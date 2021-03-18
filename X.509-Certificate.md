@@ -21,3 +21,5 @@ Unless we have a custom verification where we only verify on the existence of th
 We can stick the public key fingerprint (or public key) as the common name as well.
 
 But we would need custom verification here when used in gRPC.
+
+We could also use BIP39 and the other BIP standards to have a human readable name, these are non-FQDNs. These can also act as unique identifiers.
