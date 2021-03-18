@@ -9,7 +9,7 @@ Currently we have only implemented 1. and 2. This is the easiest because they
 are both using Node.js. And in the case of Electron, there's the Node.js 
 process is acting as a proxy between the browser and the agent.
 
-Now let's see what it means to invovle grpc-web...
+Now let's see what it means to involve grpc-web...
 
 grpc-js is TypeScript implementaion of gRPC for Node.js
 
@@ -64,6 +64,10 @@ This would be ideal:
 How much effort would it be to bring grpc-web proxy functionality into NodeJS?
 
 It would mean taking this https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy and reimplementing it for NodeJS.
+
+One way to quickly test this out, is to use grpc-web and find out which proxy is the easiest to run. If we were to distribute this, we would need to compile this for the relevant architectures within Electron, but that itself may be complex.
+
+One possible solution is to keep using our own adhoc proxies, and wait until there's a proper in-process grpc-web proxy for NodeJS and migrate to that when it is ready.
 
 Resources:
 
