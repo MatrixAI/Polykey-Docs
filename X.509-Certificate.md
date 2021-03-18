@@ -33,3 +33,7 @@ It is possible to "disable the name check". Which is what we want to do in the c
 But if we are to allow arbitrary http clients, it may be necessary to not just use our self-signed certs, but to allow the user to use their own certs for this, such as they want a CA signed cert to represent the PK node. In that case, we should actually be generating a CSR. And by doing this we can integrate PK into existing CAs like letsencrypt and such.
 
 However our CSR will have custom attributes that the CA will need to sign for. Specifically attributes that are important our own things.
+
+---
+
+Verify this: http://www.oid-info.com/#ra to ensure we have proper custom OID generation.
