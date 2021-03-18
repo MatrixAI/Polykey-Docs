@@ -23,3 +23,13 @@ We can stick the public key fingerprint (or public key) as the common name as we
 But we would need custom verification here when used in gRPC.
 
 We could also use BIP39 and the other BIP standards to have a human readable name, these are non-FQDNs. These can also act as unique identifiers.
+
+---
+
+According to the standard: https://tools.ietf.org/html/rfc2818#section-3.1 and https://security.stackexchange.com/questions/61699/is-cn-hostname-verification-against-ssl-certificate-required-for-non-browser-sof
+
+It is possible to "disable the name check". Which is what we want to do in the case of HTTP/HTTPS and grpc clients. Our name check is the public key check, there's no need to do further checks of this kind.
+
+But if we are to allow arbitrary http clients, it may be necessary to not just use our self-signed certs, but to allow the user to use their own certs for this, such as they want a CA signed cert to represent the PK node. In that case, we should actually be generating a CSR. And by doing this we can integrate PK into existing CAs like letsencrypt and such.
+
+However our CSR will have custom attributes that the CA will need to sign for. Specifically attributes that are important our own things.
