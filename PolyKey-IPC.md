@@ -54,6 +54,17 @@ extension specific native messaging which relies on STDIN and STDOUT streams.
 None of this is easy. We know the ideal would be to use grpc-js that had 
 in-process grpc-web integration, but this doesn't exist.
 
+This would be ideal:
+
+1. PK CLI grpc-js <=> PK Agent grpc-js
+2. PK GUI (Electron) grpc-web <=> PK Agent grpc-js
+3. PK Mobile (NativeScript) integrated PK as a library, no IPC
+4. PK Browser Extension grpc-web <=> PK Agent grpc-js
+
+How much effort would it be to bring grpc-web proxy functionality into NodeJS?
+
+It would mean taking this https://github.com/improbable-eng/grpc-web/tree/master/go/grpcwebproxy and reimplementing it for NodeJS.
+
 Resources:
 
 * https://grpc.io/blog/state-of-grpc-web/
