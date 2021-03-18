@@ -47,3 +47,7 @@ https://waterjuiceweb.wordpress.com/2019/08/21/oh-my-oid/
 ---
 
 Further standards are here: https://www.iana.org/protocols/apply
+
+---
+
+This is the check process: https://en.wikipedia.org/wiki/Certification_path_validation_algorithm
