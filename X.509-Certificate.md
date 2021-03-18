@@ -37,3 +37,7 @@ However our CSR will have custom attributes that the CA will need to sign for. S
 ---
 
 Verify this: http://www.oid-info.com/#ra to ensure we have proper custom OID generation.
+
+---
+
+https://pen.iana.org/pen/PenApplication.page <- we have applied for an OID.
