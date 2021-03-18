@@ -72,3 +72,4 @@ One possible solution is to keep using our own adhoc proxies, and wait until the
 Resources:
 
 * https://grpc.io/blog/state-of-grpc-web/
+* https://github.com/grpc/grpc-web/blob/master/doc/in-process-proxy.md
