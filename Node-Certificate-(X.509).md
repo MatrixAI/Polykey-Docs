@@ -51,3 +51,19 @@ Further standards are here: https://www.iana.org/protocols/apply
 ---
 
 This is the check process: https://en.wikipedia.org/wiki/Certification_path_validation_algorithm
+
+---
+
+Polykey Node Certificate
+
+* Public Key/Private Key is RSA 4096
+* Common Name is the Node Id
+* The Node Id is the Public Key Fingerprint (fingerprint is public key -> sha256 -> base64)
+* The signature is SHA512-RSA (if the issuer is RSA, the signature is RSA)
+
+In the future:
+
+* Public Key/Private Key is Ed25519
+* Common Name is the Node Id
+* The Node Id is the Public Key Fingerprint (fingerprint is public key -> base64)
+* The signature is SHA512-Ed22519
