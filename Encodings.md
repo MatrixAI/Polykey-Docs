@@ -25,3 +25,11 @@ openssl dgst -md5 binary | openssl enc -base64 # 24 characters
 openssl dgst -sha256 -binary | openssl enc -base64 # 44 characters
 openssl dgst -sha512 -binary | openssl enc -base64 # 88 characters
 ```
+
+The Ed25519 signature scheme has a max length of 256 bits, which is a max length of 32 bytes.
+
+So if we use sha256 fingerprint, we will always the same number of bytes which is 32.
+
+Then with a base64 encoding, you always end up with 44 characters.
+
+A proposed Node ID is there a string of 44 characters no matter what. Even if we are using RSA 4096 or Ed25519 or whatever.
