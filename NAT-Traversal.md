@@ -17,6 +17,7 @@ Current situation is:
 2. We have not implemented ALL of TURN (this is because all of TURN is not necessary for us)
 3. We have not tested STUN
 4. We have not implemented ALL of STUN
+5. The TURN relay/STUN MAY/(MOST LIKELY) is using uTP/MTP (which itself is running on UDP)
 
 References:
 
