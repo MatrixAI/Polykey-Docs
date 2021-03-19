@@ -1,6 +1,6 @@
 PolyKey is decentralised distributed peer to peer (P2P) secret sharing & secret
 management system. It is intended to be used by both humans and machines.
-It synthesise a unified workflow between interctive password management and
+It synthesise a unified workflow between interactive password management and
 infrastructure key management.
 
 This project PolyKey (library) is the core library for running PolyKey. It
@@ -38,7 +38,7 @@ public key and root private key.
 The root private key needs to be password protected. The user must supply the
 root password in order to encrypt the root public key.
 
-The root certficate is an X.509 certificate. This certificate will serve as the
+The root certificate is an X.509 certificate. This certificate will serve as the
 secure digital identity of the keynode.
 
 The root public key which is encoded in the root certificate is the globally
@@ -49,6 +49,9 @@ Our current root keys are RSA keys. Eventually we will move to using Ed25519 key
 Because our current root keys are RSA keys, they are very long. Our node IDs are
 therefore MD5 hashes of the PEM-encoded RSA public key. This is temporary until
  we have integrated Ed25519 keys, and our node IDs will be much shorter.
+
+Note that current modern websites tend to use ECDSA root keys, this is similar to
+Ed25519, but we will be looking to use Ed22519 instead of ECDSA in the future.
 
 The root key is used to generate and encrypt symmetric vault keys. The vault
 keys will be used to encrypt the vault filesystems.
