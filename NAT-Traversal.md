@@ -28,3 +28,4 @@ References:
 Example implementation of STUN and TURN:
 
 * https://github.com/coturn/coturn
+* https://www.rtcsec.com/post/2020/04/how-we-abused-slacks-turn-servers-to-gain-access-to-internal-services/
