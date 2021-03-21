@@ -44,3 +44,10 @@ import { pki } from 'node-forge';
 
 type RootKey = pki.rsa.KeyPair;
 ```
+
+```ts
+interface KeyManager {
+  generateRootKey(): RootKey;
+  signWithRootKey(key: RootKey)...
+}
+```
