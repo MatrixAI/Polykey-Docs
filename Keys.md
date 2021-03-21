@@ -51,3 +51,5 @@ interface KeyManager {
   signWithRootKey(key: RootKey)...
 }
 ```
+
+Anything dealing with random should be using `node-forge` anyway, since we can centralise on a single crypto library to achieve this.
