@@ -74,9 +74,9 @@ mygrpcmethod: handleUnaryCall<RequestMessage, ResponseMessage> = (
     callback(null, response);
   } catch (error) {
     if (error instanceof MyError) {
-        const error = new ErrorMessage();
-        response.setError(error);
-        callback(null, error);
+        const errorMsg = new ErrorMessage();
+        response.setError(errorMsg);
+        callback(null, errorMsg);
     } else {
       callback(error, null)
     }
