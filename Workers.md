@@ -91,3 +91,7 @@ So for example, the `src/keys/KeyManager.ts` has a class methods. These methods 
 So instead a common shared set of functions may then need to be put into the `keys` domain that can be imported by both `src/workers/PolykeyWorker.ts` and `src/keys/KeyManager.ts`, and the `KeyManager` instance can then test whether workers exist and deciding to dispatch either way.
 
 We may put this in `src/keys/utils.ts`...
+
+---
+
+Also note that all inputs and outputs to the worker functions must be POJOs. They cannot be rich objects like class instances or functions. Becareful as some things that look like plain data are not. Like the `pki.rsa.KeyPair`.
