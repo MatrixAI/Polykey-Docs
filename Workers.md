@@ -77,3 +77,17 @@ See that it's possible to await the call internally, if you do, you get the unwr
 It does not matter if the worker function itself is async or not. The situation is the same.
 
 The latter pattern is preferred, it does ensure that it makes more sense.
+
+---
+
+All parallel functions must be encoded statically in `src/workers/PolykeyWorker.ts`.
+
+It is not possible to send class instances nor functions/callbacks to the worker functions.
+
+This means for anything we want to parallelise, they must be static functions which can be imported in `src/workers/PolykeyWorker.ts`.
+
+So for example, the `src/keys/KeyManager.ts` has a class methods. These methods may need to call the functions that may run in the worker. If this is the case, the underlying implementation of certain functions must be written statically and not as methods in the class. The methods of the class would be relying on class state.
+
+So instead a common shared set of functions may then need to be put into the `keys` domain that can be imported by both `src/workers/PolykeyWorker.ts` and `src/keys/KeyManager.ts`, and the `KeyManager` instance can then test whether workers exist and deciding to dispatch either way.
+
+We may put this in `src/keys/utils.ts`...
