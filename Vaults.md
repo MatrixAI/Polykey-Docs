@@ -4,6 +4,14 @@ Vaults are Polykey's method of securely storing secrets and information. Multipl
 
 Vault Keys are encrypted and stored on disk using an encrypted file system (EFS). This EFS uses AES-CBC and a mnemonic to encrypt the keys. The mnemonic itself is encrypted the the Root Private Key and stored on disk. This allows this data to be stored and loaded when stopping and starting Polykey. A secret inside a vault is also protected with EFS, using AES-CBC encryption with the Root Private Key.
 
+**Intended Implementation**
+Each vault has a key that is used to lock and unlock it. These keys are stored in the `VaultManager` as:
+```ts
+type VaultKeys = {[key: string]: VaultKey};
+```
+
+These are encrypted and stored on disk, using asymmetric encrryption, using the Root Public Key. Decryption of this structure is done using the Root Private Key.
+
 ### Encrypted File System
 
 EFS stores the data in the following form:
