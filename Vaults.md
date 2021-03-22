@@ -45,10 +45,11 @@ Stops the vault manager
 
 ---
 
-#### `public addVault(name: string): boolean`
+#### `public async addVault(name: string): Promise<Vault>`
 * `name`: Name of vault
 
-Adds a new vault. Returns `true` if successful
+Adds a new vault. Returns the new vault if successful.
+Throws `ErrorVaultExists` exception if the vault name already exists in this `VaultManager`.
 
 ---
 
