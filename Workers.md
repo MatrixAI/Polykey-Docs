@@ -27,3 +27,51 @@ Because the worker script has to be a relative path to a file on disk in the bui
 See: https://threads.js.org/getting-started#build-with-webpack
 
 This is especially relevant to Polykey GUI which uses webpack and electron., and later with Polykey Mobile/NativeScript. Note that Polykey Browser Extension would not be bundling js-polykey at all, as it is expected to not run polykey agent inside the browser.
+
+---
+
+How to use the worker manager:
+
+```ts
+const workers = new WorkerManager;
+await workers.start();
+
+const r1 = await workers.call((w) => {
+  const r = w.add(1, 2);
+  console.log('INTERNAL RESULT 1', r);
+  return r;
+});
+
+console.log('EXTERNAL RESULT 1', r1);
+
+const r2 = await workers.call(async (w) => {
+  const r = await w.add(1, 2);
+  console.log('INTERNAL RESULT 2', r);
+  return r;
+});
+
+console.log('EXTERNAL RESULT 2', r2);
+
+await workers.stop();
+```
+
+Doing the above gives:
+
+```
+INFO:WorkerManager:Started worker pool with 8 workers
+INTERNAL RESULT 1 ObservablePromise {
+  _subscriber: [Function (anonymous)],
+  initHasRun: false,
+  fulfillmentCallbacks: [],
+  rejectionCallbacks: [],
+  firstValueSet: false,
+  state: 'pending'
+}
+EXTERNAL RESULT 1 3
+INTERNAL RESULT 2 3
+EXTERNAL RESULT 2 3
+```
+
+See that it's possible to await the call internally, if you do, you get the unwrapped value. But if you don't it's fine, since externally you get the unwrapped value.
+
+It does not matter if the worker function itself is async or not. The situation is the same.
