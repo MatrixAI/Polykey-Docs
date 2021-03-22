@@ -75,3 +75,5 @@ EXTERNAL RESULT 2 3
 See that it's possible to await the call internally, if you do, you get the unwrapped value. But if you don't it's fine, since externally you get the unwrapped value.
 
 It does not matter if the worker function itself is async or not. The situation is the same.
+
+The latter pattern is preferred, it does ensure that it makes more sense.
