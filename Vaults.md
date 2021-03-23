@@ -192,6 +192,12 @@ Changes the permissions of a node
 Returns the permissions of a node in the form of NodePermissions. Inside the NodePermissions return there will be fields which indicate the ability of the node with a boolean. Currently there is only functionality for pulling, therefore only the canPull field will exist.
 
 ---
+#### `public async renameVault(newVaultName: string): Promise<boolean>`
+* `newVaultName`: The name that the vault should be renamed to
+
+Changes the name of the vault in memory and in the encrypted file system
+
+---
 #### `public async updateSecret(secretName: string, content: Buffer): Promise<void>`
 * `secretName`: Name of secret to update
 * `content`: New content of secret
