@@ -57,7 +57,7 @@ Throws `ErrorVaultExists` exception if the vault name already exists in this `Va
 * `currName`: Current name of vault
 * `newName`: New name of vault
 
-Renames an existing vault. TODO: Behaviour if vault does not exist? if the name is same? What should it return on success
+Renames an existing vault. Returns a boolean describing the success of the operation. Throws 'ErrorVaultDoesNotExist' exception if name of current vault does not exist.
 
 ---
 
@@ -118,11 +118,51 @@ Load existing vaults data into memory (keys, names)
 This class represents the Vaults inside polykey, including functionality to manage its secrets, and git functionalities.
 
 ---
-#### `public initializeVault(): void`
-Creates the repositiory for the vault. TODO: Where?
+### `type NodePermissions`
+* `canPull`: Indicates the ability of to pull the vault
 
+Contains all the permissions and their values. At this stage, only pulling is implemented.
+
+---
+### `type ACL`
+* `[key: string]: NodePermissions`
+
+Associates a node ID with a node permissions instance
+
+---
+### `type FileChange`
+* `fileName`: The name of the file that has been changed
+* `action`: The action performed on the file (added, removed, modified)
+
+Contains the change information for a file
+
+---
+### `type FileChanges = Array<FileChange>`
+
+Alias for a list of file changes
+
+---
+#### `new Vault(...)`
+* `baseDir`: The base vault directory
+* `vaultName`: The name of the vault
+* `nodePermissions`: Indexed object of nodes and their permissions
+* `efs`: The encrypted file system for the vault
+* `mutex`: The mutex of the vault for blocking actions to a directory
+* 'logger`: The logger of the vault for outputting information
+
+Creates an instance of a vault, takes in a `key` which is passed to the `efs`.
+
+---
+#### `public async create()`
+Creates the vault directory.
+
+---
+#### `public async destroy()`
+Destroys a vault.
+
+---
 #### `public vaultStats(): fs.Stats`
-Retreives stats for a vault. TODO: what do these stats look like?
+Retrieves stats for a vault. Returns an fs.Stats object. TODO: Decide what form we want to give stats, or keep as fs.Stats?
 
 ---
 #### `public pullVault(nodeId: string): void`
@@ -131,61 +171,61 @@ Retreives stats for a vault. TODO: what do these stats look like?
 Pulls this vault from a nodeId. TODO: What happens in exception cases?
 
 ---
-#### `public addSecret(name: string, content: Buffer): boolean`
-* `name`: Name of secret
+#### `public async addSecret(secretName: string, content: Buffer): Promise<boolean>`
+* `secretName`: Name of secret
 * `content`: Content of the secret
 
 
-Adds a secret to the vault. Returns `true` if success. TODO: can this fail? when and how?
+Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name ecists, an 'ErrorSecretExists' exception will be thrown. TODO: Ensure .git is not added, how?
 
 ---
-#### `public changePermissions(nodeId: string, canEdit: boolean): void`
+#### `public changePermissions(nodeId: string, newPermissions: NodePermissions): void`
 * `nodeId`: ID of node
-* `canEdit`: Permission to change to
+* `newPermissions`: Permission(s) to change to
 
-Changes the editing permissions of a node
-
----
-#### `public checkPermissions(nodeId: string): boolean`
-* `nodeId`: ID of node to
-
-Returns the editing permissions of a node. TODO: What does this return? true if it can be edited? what does this mean
+Changes the permissions of a node
 
 ---
-#### `public updateSecret(name: string, content: Buffer): void`
-* `name`: Name of secret to update
+#### `public checkPermissions(nodeId: string): NodePermissions`
+* `nodeId`: ID of node to check permissions for
+
+Returns the permissions of a node in the form of NodePermissions. Inside the NodePermissions return there will be fields which indicate the ability of the node with a boolean. Currently there is only functionality for pulling, therefore only the canPull field will exist.
+
+---
+#### `public async updateSecret(secretName: string, content: Buffer): Promise<void>`
+* `secretName`: Name of secret to update
 * `content`: New content of secret
 
 Changes the contents of a secret
 
 ---
-#### `public renameSecret(currName: string, newName: string): boolean`
-* `currName`: Current name of secret
-* `newName`: New name of secret
+#### `public async renameSecret(currSecretName: string, newSecretName: string): Promise<boolean>`
+* `currSecretName`: Current name of secret
+* `newSecretName`: New name of secret
 
 Changes the name of a secret in a vault: Returns `true` on success.
 
 ---
-#### `public listSecrets(): Array<string>`
-Retrieves a list of the secrets in a vault: Returns an Array of secrets as strings.
+#### `public async listSecrets(): Promise<string>`
+Retrieves a list of the secrets in a vault: Returns secrets as a string.
 
 ---
 
-#### public getSecret(name: string): Buffer | string;
-* `name`: Name of secret
+#### public getSecret(secretName: string): Buffer | string;
+* `secretName`: Name of secret
 
-Returns the contents of a secret. TODO: Expand. how does this work
+Returns the contents of a secret. Uses the EFS to synchronously read in the contents of the file that has the secret name.
 
 ---
-#### `public deleteSecret(name: string, recursive: boolean): boolean`
-* `name`: Name of secret to delete
+#### `public async deleteSecret(secretName: string, recursive: boolean): Promise<boolean>`
+* `secretName`: Name of secret to delete
 * `recursive`: Recursively delete secrets within
 
-Removes a secret from a vault: Returns `true` on success.
+Removes a secret from a vault: Returns `true` on success. Throws exceptions if the Secret does not exist in the vault of if the secret is a directory and recursive is not true
 
 ---
-#### `private async commitChanges(name: string, message: string)`
-* `name`: Name of secret
+#### `private async commitChanges(fileChanges: FileChanges, message: string)`
+* `fileChanges`: List of file changes
 * `message`: Commit message
 
 Helper Method that commits the changes made to a vault repository
@@ -199,5 +239,3 @@ Writes out the stored node permissions
 Loads the node permissions
 
 ---
-#### `private reloadSecrets(): void`
-Reload secrets from on disk
