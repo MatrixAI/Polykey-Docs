@@ -30,9 +30,30 @@ In order to share secrets and vaults, the `isomorphic-git` library will be used.
 The `VaultManager` class is responsible for handling the many vaults a polykey instance would have. It contains a mapping of the vault name to the [`Vault`](#Vault) object along with functions manage the vaults. This is what is exported from the `Vaults` module.
 
 ---
+### `type VaultKey`
+
+Buffer of a vault key
+
+---
+### `type VaultKeys`
+* `[key: string]: VaultKey`
+
+Associates key names with their key value
+
+---
+### `type Vaults`
+* `[key: string]: Vault`
+
+Associates vault names with their vault class
+
+---
 #### `new VaultManager(...)`
-* `attributes`
-TODO
+* `baseDir`: The base directory of the vaults
+* `logger`: Logger for outputting information
+* `vaults`: Indexed object containing names and instances of Vaults
+* `vaultKeys`: Indexed object of key names and associated keys for each vault
+
+Constructs an instance of vault manager.
 
 ---
 #### `public async start(): void`
@@ -71,7 +92,7 @@ Delete an existing vault. Returns `true` if successful
 #### `public getVault(name: string): Vault`
 * `name`: Name of vault to get
 
-Retrieves a Vault instance from the vault manager's mapping of vaults. TODO: Behaviour if vault does not exist? should it be Vault | undefined? Returns a `Vault` object.
+Retrieves a Vault instance from the vault manager's mapping of vaults. Throws a `VaultDoesNotExist` exception if the name given does not exist.
 
 ---
 
@@ -90,11 +111,12 @@ Pull a vault from another node. Returns `true` if successful. TODO: does this fu
 
 ---
 
-#### `public shareVault(name: string, nodeId: string): void`
+#### `public changeVaultPermissions(name: string, nodeId: string, canPull: boolean): void`
 * `name`: Name of vault to share
 * `nodeId`: ID of node
+* `canPull`: Set the ability of a node to pull
 
-Change a nodes permission rights for a vault TODO: This will have to be expanded. What permissions should be used for what purpose?
+Change a nodes permission rights for a vault. At this stage, pulling is the only functionality for vaults. TODO: This will have to be expanded for other permissions?
 
 ---
 
