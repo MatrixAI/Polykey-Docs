@@ -25,11 +25,13 @@ Constructs an instance of git backend
 #### `public async handleInfoRequest(repoName: string): Promise<Buffer>`
 * `repoName`: Name of the vault repository
 
-A handler to create a buffer of information about the vault repository
+A handler to create a utf8 encoded buffer of information about the vault repository. This is passed back between nodes using the `GitRequest` class and is used by `isomorphic-git` when pulling/cloning vaults
 
 ---
 
 #### `public async handlePackRequest(repoName: string, body: Buffer): Promise<Buffer>`
+* `repoName`: Name of the vault repository
+
 
 ---
 
