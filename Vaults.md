@@ -66,57 +66,54 @@ Stops the vault manager
 
 ---
 
-#### `public async addVault(name: string): Promise<Vault>`
-* `name`: Name of vault
+#### `public async addVault(vaultName: string): Promise<Vault>`
+* `vaultName`: Name of vault
 
 Adds a new vault. Returns the new vault if successful.
-Throws `ErrorVaultExists` exception if the vault name already exists in this `VaultManager`.
+Throws `ErrorVaultDefined` exception if the vault name already exists in this `VaultManager`.
 
 ---
 
-#### `public renameVault(currName: string, newName: string): boolean`
-* `currName`: Current name of vault
-* `newName`: New name of vault
+#### `public renameVault(currVaultName: string, newVaultName: string): boolean`
+* `currVaultName`: Current name of vault
+* `newVaultName`: New name of vault
 
-Renames an existing vault. Returns a boolean describing the success of the operation. Throws 'ErrorVaultDoesNotExist' exception if name of current vault does not exist.
-
----
-
-#### `public deleteVault(name: string): boolean`
-* `name`: Name of vault to be deleted
-
-Delete an existing vault. Returns `true` if successful
+Renames an existing vault. Returns a boolean describing the success of the operation. Throws 'ErrorVaultUndefined' exception if name of current vault does not exist, of 'ErrorVaultDefined' if the new vault name already exists.
 
 ---
 
-#### `public getVault(name: string): Vault`
-* `name`: Name of vault to get
+#### `public deleteVault(vaultName: string): boolean`
+* `vaultName`: Name of vault to be deleted
 
-Retrieves a Vault instance from the vault manager's mapping of vaults. Throws a `VaultDoesNotExist` exception if the name given does not exist.
+Delete an existing vault. Returns `true` if successful. Throws 'ErrorVaultUndefined' if the vault name does not exist.
 
 ---
 
-#### `public listVaults(nodeId: string): Array<Vault>`
+#### `public getVault(vaultName: string): Vault`
+* `vaultName`: Name of vault to get
+
+Retrieves a Vault instance from the vault manager's mapping of vaults. Throws a `ErrorVaultUndefined` exception if the name given does not exist.
+
+---
+
+#### `public listVaults(): string`
+
+List all vaults for the current node. Returns a string of vault names.
+
+---
+
+#### `public scanNodeVaults(nodeId: string): string`
 * `nodeId`: ID of node to list vaults for
 
-List all vaults for a node given a nodeId. Returns an Array of `Vault` objects.
+List all vaults for a node given a nodeId. Returns an string of vault names.
 
 ---
 
-#### `public pullVault(name: string, nodeId: string): boolean`
-* `name`: Name of vault to pull
+#### `public pullVault(vaultName: string, nodeId: string): boolean`
+* `vaultName`: Name of vault to pull
 * `nodeId`: ID of node to pull from
 
 Pull a vault from another node. Returns `true` if successful. TODO: does this function do any side effects? What happens if `name` / `nodeId` is incorrect?
-
----
-
-#### `public changeVaultPermissions(name: string, nodeId: string, canPull: boolean): void`
-* `name`: Name of vault to share
-* `nodeId`: ID of node
-* `canPull`: Set the ability of a node to pull
-
-Change a nodes permission rights for a vault. At this stage, pulling is the only functionality for vaults. TODO: This will have to be expanded for other permissions?
 
 ---
 
@@ -140,18 +137,21 @@ Load existing vaults data into memory (keys, names)
 This class represents the Vaults inside polykey, including functionality to manage its secrets, and git functionalities.
 
 ---
+
 ### `type NodePermissions`
 * `canPull`: Indicates the ability of to pull the vault
 
 Contains all the permissions and their values. At this stage, only pulling is implemented.
 
 ---
+
 ### `type ACL`
 * `[key: string]: NodePermissions`
 
 Associates a node ID with a node permissions instance
 
 ---
+
 ### `type FileChange`
 * `fileName`: The name of the file that has been changed
 * `action`: The action performed on the file (added, removed, modified)
@@ -159,11 +159,13 @@ Associates a node ID with a node permissions instance
 Contains the change information for a file
 
 ---
+
 ### `type FileChanges = Array<FileChange>`
 
 Alias for a list of file changes
 
 ---
+
 #### `new Vault(...)`
 * `baseDir`: The base vault directory
 * `vaultName`: The name of the vault
@@ -175,24 +177,34 @@ Alias for a list of file changes
 Creates an instance of a vault, takes in a `key` which is passed to the `efs`.
 
 ---
+
 #### `public async create()`
 Creates the vault directory.
 
 ---
+
 #### `public async destroy()`
 Destroys a vault.
 
 ---
+
+#### `public async initializeVault(): Promise<void>`
+Initializes the repository for the vault
+
+---
+
 #### `public vaultStats(): fs.Stats`
 Retrieves stats for a vault. Returns an fs.Stats object. TODO: Decide what form we want to give stats, or keep as fs.Stats?
 
 ---
+
 #### `public pullVault(nodeId: string): void`
 * `nodeId`: ID of node to pull from
 
 Pulls this vault from a nodeId. TODO: What happens in exception cases?
 
 ---
+
 #### `public async addSecret(secretName: string, content: Buffer): Promise<boolean>`
 * `secretName`: Name of secret
 * `content`: Content of the secret
@@ -201,6 +213,7 @@ Pulls this vault from a nodeId. TODO: What happens in exception cases?
 Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name ecists, an 'ErrorSecretExists' exception will be thrown. TODO: Ensure .git is not added, how?
 
 ---
+
 #### `public changePermissions(nodeId: string, newPermissions: NodePermissions): void`
 * `nodeId`: ID of node
 * `newPermissions`: Permission(s) to change to
@@ -208,18 +221,21 @@ Adds a secret to the vault. Returns `true` if success. If a secret of the same n
 Changes the permissions of a node
 
 ---
+
 #### `public checkPermissions(nodeId: string): NodePermissions`
 * `nodeId`: ID of node to check permissions for
 
 Returns the permissions of a node in the form of NodePermissions. Inside the NodePermissions return there will be fields which indicate the ability of the node with a boolean. Currently there is only functionality for pulling, therefore only the canPull field will exist.
 
 ---
+
 #### `public async renameVault(newVaultName: string): Promise<boolean>`
 * `newVaultName`: The name that the vault should be renamed to
 
 Changes the name of the vault in memory and in the encrypted file system
 
 ---
+
 #### `public async updateSecret(secretName: string, content: Buffer): Promise<void>`
 * `secretName`: Name of secret to update
 * `content`: New content of secret
@@ -227,6 +243,14 @@ Changes the name of the vault in memory and in the encrypted file system
 Changes the contents of a secret
 
 ---
+
+#### `public async renameVault(newSVaultName: string): Promise<boolean>`
+* `newVaultName`: New name of vault
+
+Changes the name of the vault: Returns `true` on success.
+
+---
+
 #### `public async renameSecret(currSecretName: string, newSecretName: string): Promise<boolean>`
 * `currSecretName`: Current name of secret
 * `newSecretName`: New name of secret
@@ -234,6 +258,7 @@ Changes the contents of a secret
 Changes the name of a secret in a vault: Returns `true` on success.
 
 ---
+
 #### `public async listSecrets(): Promise<string>`
 Retrieves a list of the secrets in a vault: Returns secrets as a string.
 
@@ -245,6 +270,7 @@ Retrieves a list of the secrets in a vault: Returns secrets as a string.
 Returns the contents of a secret. Uses the EFS to synchronously read in the contents of the file that has the secret name.
 
 ---
+
 #### `public async deleteSecret(secretName: string, recursive: boolean): Promise<boolean>`
 * `secretName`: Name of secret to delete
 * `recursive`: Recursively delete secrets within
@@ -252,6 +278,7 @@ Returns the contents of a secret. Uses the EFS to synchronously read in the cont
 Removes a secret from a vault: Returns `true` on success. Throws exceptions if the Secret does not exist in the vault of if the secret is a directory and recursive is not true
 
 ---
+
 #### `private async commitChanges(fileChanges: FileChanges, message: string)`
 * `fileChanges`: List of file changes
 * `message`: Commit message
@@ -259,10 +286,12 @@ Removes a secret from a vault: Returns `true` on success. Throws exceptions if t
 Helper Method that commits the changes made to a vault repository
 
 ---
+
 #### `private writeNodePermissions(): void`
 Writes out the stored node permissions
 
 ---
+
 #### `private loadNodePermissions(): void`
 Loads the node permissions
 
