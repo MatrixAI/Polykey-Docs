@@ -113,7 +113,7 @@ List all vaults for a node given a nodeId. Returns an string of vault names.
 * `vaultName`: Name of vault to pull
 * `nodeId`: ID of node to pull from
 
-Pull a vault from another node. Returns `true` if successful. TODO: does this function do any side effects? What happens if `name` / `nodeId` is incorrect?
+Pull a vault from another node. Returns `true` if successful. If the vault exists then the vault is pulled, if it doesn't exist then the vault is cloned. TODO: does this function do any side effects? What happens if `name` / `nodeId` is incorrect?
 
 ---
 
@@ -201,7 +201,14 @@ Retrieves stats for a vault. Returns an fs.Stats object. TODO: Decide what form 
 #### `public pullVault(nodeId: string): void`
 * `nodeId`: ID of node to pull from
 
-Pulls this vault from a nodeId. TODO: What happens in exception cases?
+Pulls the vault changes from a nodeId. TODO: What happens in exception cases?
+
+---
+
+#### `public cloneVault(nodeId: string): void`
+* `nodeId`: ID of node to pull from
+
+Clones the vault repository from a nodeId. TODO: What happens in exception cases?
 
 ---
 
