@@ -1,17 +1,20 @@
-# Vaults
+Vaults are Polykey's method of securely storing secrets and information. Multiple vaults can be created which contain multiple secrets. These vaults are able to be securely transferred between nodes.
 
-Vaults are Polykey's method of securely storing secrets and information. Multiple vaults can be created which contain multiple secrets. Each vault is a separate folder within the [`polykey` directory](./Home.md#polykey-directory). 
+## Secrets
 
-Vault Keys are encrypted and stored on disk using an encrypted file system (EFS). This EFS uses AES-CBC and a mnemonic to encrypt the keys. The mnemonic itself is encrypted the the Root Private Key and stored on disk. This allows this data to be stored and loaded when stopping and starting Polykey. A secret inside a vault is also protected with EFS, using AES-CBC encryption with the Root Private Key.
+Vaults maintain their own encrypted file system (EFS) along with a virtual file system (VFS) to store secrets within their respective vault directories contained within the [`polykey` directory](./Home.md#polykey-directory).
+
+
+Currently, vault Keys are encrypted and stored on disk using an encrypted file system (EFS). This EFS uses AES-CBC and a mnemonic to encrypt the keys. The mnemonic itself is encrypted the the Root Private Key and stored on disk. This allows this data to be stored and loaded when stopping and starting Polykey. A secret inside a vault is also protected with EFS, using AES-CBC encryption with the Root Private Key.
 
 **Intended Implementation**
 
-Each vault has a key that is used to lock and unlock it. These keys are stored in the `VaultManager` as:
+Each vault has a key that is used to lock and unlock secrets. These keys are stored in the `VaultManager` as:
 ```ts
 type VaultKeys = {[key: string]: VaultKey};
 ```
 
-These are encrypted and stored on disk, using asymmetric encrryption, using the Root Public Key. Decryption of this structure is done using the Root Private Key.
+To ensure security when they are stored on disk, asymmetric encryption takes place on each vault key, using the Root Public Key. These keys are then stored on disk using the `level` library. For accessing secrets within a vault, the relevant key can be extracted from the `level` database which is then decrypted using the Root Private Key. Then this vault key can be used to access secrets.
 
 ### Encrypted File System
 
@@ -190,8 +193,7 @@ Initializes the repository for the vault
 ---
 
 #### `public async vaultStats(): Promise<fs.Stats>`
-Retrieves stats for a vault. Returns an fs.Stats object. TODO: Decide what form we want to give stats, or keep as fs.Stats?
-
+Retrieves stats for a vault. Returns an fs.Stats object which is serializable.
 ---
 
 #### `public pullVault(nodeId: string): void`
