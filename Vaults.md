@@ -21,10 +21,6 @@ EFS stores the data in the following form:
 
 A virtual file system (VFS) is also passed to the encrypted files system, in order to create the in-memory file system. Two operations can be performed using the Encrypted File System; reads and writes. In order to maintain security, the secrets are decrypted in memory and not on disk. For write operations, the encrypted file is stored on disk and then stored in memory using the Virtual File System. In read operations, the file is accessed on disk then stored and decrypted in memory using the Virtual File System.
 
-### Git
-
-In order to share secrets and vaults, the `isomorphic-git` library will be used.
-
 # Specification
 ## `VaultManager`
 The `VaultManager` class is responsible for handling the many vaults a polykey instance would have. It contains a mapping of the vault name to the [`Vault`](#Vault) object along with functions manage the vaults. This is what is exported from the `Vaults` module.
@@ -193,7 +189,7 @@ Initializes the repository for the vault
 
 ---
 
-#### `public vaultStats(): fs.Stats`
+#### `public async vaultStats(): Promise<fs.Stats>`
 Retrieves stats for a vault. Returns an fs.Stats object. TODO: Decide what form we want to give stats, or keep as fs.Stats?
 
 ---
