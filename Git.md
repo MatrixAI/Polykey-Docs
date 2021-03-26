@@ -68,3 +68,48 @@ Returns a string of the vault names from a connected node.
 
 ---
 
+## GitFrontend
+
+ `GitFrontend` is responsible for converting HTTP messages from isomorphic-git into requests and sending them to a specific node.
+
+---
+
+#### `new GitFrontend(...)`
+* `connectToNode`: Function that returns a NodeConnection;
+* `logger`: To output information;
+
+Constructs an instance of git frontend
+
+---
+
+#### `public connectToNodeGit(nodeId: string): GitRequest`
+* `nodeId`: Id of the node to connect to
+
+Creates a nodeConnection to the given node, passes in this connection to the requestPack, requestInfo and requestVaultNames functions and packages this in a gitRequest object which is returned.
+
+---
+
+#### `private async requestInfo(vaultName: string, nodeConnection: NodeConnection): Promise<Uint8Array>`
+* `vaultName`: Name of the targetted vault repository
+* `nodeConnection`: A method to contact the node client
+
+Uses the node connection to get the client of the targeted node. Then uses handleInfoRequest to send a request to the client through grpc which sends a vault repository's information in response as a Uint8Array.
+
+---
+
+
+#### `private async requestPack(vaultName: string, body: Uint8Array, nodeConnection: NodeConnection): Promise<Uint8Array>`
+* `vaultName`: Name of the targetted vault repository
+* `body`: Details of the request
+* `nodeConnection`: A method to contact the node client
+
+Uses the node connection to get the client of the targeted node. Then uses `handlePackRequest` to send a request to the client through grpc which sends a vault repository's information in response as a Uint8Array.
+
+---
+
+#### `private async requestVaultNames(nodeConnection: NodeConnection): Promise<string[]>`
+* `nodeConnection`: A method to contact the node client
+
+Uses the node connection to get the client of the targeted node. Then uses `handleGetVaultNames` to send a request to the client through grpc which sends a vault repository's information in response as a string.
+
+---
