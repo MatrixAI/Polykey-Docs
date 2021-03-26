@@ -42,9 +42,9 @@ A handler to create a utf8 encoded buffer of information about the vault reposit
 ---
 
 #### `new GitRequest(...)`
-* `requestInfo`: Function to get the info of a vault repository;
-* `requestPack`: Function to get the pack object;
-* `requestVaultNames`: Function to get the vault names of a node;
+* `requestInfo`: Function to get the info of a vault repository
+* `requestPack`: Function to get the pack object
+* `requestVaultNames`: Function to get the vault names of a node
 
 Constructs an instance of git request
 ---
@@ -52,7 +52,7 @@ Constructs an instance of git request
 #### `public async request({ url, method, headers, body }): `
 * `url`: URL of remote repository
 * `method`: Action to perform on the vault repo
-* `headers`
+* `headers`:
 * `body`: 
 
 Custom http request which uses handleInfoRequest and handlePackRequest for http 'GET' and 'POST' methods respectively.
