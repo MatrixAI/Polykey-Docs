@@ -113,7 +113,7 @@ List all vaults for a node given a nodeId. Returns an string of vault names.
 * `vaultName`: Name of vault to pull
 * `nodeId`: ID of node to pull from
 
-Pull a vault from another node. Returns `true` if successful. If the vault exists then the vault is pulled, if it doesn't exist then the vault is cloned. TODO: does this function do any side effects? What happens if `name` / `nodeId` is incorrect?
+Pull a vault from another node. Returns `true` if successful. If the vault exists then the vault is pulled, changin the contents of the vault in the EFS. If it doesn't exist then the vault is cloned and the contents of the vault are written using the EFS. Throws an `ErrorVaultUndefined` if the vault does not exist on the nodeIds store and an `ErrorNodeUndefined` if the node is not discoverable (in the node domain).
 
 ---
 
@@ -200,14 +200,14 @@ Retrieves stats for a vault. Returns an fs.Stats object which is serializable.
 #### `public pullVault(nodeId: string): void`
 * `nodeId`: ID of node to pull from
 
-Pulls the vault changes from a nodeId. TODO: What happens in exception cases?
+Pulls the vault changes from a nodeId. No exceptions occur as the node ID has already been connected to.
 
 ---
 
 #### `public cloneVault(nodeId: string): void`
 * `nodeId`: ID of node to pull from
 
-Clones the vault repository from a nodeId. TODO: What happens in exception cases?
+Clones the vault repository from a nodeId. No exceptions occur as the node ID has already been connected to.
 
 ---
 
@@ -216,7 +216,7 @@ Clones the vault repository from a nodeId. TODO: What happens in exception cases
 * `content`: Content of the secret
 
 
-Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name ecists, an 'ErrorSecretExists' exception will be thrown. TODO: Ensure .git is not added, how?
+Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, an 'ErrorSecretExists' exception will be thrown. TODO: Ensure .git is not added, how?
 
 ---
 
