@@ -71,21 +71,23 @@ Stops the vault manager
 
 Adds a new vault. Returns the new vault if successful.
 Throws `ErrorVaultDefined` exception if the vault name already exists in this `VaultManager`.
+Also generates a new vault key and writes encrypted vault metadata to disk.
 
 ---
 
-#### `public renameVault(currVaultName: string, newVaultName: string): boolean`
+#### `public async renameVault(currVaultName: string, newVaultName: string): Promise<boolean>`
 * `currVaultName`: Current name of vault
 * `newVaultName`: New name of vault
 
-Renames an existing vault. Returns a boolean describing the success of the operation. Throws 'ErrorVaultUndefined' exception if name of current vault does not exist, of 'ErrorVaultDefined' if the new vault name already exists.
+Renames an existing vault. Returns a boolean describing the success of the operation. Throws 'ErrorVaultUndefined' exception if name of current vault does not exist, and `ErrorVaultDefined` if the new vault name already exists.
+Updates references to vault keys and writes new encrypted vault metadata to disk.
 
 ---
 
 #### `public deleteVault(vaultName: string): boolean`
 * `vaultName`: Name of vault to be deleted
 
-Delete an existing vault. Returns `true` if successful. Throws 'ErrorVaultUndefined' if the vault name does not exist.
+Delete an existing vault. Deletes file from filesystem and updates mappings to vaults and vaultKeys. If it fails to delete from the filesystem, it will not modify any mappings and return false. Throws `ErrorVaultUndefined` if vault name does not exist.
 
 ---
 
@@ -98,7 +100,7 @@ Retrieves a Vault instance from the vault manager's mapping of vaults. Throws a 
 
 #### `public listVaults(): string`
 
-List all vaults for the current node. Returns a string of vault names.
+Retrieve all the vaults for current node, returns an Array of vault names managed currently by the vault manager.
 
 ---
 
@@ -122,13 +124,14 @@ When keypair is rotated, decrypt vault data and reencrypt with new keypair
 
 ---
 
-#### `private writeVaultData(): void`
-Store existing vaults data on disk (keys, names)
+#### `private async writeVaultData(): Promise<void>`
+Writes encrypted vault data to disk. This includes encrypted vault keys and names. The encryption is done using the root key
 
 ---
 
-#### `private loadVaultData(): void`
-Load existing vaults data into memory (keys, names)
+#### `private async loadVaultData(): Promise<void>`
+Load existing vaults data into memory from vault metadata path. If metadata does not exist, does nothing.
+This method is called at the during the `start()` method and will attempt to populate the `vaults` and `vaultKeys` mappings of the `VaultManager` based on the information in the metadata.
 
 ---
 
