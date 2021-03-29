@@ -4,18 +4,20 @@ Vaults are Polykey's method of securely storing secrets and information. Multipl
 
 Vaults maintain their own encrypted file system (EFS) along with a virtual file system (VFS) to store secrets within their respective vault directories contained within the [`polykey` directory](./Home.md#polykey-directory). The EFS (https://gitlab.com/MatrixAI/Engineering/Polykey/js-encryptedfs) uses AES-256-GCM to encrypt data. In polykey, the respective vault keys are passed into the EFS for encryption and decryption. The cryptographic operations are performed in the VFS to maintain security.
 
-**Current Implementation**
-
-Currently, vault Keys are encrypted and stored on disk using an encrypted file system (EFS). This EFS uses AES-CBC and a mnemonic to encrypt the keys. The mnemonic itself is encrypted the the Root Private Key and stored on disk. This allows this data to be stored and loaded when stopping and starting Polykey. A secret inside a vault is also protected with EFS, using AES-CBC encryption with the Root Private Key.
-
-**Intended Implementation**
-
 Each vault has a key that is used to lock and unlock secrets. These keys are stored in the `VaultManager` as:
 ```ts
 type VaultKeys = {[key: string]: VaultKey};
 ```
 
 To ensure security when they are stored on disk, asymmetric encryption takes place on each vault key, using the Root Public Key. These keys are then stored on disk using the `level` library. For accessing secrets within a vault, the relevant key can be extracted from the `level` database which is then decrypted using the Root Private Key. Then this vault key can be used to access secrets.
+
+When the `VaultManager` is started, if metadata is found, then it is decrypted, and loaded into memory. 
+
+### Metadata
+Metadata is stored using `leveldb`, under `~/.local/share/polykey/vaultKeys`. It is simply a key-value store, and it is being used to store `vaultNames` as key, and the encrytped vault key as the value. It is updated on every relevant `VaultManager` operation including: 
+* `addVault`
+* `renameVault`
+* `deleteVault`
 
 ### Encrypted File System
 
@@ -126,6 +128,21 @@ When keypair is rotated, decrypt vault data and reencrypt with new keypair
 
 #### `private async writeVaultData(): Promise<void>`
 Writes encrypted vault data to disk. This includes encrypted vault keys and names. The encryption is done using the root key
+
+---
+
+#### `private async putValueLeveldb(vaultName: string, vaultKey: Buffer): Promise<void>`
+* `vaultName` name of vault
+* `vaultKey` vault key
+
+Puts the vaultName value and the encrypted value for vaultKey into the leveldb
+
+---
+
+#### `private async deleteValueLeveldb(vaultName: string): Promise<void>`
+* `vaultName` name of vault
+
+Deletes the vault from the leveldb
 
 ---
 
