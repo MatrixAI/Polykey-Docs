@@ -98,6 +98,10 @@ The certificate validation has to go through instead checking that the public ke
 
 The certificate information is then trusted. The common name is not useful here, as the claim on the public key is self-evident. But other attribute information here can be trusted, for example all the cryptolink information.
 
+The default certificate generates only has common name information which points back to its public key, therefore its claim is self-evident.
+
+Only when the certificate gains extra attributes, is that useful as a time-limited trusted information.
+
 ## Cryptographic Primitives
 
 All cryptographic primitives (including CSPRNG) are implemented with `node-forge`.
