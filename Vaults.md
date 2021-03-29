@@ -115,7 +115,7 @@ List all vaults for a node given a nodeId. Returns an string of vault names.
 * `vaultName`: Name of vault to pull
 * `nodeId`: ID of node to pull from
 
-Pull a vault from another node. Returns `true` if successful. If the vault exists then the vault is pulled, changin the contents of the vault in the EFS. If it doesn't exist then the vault is cloned and the contents of the vault are written using the EFS. Throws an `ErrorVaultUndefined` if the vault does not exist on the nodeIds store and an `ErrorNodeUndefined` if the node is not discoverable (in the node domain).
+Pull a vault from another node. Returns `true` if successful. If the vault exists then the vault is pulled, changing the contents of the vault in the EFS by calling the corresponding `pullVault` function for the vault. If it doesn't exist then the vault is cloned and the contents of the vault are written using the EFS. Throws an `ErrorVaultUndefined` if the vault does not exist on the nodeIds store and an `ErrorNodeUndefined` if the node is not discoverable (in the node domain).
 
 ---
 
@@ -203,14 +203,7 @@ Retrieves stats for a vault. Returns an fs.Stats object which is serializable.
 #### `public pullVault(nodeId: string): void`
 * `nodeId`: ID of node to pull from
 
-Pulls the vault changes from a nodeId. No exceptions occur as the node ID has already been connected to.
-
----
-
-#### `public cloneVault(nodeId: string): void`
-* `nodeId`: ID of node to pull from
-
-Clones the vault repository from a nodeId. No exceptions occur as the node ID has already been connected to.
+Pulls the vault changes from a nodeId. No exceptions occur as the node ID has already been connected to and the existence of the vault has been checked by the VaultManager.
 
 ---
 
