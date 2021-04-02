@@ -50,12 +50,15 @@ Associates vault names with their vault class
 
 ---
 #### `new VaultManager(...)`
-* `baseDir`: The base directory of the vaults
-* `logger`: Logger for outputting information
-* `vaults`: Indexed object containing names and instances of Vaults
-* `vaultKeys`: Indexed object of key names and associated keys for each vault
 
-Constructs an instance of vault manager.
+Takes an object with the following properties:
+
+* `baseDir`: The base directory of the vaults
+* `keyManager`: A keyManager object
+* `fs?`: A filesystem object, defaults to `fs/promises`
+* `logger?`: Logger for outputting information, defaults to a `new Logger()`
+
+Constructs an instance of vault manager. The VaultManager needs to be started with `start()`
 
 ---
 #### `public async start(): void`
@@ -65,6 +68,11 @@ Starts the vault manager
 
 #### `public async stop(): void`
 Stops the vault manager
+
+---
+
+#### `public async started(): Promise<boolean>`
+Checks to see whether or nor the current VaultManager instance has been started. This will be of use when ensuring that the VaultManager is fully initialized before attempting any changes, such as refreshing root keys.
 
 ---
 
