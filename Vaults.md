@@ -229,7 +229,14 @@ Pulls the vault changes from a nodeId. No exceptions occur as the node ID has al
 * `content`: Content of the secret
 
 
-Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, an 'ErrorSecretExists' exception will be thrown. TODO: Ensure .git is not added, how?
+Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, an 'ErrorSecretExists' exception will be thrown. If the file is a `.git` file, then an 'ErrorGitFile' exception is thrown. If a secret is being added without the vault being initialised, then a 'ErrorVaultUninitialised' will be thrown.
+
+---
+
+#### `public async addSecretDirectory(secretDirectory: string): Promise<void>`
+* `secretDirectory`: Path to secret on disk
+
+Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, that directory/secret will be updated. If a secret is a `.git` file, then an 'ErrorGitFile' exception is thrown. If a secret is being added without the vault being initialised, then a 'ErrorVaultUninitialised' will be thrown.
 
 ---
 
