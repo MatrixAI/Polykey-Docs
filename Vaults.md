@@ -80,7 +80,9 @@ Checks to see whether or nor the current VaultManager instance has been started.
 * `vaultName`: Name of vault
 
 Adds a new vault. Returns the new vault if successful.
-Throws `ErrorVaultDefined` exception if the vault name already exists in this `VaultManager`.
+
+* Throws `ErrorVaultDefined` exception if the vault name already exists in this `VaultManager`.
+
 Also generates a new vault key and writes encrypted vault metadata to disk.
 
 ---
@@ -89,7 +91,11 @@ Also generates a new vault key and writes encrypted vault metadata to disk.
 * `currVaultName`: Current name of vault
 * `newVaultName`: New name of vault
 
-Renames an existing vault. Returns a boolean describing the success of the operation. Throws 'ErrorVaultUndefined' exception if name of current vault does not exist, and `ErrorVaultDefined` if the new vault name already exists.
+Renames an existing vault. Returns a boolean describing the success of the operation. 
+
+* Throws `ErrorVaultUndefined` exception if name of current vault does not exist
+* Throws `ErrorVaultDefined` if the new vault name already exists.
+
 Updates references to vault keys and writes new encrypted vault metadata to disk.
 
 ---
@@ -97,14 +103,18 @@ Updates references to vault keys and writes new encrypted vault metadata to disk
 #### `public deleteVault(vaultName: string): boolean`
 * `vaultName`: Name of vault to be deleted
 
-Delete an existing vault. Deletes file from filesystem and updates mappings to vaults and vaultKeys. If it fails to delete from the filesystem, it will not modify any mappings and return false. Throws `ErrorVaultUndefined` if vault name does not exist.
+Delete an existing vault. Deletes file from filesystem and updates mappings to vaults and vaultKeys. If it fails to delete from the filesystem, it will not modify any mappings and return false. 
+
+* Throws `ErrorVaultUndefined` if vault name does not exist.
 
 ---
 
 #### `public getVault(vaultName: string): Vault`
 * `vaultName`: Name of vault to get
 
-Retrieves a Vault instance from the vault manager's mapping of vaults. Throws a `ErrorVaultUndefined` exception if the name given does not exist.
+Retrieves a Vault instance from the vault manager's mapping of vaults. 
+
+* Throws `ErrorVaultUndefined` if the name given does not exist.
 
 ---
 
@@ -125,7 +135,12 @@ List all vaults for a node given a nodeId. Returns an string of vault names.
 * `vaultName`: Name of vault to pull
 * `nodeId`: ID of node to pull from
 
-Pull a vault from another node. Returns `true` if successful. If the vault exists then the vault is pulled, changing the contents of the vault in the EFS by calling the corresponding `pullVault` function for the vault. If it doesn't exist then the vault is cloned and the contents of the vault are written using the EFS. Throws an `ErrorVaultUndefined` if the vault does not exist on the nodeIds store and an `ErrorNodeUndefined` if the node is not discoverable (in the node domain).
+Pull a vault from another node. 
+
+Returns `true` if successful. If the vault exists then the vault is pulled, changing the contents of the vault in the EFS by calling the corresponding `pullVault` function for the vault. If it doesn't exist then the vault is cloned and the contents of the vault are written using the EFS. 
+
+* Throws `ErrorVaultUndefined` if the vault does not exist on the nodeIds store
+* Throws `ErrorNodeUndefined` if the node is not discoverable (in the node domain).
 
 ---
 
@@ -251,16 +266,24 @@ Pulls the vault changes from a nodeId. No exceptions occur as the node ID has al
 
 Adds a secret to the vault.
  
-Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, an 'ErrorSecretExists' exception will be thrown. 
+Returns `true` if success. 
 
-If the file is a `.git` file, then an 'ErrorGitFile' exception is thrown. If a secret is being added without the vault being initialised, then a 'ErrorVaultUninitialised' will be thrown.
+* Throws `ErrorSecretExists` if a secret of the same name already exists or a directory of the same name exists
+* Throws `ErrorGitFile` exception if the file is a `.git` file
+* Throws `ErrorVaultUnintialised` if secret is added without the vault being initialised
+
 
 ---
 
 #### `public async addSecretDirectory(secretDirectory: string): Promise<void>`
 * `secretDirectory`: Path to secret on disk
 
-Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, that directory/secret will be updated. If a secret is a `.git` file, then an 'ErrorGitFile' exception is thrown. If a secret is being added without the vault being initialised, then a 'ErrorVaultUninitialised' will be thrown.
+Adds a secret to the vault. 
+
+Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, that directory/secret will be updated. 
+
+* Throws `ErrorGitFile` if a secret is a `.git` file
+* Throws `ErrorVaultUninitialised` if a secret is being added without the vault being initialised
 
 ---
 
@@ -294,18 +317,14 @@ Changes the contents of a secret
 
 ---
 
-#### `public async renameVault(newSVaultName: string): Promise<boolean>`
-* `newVaultName`: New name of vault
-
-Changes the name of the vault: Returns `true` on success.
-
----
-
 #### `public async renameSecret(currSecretName: string, newSecretName: string): Promise<boolean>`
 * `currSecretName`: Current name of secret
 * `newSecretName`: New name of secret
 
 Changes the name of a secret in a vault: Returns `true` on success.
+
+* Throws `ErrorGitFile` is the currSecretName or newSecretName is '.git'
+* Throws `ErrorSecretDefined` if the new name of the secret already exists
 
 ---
 
@@ -319,13 +338,19 @@ Retrieves a list of the secrets in a vault: Returns secrets as a string.
 
 Returns the contents of a secret. Uses the EFS to synchronously read in the contents of the file that has the secret name.
 
+* Throws `ErrorSecretUndefined` if secret with specified name does not exist
+
 ---
 
 #### `public async deleteSecret(secretName: string, recursive: boolean): Promise<boolean>`
 * `secretName`: Name of secret to delete
 * `recursive`: Recursively delete secrets within
 
-Removes a secret from a vault: Returns `true` on success. Throws exceptions if the Secret does not exist in the vault of if the secret is a directory and recursive is not true
+Removes a secret from a vault: Returns `true` on success.
+
+* Throws `ErrorGitFile` if secretName is '.git'
+* Throws `ErrorRecursiveDelete` if the specified secret is a directory but the deletion is not recursive
+* Throws `ErrorSecretUdefined` if the secret does not exist
 
 ---
 
