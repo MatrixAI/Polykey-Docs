@@ -162,7 +162,18 @@ This method is called at the during the `start()` method and will attempt to pop
 
 ## `Vault`
 
-This class represents the Vaults inside polykey, including functionality to manage its secrets, and git functionalities.
+This class represents the Vaults inside polykey, including functionality to manage its secrets, and git functionalities. Vaults are generally handled through the VaultManager. 
+```ts
+const vaultManager = new VaultManager(...);
+await vaultManager.addVault('MyVault');
+const vault = vaultManager.getVault('MyVault');
+// Create the vault, and initialize the vault's git repository for use
+await vault.create();
+await vault.initializeVault();
+
+// Add a secret
+await vault.addSecret("MySecret", "my-banking-details");
+```
 
 ---
 
@@ -223,6 +234,7 @@ Initializes the repository for the vault
 
 #### `public async vaultStats(): Promise<fs.Stats>`
 Retrieves stats for a vault. Returns an fs.Stats object which is serializable.
+
 ---
 
 #### `public pullVault(nodeId: string): void`
@@ -237,7 +249,11 @@ Pulls the vault changes from a nodeId. No exceptions occur as the node ID has al
 * `content`: Content of the secret
 
 
-Adds a secret to the vault. Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, an 'ErrorSecretExists' exception will be thrown. If the file is a `.git` file, then an 'ErrorGitFile' exception is thrown. If a secret is being added without the vault being initialised, then a 'ErrorVaultUninitialised' will be thrown.
+Adds a secret to the vault.
+ 
+Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, an 'ErrorSecretExists' exception will be thrown. 
+
+If the file is a `.git` file, then an 'ErrorGitFile' exception is thrown. If a secret is being added without the vault being initialised, then a 'ErrorVaultUninitialised' will be thrown.
 
 ---
 
