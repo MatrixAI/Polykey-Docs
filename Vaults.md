@@ -1,5 +1,8 @@
 Vaults are Polykey's method of securely storing secrets and information. Multiple vaults can be created which contain multiple secrets. These vaults are able to be securely transferred between nodes.
 
+## Vaults
+Each vault has a unique id, which is generated when it gets created. It is generated using Base58, and stored in the encryptedfs under its id. Within Polykey, the ID gets mapped to the vault, the current vaultName as well as the vaultKey, and in leveldb, the name and key gets stored under the ID.
+
 ## Secrets
 
 Vaults maintain their own encrypted file system (EFS) along with a virtual file system (VFS) to store secrets within their respective vault directories contained within the [`polykey` directory](./Home.md#polykey-directory). The EFS (https://gitlab.com/MatrixAI/Engineering/Polykey/js-encryptedfs) uses AES-256-GCM to encrypt data. In polykey, the respective vault keys are passed into the EFS for encryption and decryption. The cryptographic operations are performed in the VFS to maintain security.
