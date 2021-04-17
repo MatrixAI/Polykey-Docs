@@ -2,7 +2,7 @@
 
 In Polykey, vaults and secret sharing is managed through git. Polykey uses the `isomorphic-git` library. Within the git implementation there are three domains.
 
-## Sepcification
+## Specification
 
 ---
 
