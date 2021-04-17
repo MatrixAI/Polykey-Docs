@@ -12,7 +12,7 @@ A host system can run multiple nodes. Each node manages one or more vaults which
 are encrypted filesystems with automatic version history. You can share these
 vaults with other users of PolyKey who are running their own keynodes.
 
-## Bootstrapping
+## Keynodes
 
 A live keynode is a live process known as a PolyKey Agent process. A dead
 keynode consists of only the keynode state stored at the node path.
