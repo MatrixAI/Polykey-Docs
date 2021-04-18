@@ -16,14 +16,21 @@
 
 # Background Information
 [Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure)
+
 [Key Management](https://github.com/MatrixAI/js-polykey/wiki/key-management)
+
 [Key Nodes](https://github.com/MatrixAI/js-polykey/wiki/key-nodes)
+
 [Network Discovery](https://github.com/MatrixAI/js-polykey/wiki/network-discovery)
+
 [Nat Traversal](https://github.com/MatrixAI/js-polykey/wiki/nat-traversal)
+
 [Privileged Communications](https://github.com/MatrixAI/js-polykey/wiki/privileged)
+
 [Vault Histories with Git](https://github.com/MatrixAI/js-polykey/wiki/vault-histories)
 
 
 # Development Guide
 [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
+
 [Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
