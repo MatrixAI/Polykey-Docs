@@ -15,3 +15,7 @@ A virtual file system is also passed to the encrypted files system, in order to 
 ### Root Keypair Rotation
 
 In some cases, the root keypair will need to be replaced with a new keypair or ‘rotated’. There is no need to generate new vault keys or other instances of encrypted data. Instead, the new root keypair can be generated. Then, the required metadata and vault keys are decrypted using the old root keypair and re-encrypted using the new root keypair.  Therefore, PolyKey has now transferred to usage of the new root keypair without the entire removal of all data encrypted by the old root keypair.
+
+### Metadata
+
+In order to keep track of important information after PolyKey has been closed, this data is written on disk. The data that is stored includes the keynode’s gestalt graph, provider tokens, keys and node information.  Some of this information, for example the vault keys of a keynode, needs to be encrypted before being stored in order to maintain security. To do this a bip39 mnemonic is encrypted using the root private key and stored on disk. The Encrypted File System mentioned previously then uses this mnemonic to encrypt the relevant data and store it on disk. This data is loaded and decrypted when required to access certain areas of PolyKey.
