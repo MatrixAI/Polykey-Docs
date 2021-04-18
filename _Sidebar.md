@@ -4,7 +4,7 @@
 # How-To Guides
 
 # Reference
-[Client Configuration](https://github.com/MatrixAI/js-polykey/wiki/client-config)
+[Client API](https://github.com/MatrixAI/js-polykey/wiki/client-api)
 
 [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
 
