@@ -1,5 +1,3 @@
-TBD Node Discovery
-
 Node Discovery is about:
 
 ```
