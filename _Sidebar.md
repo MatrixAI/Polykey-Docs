@@ -8,6 +8,8 @@
 
 [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
 
+[Node API](https://github.com/MatrixAI/js-polykey/wiki/node-api)
+
 [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api)
 
 [Git API](https://github.com/MatrixAI/js-polykey/wiki/git-api)
