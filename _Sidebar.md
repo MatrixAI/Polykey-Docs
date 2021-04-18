@@ -23,6 +23,8 @@
 
 [Network Discovery](https://github.com/MatrixAI/js-polykey/wiki/network-discovery)
 
+[Node Identification](https://github.com/MatrixAI/js-polykey/wiki/node-identification)
+
 [Nat Traversal](https://github.com/MatrixAI/js-polykey/wiki/nat-traversal)
 
 [Concurrency Model](https://github.com/MatrixAI/js-polykey/wiki/concurrency)
