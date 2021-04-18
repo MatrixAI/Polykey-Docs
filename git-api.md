@@ -1,9 +1,9 @@
 # Git
 
 In Polykey, vaults and secret sharing is managed through git. Polykey uses the `isomorphic-git` library. Within the git implementation there are three domains.
-* [[GitBackend]](https://github.com/MatrixAI/js-polykey/wiki/git-api#GitBackend)
-* [[GitRequest]](https://github.com/MatrixAI/js-polykey/wiki/git-api#GitRequest)
-* [[GitFrontend]](https://github.com/MatrixAI/js-polykey/wiki/git-api#GitFrontend)
+* [GitBackend](https://github.com/MatrixAI/js-polykey/wiki/git-api#GitBackend)
+* [GitRequest](https://github.com/MatrixAI/js-polykey/wiki/git-api#GitRequest)
+* [GitFrontend](https://github.com/MatrixAI/js-polykey/wiki/git-api#GitFrontend)
 
 ---
 
