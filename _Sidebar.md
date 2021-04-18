@@ -1,21 +1,21 @@
 # Tutorials
-## Getting Started with PolyKey
+1. Getting Started with PolyKey
 
 # How-To Guides
 
 # Reference
-## Client Configuration
-## Keys API
-## Vault API
-## Git API
-## Workers API
+1. Client Configuration
+2. Keys API
+3. Vault API
+4. Git API
+5. Workers API
 
 # Background Information
-## Infrastructure Overview
-## Key Management
-## Key Nodes
-## Network Discovery
-## Nat Traversal
+1. Infrastructure Overview
+2. Key Management
+3. Key Nodes
+4. Network Discovery
+5. Nat Traversal
 ## Privileged Communications
 ## Vault Histories with Git
 
