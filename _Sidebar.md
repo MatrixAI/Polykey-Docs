@@ -37,6 +37,7 @@
 
 [Vault Histories with Git](https://github.com/MatrixAI/js-polykey/wiki/vault-histories)
 
+[Identification with Third Party Services](https://github.com/MatrixAI/js-polykey/wiki/identification-with-third-party-services)
 
 # Development Guide
 [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
