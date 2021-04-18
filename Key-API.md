@@ -1,7 +1,5 @@
 
 # Encodings
-
-# Encodings
 ## ED25519 (ssh-keygen)
 ```
 Encoding: Base64
