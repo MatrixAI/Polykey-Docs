@@ -3,7 +3,7 @@ Welcome to our js-polykey repo!
 Visit our [Getting Started](https://github.com/MatrixAI/js-polykey/wiki/getting-started) Guide to deploy your very own PolyKey agent.
 
 # About
-PolyKey is decentralised distributed peer to peer (P2P) secret sharing & secret
+PolyKey is a decentralised distributed peer to peer (P2P) secret sharing & secret
 management system. It is intended to be used by both humans and machines.
 It synthesise a unified workflow between interactive password management and
 infrastructure key management.
