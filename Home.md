@@ -1,1 +1,1 @@
-Welcome
+Welcome to js-PolyKey Wiki!
