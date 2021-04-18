@@ -21,7 +21,9 @@
 
 [Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
 
-[Key Management](https://github.com/MatrixAI/js-polykey/wiki/key-management)
+[Secrets Management](https://github.com/MatrixAI/js-polykey/wiki/secrets-management)
+
+[Cryptographic Operations](https://github.com/MatrixAI/js-polykey/wiki/cryptographic-operations)
 
 [Key Nodes](https://github.com/MatrixAI/js-polykey/wiki/key-nodes)
 
