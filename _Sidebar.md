@@ -23,7 +23,7 @@
 
 [Secrets Management](https://github.com/MatrixAI/js-polykey/wiki/secrets-management)
 
-[Cryptographic Operations](https://github.com/MatrixAI/js-polykey/wiki/cryptographic-operations)
+[Cryptography](https://github.com/MatrixAI/js-polykey/wiki/cryptography)
 
 [Key Nodes](https://github.com/MatrixAI/js-polykey/wiki/key-nodes)
 
