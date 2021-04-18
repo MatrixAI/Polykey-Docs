@@ -31,9 +31,9 @@
 
 [Nat Traversal](https://github.com/MatrixAI/js-polykey/wiki/nat-traversal)
 
-[Concurrency Model](https://github.com/MatrixAI/js-polykey/wiki/concurrency)
+[Concurrency Model](https://github.com/MatrixAI/js-polykey/wiki/concurrency-model)
 
-[Privilege Model](https://github.com/MatrixAI/js-polykey/wiki/privileged)
+[Privilege Model](https://github.com/MatrixAI/js-polykey/wiki/privilege-model)
 
 [Vault Histories with Git](https://github.com/MatrixAI/js-polykey/wiki/vault-histories)
 
