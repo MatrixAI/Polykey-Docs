@@ -7,16 +7,6 @@ A host system can run multiple nodes. Each node manages one or more vaults which
 are encrypted filesystems with automatic version history. You can share these
 vaults with other users of PolyKey who are running their own keynodes.
 
-
-
-## Vaults
-
-
-
-### Metadata
-
-In order to keep track of important information after PolyKey has been closed, this data is written on disk. The data that is stored includes the keynode’s gestalt graph, provider tokens, keys and node information.  Some of this information, for example the vault keys of a keynode, needs to be encrypted before being stored in order to maintain security. To do this a bip39 mnemonic is encrypted using the root private key and stored on disk. The Encrypted File System mentioned previously then uses this mnemonic to encrypt the relevant data and store it on disk. This data is loaded and decrypted when required to access certain areas of PolyKey.
-
 ### Node ID
 
 In order to interact with other nodes, PolyKey uses a unique node ID identifier. Currently, the fingerprint of the root public key of a keynode is calculated using a sha256 has function and is then transformed into base64 encoding to obtain a keynode’s Node ID. This will consistently produce a string of 44 characters. In the future, PolyKey will used an ed25519 public key directly encoded using base64 to create the Node ID. As the signature of ed25519 keys can be up to 256 bits, the length of the node ID would be a maximum of 44 characters.
