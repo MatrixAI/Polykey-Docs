@@ -1,4 +1,3 @@
-# Errors
 This entry refers to the errors that js-polykey may encounter, whether they be internal or external.
 
 There are 2 kinds of errors:
