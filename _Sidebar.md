@@ -34,3 +34,5 @@
 [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
 
 [Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
+
+[Async Functions](https://github.com/MatrixAI/js-polykey/wiki/async-functions)
