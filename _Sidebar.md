@@ -25,7 +25,7 @@
 
 [Key Nodes](https://github.com/MatrixAI/js-polykey/wiki/key-nodes)
 
-[Network Discovery](https://github.com/MatrixAI/js-polykey/wiki/network-discovery)
+[Network](https://github.com/MatrixAI/js-polykey/wiki/network)
 
 [Node Identification](https://github.com/MatrixAI/js-polykey/wiki/node-identification)
 
