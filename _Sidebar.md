@@ -19,9 +19,9 @@
 # Background Information
 [Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview)
 
-[Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
+[Bootstrapping](https://github.com/MatrixAI/js-polykey/wiki/bootstrapping)
 
-[Key Node Initialization](https://github.com/MatrixAI/js-polykey/wiki/key-node-initialization)
+[Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
 
 [Secrets Management](https://github.com/MatrixAI/js-polykey/wiki/secrets-management)
 
