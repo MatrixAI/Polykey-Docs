@@ -15,7 +15,7 @@
 [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
 
 # Background Information
-[Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure)
+[Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview)
 
 [Key Management](https://github.com/MatrixAI/js-polykey/wiki/key-management)
 
