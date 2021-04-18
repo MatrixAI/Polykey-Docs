@@ -19,7 +19,7 @@
 # Background Information
 [Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview)
 
-[Actor Model](https://github.com/MatrixAI/js-polykey/wiki/actor-model)
+[Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
 
 [Key Management](https://github.com/MatrixAI/js-polykey/wiki/key-management)
 
