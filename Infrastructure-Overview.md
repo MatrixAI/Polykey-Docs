@@ -1,12 +1,3 @@
-This project PolyKey (library) is the core library for running PolyKey. It
-provides a CLI `polykey` or `pk` for interacting with the PolyKey system. The
-main desktop GUI is located at https://github.com/MatrixAI/PolyKey.
-
-PolyKey involves running distributed keynodes, which we will refer to as "nodes".
-A host system can run multiple nodes. Each node manages one or more vaults which
-are encrypted filesystems with automatic version history. You can share these
-vaults with other users of PolyKey who are running their own keynodes.
-
 ### Node ID
 
 In order to interact with other nodes, PolyKey uses a unique node ID identifier. Currently, the fingerprint of the root public key of a keynode is calculated using a sha256 has function and is then transformed into base64 encoding to obtain a keynode’s Node ID. This will consistently produce a string of 44 characters. In the future, PolyKey will used an ed25519 public key directly encoded using base64 to create the Node ID. As the signature of ed25519 keys can be up to 256 bits, the length of the node ID would be a maximum of 44 characters.
