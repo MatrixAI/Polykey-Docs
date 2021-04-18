@@ -1,6 +1,5 @@
 # Tutorials
 * Getting Started with PolyKey
-* 
 
 # How-To Guides
 
