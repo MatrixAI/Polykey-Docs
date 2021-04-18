@@ -21,11 +21,11 @@
 
 [Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
 
+[Key Node Initialization](https://github.com/MatrixAI/js-polykey/wiki/key-node-initialization)
+
 [Secrets Management](https://github.com/MatrixAI/js-polykey/wiki/secrets-management)
 
 [Cryptography](https://github.com/MatrixAI/js-polykey/wiki/cryptography)
-
-[Key Nodes](https://github.com/MatrixAI/js-polykey/wiki/key-nodes)
 
 [Network](https://github.com/MatrixAI/js-polykey/wiki/network)
 
