@@ -1,9 +1,11 @@
 # Tutorials
+
 [Getting Started With PolyKey](https://github.com/MatrixAI/js-polykey/wiki/getting-started)
 
 # How-To Guides
 
 # Reference
+
 [Client API](https://github.com/MatrixAI/js-polykey/wiki/client-api)
 
 [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
@@ -16,7 +18,8 @@
 
 [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
 
-# Background Information
+# Discussion 
+
 [Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview)
 
 [Bootstrapping](https://github.com/MatrixAI/js-polykey/wiki/bootstrapping)
@@ -40,6 +43,7 @@
 [Identification with Third Party Services](https://github.com/MatrixAI/js-polykey/wiki/identification-with-third-party-services)
 
 # Development Guide
+
 [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
 
 [Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
