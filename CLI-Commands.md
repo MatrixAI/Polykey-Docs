@@ -54,7 +54,6 @@
 * augment: Augment the keynode on a given provider and identity
 * authenticate: Authenticate a social identity provider (Github only at the moment)
 * list: Lists registered providers
-* register: Registers/unregister a provider
 * provider: Gets a provider
 * get: Gets a token
 * put: Stores a token
