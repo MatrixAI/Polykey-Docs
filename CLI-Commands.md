@@ -53,6 +53,12 @@
 ### Identities
 * augment: Augment the keynode on a given provider and identity
 * authenticate: Authenticate a social identity provider (Github only at the moment)
+* list: Lists registered providers
+* register: Registers a provider
+* get: Gets a provider
+* getToken: Gets a token
+* putToken: Stores a token
+* deleteToken: Deletes a token
 
 ### Gestalt
 * get: Gets a gestalt with the associated node or identity
