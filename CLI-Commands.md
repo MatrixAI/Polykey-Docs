@@ -55,10 +55,11 @@
 * authenticate: Authenticate a social identity provider (Github only at the moment)
 * list: Lists registered providers
 * register: Registers a provider
-* get: Gets a provider
-* getToken: Gets a token
-* putToken: Stores a token
-* deleteToken: Deletes a token
+* unregister: Unregisters a provider
+* provider: Gets a provider
+* get: Gets a token
+* put: Stores a token
+* delete: Deletes a token
 
 ### Gestalt
 * get: Gets a gestalt with the associated node or identity
