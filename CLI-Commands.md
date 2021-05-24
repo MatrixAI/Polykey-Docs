@@ -2,9 +2,6 @@
 ### Agent
 |  Command  |             Description              |
 |-----------|--------------------------------------|
-| start     | Starts the polykey agent             |
-| status    | Gets the status of the polykey agent |
-| stop      | Stops the polykey agent              |
 | bootstrap | Initializes a keynode                |
 
 
