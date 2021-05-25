@@ -6,6 +6,8 @@
 
 # Reference
 
+[CLI API](https://github.com/MatrixAI/js-polykey/wiki/CLI-API)
+
 [Client API](https://github.com/MatrixAI/js-polykey/wiki/client-api)
 
 [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
