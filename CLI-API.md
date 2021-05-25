@@ -8,6 +8,8 @@ The node path is optionally supplied to all commands and will indicate the polyk
 
 There are no 'lock' or 'unlock' commands. Polykey is unlocked through one of two methods. Each command will specify an optional password parameter. Entering a password directly into the CLI is insecure as the CLI history can reveal the password. Therefore a file containing the password must be supplied to the command. This will create a session with a timeout of 5 minutes. If no commands are entered within the 5 minute timer, then the session is destroyed and the password must be entered again. The other method for creating a session will occur when no session exists and a CLI command is executed. A prompt will appear for the password to be entered, which will create a session if entered successfully. A session with a Polykey Agent is a singleton, so only one session can be used with an Agent at anytime.
 
+![](http://www.plantuml.com/plantuml/png/RL7HIWGn37pFL-mFt2_8wOk888BWUzp6tNhTjYJf7OluxwQxBgNWGvjcc1aopLaKMSiI87ryqQZ3QmhhCwr7-v2IYZBc0xYVAEhm3PlExfJhKul0pq5vnn9KZ3CoeH8u2cGbU55WYhZG9X789GIG4MFJlf69_X6JymeJwUwoN9ndi7FuKRn2oSu4pSfIL1-s133Ew2DazWloMaLqirj88QF8BR43HoElMSrgh-Ad25TY_xaEpVGbEQgkwDmnMfrAb33et7XFZg9wzJkvw5pR4PMicHPh6lMHH77xi1PGkKXznelnu6ydm-bqrnRIeTjMEcHVGWVjVzjZLdkW1koG5gM7Zx7XJD6L9Vm2)
+
 ### Bootstrap
 
 The bootstrap subcommand solely deals with the construction of the state of polykey.
@@ -88,8 +90,6 @@ For signature and verification using the root keypair, the data and signature wi
 
 The node subcommand allows manipulation of Polykey's peer-to-peer system.
 
-Node connections will require services for agent to agent communication but there arent any direct cli commands which require it.
-
 |  Command  |              Description                        | Level |    Interaction   | Parameters |
 |-----------|-------------------------------------------------|-------|------------------|------------|
 |    add    |  Adds a node to the node graph                  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
@@ -100,13 +100,16 @@ Node connections will require services for agent to agent communication but ther
 
 ### Identities
 
+The identities subcommand allows control over the node's digital identity.
+
 |   Command    |                     Description                        | Level |    Interaction   | Parameters |
 |--------------|--------------------------------------------------------|-------|------------------|------------|
 |   augment    |  Augment the keynode on a given provider and identity  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
 | authenticate |  Authenticate a social identity provider (Github only) |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|    list      |  Lists registered providers                            |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
 
 ### Gestalt
+
+
 
 |  Command  |                     Description                       | Level |    Interaction   | Parameters |
 |-----------|-------------------------------------------------------|-------|------------------|------------|
