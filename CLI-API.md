@@ -28,7 +28,7 @@ The agent subcommand allows control over the Polykey agent process.
 |-----------|--------------------------------------|-------|--------------------|---------------------|
 |   start   |      Starts the Polykey Agent        |   1   |    Client-Agent    | Node Path (opt), Password file (opt) |
 |   stop    |      Stops the Polykey Agent         |   1   |    Client-Agent    | Node Path (opt), Password file (opt) |
-|  status   | Gets the status of the Polykey Agent |   1   |    Client-Agent    | Node Path (opt), Password file (opt) |
+|  status   | Gets the status of the Polykey Agent |   1   |                    | Node Path (opt), Password file (opt) |
 
 ### Vaults
 
