@@ -8,7 +8,7 @@ The node path is optionally supplied to all commands and will indicate the polyk
 
 There are no 'lock' or 'unlock' commands. Polykey is unlocked through one of two methods. Each command will specify an optional password parameter. Entering a password directly into the CLI is insecure as the CLI history can reveal the password. Therefore a file containing the password must be supplied to the command. This will create a session with a timeout of 5 minutes. If no commands are entered within the 5 minute timer, then the session is destroyed and the password must be entered again. The other method for creating a session will occur when no session exists and a CLI command is executed. A prompt will appear for the password to be entered, which will create a session if entered successfully. A session with a Polykey Agent is a singleton, so only one session can be used with an Agent at anytime.
 
-![](http://www.plantuml.com/plantuml/png/RL7HIWGn37pFL-mFt2_8wOk888BWUzp6tNhTjYJf7OluxwQxBgNWGvjcc1aopLaKMSiI87ryqQZ3QmhhCwr7-v2IYZBc0xYVAEhm3PlExfJhKul0pq5vnn9KZ3CoeH8u2cGbU55WYhZG9X789GIG4MFJlf69_X6JymeJwUwoN9ndi7FuKRn2oSu4pSfIL1-s133Ew2DazWloMaLqirj88QF8BR43HoElMSrgh-Ad25TY_xaEpVGbEQgkwDmnMfrAb33et7XFZg9wzJkvw5pR4PMicHPh6lMHH77xi1PGkKXznelnu6ydm-bqrnRIeTjMEcHVGWVjVzjZLdkW1koG5gM7Zx7XJD6L9Vm2)
+![](http://www.plantuml.com/plantuml/uml/RP7HIiKm38RlynHxWVCASlHE1144xsCRjtgwjYJfEGpntKqtnonuiQRvbtpqJywYo5hd2FdzavmEBpakJxJiwKFEAifOTk5-fAJ35wnzTkRIhbe5llUIDwnHnMeS4og1fqWMOX05feGphIq2fSO8uZ21JCXq45x9Mlz1a0yA8-d6cYy-CDYtKobTeHQF-WTbNXg7pGUu2KE2mc56NbeJtUmKunKKkMNsuCdnKjHGMvGm9hWIXuzbEA3FsLEZelVxqqRIu_-ZfwH1mrPKTMgfGoLBnjcImuHobNPD5n12TfDHu7S9m-bqTsoWKzSrTCeszKxQnjXh5dkXUUcLu_LmfkJh77y0)
 
 ### Bootstrap
 
@@ -16,33 +16,35 @@ The bootstrap subcommand solely deals with the construction of the state of poly
 
 The supplied or assumed node path must exist and be empty for a successful execution, otherwise the command will exit with code [EX_USAGE (64)].
 
-| Command   |            Description                    | Level |  Interaction |   Parameters    |
-|-----------|-------------------------------------------|-------|--------------|-----------------|
-| bootstrap | Initializes a Polykey node at a node path |   1   |              | Node Path (opt) |
+| Command   |            Description                    | Level |  Interaction |
+|-----------|-------------------------------------------|-------|--------------|
+| bootstrap | Initializes a PolyKey node at a node path |   1   |     Local    |
 
 ### Agent
 
 The agent subcommand allows control over the Polykey agent process.
 
-|  Command  |             Description              | Level | Interaction        |      Parameters     |
-|-----------|--------------------------------------|-------|--------------------|---------------------|
-|   start   |      Starts the Polykey Agent        |   1   |    Client-Agent    | Node Path (opt), Password file (opt) |
-|   stop    |      Stops the Polykey Agent         |   1   |    Client-Agent    | Node Path (opt), Password file (opt) |
-|  status   | Gets the status of the Polykey Agent |   1   |                    | Node Path (opt), Password file (opt) |
+|  Command  |             Description              | Level | Interaction        |
+|-----------|--------------------------------------|-------|--------------------|
+|   start   |      Starts the PolyKey Agent        |   1   |       Local        |
+|   stop    |      Stops the PolyKey Agent         |   1   |       Local        |
+|  status   | Gets the status of the PolyKey Agent |   1   |       Local        |
 
 ### Vaults
 
 The vaults subcommand will deal with CRUD (Create, read, update and delete) operations on Polykey vaults.
 
-|  Command  |             Description              | Level |    Interaction   | Parameters |
-|-----------|--------------------------------------|-------|------------------|------------|
-| create    | Creates a new vault                  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| delete    | Deletes an existing vault            |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| list      | Lists all existing vaults            |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| rename    | Renames an existing vault            |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| stats     | Gets the stats of an existing vault  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| pull      | Pulls a vault from another node      |   1   |    Agent-Agent   | Node Path (opt), Password file (opt) |
-| scan      | Lists the vaults of another node     |   1   |    Agent-Agent   | Node Path (opt), Password file (opt) |
+|  Command  |             Description              | Level |    Interaction   |
+|-----------|--------------------------------------|-------|------------------|
+| create    | Creates a new vault                  |   1   |       Local      |
+| delete    | Deletes an existing vault            |   1   |       Local      |
+| list      | Lists all existing vaults            |   1   |       Local      |
+| rename    | Renames an existing vault            |   1   |       Local      |
+| stats     | Gets the stats of an existing vault  |   1   |       Local      |
+| share     | Shares vaults with a gestalt         |   1   |       Local      |
+| pull      | Pulls a vault from another node      |   1   |    Agent-Agent   |
+| scan      | Lists the vaults of another node     |   1   |    Agent-Agent   |
+
 
 ### Secrets
 
@@ -50,18 +52,19 @@ The secrets subcommand will deal with CRUD (Create, read, update and delete) ope
 
 As secrets subcommands are performed within a single vault, paths are specified using the following notation `<vaultName>:<secretPath>`. As each vault maintains separate filesystems, secrets cannot be transferred across vaults.
 
-|  Command  |              Description               | Level |    Interaction   | Parameters |
-|-----------|----------------------------------------|-------|------------------|------------|
-| create    | Creates a new secret                             |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| delete    | Deletes an existing secret                       |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| edit      | Edits an existing secret                         |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| get       | Gets the contents of an existing secret          |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| list      | Lists the secrets within an existing vault       |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| mkdir     | Makes a directory inside an existing vault       |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| dir       | Adds a directory of secrets to an existing vault |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| rename    | Renames an existing secret                       |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| env       | Injects existing secrets into an environment     |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| update    | Updates an existing secret with new content      |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
+|  Command  |                      Description                 | Level |    Interaction   |
+|-----------|--------------------------------------------------|-------|------------------|
+| create    | Creates a new secret                             |   1   |       Local      |
+| delete    | Deletes an existing secret                       |   1   |       Local      |
+| edit      | Edits an existing secret                         |   1   |       Local      |
+| get       | Gets the contents of an existing secret          |   1   |       Local      |
+| list      | Lists the secrets within an existing vault       |   1   |       Local      |
+| mkdir     | Makes a directory inside an existing vault       |   1   |       Local      |
+| dir       | Adds a directory of secrets to an existing vault |   1   |       Local      |
+| rename    | Renames an existing secret                       |   1   |       Local      |
+| update    | Updates an existing secret with new content      |   1   |       Local      |
+| env       | Injects existing secrets into an environment     |   2   |       Local      |
+
 
 ### Keys
 
@@ -73,47 +76,39 @@ Encryption using the root keypair has a size limit depending on the size of the 
 
 For signature and verification using the root keypair, the data and signature will be input and output separately. In the future, this will be done using a specific file format which allows the signature and data to be compiled into one file.
 
-|  Command  |              Description                     | Level |    Interaction   | Parameters |
-|-----------|----------------------------------------------|-------|------------------|------------|
-|   root    |  Gets the root certificate                   |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|   chain   |  Get the certificate chain                   |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|  primary  |  Get the root keypair                        |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|   renew   |  Renews the root keypair                     |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|   reset   |  Resets the root keypair                     |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| password  |  Change the password of the root keypair     |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|  decrypt  |  Decrypts data using the root keypair        |   2   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|  encrypt  |  Encrypts data using the root keypair        |   2   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|   sign    |  Signs data using the root keypair           |   3   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|  verify   |  Verifies a signature using the root keypair |   3   |    Client-Agent  | Node Path (opt), Password file (opt) |
+|   Command   |              Description                     | Level |    Interaction   |
+|-------------|----------------------------------------------|-------|------------------|
+|    cert     |  Gets the root certificate                   |   1   |       Local      |
+|  certchain  |  Get the certificate chain                   |   1   |       Local      |
+|    root     |  Get the root keypair                        |   1   |       Local      |
+|    renew    |  Renews the root keypair                     |   1   |       Local      |
+|  password   |  Change the password of the root keypair     |   1   |       Local      |
+|    reset    |  Resets the root keypair                     |   2   |       Local      |
+|   decrypt   |  Decrypts data using the root keypair        |   2   |       Local      |
+|   encrypt   |  Encrypts data using the root keypair        |   2   |       Local      |
+|    sign     |  Signs data using the root keypair           |   3   |       Local      |
+|   verify    |  Verifies a signature using the root keypair |   3   |       Local      |
 
 ### Nodes
 
 The node subcommand allows manipulation of Polykey's peer-to-peer system.
 
-|  Command  |              Description                        | Level |    Interaction   | Parameters |
-|-----------|-------------------------------------------------|-------|------------------|------------|
-|    add    |  Adds a node to the node graph                  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|  delete   |  Deletes a node from the node graph             |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|    get    |  Gets the node info for a particular node       |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|  stealth  |  Opens or closes the node to connections        |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-
+|  Command  |              Description                        | Level |    Interaction   |
+|-----------|-------------------------------------------------|-------|------------------|
+|    add    |  Adds a node to the node graph                  |   1   |       Local      |
+|  delete   |  Deletes a node from the node graph             |   1   |       Local      |
+|    get    |  Gets the node info for a particular node       |   1   |       Local      |
 
 ### Identities
 
-The identities subcommand allows control over the node's digital identity.
+The identities subcommand allows control over the node's identity and its links with other social identities.
 
-|   Command    |                     Description                        | Level |    Interaction   | Parameters |
-|--------------|--------------------------------------------------------|-------|------------------|------------|
-|   augment    |  Augment the keynode on a given provider and identity  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-| authenticate |  Authenticate a social identity provider (Github only) |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-
-### Gestalts
-
-The gestalts subcommand allows management of trust between other identities.
-
-|  Command  |                     Description                       | Level |    Interaction   | Parameters |
-|-----------|-------------------------------------------------------|-------|------------------|------------|
-|   get     |  Gets a gestalt with the associated node or identity  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|   list    |  Lists the available gestalts                         |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|   trust     |  trusr or untrust a gestalt                         |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|   link    |  Link or unlink a node to node or identity            |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
+|   Command    |                     Description                        | Level |    Interaction   |
+|--------------|--------------------------------------------------------|-------|------------------|
+|   augment    |  Augment the keynode on a given provider and identity  |   1   |       Local      |
+| authenticate |  Authenticate a social identity provider (Github only) |   1   |       Local      |
+|     get      |  Gets the gestalt of a node or identity                |   1   |       Local      |
+|    list      |  Lists the available gestalts                          |   1   |       Local      |
+|    trust     |  trust or untrust a gestalt                            |   1   |       Local      |
+|   search     |  Searches the provider for a connected identity        |   1   |       Local      |
+|    link      |  Link or unlink known identities                       |   2   |       Local      |
