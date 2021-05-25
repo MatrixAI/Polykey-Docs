@@ -16,7 +16,7 @@ The supplied or assumed node path must exist and be empty for a successful execu
 
 | Command   |            Description                    | Level |  Interaction |   Parameters    |
 |-----------|-------------------------------------------|-------|--------------|-----------------|
-| bootstrap | Initializes a Polykey node at a node path |   1   | Client-Agent | Node Path (opt) |
+| bootstrap | Initializes a Polykey node at a node path |   1   |              | Node Path (opt) |
 
 ### Agent
 
@@ -96,6 +96,7 @@ Node connections will require services for agent to agent communication but ther
 |  delete   |  Deletes a node from the node graph             |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
 |    get    |  Gets the node info for a particular node       |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
 |  stealth  |  Opens or closes the node to connections        |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
+
 
 ### Identities
 
