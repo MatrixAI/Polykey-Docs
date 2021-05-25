@@ -107,13 +107,13 @@ The identities subcommand allows control over the node's digital identity.
 |   augment    |  Augment the keynode on a given provider and identity  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
 | authenticate |  Authenticate a social identity provider (Github only) |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
 
-### Gestalt
+### Gestalts
 
-
+The gestalts subcommand allows management of trust between other identities.
 
 |  Command  |                     Description                       | Level |    Interaction   | Parameters |
 |-----------|-------------------------------------------------------|-------|------------------|------------|
 |   get     |  Gets a gestalt with the associated node or identity  |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
 |   list    |  Lists the available gestalts                         |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
-|   set     |  Set or unset a node or identitiy                     |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
+|   trust     |  trusr or untrust a gestalt                         |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
 |   link    |  Link or unlink a node to node or identity            |   1   |    Client-Agent  | Node Path (opt), Password file (opt) |
