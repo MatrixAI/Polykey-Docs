@@ -1,33 +1,50 @@
-# Keynode Architecture
+# Description & Goals
+
+The network module establishes and maintains the network communication between a GRPC client and a GRPC server in two different keynodes. Currently, it supports direct and natted p2p connection, relay connection is yet to be developed. Additionally, the communication established using the network module is secure, through the application level TLS protocol. 
+
+Under the hood, the network module is maintaining a forward proxy for forwarding data out of the keynode, and a reverse proxy for receiving data into the keynode. All the data going out and into the keynode are secured using TLS. Some keynodes are reachable using their IP addresses directly, while many live behind some NAT devices preventing direct connections to be established. For those connections that are natted, the network module uses a nat traversal technique called hole-punch to establish a direct p2p connection. It is worth noting that all types of connection other than Symmetric NAT are supported, and the Symmetric NAT connection can be supported through relay that are yet to be implemented. 
+
+
+# Network Architecture
 
 Each keynode contains two networking components:
 
 1. Forward Proxy
 2. Reverse Proxy
 
-The purpose of a forward proxy is forwarding data from GRPC Client to a remote GRPC server. Whereas the purpose of a reverse proxy is forwarding data from a remote GRPC Client to a local GRPC server. The architecture is shown below.
+The purpose of a forward proxy is forwarding data from GRPC Client to a remote GRPC server, whereas the purpose of a reverse proxy is forwarding data from a remote GRPC Client to a local GRPC server. The architecture is shown below.
 
-![NetworkArchitecture1](https://user-images.githubusercontent.com/38675169/116488112-eeed6300-a8d4-11eb-8a6f-73c0d724f9c0.png)
-
-In this architecture, the GRPC server, forward proxy, and reverse proxy instance persists over multiple RPC calls, whereas a new GRPC client instance is created for each RPC call. The implication of this is you can reuse the GRPC Server, Forward Proxy (and its sockets), Reverse Proxy (and its sockets) as many times as you want. And all GRPC client need to know is there exists a forward proxy that it should send data to.
-
-The forward proxy always has an HTTP server and an uTP (Micro Transport Protocol) socket listening, a socket TCP socket may be opened for each outgoing GRPC client call. Similarly, the reverse proxy always has an uTP socket listening, and a new TCP socket may be opened for each incoming GRPC client call.
+![architecture0](https://user-images.githubusercontent.com/38675169/120810705-9de52480-c58e-11eb-8c0a-8d49486a74b5.jpg)
 
 
-# Communication Mechanism
+Within the architecture, the GRPC client, forward proxy, reverse proxy, and GRPC server instance persist over multiple GRPC calls, meaning you can reuse the communication channel. 
 
-Conceptually, when a GRPC client want to communicate with a remote GRPC server, the following process would happen:
+The GRPC client uses an HTTP Connect request to acquire a TCP socket for channelling GRPC data to forward proxy. Then, the forward proxy establishes an UTP socket with TLS encryption to the reverse proxy for channelling the GRPC data from the forward proxy to the reverse proxy. Lastly, another TCP socket is established between the reverse proxy and GRPC server for channelling GRPC data from the reverse proxy to the GRPC server. 
 
-![NetworkArchitecture3](https://user-images.githubusercontent.com/38675169/116488143-02003300-a8d5-11eb-9acb-992e3c8b512f.png)
+The GRPC client is aware of the existence of the forward proxy, whereas the GRPC server is not aware of any proxies. Therefore, once the connection is fully established, the GRPC client and server works just like they are directly connected with each other and no proxies forwarding data in between. Additionally, the TCP connection between the GRPC client and Forward proxy, and the GRPC server and the reverse proxy are not encrypted, only the UTP connection between the two proxies are encrypted.
 
-First, the GRPC client indicates its will to communicate with another GRPC server by sending an HTTP `CONNECT` request to the forward proxy. The HTTP `CONNECT` request doesn't carry the actual payload of the GRPC request but some important information such that the forward proxy knows how to forward the actual GRPC payload to where the client wanted. The information contains an authentication token and a directly connectable address and port of the remote reverse proxy. (More on directly connectable address and port later.)
+There is another UTP channel for out of band communications between the two proxies, and it is used for sending hole-punch and keep-alive messages. This out of band channel is similar to UDP datagrams in a sense that it is unreliable, and not connection oriented. However, it enables the establishment of peer to peer natted connections. 
 
-Along with the HTTP `CONNECT` request, a new TCP socket between the GRPC client and forward proxy is established, and this is where the grpc payload would be transferred from client to forward proxy.
+The egress and ingress host and port are used for communication between the proxies, the public address of them are unknown to themselves but will be known by the receiving party due to NAT translation. 
 
-Once the forward proxy received the HTTP `CONNECT` request and necessary information, it would attempt to connect to the remote reverse proxy through an uTP socket, which is essentially a UDP socket but provides reliable packet delivery. It's important to keep in mind that the forward proxy doesn't forward data immediately after the uTP socket has been established, it waits until the remote reverse proxy acknowledged the communication with the server is established.
 
-Then, the reverse proxy realises a new uTP connection has been established, so it creates a new TCP socket between the GRPC server and itself, pipe data between the uTP (from forward proxy) and TCP socket, acknowledge the communication has been established, and forward proxy starts forwarding data. As a result, the GRPC client can communicate with the GRPC server now.
+## Communication Mechanism
 
+The communication mechanism of the network module is shown below.
+
+![sequence0](https://user-images.githubusercontent.com/38675169/120810769-accbd700-c58e-11eb-8dd0-26b06e321553.jpg)
+
+The HTTP Connect requests a TCP socket between the GRPC client and forward proxy, and the TCP connection establishment happens immediately after the request. 
+
+Once the forward proxy receives the HTTP Connect request, the forward proxy starts hole-punching using the Ping and Pong messages and starts UTP connection establishment at the same time. 
+
+Once the connection between the proxies are punched and connected, the reverse proxy establishes a TCP connection with the GRPC server.
+
+Some time after the establishments, the socket composition happens, which pipes the data from one socket into another, allowing data to pass through. 
+
+Finally, forward sends a connection established response to the client indicating the connection to the GRPC server is successfully established and data can be sent through the socket. 
+
+To keep the connection alive, which is especially important for the natted ones, as NAT and firewalls forget the connection after a short period of time, the Ping and Pong messages are sent periodically to keep the connection open. 
 
 # Hole Punch
 
@@ -63,54 +80,6 @@ For hole punch to work, following conditions must be satified:
 
 This whole hole punching process is part of the NAT connection management included in Forward and Reverse proxy.
 
-
-# Directly Connectable
-
-The most simple form of a directly connectable address and port is one that can be directly connected. (Yes.) That means you can connect to the server at the address and port without doing anything special.
-
-Another form of a directly connectable address and port is the HOLE PUNCHED address and port. If a connection cannot be connected directly, that may be because there's NAT involve, and it is not directly connectable. However, if we successfully hole punched the address and port, and keep the connection alive by sending keep alive packets, then we say the connection is directly connectable.
-
-We intend to add relay connection in the future to accomodate situations where address and port cannot be connected directly nor can be hole punched.
-
-# Forward Proxy Usage
-
-Keep in mind that the forward proxy interacts with the GRPC client. When a client wants to send a request to GRPC server, it needs to send it through the forward proxy. You can tell GRPC client to use the forward proxy by setting the environment variable. Read on.
-
-To start a forward proxy, you need to provide an authentication token of type string. This is a token for GRPC client to access the forward proxy, and block anyone who doesn't hold a valid token.
-
-Once a forward proxy is `started`, the first thing you should be doing is setting the environment variables for GRPC clients as follows:
-
-```javascript
-const proxyAuthToken = 'yoasobi';
-const proxyPort = fwProxy.getHttpPort(); // not .getSocketPort()
-process.env["grpc_proxy"] = `http://${proxyAuthToken}@${fwAddress}:${proxyPort}`;
-```
-
-After the environment variable is set, you need to manage your directly connectable addresses through the forward proxy. It's **important** to keep in mind that for a GRPC client to send a request to the remote GRPC server successfully, the **public IP address of the remote reverse proxy associated with the remote GRPC server must be added to the connection tracker in the forward proxy**. 
-
-There are two situations for adding the connection:
-
-1. If the connection can be connected directly, add a direct connection in the forward proxy only.
-2. If the connection needs to be hole punched, add a NAT connection in the forward proxy, and ensure the remote reverse proxy is also adding a NAT connection to the forward proxy at the same time.
-
-Verify your understanding with the diagram below. If keynode A's GRPC client want to contact Keynode B and C's GRPC server. Then A's forward proxy needs to add the address of reverse proxy of both GRPC servers to the connection tracker. But only keynode B's reverse proxy need to add A's forward proxy to its connection tracker as A and B are natted to each other.
-
-![ConnTrack](https://user-images.githubusercontent.com/38675169/116488241-383db280-a8d5-11eb-9e4d-d4f4edb3e75a.png)
-
-Additionally, if you no longer need to make any more requests to the GRPC Server, or you just want to disconnect from it, you can remove the connection from the forward proxy (and reverse proxy if NATTED).
-
-Finally, you can close the forward proxy and it stops maintaining any natted connections, and termiante the socket.
-
-
-# Reverse Proxy Usage
-
-Reverse proxy interacts with the GRPC server and the goal of the reverse proxy is forward incoming packets from forward proxy to the GRPC server.
-
-Reverse proxy can be instatiated straightaway without providing anything special.
-
-You can start the reverse proxy by providing the local address and port of the GRPC server so that it can forward data to.
-
-If a forward proxy wants to connect to this reverse proxy, you need to add a NAT connection to the connection tracker as described in the forward proxy above.
 
 
 # Unidirectional Communication
