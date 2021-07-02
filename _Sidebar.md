@@ -8,6 +8,10 @@
 
 [CLI API](https://github.com/MatrixAI/js-polykey/wiki/CLI-API)
 
+[ACL](https://github.com/MatrixAI/js-polykey/wiki/ACL)
+
+[DB](https://github.com/MatrixAI/js-polykey/wiki/DB)
+
 [Client API](https://github.com/MatrixAI/js-polykey/wiki/client-api)
 
 [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
@@ -20,7 +24,6 @@
 
 [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
 
-[ACL](https://github.com/MatrixAI/js-polykey/wiki/ACL)
 
 # Discussion 
 
