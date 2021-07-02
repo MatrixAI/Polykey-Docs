@@ -20,7 +20,7 @@
 
 [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
 
-[ACL](https://github.com/MatrixAI/js-polykey/wiki/acl)
+[ACL](https://github.com/MatrixAI/js-polykey/wiki/ACL)
 
 # Discussion 
 
