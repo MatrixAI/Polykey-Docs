@@ -49,6 +49,8 @@
 
 [Identification with Third Party Services](https://github.com/MatrixAI/js-polykey/wiki/identification-with-third-party-services)
 
+[Gestalts and Digital Identities](https://github.com/MatrixAI/js-polykey/wiki/Gestalts-and-Digital-Identities)
+
 # Development Guide
 
 [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
