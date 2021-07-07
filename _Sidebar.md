@@ -51,6 +51,8 @@
 
 [Gestalts and Digital Identities](https://github.com/MatrixAI/js-polykey/wiki/Gestalts-and-Digital-Identities)
 
+[Glossary](Glossary)
+
 # Development Guide
 
 [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
