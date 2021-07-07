@@ -27,23 +27,23 @@ Topics:
 
 
 ## Keywords
-1. identity - authentication/secrets management [x]
-2. trust - how do you know you can trust an identity? transitivity ->communication + quality of info - needs to meet certain qualifiers/acceptance criteria [x]
-   1. when you trust someone - judgement on how to qualify info they provide [x]
-   2. don't accept info at face value [x]
-   3. not binary -> levels [x]
-   4. relationship between 2 gestalts - is it transitive? a->b, b->c => a->c? [x]
-3. gestalt - point of presence (there is some info (digital) that represents an entity e.g. person) [x]
-4. BLUF - bottom line upfront (big idea upfront(summary) - then build up componentry) [ ]
-   1. gestalts + digital identities - key argument/idea 1-2 sentences [ ]
-5. social discovery [ ]
-6. secret sharing [ ]
-7. compromise - identity providing info that's no longer representative of it (identity represents agent) [ ]
-8. social proof - Social proof is considered prominent in ambiguous social situations where people are unable to determine the appropriate mode of behavior, **and is driven by the assumption that the surrounding people possess more knowledge about the current situation.** [ ]
-   1. are other people trusting the gestalt representative of the person/entity [ ]
-9. sigchain - chain of messages where each message is signed with a cryptographic key - can prove authenticity/integrity of message [ ]
-   1.  authenticity - can check the message came from who it was meant to [ ]
-   2.  integrity - hasn't been mutated since [ ]
+1. identity - authentication/secrets management
+2. trust - how do you know you can trust an identity? transitivity ->communication + quality of info - needs to meet certain qualifiers/acceptance criteria
+   1. when you trust someone - judgement on how to qualify info they provide
+   2. don't accept info at face value
+   3. not binary -> levels
+   4. relationship between 2 gestalts - is it transitive? a->b, b->c => a->c?
+3. gestalt - point of presence (there is some info (digital) that represents an entity e.g. person)
+4. BLUF - bottom line upfront (big idea upfront(summary) - then build up componentry)
+   1. gestalts + digital identities - key argument/idea 1-2 sentences
+5. social discovery
+6. secret sharing
+7. compromise - identity providing info that's no longer representative of it (identity represents agent)
+8. social proof - Social proof is considered prominent in ambiguous social situations where people are unable to determine the appropriate mode of behavior, **and is driven by the assumption that the surrounding people possess more knowledge about the current situation.**
+   1. are other people trusting the gestalt representative of the person/entity
+9. sigchain - chain of messages where each message is signed with a cryptographic key - can prove authenticity/integrity of message
+   1.  authenticity - can check the message came from who it was meant to
+   2.  integrity - hasn't been mutated since
 
 
 ## Relationships
