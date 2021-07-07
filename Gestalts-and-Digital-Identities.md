@@ -15,6 +15,7 @@ Topics:
 ## Overview
 * Social discovery is about being able to easily find entities (whether this be friends, teams, people, or machines) to be able to securely share secret information with them
 * Identities can be found through the identity's provider via an API. Such identities include GitHub, Facebook, Twitter, LinkedIn etc.
+  * Identities are used to aid in authentication - if you trust that an identity belongs to a particular entity then you can trust that your secrets are being shared with the appropriate entities
 * Gestalts are formed from identities: a message (or cryptolink) is posted by the user onto both an identity and a keynode, which subsequently links them together via a process of augmentation
   * The gestalt is formed through cryptolinks between nodes and identities as well as nodes with other nodes (cryptolinks cannot be formed between identities and other identities
 * To share secrets with another gestalt, you must trust it. This trust can be based on an arbitrary qualification, such as social proof
