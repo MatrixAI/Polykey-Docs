@@ -2,7 +2,7 @@ Today's digital landscape is a decentralized network of computing systems which 
 
 To understand secrets management, we must first understand how secrets are fundamental to the authentication and authorization of secure computing systems.
 
-Authentication is a procedure for identifying an [Glossary#agent](agent) attempting to access a particular [Glossary#resource](resource), and to guarantee that only valid identities are allowed access to a resource. Authentication procedures are implemented as communication protocols between humans and machines, or between machines to other machines.
+Authentication is a procedure for identifying an [agent](Glossary#agent) attempting to access a particular [resource](Glossary#resource), and to guarantee that only valid identities are allowed access to a resource. Authentication procedures are implemented as communication protocols between humans and machines, or between machines to other machines.
 
 Authorization is a way of controlling access to resources after the agent is identified. The access to resources have many names including privileges, permissions, authorities or capabilities. Managing authorization means granting, revoking or tracking of privileges to identified agents. Authorization systems are implemented as data-models that assign privileges to agents and resources.
 
