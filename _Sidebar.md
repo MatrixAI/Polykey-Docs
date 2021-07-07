@@ -6,11 +6,11 @@
 
 # Reference
 
-[CLI API](https://github.com/MatrixAI/js-polykey/wiki/CLI-API)
+[CLI API](CLI-API)
 
-[ACL](https://github.com/MatrixAI/js-polykey/wiki/ACL)
+[ACL](ACL)
 
-[DB](https://github.com/MatrixAI/js-polykey/wiki/DB)
+[DB](DB)
 
 [Client API](https://github.com/MatrixAI/js-polykey/wiki/client-api)
 
