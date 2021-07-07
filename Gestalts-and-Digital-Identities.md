@@ -15,32 +15,35 @@ Topics:
 ## Overview
 * Social discovery is about being able to easily find entities (whether this be friends, teams, people, or machines) to be able to securely share secret information with them
 * Identities can be found through the identity's provider via an API. Such identities include GitHub, Facebook, Twitter, LinkedIn etc.
-  * Identities are used to aid in authentication - if you trust that an identity belongs to a particular entity then you can trust that your secrets are being shared with the appropriate entities
+  * Identities are used to aid in authentication - if you trust that an identity belongs to a particular entity then it is authenticated
 * Gestalts are formed from identities: a message (or cryptolink) is posted by the user onto both an identity and a keynode, which subsequently links them together via a process of augmentation
-  * The gestalt is formed through cryptolinks between nodes and identities as well as nodes with other nodes (cryptolinks cannot be formed between identities and other identities
-* To share secrets with another gestalt, you must trust it. This trust can be based on an arbitrary qualification, such as social proof
+  * The gestalt is formed through cryptolinks between nodes and identities as well as nodes with other nodes (cryptolinks cannot be formed between identities and other identities)
+  * Gestalts act as a point of presence between identities (digital information) and entities (for example, people)
+* To share secrets with another gestalt, you must trust it. This trust can be based on an arbitrary qualification, such as social proof, but the quality and source of this information needs to meet certain acceptance criteria
+  * Trust is a judgement made by qualifying the information that is provided - information should not be accepted at face value
+  * Trust is not a binary decision, there are multiple levels of trust, and there are factors regarding trust that need to be considered such as whether or not it is transitive (for example, if you trust a gestalt, and that gestalt trusts another gestalt, does this mean that you should trust it as well?)
 * Once you trust another gestalt you can begin to share secret information with it (see [Secrets Management](secrets-management))
 * All of this machinery is necessary to easily manage the sharing of secrets in a way that aids the user experience
 
 
 ## Keywords
-1. identity - authentication/secrets management
-2. trust - how do you know you can trust an identity? transitivity ->communication + quality of info - needs to meet certain qualifiers/acceptance criteria
-   1. when you trust someone - judgement on how to qualify info they provide
-   2. don't accept info at face value
-   3. not binary -> levels
-   4. relationship between 2 gestalts - is it transitive? a->b, b->c => a->c?
-3. gestalt - point of presence (there is some info (digital) that represents an entity e.g. person)
-4. BLUF - bottom line upfront (big idea upfront(summary) - then build up componentry)
-   1. gestalts + digital identities - key argument/idea 1-2 sentences
-5. social discovery
-6. secret sharing
-7. compromise - identity providing info that's no longer representative of it (identity represents agent)
-8. social proof - Social proof is considered prominent in ambiguous social situations where people are unable to determine the appropriate mode of behavior, **and is driven by the assumption that the surrounding people possess more knowledge about the current situation.**
-   1. are other people trusting the gestalt representative of the person/entity
-9. sigchain - chain of messages where each message is signed with a cryptographic key - can prove authenticity/integrity of message
-   1.  authenticity - can check the message came from who it was meant to
-   2.  integrity - hasn't been mutated since
+1. identity - authentication/secrets management [x]
+2. trust - how do you know you can trust an identity? transitivity ->communication + quality of info - needs to meet certain qualifiers/acceptance criteria [x]
+   1. when you trust someone - judgement on how to qualify info they provide [x]
+   2. don't accept info at face value [x]
+   3. not binary -> levels [x]
+   4. relationship between 2 gestalts - is it transitive? a->b, b->c => a->c? [x]
+3. gestalt - point of presence (there is some info (digital) that represents an entity e.g. person) [x]
+4. BLUF - bottom line upfront (big idea upfront(summary) - then build up componentry) [ ]
+   1. gestalts + digital identities - key argument/idea 1-2 sentences [ ]
+5. social discovery [ ]
+6. secret sharing [ ]
+7. compromise - identity providing info that's no longer representative of it (identity represents agent) [ ]
+8. social proof - Social proof is considered prominent in ambiguous social situations where people are unable to determine the appropriate mode of behavior, **and is driven by the assumption that the surrounding people possess more knowledge about the current situation.** [ ]
+   1. are other people trusting the gestalt representative of the person/entity [ ]
+9. sigchain - chain of messages where each message is signed with a cryptographic key - can prove authenticity/integrity of message [ ]
+   1.  authenticity - can check the message came from who it was meant to [ ]
+   2.  integrity - hasn't been mutated since [ ]
 
 
 ## Relationships
