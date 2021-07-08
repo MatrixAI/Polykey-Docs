@@ -20,3 +20,5 @@ Any kind of data that that should only be known by selected agents. The 4 common
 Additionally there may also be larger pieces of data that may be considered secret. These include documents, source code, intellectual property, emails... etc.
 
 Some secrets have intrinsic value, that is the secret data is what is valuable. Other secrets have extrinsic value, which means the value lies in what the secret protects, but not the secret data itself.
+
+In Polykey, we consider secrets that have extrinsic value, the currency of access control when working with decentralized services, resources and devices.
