@@ -39,72 +39,50 @@ When managing secrets at rest, the goals are:
 
 When managing secrets in transit, the goals are:
 
+* to prevent [eavesdropping](https://en.wikipedia.org/wiki/Network_eavesdropping) where the secrets can be intercepted over the network
+* to ensure [privacy and optionally anonymity](https://en.wikipedia.org/wiki/Internet_privacy) of the agents communicating
+* to prevent [third-party tampering](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) of the secret data that are in-flight
+* to easily identify who or what you are sending secret data to, to avoid mistakes in communication
 
-> existing tech doesn't meet these goals completely
-> introducing polykey which allows you to meet these goals
+When managing secrets in use, the goals are:
 
+* to ensure that programs are receiving the [minimal privileges](https://en.wikipedia.org/wiki/Principle_of_least_privilege) required to do its job and nothing more
+* to ensure that programs only have privileges for the [duration they need it for](https://en.wikipedia.org/wiki/Privilege_bracketing)
+* to ensure that programs do not [leak privileges to other unauthorized programls](https://en.wikipedia.org/wiki/Privilege_escalation)
+* to ensure that authorized programs that given the [right secret data at the right time and right place](https://en.wikipedia.org/wiki/Principle_of_least_privilege)
+* to ensure program configuration is updated when relevant secrets are rotated or expired
 
-There have many technologies invented to help secure data in all 3 situations, for example:
+Different technologies and techniques have been invented to help secure data in all 3 situations.
 
-* HTTPS protocols secures internet communication
 * Full disk encryption secures data in your hard drive
-* Capability systems, memory encryption secures data in use
+* HTTPS protocols secures data in transit during internet communication
+* Privilege separation, capability systems and memory encryption are used to secure data in use
 
-What makes Polykey different is that it helps agents (that means humans and machines) securely share secrets.
+Polykey has synthesized from these different technologies to produce a system that helps agents (that means humans and machines) secure secrets in all 3 situations. It does this while also providing these properties:
 
-It does this while having these nice properties:
-
-* Being decentralized so that there's no third party single point of failure which is holding your secrets
+* Decentralized storage with no third party single point of failure which is holding your secrets
 * Peer to peer architecture allowing customizable infinite redundancy and flexible privilege separation
 * Secure at rest with transparent filesystem encryption
 * Ensure secret provenance with version history tracking and audit logging
+* Integrated into social identity platforms to eliminate friction in identifying agents you want to share secrets with
+* CLI and GUI interfaces to enable secret management all computing areas
+* Open source for full transparency
 
-HERE IS WHERE we can talk about secret provenance (with respect to goals), but this is common to all personas
+Polykey is on-going development project, some features are coming soon.
 
-## Sharing Secrets
+Here is how Polykey helps in each situation, structured in terms of personas and usecases.
 
-What's the purpose of sharing secrets?
+### Secrets at Rest
 
-What do we mean by sharing secrets?
+TBD
 
-How does this occur with respect to personas
+### Secrets in Transit
 
-Let's introduce the usecases
+TBD
 
+### Secrets in Use
 
-
-Principle of least privilege
-
-Privilege separation
-
-Privilge bracketing
-
-
-
-Data Provenance
-
-And Secret Provenance
-
-What Makes Polykey Different with respect to Secrets Management.
-
-Polykey helps you secure secrets in all 3 situations.
-
-
-
-
-Preferably we would like to protect secret data in all 3 data situations, but there may be tradeoffs that need to be made in any particular context. 
-
-In the world of cloud connected web applications, our priorities should start with securing data in transit first (HTTPS), securing data at rest second (full disk encryption and hashing), and finally attempt to secure data in use (capability systems, security policies and memory encryption).
-
-This of couse goes for data that aren't secrets as well, as it's good to have defence in depth.
-
-
-Provenance!!
-
-And different personas
-
-Go into different usecases
-
+TBD
 
 ## Types of Secret Data
 
