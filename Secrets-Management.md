@@ -1,6 +1,6 @@
 Today's digital landscape is a decentralized network of computing systems which includes web and mobile applications, micro-services, devices, Internet of Things and APIs (Application Programming Interfaces). Managing secret data is essential to the secure usage of this global network.
 
-To understand secrets management, we must first understand how secrets are fundamental to the authentication and authorization of secure computing systems.
+To understand secrets management, we must first understand how [secrets](Glossary#secret) are fundamental to the authentication and authorization of secure computing systems.
 
 Authentication is a procedure for identifying an [agent](Glossary#agent) attempting to access a particular [resource](Glossary#resource), and to guarantee that only valid identities are allowed access to a resource. Authentication procedures are implemented as communication protocols between humans and machines, or between machines to other machines.
 
@@ -71,6 +71,8 @@ Polykey is on-going development project, some features are coming soon.
 
 Here is how Polykey helps in each situation, structured in terms of personas and usecases.
 
+> These below can be separate pages
+
 ### Secrets at Rest
 
 TBD
@@ -81,42 +83,46 @@ TBD
 
 ### Secrets in Use
 
+> This is the key point
+> The other parts are not as important
+
+FOCUS ON HERE
+
 TBD
 
-## Types of Secret Data
+#### Developers
 
-The 4 common types of secret data are:
+##### Development Environment Secrets
 
-Tokens - 
+Developers often have to setup development environments which can allow them to edit their software source code as well as being able to test run the software in a simulated environment.
 
-Passwords - 
+The need to run their software
 
-Keys - 
+Environment Variables
 
-Certificates -
+#### DevOps
 
-Additionally there may also be larger pieces of data that may be considered secret. These include documents, source code, intellectual property, intelligence, emails... etc. These types of secrets have inherent value.
+##### Service Deployment and Rotation
 
+TBD
 
+#### Teams, Organizations and Companies
 
+##### Employee Onboarding/Offboarding
 
+Onboarding/Offboarding
 
+Dealing with user-profiles, and user profile secrets.
 
+https://en.wikipedia.org/wiki/User_profile
 
+New employee, workstation user profiles.
 
-INDICATE THAT THEY ARE CURRENCY
+Remote-ready employee onboarding and offboarding.
 
+##### Device Provisioning
 
-
-
-Secrets (tokens, passwords, keys and certificates) are the currency of access control when working with decentrlised services, resources and devices.
-
-
-
-
-**Note that secrets are used for BOTH Authentication and Authorization!**
-
-
+Device provisoning. Adding new devices into your system.
 
 ---
 
