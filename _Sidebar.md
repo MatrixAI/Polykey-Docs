@@ -33,7 +33,7 @@
 
 [Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
 
-[Secrets Management](https://github.com/MatrixAI/js-polykey/wiki/secrets-management)
+<!-- [Secrets Management](secrets-management) -->
 
 [Cryptography](https://github.com/MatrixAI/js-polykey/wiki/cryptography)
 
