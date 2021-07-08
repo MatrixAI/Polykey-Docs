@@ -14,7 +14,7 @@ Both authentication protocols and authorization models make use of secret data w
 
 For example, you have probably used a secret password to authenticate yourself to the device you are using to read this article. At the same time, the ability for you to launch the browser program (Chrome, Firefox... etc) is a privilege assigned to your identity on the device via the authorization model built into your operating system.
 
-<img src="https://raw.githubusercontent.com/flocke/andOTP/master/assets/screenshots/main_activity.png" width="200"/>
+<img src="https://raw.githubusercontent.com/flocke/andOTP/master/assets/screenshots/main_activity.png" width="100"/>
 
 In the context of authentication, secrets are used to uniquely identify agents. These secrets can be a knowledge factor i.e. "something you know", or a possession factor i.e. "something you have". For example some computer systems give you the ability to specify a password that only you should know, and a way for you to generate tokens that only you can have such as one-time password (OTP) multi-factor authentication tokens.
 
