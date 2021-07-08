@@ -83,22 +83,72 @@ TBD
 
 ### Secrets in Use
 
-> This is the key point
-> The other parts are not as important
-
-FOCUS ON HERE
-
-TBD
-
 #### Developers
 
 ##### Development Environment Secrets
 
-Developers often have to setup development environments which can allow them to edit their software source code as well as being able to test run the software in a simulated environment.
+As developers, we often have to setup development environments that allows us to edit our software source code as well as being able to test run the software in a simulated environment.
 
-The need to run their software
+When these environments need access external resources such as databases such PostgreSQL or SaaS services like Amazon S3, they require configuration that includes secret credentials.
 
-Environment Variables
+This configuration can be setup in configuration files, as constants in the source code, or injected at the terminal via environment variables or command line parameters.
+
+In 2011, Heroku developed a methodology called the [12 factor app](https://12factor.net/) that argued that the best way of setting secrets for development environments is through environment variables.
+
+Operating systems will run software processes within process environment, and environment variables are key-value strings that can be set prior to launching the program which reads the environment variables on startup.
+
+For example on Unix-like terminals, we can set the variable `X` to `3`, then run a program like `sh` which will output the value of `X`.
+
+```sh
+X=3 sh -c 'echo $X'
+```
+
+This has several advantages:
+
+* The environment variables are not persisted in the source code, this avoids a common vector for leaking secrets accidentally via source code version control systems such as Git, GitHub and GitLab.
+* The environment variables can be easily programatically changed depending on different environments, so there is minimal change required between development and production environments.
+* There is only 1 places to set secret configuration, which is the shell/process environment, simplifying how to configure systems.
+* Environment variables are framework and programming language agnostic, all major operating systems support environment variables.
+* Environment variables only existed while the process was live, when the process died, the environment variables would automatically be deleted.
+
+There was one major challenge with using environment variables: If environment variables were temporary and only existed while the process was live, then:
+
+* How do we remember what environment variables need to be set when we log off for the day and start working on the application after a restart of the computer? 
+* How do we communicate what environment variables are required to other developers who are also working on the same software system?
+* How do we deal with many environment variables to set? It would be a chore to have to set them every time we ran our application.
+
+In order to meet these challenges, the development community evolved the above idea into a development workflow pattern called "dotenv".
+
+The idea is to create a `.env` file that is ignored by source code control systems, and is located at the root of your project repository. This file contains all of your application environment configuration, for example:
+
+```
+AWS_DEFAULT_REGION='ap-southeast-2'
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+
+NODE_ENV=development
+
+PGDATABASE=postgres
+PGUSER=root
+PGPASSWORD=
+PGHOST=localhost
+PGPORT=5432
+
+GOOGLE_MAPS_API_KEY=
+
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+
+SPARKPOST_KEY=
+```
+
+This file is then loaded into your terminal shell with `source ./.env` when you start working on the software.
+
+In Matrix AI, we also create a `.env.example` that is saved into the source control system, which lists all the environment variables and has commentary on what they are for. New developers then copy the `.env.example` to `.env` before sourcing it into their shell.
+
+However by using `.env` file we end up now managing a configuration file, even if it is a more portable and simpler one than before.
+
+This is where Polykey can help.
 
 #### DevOps
 
