@@ -48,11 +48,11 @@ When managing secrets in use, the goals are:
 
 * to ensure that programs are receiving the [minimal privileges](https://en.wikipedia.org/wiki/Principle_of_least_privilege) required to do its job and nothing more
 * to ensure that programs only have privileges for the [duration they need it for](https://en.wikipedia.org/wiki/Privilege_bracketing)
-* to ensure that programs do not [leak privileges to other unauthorized programls](https://en.wikipedia.org/wiki/Privilege_escalation)
+* to ensure that programs do not [leak privileges to other unauthorized programs](https://en.wikipedia.org/wiki/Privilege_escalation)
 * to ensure that authorized programs that given the [right secret data at the right time and right place](https://en.wikipedia.org/wiki/Principle_of_least_privilege)
 * to ensure program configuration is updated when relevant secrets are rotated or expired
 
-Different technologies and techniques have been invented to help secure data in all 3 situations.
+Different technologies and techniques have been invented to help secure data in all 3 situations. For example:
 
 * Full disk encryption secures data in your hard drive
 * HTTPS protocols secures data in transit during internet communication
