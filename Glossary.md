@@ -4,6 +4,18 @@ Glossary of terminology in alphabetical order.
 
 Agent is any entity that possesses agency. That is the motivation and will to act. This can be a real person, or a software agent.
 
+### Authenticity
+
+The ability to check that the source of origin of a piece of data is correct.
+
+### Digital Identity
+
+Digital information that can be used to represent a physical agent or entity. In the case of Polykey digital identities are social media accounts including GitHub, Facebook, Instagram, LinkedIn etc.
+
+### Integrity
+
+The ability to check that a piece of data had not been mutated since its creation.
+
 ### Resource
 
 What is Resource
