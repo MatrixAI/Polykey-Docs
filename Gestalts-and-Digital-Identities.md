@@ -12,22 +12,4 @@ So how does one decide whether or not to trust a Gestalt? While trust can be bas
 
 In the case of trusting a Gestalt, this means that you trust it has not been compromised and that it remains representative of the agent it supposedly represents. When choosing to trust a Gestalt, you must start by trusting one of the digital identities contained within the Gestalt, and this trust is then consequently extended to the rest of the Gestalt. Once you trust a Gestalt then you are able to share secret information with it (see [Secrets Management](secrets-management) for a detailed discussion of secret sharing and management), however this trust must extend both ways.
 
-At the end of all of this architecture is an overarching goal: to easily manage the sharing of secrets with other agents. This is made possible through the process of social discovery implemented within Polykey. By searching for a particular agent using the software's interface it is possible to search through all of the digital identities that are owned by any Gestalt's keynode. Once an identity has been found its authenticity can be confirmed through social proof and its integrity is ensured by the augmentation process. Once one identity within a Gestalt has been discovered it is then possible to traverse it to discover other identities under the control of the same entity such that there is more information upon which to make a judgement of trust.
-
-
-Other notes
-* Digital presence vs physical presence + digital identities -> people are defined by their digital lives
-  * Information contained in digital identities can be used to aid authentication + allow us to access machines and secrets
-  * This information can be linked to a person's physical presence as well
-  * Secrets themselves cannot be connected to an individual, especially shared ones (e.g. within an organization), however, a digital identity combines this information with behavior and can be used to represent an individual
-  * Social discovery therefore helps us be certain that whoever we are interacting with actually is who they say they are - can trust them with our secrets
-* What is the benefit of social discovery and how does it work outside of Polykey
-  * Social discovery is whenever one user discovers information about another user
-  * An example of this could be looking up a person's name on Facebook and finding out other information about them such as who they're friends with
-* What are gestalts (both in general and in terms of Polykey)
-  * The world gestalt comes from the idea that "the whole is greater than the sum of its parts", in other words, you cannot understand an entire structure by merely looking at all of its components separately - there is information that can only be conveyed by looking at the whole in its complete form
-  * A person is more than just their individual digital identities and secrets - these need to be combined and connected together in order to see the person's full physical identity
-  * Polykey users are represented by gestalts: connected graphs containing a person's digital identities and keynodes (secrets)
-* How does social discovery work re Polykey gestalts
-  * When a user links a digital identity to their gestalt, they must make an ownership claim by creating an immutable message via the relevant social media provider
-  * By finding this ownership claim, you can find the owner's gestalt, and subsequently traverse the gestalt (similar to a breadth-first-search style graph traversal) to find the rest of the gestalt
+At the end of all of this architecture is an overarching goal: to easily manage the sharing of secrets with other agents. This is made possible through the process of social discovery implemented within Polykey. By searching for a particular agent using the software's interface it is possible to search through all of the digital identities that are owned by any Gestalt's keynode. Once an identity has been found its authenticity can be confirmed through social proof and its integrity is ensured by the augmentation process. Once one identity within a Gestalt has been discovered it is then possible to traverse it to discover other identities under the control of the same entity such that there is more information upon which to make a judgement of trust. Social discovery thereby helps agents to be certain that the Gestalt they are sharing secrets with can be trusted and is indeed representative of the entity that is presumed to have ownership of it.
