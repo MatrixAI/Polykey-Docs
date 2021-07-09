@@ -12,18 +12,7 @@ So how does one decide whether or not to trust a Gestalt? While trust can be bas
 
 In the case of trusting a Gestalt, this means that you trust it has not been compromised and that it remains representative of the agent it supposedly represents. When choosing to trust a Gestalt, you must start by trusting one of the digital identities contained within the Gestalt, and this trust is then consequently extended to the rest of the Gestalt. Once you trust a Gestalt then you are able to share secret information with it (see [Secrets Management](secrets-management) for a detailed discussion of secret sharing and management), however this trust must extend both ways.
 
-
-
-* All of this machinery is necessary to easily manage the sharing of secrets in a way that aids the user experience
-  * Discovery is made easier
-
-Relationships
-identities -> gestalt -> trust -> sharing -> discovery
-
-if you can trust a system -> can start sharing secret info with system
-need to make sure this system represents the entity we think it is -> trusting a gestalt means making a judgement that the gestalt represents the real-world entity
--> leads to an explanation about how we form gestalts
-
+At the end of all of this architecture is an overarching goal: to easily manage the sharing of secrets with other agents. This is made possible through the process of social discovery implemented within Polykey. By searching for a particular agent using the software's interface it is possible to search through all of the digital identities that are owned by any Gestalt's keynode. Once an identity has been found its authenticity can be confirmed through social proof and its integrity is ensured by the augmentation process. Once one identity within a Gestalt has been discovered it is then possible to traverse it to discover other identities under the control of the same entity such that there is more information upon which to make a judgement of trust.
 
 
 Other notes
