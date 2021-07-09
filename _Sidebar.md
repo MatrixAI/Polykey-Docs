@@ -33,8 +33,6 @@
 
 [Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
 
-<!-- [Secrets Management](secrets-management) -->
-
 [Cryptography](https://github.com/MatrixAI/js-polykey/wiki/cryptography)
 
 [Network](https://github.com/MatrixAI/js-polykey/wiki/network)
@@ -48,10 +46,6 @@
 [Vault Histories with Git](https://github.com/MatrixAI/js-polykey/wiki/vault-histories)
 
 [Identification with Third Party Services](https://github.com/MatrixAI/js-polykey/wiki/identification-with-third-party-services)
-
-[Gestalts and Digital Identities](https://github.com/MatrixAI/js-polykey/wiki/Gestalts-and-Digital-Identities)
-
-[Glossary](Glossary)
 
 # Development Guide
 
