@@ -1,53 +1,29 @@
-TBD
+In today's world, entities can almost entirely be represented by their presences across digital identity providers. Through social discovery these entities can be located and authenticated, subsequently allowing for the secure sharing of secrets with desired parties.
 
-Synthesize from:
+Digital identities contain a vast amount and variety of information, so much so that digital identities can often hold the power to authenticate agents and allow them access to services and secrets (an example of this would be using your Facebook account to log into other websites). This power comes not only from a digital identity's collection of factual information (e.g. name, age, and acquaintances), but also information about behavior.
 
-* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/31
-* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/33
-* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/27
+Unlike factual information, behavioral information is hard to imitate. Because of this it can be quite a reliable representation of an agent, and people are quite sensitive to this. Social proof, the idea that the people around you will often collectively hold more information about the current environment or situation than yourself, taps into this idea. If a large number of people believe that a digital identity is a reliable representation of a certain physical agent, then you may have enough evidence to believe that this is true.
 
-Topics:
 
-* Digital Identities
-* Gestalts
-* Social Discovery
 
-## Overview
 * Social discovery is about being able to easily find entities (whether this be friends, teams, people, or machines) to be able to securely share secret information with them
 * Identities can be found through the identity's provider via an API. Such identities include GitHub, Facebook, Twitter, LinkedIn etc.
   * Identities are used to aid in authentication - if you trust that an identity belongs to a particular entity then it is authenticated
-* Gestalts are formed from identities: a message (or cryptolink) is posted by the user onto both an identity and a keynode, which subsequently links them together via a process of augmentation
+* Gestalts are formed from identities: a message (or cryptolink) is posted by the user onto both a digital identity (on the identity provider) and a keynode (on its sigchain), which subsequently links them together via a process of augmentation
+  * These messages are immutable once created, ensuring both their authenticity and integrity
   * The gestalt is formed through cryptolinks between nodes and identities as well as nodes with other nodes (cryptolinks cannot be formed between identities and other identities)
   * Gestalts act as a point of presence between identities (digital information) and entities (for example, people)
+  * The linking of digital identities to keynodes provides a method of using social proof to confirm that the gestalt is representative of its supposed agent - if other people are saying that this person is who they say they are then you can be more confident that this is indeed the case
 * To share secrets with another gestalt, you must trust it. This trust can be based on an arbitrary qualification, such as social proof, but the quality and source of this information needs to meet certain acceptance criteria
   * Trust is a judgement made by qualifying the information that is provided - information should not be accepted at face value
   * Trust is not a binary decision, there are multiple levels of trust, and there are factors regarding trust that need to be considered such as whether or not it is transitive (for example, if you trust a gestalt, and that gestalt trusts another gestalt, does this mean that you should trust it as well?)
+  * If you trust a gestalt then you trust that it has not been compromised - the identity is still representative of the agent it is supposed to represent
 * Once you trust another gestalt you can begin to share secret information with it (see [Secrets Management](secrets-management))
 * All of this machinery is necessary to easily manage the sharing of secrets in a way that aids the user experience
-
-
-## Keywords
-1. identity - authentication/secrets management
-2. trust - how do you know you can trust an identity? transitivity ->communication + quality of info - needs to meet certain qualifiers/acceptance criteria
-   1. when you trust someone - judgement on how to qualify info they provide
-   2. don't accept info at face value
-   3. not binary -> levels
-   4. relationship between 2 gestalts - is it transitive? a->b, b->c => a->c?
-3. gestalt - point of presence (there is some info (digital) that represents an entity e.g. person)
-4. BLUF - bottom line upfront (big idea upfront(summary) - then build up componentry)
-   1. gestalts + digital identities - key argument/idea 1-2 sentences
-5. social discovery
-6. secret sharing
-7. compromise - identity providing info that's no longer representative of it (identity represents agent)
-8. social proof - Social proof is considered prominent in ambiguous social situations where people are unable to determine the appropriate mode of behavior, **and is driven by the assumption that the surrounding people possess more knowledge about the current situation.**
-   1. are other people trusting the gestalt representative of the person/entity
-9. sigchain - chain of messages where each message is signed with a cryptographic key - can prove authenticity/integrity of message
-   1.  authenticity - can check the message came from who it was meant to
-   2.  integrity - hasn't been mutated since
-
+  * Discovery is made easier
 
 ## Relationships
-identities -> gestalt -> trust -> sharing
+identities -> gestalt -> trust -> sharing -> discovery
 
 if you can trust a system -> can start sharing secret info with system
 need to make sure this system represents the entity we think it is -> trusting a gestalt means making a judgement that the gestalt represents the real-world entity
@@ -78,3 +54,17 @@ In today's world, a person's physical presence can almost entirely be represente
 Secrets, by themselves, cannot be connected to an individual by ownership. Secrets can be shared, leaked, or lost.
 
 Every Polykey user can be represented by a connected graph of keynodes and digital identities, otherwise known as a Gestalt. Keynodes store vaults, which in turn store secrets, and digital identities are the user's digital presences on third-party applications. Keynodes and digital identities are connected through ownership claims; immutable messages created on social media providers and keynode sigchains which are used to form cryptolinks.
+
+TBD
+
+Synthesize from:
+
+* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/31
+* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/33
+* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/27
+
+Topics:
+
+* Digital Identities
+* Gestalts
+* Social Discovery
