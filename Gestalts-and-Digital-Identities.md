@@ -2,7 +2,9 @@ In today's world, entities can almost entirely be represented by their presences
 
 Digital identities contain a vast amount and variety of information, so much so that digital identities can often hold the power to authenticate agents and allow them access to services and secrets (an example of this would be using your Facebook account to log into other websites). This power comes not only from a digital identity's collection of factual information (e.g. name, age, and acquaintances), but also information about behavior.
 
-Unlike factual information, behavioral information is hard to imitate. Because of this it can be quite a reliable representation of an agent, and people are quite sensitive to this. Social proof, the idea that the people around you will often collectively hold more information about the current environment or situation than yourself, taps into this idea. If a large number of people believe that a digital identity is a reliable representation of a certain physical agent, then you may have enough evidence to believe that this is true.
+Unlike factual information, behavioral information is hard to imitate. Because of this it can be quite a reliable representation of an agent, and people are quite sensitive to this. Social proof, the idea that the people around you will often collectively hold more information about the current environment or situation than yourself, taps into this idea. If a large number of people believe that a digital identity is a reliable representation of a certain physical agent, then you may have sufficient evidence to believe that this is true.
+
+Polykey takes advantage of this idea through the use of Gestalts, a word that comes from the adage "the whole is more than the sum of its parts". Gestalts, as implemented within Polykey, combine the information that is conveyed through digital identities with the secrets held within the vaults of a keynode. By posting a signed claim on both an identity provider and the sigchain of a keynode, an agent can augment an identity (in other words, establish a cryptolink between these two points).
 
 
 
