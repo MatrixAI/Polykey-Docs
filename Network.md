@@ -99,3 +99,29 @@ If you want GRPC clients in keynode A and B making requests to each other. You n
 Due to the lack of relaying services, the network module only allows direct connection and hole punchable connections. Any other connections such as the Symetric NAT scenario cannot be connected.
 
 There is not yet a way to notify the caller in the case where a connection failed to be kept alive, or timed out.
+
+# Improvements
+
+We can separate the networking to 3 layers:
+
+* P2P application layer
+* RPC layer
+* Data Transfer layer
+
+Right now these are:
+
+* Kademlia & Automerge and Nodes Domain
+* GRPC
+* UTP - micro transport protocol (using UDP)
+
+It is ideal to have these 3 layers separated so that it is possible innovate on them separately. So in the future, it may be possible to do instead:
+
+* P2P - Kademlia/Automerge.. whatever
+* RPC - JSONRPC or whatever
+* Data Transfer - QUIC, Wireguard, both are based on UDP (wireguard in userspace would be relevant too)
+
+There are some constraints on relevant protocols/libraries:
+
+* For the Data Transfer it must be capable of NAT-busting which means it must be on UDP and we must be able to craft signalling packets to bust UDP, it must also work in user-space and be compatible on Linux, Windows, Unix, iOS and Android, the data transfer layer requires security as well, so TLS could work on top if it doesn't have it, or wireguard has native security
+* For the RPC layer it must either not specify the network like JSON RPC, or if it does, it must be proxyable like GRPC, if proxyable it must be plaintext possible, so that the security can be injected at a lower layer.
+* For the P2P layer they must be done as in-memory functions, that can we translate to RPC commands, they must not specify a particular network protocol at all
