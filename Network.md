@@ -123,5 +123,11 @@ It is ideal to have these 3 layers separated so that it is possible innovate on 
 There are some constraints on relevant protocols/libraries:
 
 * For the Data Transfer it must be capable of NAT-busting which means it must be on UDP and we must be able to craft signalling packets to bust NAT, it must also work in user-space and be compatible on Linux, Windows, Unix, iOS and Android, the data transfer layer requires security as well, so TLS could work on top if it doesn't have it, or wireguard has native security, we must have control over the underlying IPs so we can relay it over relay servers to really bust NAT, must support IPv6... etc.
-* For the RPC layer it must either not specify the network like JSON RPC, or if it does, it must be proxyable like GRPC, if proxyable it must be plaintext possible, so that the security can be injected at a lower layer.
+* For the RPC layer it must either not specify the network like JSON RPC, or if it does, it must be proxyable like GRPC, if proxyable it must be plaintext possible, so that the security can be injected at a lower layer. It should also support streaming beyond just unary.
 * For the P2P layer they must be done as in-memory functions, that can we translate to RPC commands, they must not specify a particular network protocol at all
+
+As you can see there's alot of constraints which narrows down choices. The most generic stack possible would be:
+
+* QUIC/UTP/Wireguard - data transfer layer, wireguard may be difficult unless you can control it as a library
+* JSON-RPC
+* Custom on top
