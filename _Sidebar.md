@@ -54,3 +54,5 @@
 [Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
 
 [Async Functions](https://github.com/MatrixAI/js-polykey/wiki/async-functions)
+
+[CLI commands design](https://github.com/MatrixAI/js-polykey/wiki/CLI-commands-design-and-style)
