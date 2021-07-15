@@ -8,3 +8,10 @@ Make sure you're using the output formatting functions in the `src/bin/utils.ts`
 And for testing, try to use the `main` exported function, but I think as you said on slack there are new methods that make it easier to test these that might have been created by @DrFacepalm or @scottmmorris.
 
 Finally make sure all your options/flags/parameters are consistent across all subcommands. In some cases we find better names we should switch to those.
+
+Subcommands have better recall and discoverability:
+
+* Subcommands have full words which is easier to understand, and easier to remember, less ambiguity
+* Subcommands can be auto-suggested (because they have a deterministic position), flags cannot be
+* High level commands should always be subcommands, not hidden behind flags
+* Minimize optionality, increase conventionality, reduce user configuration headache, things should be as expected and intuitive as complexity allows
