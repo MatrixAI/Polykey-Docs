@@ -57,4 +57,4 @@
 
 [CLI commands design](https://github.com/MatrixAI/js-polykey/wiki/CLI-commands-design-and-style)
 
-[Using the PolykeyClient]()
+[Using the PolykeyClient](Using-the-PolykeyClient)
