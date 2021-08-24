@@ -29,6 +29,10 @@ The agent subcommand allows control over the Polykey agent process.
 |   start   |      Starts the PolyKey Agent        |   1   |       Local        |
 |   stop    |      Stops the PolyKey Agent         |   1   |       Local        |
 |  status   | Gets the status of the PolyKey Agent |   1   |       Local        |
+|unlock|Starts a session for the current client|1|Local|
+|   lock    | Locks the current client session     |   1   |       Local        |
+|lockall|Locks all active sessions on the agent|1|Local|
+
 
 ### Vaults
 
@@ -42,8 +46,11 @@ The vaults subcommand will deal with CRUD (Create, read, update and delete) oper
 | rename    | Renames an existing vault            |   1   |       Local      |
 | stats     | Gets the stats of an existing vault  |   1   |       Local      |
 | share     | Shares vaults with a gestalt         |   1   |       Local      |
+|unshare|Unshares vaults with a gestalt|1|Local|
+|permissions|Gets the permissions for a vault|1|Local|
 | pull      | Pulls a vault from another node      |   1   |    Agent-Agent   |
 | scan      | Lists the vaults of another node     |   1   |    Agent-Agent   |
+|clone|Clones a vault from another node|1|Agent-Agent|
 
 
 ### Secrets
@@ -96,8 +103,12 @@ The node subcommand allows manipulation of Polykey's peer-to-peer system.
 |  Command  |              Description                        | Level |    Interaction   |
 |-----------|-------------------------------------------------|-------|------------------|
 |    add    |  Adds a node to the node graph                  |   1   |       Local      |
-|  delete   |  Deletes a node from the node graph             |   1   |       Local      |
-|    get    |  Gets the node info for a particular node       |   1   |       Local      |
+|  delete(Removed)   |  Deletes a node from the node graph             |   1   |       Local      |
+|    get(Removed)    |  Gets the node info for a particular node       |   1   |       Local      |
+|claim|Makes a claim to a node|1|Agent-Agent|
+|unclaim|Removes a claim to a ndoe|1|Agent-Agent|
+|find|Attempts to find a node in the DHT|1|Agent-Agent|
+|ping|Pings a node to check if it is online|1|Agent-Agent|
 
 ### Identities
 
@@ -105,10 +116,23 @@ The identities subcommand allows control over the node's identity and its links 
 
 |   Command    |                     Description                        | Level |    Interaction   |
 |--------------|--------------------------------------------------------|-------|------------------|
-|   augment    |  Augment the keynode on a given provider and identity  |   1   |       Local      |
+|   claim    |  Claim an identity for this keynode  |   1   |       Local      |
 | authenticate |  Authenticate a social identity provider (Github only) |   1   |       Local      |
 |     get      |  Gets the gestalt of a node or identity                |   1   |       Local      |
 |    list      |  Lists the available gestalts                          |   1   |       Local      |
-|    trust     |  trust or untrust a gestalt                            |   1   |       Local      |
+|    trust     |  Trusts a node id or identity                          |   1   |       Local      |
+|untrust|Untrusts a node id or identity|1|Local|
 |   search     |  Searches the provider for a connected identity        |   1   |       Local      |
-|    link      |  Link or unlink known identities                       |   2   |       Local      |
+|allow|Set a specific permission for a Node or Identity|2|Local|
+|disallow|Remove a Specific permission for a Node or Identity|2|Local|
+|discover|Starts discovery process using Node or Identity as a starting point|1|Agent-Agent|
+|perms|Gets the permisson for an node or identity|1|Local|
+
+
+### Notifications
+|Command|Description|Level|Interaction|
+|---|---|---|---|
+|send|Sends a notification to another node|1|Agent-Agent|
+|read|Displays notifications and marks them as "read"|1|Local|
+|clear|Clears all read and unread notifications|1|Local|
+
