@@ -24,6 +24,8 @@
 
 [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
 
+[Sessions](Sessions)
+
 
 # Discussion 
 
