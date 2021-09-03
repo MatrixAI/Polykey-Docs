@@ -9,11 +9,12 @@ When a client is started, it starts the `Session` object. this handles the curre
 The Session is instantiated with `new Session({clientPath, logger, fs});`. The `clientPath` is used to find the Session file. There are two ways of starting the session. With `session.start({});` or `session.start({ token });` If a token is not provided it will attempt to read a token from the `clientPath` directory. 
 
 At this stage the Session can be started with 3 possible states.
-1. Session started with a valid token.
-2. Session started with an invalid token.
-3. Session started with no token.
+1. Session started with no token.
+2. Session started with a valid token.
+3. Session started with an invalid token.
 
-States 2. and 3. will cause an exception when attempting to make a GRPC call. State 2. will cause the agent to reply with an `ErrorSessionTokenInvalid` exception through the GRPC. State 3. will cause an `ErrorClientJWTTokenNotProvided`. see [Exceptions](#Exceptions) for more details.
+
+States 1. and 3. will cause an exception when attempting to make a GRPC call. State 1. will cause an `ErrorClientJWTTokenNotProvided`. see [Exceptions](#Exceptions) for more details. State 3. will cause the agent to reply with an `ErrorSessionTokenInvalid` exception through the GRPC.
 
 
 #### CallCredentials
@@ -24,6 +25,95 @@ The `CallCredentials` provided by the Session ensures that `Authorization: 'Bear
 
 If the token is missing or expired, then the agent will respond with an error. An `ErrorClientJWTTokenNotProvided` if the token is missing from the metadata. Or an `ErrorSessionTokenInvalid` error if the token has expired or been invalidated by an `agent lockall` command.
 
+#### Making GRPC calls.
+As mentioned in the [Starting a session](#Starting-a-session) section there are 3 states that the `Session` can be in. For reference here they are.
+1. no token.
+2. valid token.
+3. invalid token.
+
+With state 1. 
+```
+
+   ┌────────────┐                         ┌────────────┐
+   │            │                         │            │
+   │   Client   │                         │   Agent    │
+   │            │                         │            │
+   └─────┬──────┘                         └──────┬─────┘
+         │            Call is made               │
+         │           with no token               │
+         ├──────────────────────────────────────►│
+         │                                       │
+         │    ErrorClientJWTTokenNotProvided     │
+         │◄──────────────────────────────────────┤
+         │                                       │
+         │`sessionUnlock(sessionPasswordMessage)`│
+         ├──────────────────────────────────────►│
+         │                                       │
+         │         SessionTokenMessage           │
+         │◄──────────────────────────────────────┤
+         │                                       │
+         │ `Session.start({ token });`           │
+         ├────────────────────────┐              │
+         │Session token is updated│              │
+         │Token written to disk   │              │
+         │◄───────────────────────┘              │
+         │                                       │
+
+```
+
+With the state 2. valid token, GRPC calls should complete normally. 
+```
+
+  ┌────────────┐                         ┌────────────┐
+  │            │                         │            │
+  │   Client   │                         │   Agent    │
+  │            │                         │            │
+  └─────┬──────┘                         └──────┬─────┘
+        │            Call is made               │
+        │           with valid token            │
+        ├──────────────────────────────────────►│
+        │                                       │
+        │           Response with new           │
+        │            token metadata             │
+        │◄──────────────────────────────────────┤
+        │                                       │
+        ├────────────────────────┐              │
+        │Session token is updated│              │
+        │Token written to disk   │              │
+        │◄───────────────────────┘              │
+        │                                       │
+
+```
+
+state 3.
+```
+
+   ┌────────────┐                         ┌────────────┐
+   │            │                         │            │
+   │   Client   │                         │   Agent    │
+   │            │                         │            │
+   └─────┬──────┘                         └──────┬─────┘
+         │            Call is made               │
+         │           with invalid token          │
+         ├──────────────────────────────────────►│
+         │                                       │
+         │       ErrorSessionTokenInvalid        │
+         │◄──────────────────────────────────────┤
+         │                                       │
+         │`sessionUnlock(sessionPasswordMessage)`│
+         ├──────────────────────────────────────►│
+         │                                       │
+         │         SessionTokenMessage           │
+         │◄──────────────────────────────────────┤
+         │                                       │
+         │ `Session.start({ token });`           │
+         ├────────────────────────┐              │
+         │Session token is updated│              │
+         │Token written to disk   │              │
+         │◄───────────────────────┘              │
+         │                                       │
+
+```
 
 TODO: finish this, add diagrams.
 
