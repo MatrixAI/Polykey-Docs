@@ -77,7 +77,6 @@ With the state 2. valid token, GRPC calls should complete normally.
         │            token metadata             │
         │◄──────────────────────────────────────┤
         │                                       │
-        │ `Session.start({ token });`           │
         ├────────────────────────┐              │
         │Session token is updated│              │
         │Token written to disk   │              │
