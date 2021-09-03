@@ -1,4 +1,3 @@
-# Sessions
 
 ### Usage
 Here is an outline of how sessions is used.
