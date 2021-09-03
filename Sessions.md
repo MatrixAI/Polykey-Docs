@@ -3,7 +3,18 @@
 ### Usage
 Here is an outline of how sessions is used.
  
+#### Starting a session
 When a client is started, it starts the `Session` object. this handles the current session token. It does three things, holds the current token, reads the token for the current session from the disk if it exists and writes a new tokens to the disk. it also provides a method to generate call credentials. 
+
+The Session is instantiated with `new Session({clientPath, logger, fs});`. The `clientPath` is used to find the Session file. There are two ways of starting the session. With `session.start({});` or `session.start({ token });` If a token is not provided it will attempt to read a token from the `clientPath` directory. 
+
+At this stage the Session can be started with 3 possible states.
+1. Session started with a valid token.
+2. Session started with an invalid token.
+3. Session started with no token.
+
+States 2. and 3. will cause an exception when attempting to make a GRPC call. State 2. will cause the agent to reply with an `ErrorSessionTokenInvalid` exception through the GRPC. State 3. will cause an `ErrorClientJWTTokenNotProvided`. see [Exceptions](#Exceptions) for more details.
+
 
 These credentials are necessary when making a GRPC call. it can be used in two ways. the `Session` object can be provided when starting a `GRPCClientClient`. the client uses the `Session.sessionMetadataGenerator` for the `CallCredentials` when starting a client connection. this automatically provides the required metadata when making each call. The other method is using the providing the `CallCredentials` with each GRPC call by using `GRPCClient.someRandomCall(message, await session.createCallCredentials())`
 
