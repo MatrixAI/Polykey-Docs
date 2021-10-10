@@ -114,6 +114,74 @@ state 3.
 
 ```
 
+States 1 and 3 both follow the same series of steps in order to resolve the problem, and the relationships between the objects that perform these steps can be visualized as follows:
+```
+┌──────────────────┐
+│  SessionManager  │
+└──────▲───┬───────┘
+       │   │
+       │  3│
+       │   │
+┌──────┴───┴───────┐
+│   PolykeyAgent   │
+└──┬───┬───┬───────┘
+   │   │   │
+  1│   │   │
+   │   │   │
+┌──┴───┴───┴───────┐
+│  PolykeyClient   │
+└──┬───┬───┬───┬───┘
+   │   │   │   │
+   │  2│   │  4│
+   │   │   │   │
+┌──┴───┴───┴───┴───┐
+│     Session      │
+└──┬───────┬───┬───┘
+   │       │   │
+   │       │   │
+   │       │   │
+┌──▼───────▼───▼───┐
+│   sessionFile    │
+└──────────────────┘
+```
+
+1. The Agent starts up a new Client and Session in response to a CLI call. The Session checks the session file (located at `~/.polykey/client/token`) for a valid token. At this stage, either the session file is empty or the stored token is invalid.
+2. The Session requests a new, valid token from the Session Manager.
+3. The Session Manager returns a new token and the Session writes this to the session file and locks it.
+4. When the Client finishes its command, its Session unlocks the session file and refreshes the token.
+
+The refreshing of the token is important, as this resets the amount of time until it becomes invalid and allows subsequent CLI calls to use the token, rather than needing to wait for the Session Manager to generate a new one every time. We lock the session file during process execution in order to prevent other processes from refreshing the session token during this time. This is because the token is already guaranteed to be refreshed upon the completion of our own command. Two concurrent processes, along with the stages of locking and unlocking the session file, can be visualized as follows:
+```
+┌──────────────────────────────────────────┐
+│               PolykeyAgent               │
+└────┬────────────────────────┬────────────┘
+     │                        │
+    1│                       3│
+     │                        │
+┌────┴────────────┐      ┌────┴────────────┐
+│  PolykeyClient  │      │  PolykeyClient  │
+└────┬───▲───┬────┘      └────┬───▲───┬────┘
+     │   │   │                │   │   │
+     │   │  6│                │   │  5│
+     │   │   │                │   │   │
+┌────┴───┴───┴────┐      ┌────┴───┴───┴────┐
+│     Session     │      │     Session     │
+└────┬───┬───┬────┘      └────┬───┬───┬────┘
+     │   │   │                │   │   │
+     │  2│   │                │  4│   ▼
+     │   │   │                │   │(locked)
+┌────▼───┴───▼────────────────▼───┴────────┐
+│               sessionFile                │
+└──────────────────────────────────────────┘
+```
+
+1. The Agent starts up a new Client and Session in response to a CLI call. The Session checks the session file (located at `~/.polykey/client/token`) for a valid token, which is found, and locks the file.
+2. The valid token from the session file is returned to the Client.
+3. The Agent starts up a second Client and associated Session in response to a second, concurrent CLI call. This Session also checks the session file for a valid token (which is found) and attempts to lock the session file, however this request fails because the file is already locked. This behavior is expected and does not throw an exception.
+4. The valid token from the session file is returned to the second Client.
+5. When the second Client finishes its process, its Session attempts to unlock the session file, however this fails because it does not possess the lock. The session refresh attempt is dropped and the process exits cleanly.
+6. When the first Client finishes its process, its Session unlocks the session file and refreshes the token.
+
 TODO: finish this, add diagrams.
 
 
