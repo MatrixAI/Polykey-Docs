@@ -112,3 +112,24 @@ Other potential libraries include:
 * `PKI.js`
 
 We have aliased types from inside `node-forge` in `keys/types.ts` in case we need to change our cryptographic library.
+
+---
+
+X.509 OIDs registered for us.
+
+```
+/**
+ * Polykey OIDs start at 1.3.6.1.4.1.57167.2
+ */
+const oids = {
+  // 1.3.6.1.4.1.57167.2.1
+  attributes: {
+    cryptoLinks: '1.3.6.1.4.1.57167.2.1.1',
+  },
+  // 1.3.6.1.4.1.57167.2.2
+  extensions: {
+    polykeyVersion: '1.3.6.1.4.1.57167.2.2.1',
+    nodeSignature: '1.3.6.1.4.1.57167.2.2.2',
+  },
+};
+```
