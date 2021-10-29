@@ -65,8 +65,8 @@
 
 ### Nodes
 
-* Node Connection Management
-* Node Discovery with Kademlia
+* [Node Connections](https://github.com/MatrixAI/js-polykey/wiki/Node-Connections)
+* [Node Discovery with Kademlia](https://github.com/MatrixAI/js-polykey/wiki/Node-Discovery-with-Kademlia)
 * [Node API](https://github.com/MatrixAI/js-polykey/wiki/node-api) - should be deleted
 * [Node Identification](https://github.com/MatrixAI/js-polykey/wiki/node-identification)
 * Trusted Seed Nodes
