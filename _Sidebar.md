@@ -126,7 +126,7 @@
 ### Workers
 
 * [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
-* ArrayBuffer
+* Zero Copy Transfer with ArrayBuffer
 * Worker Pool used by Keys and DB and Vaults (EFS)
 
 # Discussion 
