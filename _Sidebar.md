@@ -95,7 +95,7 @@
 
 ### Sigchain
 
-* TBD
+* [Sigchain](https://github.com/MatrixAI/js-polykey/wiki/Sigchain)
 * Claims
 
 ### ACL
