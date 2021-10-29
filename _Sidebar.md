@@ -70,6 +70,7 @@
 * Node Discovery with Kademlia
 * [Node API](https://github.com/MatrixAI/js-polykey/wiki/node-api) - should be deleted
 * [Node Identification](https://github.com/MatrixAI/js-polykey/wiki/node-identification)
+* Trusted Seed Nodes
 
 ### gRPC and HTTP API
 
@@ -113,6 +114,8 @@
 
 * [Network](https://github.com/MatrixAI/js-polykey/wiki/network)
 * [Nat Traversal](https://github.com/MatrixAI/js-polykey/wiki/nat-traversal)
+  - Signalling & Bidirectional Hole Punching
+  - TURN Relays
 * architecture
 * error conditions
 
@@ -155,3 +158,5 @@
 * Benchmarking
 * Dependencies
 * Development Environment using Nix
+* Release & Distribution
+* Testnet & Mainnet Deployment
