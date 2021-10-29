@@ -1,31 +1,106 @@
 # Tutorials
 
-[Getting Started With PolyKey](https://github.com/MatrixAI/js-polykey/wiki/getting-started)
+* [Getting Started With PolyKey](https://github.com/MatrixAI/js-polykey/wiki/getting-started)
 
 # How-To Guides
 
+### Developers
+
+* [Development Environment Secrets](Development-Environment-Secrets)
+
+### DevOps
+
+* Service Deployment Secrets with AWS ECS
+* Cloud Agnostic Secrets Management
+* Certificate Renewal with Let's Encrypt
+* CI/CD Secrets with GitLab
+* Internet of Things OTA Secret Update
+* Microservice Authentication with Zero-Trust and MTLS
+
+### Companies/Teams
+
+* [Employee Onboarding and Offboarding](Employee-Onboarding-and-Offboarding)
+* [Device Provisioning](Device-Provisioning)
+* [Delegation of Authority](Delegation-of-Authority)
+
 # Reference
 
-[CLI API](CLI-API)
+### CLI
 
-[ACL](ACL)
+* [CLI API](CLI-API)
+* environment variables
+* parameterisation configuration priority
+* different commands and their help pages
 
-[DB](DB)
+### Keys
 
-[Client API](https://github.com/MatrixAI/js-polykey/wiki/client-api)
+* [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
 
-[Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
+### Vaults
 
-[Node API](https://github.com/MatrixAI/js-polykey/wiki/node-api)
+* Vault Storage
+  - facade
+  - efs
+* Vault Lifecycle
+* Vault Sharing
+  - permissions
+* Vault Versioning
+* Vault Operations
+* [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api) - should be deleted
+* [Git API](https://gittorage
+  - facade
+  - efs
+* Vault Lifecycle
+* Vault Sharing
+  - permissions
+* Vault Versioning
+* Vault Operations
+* [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api) - should be deleted
+* [Git API](https://github.com/MatrixAI/js-polykey/wiki/git-api) - should be deleted (function descriptions are not required)
 
-[Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api)
+### Nodes
 
-[Git API](https://github.com/MatrixAI/js-polykey/wiki/git-api)
+* Node Connection Management
+* Node Discovery with Kademlia
+* [Node API](https://github.com/MatrixAI/js-polykey/wiki/node-api) - should be deleted
 
-[Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
+### Gestalts
 
-[Sessions](Sessions)
+* Gestalt Graph
+* Gestalt Discovery
 
+### Sigchain
+
+* TBD
+
+### ACL
+
+* [ACL](ACL)
+* Structure of ACL, but not the usage of it
+
+### Workers
+
+* [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
+* ArrayBuffer
+* Worker Pool used by Keys and DB and Vaults (EFS)
+
+### DB
+
+* [DB](DB)
+
+### gRPC and HTTP API
+
+* [Client Service](https://github.com/MatrixAI/js-polykey/wiki/client-api)
+* Agent Service
+* Service Error Handling
+* Service Versioning
+* [Service Authentication](Sessions)
+  - SessionManager and Session
+
+### Network
+
+* architecture
+* error conditions
 
 # Discussion 
 
