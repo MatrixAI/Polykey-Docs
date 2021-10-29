@@ -52,11 +52,11 @@
 
 ### Vaults
 
-* Vault Storage
+* [Vault Storage](https://github.com/MatrixAI/js-polykey/wiki/vault-storage)
   - facade
   - efs
 * [Vault Lifecycle](https://github.com/MatrixAI/js-polykey/wiki/vault-lifecycle)
-* Vault Sharing
+* [Vault Sharing](https://github.com/MatrixAI/js-polykey/wiki/vault-sharing)
   - permissions
 * Vault Versioning
 * Vault Operations
