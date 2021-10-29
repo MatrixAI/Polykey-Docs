@@ -15,3 +15,5 @@ If we consider two remote keynodes, `A` and `B`, the cloning process would be as
    This cloning process is depicted as follows:
 
    ### TODO: Add diagram of process. See [#258](https://github.com/MatrixAI/js-polykey/issues/258)
+
+Note that any cloned vaults are inherently immutable. No mutations can be performed on the originally cloned vault: a mutable copy of the vault needs to be created to do so.
