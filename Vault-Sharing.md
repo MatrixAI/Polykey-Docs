@@ -1,4 +1,4 @@
-A vault can be shared with other keynodes (and their respective gestalt) in the wider Polykey network. 
+A vault can be shared with other keynodes (and their respective gestalt) in the wider Polykey network. An attempt to clone/pull a vault will only be executed if the requesting keynode has the appropriate permissions.
 
 If we consider two remote keynodes, `A` and `B`, the cloning process would be as follows:
 
