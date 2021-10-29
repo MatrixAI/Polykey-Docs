@@ -6,4 +6,13 @@ Vaults are encapsulated properties of `VaultManager`. A `Vault` is only construc
 
 Vaults are stored in a `VaultMap`, mapping from the vault ID to the `Vault` itself. Locking is required on this `VaultMap` to ensure consistent creation, destruction, opening, and closing. This `VaultMap` follows the generic `ObjectMap` flow for creation of a vault:
 
+```ts
+type ObjectMap = Map<ObjectId,
+  {
+    resource?: Object;
+    lock: MutexInterface;
+  }
+>;
+```
+
 ![](http://www.plantuml.com/plantuml/png/VL11JiCm4Bpd5NDC3oXtAa4Hue04GkeFGZ9H3AuTrckL_XxNYL6WY9DtPsTclRCBseh6WwroKGadjbe1Pa3zu5HEC0ulhs_izBcTC7XPkiV-TWCTwL2V63OLC8ls33vAH_3J10rdESy-bspWwgPfX1h5GHPPqsoNOL0_vP8s4BNpHNKSZKt0a-_UOGA4bcrW-axgrZowFbFBoXaoG_NRylfUs2fXa-Fs1yAB1FBuQ7HSi--wZsZaBuDoLY7s_JS4zRD_7grtBEJzV5Xn_IUlabOvS9UUUB1V)
