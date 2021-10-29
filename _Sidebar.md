@@ -82,6 +82,7 @@
 * [Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview) - should be synthesised
 * [Privilege Model](https://github.com/MatrixAI/js-polykey/wiki/privilege-model) - should be synthesised
 * [Using the PolykeyClient](Using-the-PolykeyClient)
+* Protobuf Schemas and Compilation
 
 ### Gestalts
 
@@ -147,3 +148,10 @@
 * ID Usage - IdSortable, IdDeterministic, IdRandom
 * Configuration
 * Diagram Standard - Sequence, Component, tooling, State, Flow (Activity), Embedding
+* Testing
+  - Mocking
+  - Execution Speed, breaking up tests
+  - Timeouts & Parallelism
+* Benchmarking
+* Dependencies
+* Development Environment using Nix
