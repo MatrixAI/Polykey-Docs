@@ -58,7 +58,7 @@
 * [Vault Lifecycle](https://github.com/MatrixAI/js-polykey/wiki/vault-lifecycle)
 * [Vault Sharing](https://github.com/MatrixAI/js-polykey/wiki/vault-sharing)
   - permissions
-* Vault Versioning
+* [Vault Versioning](https://github.com/MatrixAI/js-polykey/wiki/Vault-Versioning)
 * Vault Operations
 * [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api) - should be deleted
 * [Git API](https://github.com/MatrixAI/js-polykey/wiki/git-api) - should be deleted (function descriptions are not required)
