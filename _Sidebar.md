@@ -62,7 +62,6 @@
 * Vault Operations
 * [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api) - should be deleted
 * [Git API](https://github.com/MatrixAI/js-polykey/wiki/git-api) - should be deleted (function descriptions are not required)
-* [Vault Histories with Git](https://github.com/MatrixAI/js-polykey/wiki/vault-histories) - should be synthesised
 
 ### Nodes
 
