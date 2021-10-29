@@ -39,12 +39,16 @@
 * [Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
 * "Agent process" is the background process
 * Node State
+* State Version and Schema
 * What is "keynode"
 
 ### Keys
 
 * [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
 * [Cryptography](https://github.com/MatrixAI/js-polykey/wiki/cryptography)
+* Root Keys
+  - Key Renewal
+* Root Certificate
 
 ### Vaults
 
@@ -128,7 +132,12 @@
 * [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
 * [Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
 * [Async Functions](https://github.com/MatrixAI/js-polykey/wiki/async-functions)
+  - Promise Usage
 * Logging and Logging Hierarchy
 * Async-Init - CreateDestroyStartStop vs StartStop... etc
 * Dependency Injection - Required vs Optional and External vs Internal
-* 
+* Linting
+* CI/CD
+* ID Usage - IdSortable, IdDeterministic, IdRandom
+* Configuration
+* Diagram Standard - Sequence, Component, tooling, State, Flow (Activity), Embedding
