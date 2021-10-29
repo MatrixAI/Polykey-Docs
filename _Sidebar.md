@@ -31,10 +31,20 @@
 * environment variables
 * parameterisation configuration priority
 * different commands and their help pages
+* [Bootstrapping](https://github.com/MatrixAI/js-polykey/wiki/bootstrapping)
+* [CLI commands design](https://github.com/MatrixAI/js-polykey/wiki/CLI-commands-design-and-style)
+
+### Agent
+
+* [Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
+* "Agent process" is the background process
+* Node State
+* What is "keynode"
 
 ### Keys
 
 * [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
+* [Cryptography](https://github.com/MatrixAI/js-polykey/wiki/cryptography)
 
 ### Vaults
 
@@ -48,36 +58,14 @@
 * Vault Operations
 * [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api) - should be deleted
 * [Git API](https://github.com/MatrixAI/js-polykey/wiki/git-api) - should be deleted (function descriptions are not required)
+* [Vault Histories with Git](https://github.com/MatrixAI/js-polykey/wiki/vault-histories) - should be synthesised
 
 ### Nodes
 
 * Node Connection Management
 * Node Discovery with Kademlia
 * [Node API](https://github.com/MatrixAI/js-polykey/wiki/node-api) - should be deleted
-
-### Gestalts
-
-* Gestalt Graph
-* Gestalt Discovery
-
-### Sigchain
-
-* TBD
-
-### ACL
-
-* [ACL](ACL)
-* Structure of ACL, but not the usage of it
-
-### Workers
-
-* [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
-* ArrayBuffer
-* Worker Pool used by Keys and DB and Vaults (EFS)
-
-### DB
-
-* [DB](DB)
+* [Node Identification](https://github.com/MatrixAI/js-polykey/wiki/node-identification)
 
 ### gRPC and HTTP API
 
@@ -87,42 +75,60 @@
 * Service Versioning
 * [Service Authentication](Sessions)
   - SessionManager and Session
+* [Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview) - should be synthesised
+* [Privilege Model](https://github.com/MatrixAI/js-polykey/wiki/privilege-model) - should be synthesised
+* [Using the PolykeyClient](Using-the-PolykeyClient)
+
+### Gestalts
+
+* Gestalt Graph
+* Gestalt Discovery
+
+### Identities
+
+* [Identification with Third Party Services](https://github.com/MatrixAI/js-polykey/wiki/identification-with-third-party-services)
+
+### Sigchain
+
+* TBD
+* Claims
+
+### ACL
+
+* [ACL](ACL)
+* Structure of ACL, but not the usage of it
 
 ### Network
 
+* [Network](https://github.com/MatrixAI/js-polykey/wiki/network)
+* [Nat Traversal](https://github.com/MatrixAI/js-polykey/wiki/nat-traversal)
 * architecture
 * error conditions
 
+### DB
+
+* [DB](DB)
+
+### Workers
+
+* [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
+* ArrayBuffer
+* Worker Pool used by Keys and DB and Vaults (EFS)
+
 # Discussion 
 
-[Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview)
-
-[Bootstrapping](https://github.com/MatrixAI/js-polykey/wiki/bootstrapping)
-
-[Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
-
-[Cryptography](https://github.com/MatrixAI/js-polykey/wiki/cryptography)
-
-[Network](https://github.com/MatrixAI/js-polykey/wiki/network)
-
-[Node Identification](https://github.com/MatrixAI/js-polykey/wiki/node-identification)
-
-[Nat Traversal](https://github.com/MatrixAI/js-polykey/wiki/nat-traversal)
-
-[Privilege Model](https://github.com/MatrixAI/js-polykey/wiki/privilege-model)
-
-[Vault Histories with Git](https://github.com/MatrixAI/js-polykey/wiki/vault-histories)
-
-[Identification with Third Party Services](https://github.com/MatrixAI/js-polykey/wiki/identification-with-third-party-services)
+* [Secrets Management](Secrets-Management)
+* [Decentralized Trust Network](Decentralized-Trust-Network)
+* [Centralized vs Decentralized Platforms](Centralized-vs-Decentralized-Platforms)
+* [Glossary](Glossary)
 
 # Development Guide
 
-[Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
-
-[Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
-
-[Async Functions](https://github.com/MatrixAI/js-polykey/wiki/async-functions)
-
-[CLI commands design](https://github.com/MatrixAI/js-polykey/wiki/CLI-commands-design-and-style)
-
-[Using the PolykeyClient](Using-the-PolykeyClient)
+* [Roadmap](Roadmap)
+* [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
+* [Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
+* [Async Functions](https://github.com/MatrixAI/js-polykey/wiki/async-functions)
+* Logging and Logging Hierarchy
+* Async-Init - CreateDestroyStartStop vs StartStop... etc
+* Dependency Injection - Required vs Optional and External vs Internal
+* 
