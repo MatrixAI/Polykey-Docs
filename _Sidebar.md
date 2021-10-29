@@ -86,7 +86,7 @@
 
 ### Gestalts
 
-* Gestalt Graph
+* [Gestalt Graph](https://github.com/MatrixAI/js-polykey/wiki/Gestalt-Graph)
 * Gestalt Discovery
 
 ### Identities
