@@ -102,6 +102,12 @@
 * [ACL](ACL)
 * Structure of ACL, but not the usage of it
 
+### Notifications
+
+* Vault Sharing
+* Gestalt Invite
+* Node Linking
+
 ### Network
 
 * [Network](https://github.com/MatrixAI/js-polykey/wiki/network)
