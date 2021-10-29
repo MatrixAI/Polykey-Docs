@@ -55,7 +55,7 @@
 * Vault Storage
   - facade
   - efs
-* [Vault Lifecycle]((https://github.com/MatrixAI/js-polykey/wiki/vault-lifecycle))
+* [Vault Lifecycle](https://github.com/MatrixAI/js-polykey/wiki/vault-lifecycle)
 * Vault Sharing
   - permissions
 * Vault Versioning
