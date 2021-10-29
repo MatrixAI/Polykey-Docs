@@ -47,15 +47,6 @@
 * Vault Versioning
 * Vault Operations
 * [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api) - should be deleted
-* [Git API](https://gittorage
-  - facade
-  - efs
-* Vault Lifecycle
-* Vault Sharing
-  - permissions
-* Vault Versioning
-* Vault Operations
-* [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api) - should be deleted
 * [Git API](https://github.com/MatrixAI/js-polykey/wiki/git-api) - should be deleted (function descriptions are not required)
 
 ### Nodes
