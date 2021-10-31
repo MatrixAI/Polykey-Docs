@@ -1,0 +1,1 @@
+* https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/213#note_719283071: No usage of sync functions from `fs`
