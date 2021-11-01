@@ -1,8 +1,8 @@
 Vaults are encapsulated properties of `VaultManager`. A `Vault` is only constructed by requesting one from the `VaultManager`. That is, whilst a `Vault` has `create`/`destroy`/`start`/`stop` functions, these are **always only called internally by `VaultManager`**. Therefore, note that `Vault` is **not** dependency injected into `VaultManager`: we don't construct a `Vault` and then pass it to the `VaultManager`.
 
-### TODO: Add details about open/close/create and implications with memory/EFS to relate to this diagram.
+### TODO: Add details about open/close/create and implications with memory/EFS to relate to this diagram. Also add a list of exceptions for error handling (for example: what happens when we call `destroyVault` on a vault that doesn't exist?) List these exceptions out.
 
-![](http://www.plantuml.com/plantuml/png/VP0n2uCm48Nt_8h3tJ_WK8JIGeVgKEWkvg22IIGv1v7-z-RYMIkbdNAyx-Mzuyf0ZQVHzEhHQGGq0qsWCRI-6wXpLgbe88IiSd1lnfuoQ09KpkARr0DQr1zKX5a1YELYSuF6-IdnQneNr-QfBPpEDpRmA_IfOAqvzYxiQaIOVqKmbmZU5_ByiAvMGEinVabXIaJcoLZm0SYxwGjBPVpEmu95swMxE6pqJtQ9LiVZlm00)
+![](http://www.plantuml.com/plantuml/png/ZO_1IiGm48RlUOfXB-gXFi0UP44KFBWU1E-X-PN0x4GoKt7VthH3rRfOlNJedo_p_TcfnMh3WODbOz1J7DY8ypFwOz_-sx51GvWcRVR5YGr5fNqHXF53M-eylnD3bSYKHIrAZoqbnFH5tTm--ivsKA1oPeJthFPfU7Y587spU11yh9euls7cbYvtQA3PSir55nOFWe-_t-FSRnP_RjTTqTp6jzr7YI-ebtr5uwVe_28uC-7ZlPzmWbejnrFQEvyk7zEPTcIbIcdf4lvlaHqa3GV-0000)
 
 Vaults are stored in a `VaultMap`, mapping from the vault ID to the `Vault` itself. Locking is required on this `VaultMap` to ensure consistent creation, destruction, opening, and closing. This `VaultMap` follows the generic `ObjectMap` flow for creation of a vault:
 
