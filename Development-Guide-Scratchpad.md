@@ -11,6 +11,9 @@ Keeping a list of things to be integrated into programmer's reference documentat
    - utils and errors: `import * as domainUtils from '../domain';` or `import { utils as domainUtils, errors as domainErrors } from '../domain';`
    - don't do `import { errors } from '.';`
 
+### Deployment:
+* Some gist notes about using Docker and Nix https://github.com/MatrixAI/js-polykey/issues/231#issuecomment-955960337
+
 ### Documentation:
 * function comment blocks (in code):
    - no `@return`/`@param` usage in function comments (auto-generated, and return is inferred from the return type)
