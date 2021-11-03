@@ -31,4 +31,4 @@ This process can also be shown on the following state diagram:
 
 ![](http://www.plantuml.com/plantuml/png/VP1D2i8m48NtxnH3L-t27g0BwVnSf60M1QsGHBs-CKI9DRWfdVVoXIypXxZuUBkSWVGN7IcK9c8w74bU7tqN0caN3DuNI5CU9xex7zRhrijGGgr27G39ALSf3v3cKMtTgYs-g7NMqHB86FPnjEAHauTVe-l7SVn11FRzNYjI9dyvXUqMcE6YcRiAdjrsIij_0W00)
 
-### TODO: textually expand on diagram
+### TODO: textually expand on diagram (from [#258](https://github.com/MatrixAI/js-polykey/issues/258))
