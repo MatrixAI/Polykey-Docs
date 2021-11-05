@@ -128,7 +128,7 @@
 * Zero Copy Transfer with ArrayBuffer
 * Worker Pool used by Keys and DB and Vaults (EFS)
 
-# Discussion 
+# Theory
 
 * [Secrets Management](Secrets-Management)
 * [Decentralized Trust Network](Decentralized-Trust-Network)
