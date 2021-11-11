@@ -3,7 +3,7 @@ Keeping a list of things to be integrated into programmer's reference documentat
 ### Code:
 * All class functions/variables that are only intended for internal class operations should be `protected` (not `private`)
    - Reasoning for this? Mostly because of subclassing?
-* Correct logger usage and propagation (see rest of thread too): https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/213#note_717192817
+* Correct logger usage and propagation (see rest of thread too): https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/213#note_717192817 - using `this.name` in static methods and `this.constructor.name` otherwise, whenever the class name is required https://github.com/MatrixAI/js-polykey/issues/281#issuecomment-965989526
 * Protobuf schema structure: https://github.com/MatrixAI/js-polykey/issues/249#issuecomment-956265363 (likely to have some further changes - check later in the issue)
 
 ### Module usage:
