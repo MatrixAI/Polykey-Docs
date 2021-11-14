@@ -19,3 +19,6 @@ Keeping a list of things to be integrated into programmer's reference documentat
 ### Documentation:
 * function comment blocks (in code):
    - no `@return`/`@param` usage in function comments (auto-generated, and return is inferred from the return type)
+
+### Reviewing
+* Ensure exceptions are defined where expected. From **Code** section: errors occurring from service handler logic should be in either `client/errors.ts` or `agent/errors.ts` (as opposed to the domain-level). For example, only GRPC-specific errors should be defined in `grpc/errors.ts`. https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/213#note_732415633
