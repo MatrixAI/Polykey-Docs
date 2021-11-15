@@ -5,7 +5,11 @@ Keeping a list of things to be integrated into programmer's reference documentat
    - Reasoning for this? Mostly because of subclassing?
 * Correct logger usage and propagation (see rest of thread too): https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/213#note_717192817 - using `this.name` in static methods and `this.constructor.name` otherwise, whenever the class name is required https://github.com/MatrixAI/js-polykey/issues/281#issuecomment-965989526
 * Protobuf schema structure: https://github.com/MatrixAI/js-polykey/issues/249#issuecomment-956265363 (likely to have some further changes - check later in the issue)
-* Exceptions: errors occurring from service handler logic should be in either `client/errors.ts` or `agent/errors.ts` (as opposed to the domain-level). For example, only GRPC-specific errors should be defined in `grpc/errors.ts`. https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/213#note_732415633
+
+### Exceptions:
+* Errors occurring from service handler logic should be in either `client/errors.ts` or `agent/errors.ts` (as opposed to the domain-level). For example, only GRPC-specific errors should be defined in `grpc/errors.ts`. https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/213#note_732415633
+* Ensure that the `extends ...` higher-level exception class is prepended to the exception name. e.g. `class ErrorCLIGRPCNotStarted extends ErrorCLI {}`
+
 
 ### Module usage:
 * No usage of sync functions from `fs`: https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/213#note_719283071: 
