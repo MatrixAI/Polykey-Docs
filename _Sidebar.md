@@ -159,4 +159,4 @@
 * Development Environment using Nix
 * Release & Distribution
 * Testnet & Mainnet Deployment
-* [building]
+* [[Building]]
