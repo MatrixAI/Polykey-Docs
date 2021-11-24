@@ -1,4 +1,4 @@
-#### Starting a session
+### Starting a Session
 When a client is started, it starts the `Session` object. This handles the reading and writing of the current session token from the disk (it does not store a copy of the token internally).
 
 The Session must be provided with a `sessionTokenPath` during creation, and can optionally also be provided with a filesystem, logger, session token, and the option to overwrite old data if it exists. The `sessionTokenPath` is the location of the session file on disk, which stores the shared session token for all authenticated gRPC calls. When the Session is started (during creation) if a session token is provided it will be written to the session file, overwriting any existing data. This means that, when the session is started, the session file can be in any one of three possible states:
@@ -7,15 +7,15 @@ The Session must be provided with a `sessionTokenPath` during creation, and can 
 2. Contains a valid token
 3. Contains an invalid token
 
-A gRPC call can be attempted in all three cases, however, only states one and two have the potential to result in a successful execution after zero or more reattempts of the call. A gRPC call cannot be reattempted if the session token is invalid, unless a valid password is supplied when the call is made that can override the usage of the token for authentication (see CARL).
+A gRPC call can be attempted in all three cases, however, only a valid token can be used to authorize the call.
 
-#### CallCredentials
+### Session Interception
+The session interceptor is the middleware for authenticating gRPC calls. It ensures that the session token is read from the session file at the beginning of every call and encoded into authorization metadata. This metadata can be overridden by an additional metadata object generated using the root password, which can be supplied in the form of a path to the password file or as an environment variable.
 
-These credentials are necessary when making a GRPC call. it can be used in two ways. the `Session` object can be provided when starting a `GRPCClientClient`. the client uses the `Session.sessionMetadataGenerator` for the `CallCredentials` when starting a client connection. this automatically provides the required metadata when making each call. The other method is using the providing the `CallCredentials` with each GRPC call by using `GRPCClient.someRandomCall(message, await session.createCallCredentials())`
+When the call is made to the agent, the service handler checks the authorization metadata and, once authenticated, generates a new token that is encoded into a new authorization metadata object. The session interceptor listens for this, decoding the received metadata back into a session token and writing it to the session file. This allows future calls to be authenticated using this token, preventing the need for a new token to be generated on every call or for the password to be supplied on every call.
 
-The `CallCredentials` provided by the Session ensures that `Authorization: 'Bearer: {token}'` is provided in the `Metadata` of the GRPC call. This metadata is used by the agent to verify that the call was made by an authorised session.
-
-If the token is missing or expired, then the agent will respond with an error. An `ErrorClientJWTTokenNotProvided` if the token is missing from the metadata. Or an `ErrorSessionTokenInvalid` error if the token has expired or been invalidated by an `agent lockall` command.
+#### Session Management
+Since the session token needs to be both read from and written to the session file during authenticated calls, we need to ensure that the token remains safe. To achieve this, we use a read-write lock in order to prevent multiple commands from attempting to write to the session file at the same time. Since multiple reads can occur concurrently safely, the lock favours writes in order to prevent subsequent reads from sharing the lock and increasing wait times for writes. We also drop writes if a write lock is already acquired by another process since we know that the session token will be refreshed by the other process.
 
 #### Making GRPC calls.
 As mentioned in the [Starting a session](#Starting-a-session) section there are 3 states that the `Session` can be in. For reference here they are.
