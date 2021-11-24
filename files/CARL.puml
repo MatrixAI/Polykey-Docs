@@ -1,0 +1,23 @@
+@startuml
+
+!theme plain
+skinparam style strictuml
+
+title "CLI Authentication Retry Loop"
+
+User -> Client: Inputs CLI Command
+Client -> Agent: Attempts CLI Call
+Agent --> Client: ErrorClientAuthMissing
+
+loop call unsuccessful
+    Client --> User: Prompts for password
+    User -> Client: Enters password
+    Client -> Agent: Attempts CLI Call
+    break password is valid
+        Agent --> Client: Returns requested data
+        Client --> User: Displays requested data
+    end
+    Agent --> Client: ErrorClientAuthDenied
+end
+
+@enduml
