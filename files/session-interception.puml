@@ -1,0 +1,26 @@
+@startuml
+
+!theme plain
+skinparam style strictuml
+
+title "Session Interception"
+
+participant User
+participant Client
+participant "Session Interceptor" as interceptor
+participant Session
+participant Agent
+
+User -> Client: Inputs CLI Command
+Client -> interceptor: Attempts CLI Call
+interceptor -> Session: Requests session token
+Session --> interceptor: Returns session token
+interceptor -> interceptor: Encodes authorization metadata
+interceptor -> Agent: Call continues to agent
+Agent -> Agent: Authenticates call request
+Agent --> interceptor: Sends metadata with new token
+interceptor -> Session: Writes new token
+Agent --> Client: Returns requested data
+Client --> User: Displays requested data
+
+@enduml
