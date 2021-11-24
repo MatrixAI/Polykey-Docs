@@ -1,0 +1,62 @@
+@startuml
+
+!theme plain
+skinparam style strictuml
+
+title "Session Interception"
+
+participant User
+participant Client1
+participant Client2
+participant Interceptor1
+participant Interceptor2
+participant Session1
+participant Session2
+participant "Session File" as file
+participant Agent
+
+User -[#red]> Client1: Inputs Command A
+activate Client1 #red
+
+Client1 -[#red]> Interceptor1: Attempts Call A
+Interceptor1 -[#red]> Session1: Requests session token
+Session1 -[#red]> file: Reads session token
+activate file
+
+User -[#blue]> Client2: Inputs Command B
+activate Client2 #blue
+
+Client2 -[#blue]> Interceptor2: Attempts Call B
+Interceptor2 -[#blue]> Session2: Requests session token
+Session2 -[#blue]> file: Reads session token
+file -[#red]-> Session1: Returns session token
+file -[#blue]-> Session2: Returns session token
+deactivate file
+
+Interceptor1 -[#red]> Agent: Call A continues to agent
+Interceptor2 -[#blue]> Agent: Call B continues to agent
+Agent -[#red]> Agent: Authenticates Call A
+Agent -[#red]-> Interceptor1: Sends metadata with new token
+Interceptor1 -[#red]> Session1: Writes token
+Session1 -[#red]> file: Acquires write lock
+activate file
+
+Agent -[#blue]> Agent: Authenticates Call B
+Agent -[#blue]-> Interceptor2: Sends metadata with new token
+Interceptor2 -[#blue]> Session2: Writes token
+Session2 -[#blue]> file: Fails to acquire lock
+
+Agent -[#blue]-> Client2: Returns requested data B
+deactivate Client2
+
+Client2 -[#blue]-> User: Displays requested data B
+
+file -[#red]-> Session1: Releases lock
+deactivate file
+
+Agent -[#red]-> Client1: Returns requested data A
+deactivate Client1
+
+Client1 -[#red]-> User: Displays requested data A
+
+@enduml
