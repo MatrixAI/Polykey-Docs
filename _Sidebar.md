@@ -77,7 +77,7 @@
 * Agent Service
 * Service Error Handling
 * Service Versioning
-* [Service Authentication](Service-Authentication)
+* [Session Management](Session-Management)
   - SessionManager and Session
 * [Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview) - should be synthesised
 * [Privilege Model](https://github.com/MatrixAI/js-polykey/wiki/privilege-model) - should be synthesised
