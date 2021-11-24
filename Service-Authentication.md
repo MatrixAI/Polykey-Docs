@@ -14,6 +14,8 @@ The session interceptor is the middleware for authenticating gRPC calls. It ensu
 
 When the call is made to the agent, the service handler checks the authorization metadata and, once authenticated, generates a new token that is encoded into a new authorization metadata object. The session interceptor listens for this, decoding the received metadata back into a session token and writing it to the session file. This allows future calls to be authenticated using this token, preventing the need for a new token to be generated on every call or for the password to be supplied on every call.
 
+![session interception diagram](http://www.plantuml.com/plantuml/png/3SSn5i9020N0g-W1ilHsbXOU8gveC8JbmUV5t5wdcxDOrtfoXPuMmFD25FFUteAb7fKSVHZOqFhOQ9TLw3uZv7kzqISd7tgiVD1Bb9EICsNO90QEpev_cjUcFm00)
+
 #### Session Management
 Since the session token needs to be both read from and written to the session file during authenticated calls, we need to ensure that the token remains safe. To achieve this, we use a read-write lock in order to prevent multiple commands from attempting to write to the session file at the same time. Since multiple reads can occur concurrently safely, the lock favours writes in order to prevent subsequent reads from sharing the lock and increasing wait times for writes. We also drop writes if a write lock is already acquired by another process since we know that the session token will be refreshed by the other process.
 
