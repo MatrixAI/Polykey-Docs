@@ -1,5 +1,5 @@
 ### Starting a Session
-When a client is started, it starts the `Session` object. This handles the reading and writing of the current session token from the disk (it does not store a copy of the token internally).
+When a client is initialized, it creates a `Session` object. This handles the reading and writing of the current session token from the disk (it does not store a copy of the token internally).
 
 The Session must be provided with a `sessionTokenPath` during creation, and can optionally also be provided with a filesystem, logger, session token, and the option to overwrite old data if it exists. The `sessionTokenPath` is the location of the session file on disk, which stores the shared session token for all authenticated gRPC calls. When the Session is started (during creation) if a session token is provided it will be written to the session file, overwriting any existing data. This means that, when the session is started, the session file can be in any one of three possible states:
 
@@ -19,166 +19,22 @@ When the call is made to the agent, the service handler checks the authorization
 #### Session Management
 Since the session token needs to be both read from and written to the session file during authenticated calls, we need to ensure that the token remains safe. To achieve this, we use a read-write lock in order to prevent multiple commands from attempting to write to the session file at the same time. Since multiple reads can occur concurrently safely, the lock favours writes in order to prevent subsequent reads from sharing the lock and increasing wait times for writes. We also drop writes if a write lock is already acquired by another process since we know that the session token will be refreshed by the other process.
 
-#### Making GRPC calls.
-As mentioned in the [Starting a session](#Starting-a-session) section there are 3 states that the `Session` can be in. For reference here they are.
-1. no token.
-2. valid token.
-3. invalid token.
+![session management diagram](http://www.plantuml.com/plantuml/png/5Sqzje90343X_gtYkG18RuMbXOk8GuH89ZCdFmVPlLBTwfvlya2BhF9tOIsICwN9_nhH_GfWk8yBnvhFTBBID4XZBAt2pXl30yFuSxl3suVUvDZeW1SBEJYvSzEXek92zRpwYKoaywzV)
 
-With state 1. 
-```
+### Retrying a CLI Call
+When a user executes a CLI command without having been authenticated previously the command sent to the agent will be rejected as "unauthorised". Instead of throwing an exception here, we can prompt the user for the root password in order to authenticate the client. Provided we know that the user is not a machine (which would classify as unattended usage), we can continue to prompt the user for the root password until the correct password is supplied and they can be authenticated. We will refer to this loop as the CLI Authentication Retry Loop (CARL).
 
-   ┌────────────┐                         ┌────────────┐
-   │            │                         │            │
-   │   Client   │                         │   Agent    │
-   │            │                         │            │
-   └─────┬──────┘                         └──────┬─────┘
-         │            Call is made               │
-         │           with no token               │
-         ├──────────────────────────────────────►│
-         │                                       │
-         │    ErrorClientJWTTokenNotProvided     │
-         │◄──────────────────────────────────────┤
-         │                                       │
-         │`sessionUnlock(sessionPasswordMessage)`│
-         ├──────────────────────────────────────►│
-         │                                       │
-         │         SessionTokenMessage           │
-         │◄──────────────────────────────────────┤
-         │                                       │
-         │ `Session.start({ token });`           │
-         ├────────────────────────┐              │
-         │Session token is updated│              │
-         │Token written to disk   │              │
-         │◄───────────────────────┘              │
-         │                                       │
+Before we can activate the CARL and begin to prompt the user for the password, we need to ensure that the command is not unattended (since we need to account for both machine and human usage). We can do this by checking if either of the two environment variables PK_PASSWORD (for the root password) or PK_TOKEN (for the session token) are set (since the purpose of setting these is for unattended usage). Before we activate the CARL we also need to check that the first exception we receive back from the agent is ErrorClientAuthMissing (thrown when the call has no authorisation metadata), since we only want to retry the call if the client is not authenticated, rather than if the authentication metadata is invalid or if there is some other error on the agent side. Once we are inside the loop we only want to restart it if the error we receive back from the agent is ErrorClientAuthDenied (thrown when the authorisation metadata is invalid), since this means that the password supplied by the user was invalid and we want to prompt them to try again. The user can always manually exit the loop from the terminal if they have forgotten their password or otherwise wish to cancel the call.
 
-```
+![CARL](http://www.plantuml.com/plantuml/png/5Smx3i8m303GdLF00OXtfbPCIB1mWv0QQkewaJygkJqmlUqDvbazLjuTI0h7XA6ydzsRdG0qR-b5FiSZ3BLKSHHFfQwmqK9mowxq6I_mjcEht1Viy2H6W_DulwRsRmUKwUSN)
 
-With the state 2. valid token, GRPC calls should complete normally. 
-```
+Since we want this loop to be as automated as possible, prompting the user to enter their password should be our last option. As such, the retry function can be optionally called with an initial metadata object that is constructed during parsing of command line options for each call. This metadata is encoded using the first set value from the following in order:
 
-  ┌────────────┐                         ┌────────────┐
-  │            │                         │            │
-  │   Client   │                         │   Agent    │
-  │            │                         │            │
-  └─────┬──────┘                         └──────┬─────┘
-        │            Call is made               │
-        │           with valid token            │
-        ├──────────────────────────────────────►│
-        │                                       │
-        │           Response with new           │
-        │            token metadata             │
-        │◄──────────────────────────────────────┤
-        │                                       │
-        ├────────────────────────┐              │
-        │Session token is updated│              │
-        │Token written to disk   │              │
-        │◄───────────────────────┘              │
-        │                                       │
+1. Password File (optional for every CLI call)
+1. PK_PASSWORD environment variable
+1. PK_TOKEN environment variable
 
-```
-
-state 3.
-```
-
-   ┌────────────┐                         ┌────────────┐
-   │            │                         │            │
-   │   Client   │                         │   Agent    │
-   │            │                         │            │
-   └─────┬──────┘                         └──────┬─────┘
-         │            Call is made               │
-         │           with invalid token          │
-         ├──────────────────────────────────────►│
-         │                                       │
-         │       ErrorSessionTokenInvalid        │
-         │◄──────────────────────────────────────┤
-         │                                       │
-         │`sessionUnlock(sessionPasswordMessage)`│
-         ├──────────────────────────────────────►│
-         │                                       │
-         │         SessionTokenMessage           │
-         │◄──────────────────────────────────────┤
-         │                                       │
-         │ `Session.start({ token });`           │
-         ├────────────────────────┐              │
-         │Session token is updated│              │
-         │Token written to disk   │              │
-         │◄───────────────────────┘              │
-         │                                       │
-
-```
-
-States 1 and 3 both follow the same series of steps in order to resolve the problem, and the relationships between the objects that perform these steps can be visualized as follows:
-```
-┌──────────────────┐
-│  SessionManager  │
-└──────▲───┬───────┘
-       │   │
-       │  3│
-       │   │
-┌──────┴───┴───────┐
-│   PolykeyAgent   │
-└──┬───┬───┬───────┘
-   │   │   │
-  1│   │   │
-   │   │   │
-┌──┴───┴───┴───────┐
-│  PolykeyClient   │
-└──┬───┬───┬───┬───┘
-   │   │   │   │
-   │  2│   │  4│
-   │   │   │   │
-┌──┴───┴───┴───┴───┐
-│     Session      │
-└──┬───────┬───┬───┘
-   │       │   │
-   │       │   │
-   │       │   │
-┌──▼───────▼───▼───┐
-│   sessionFile    │
-└──────────────────┘
-```
-
-1. The Agent starts up a new Client and Session in response to a CLI call. The Session checks the session file (located at `~/.polykey/client/token`) for a valid token. At this stage, either the session file is empty or the stored token is invalid.
-2. The Session requests a new, valid token from the Session Manager.
-3. The Session Manager returns a new token and the Session writes this to the session file and locks it.
-4. When the Client finishes its command, its Session unlocks the session file and refreshes the token.
-
-The refreshing of the token is important, as this resets the amount of time until it becomes invalid and allows subsequent CLI calls to use the token, rather than needing to wait for the Session Manager to generate a new one every time. We lock the session file during process execution in order to prevent other processes from refreshing the session token during this time. This is because the token is already guaranteed to be refreshed upon the completion of our own command. Two concurrent processes, along with the stages of locking and unlocking the session file, can be visualized as follows:
-```
-┌──────────────────────────────────────────┐
-│               PolykeyAgent               │
-└────┬────────────────────────┬────────────┘
-     │                        │
-    1│                       3│
-     │                        │
-┌────┴────────────┐      ┌────┴────────────┐
-│  PolykeyClient  │      │  PolykeyClient  │
-└────┬───▲───┬────┘      └────┬───▲───┬────┘
-     │   │   │                │   │   │
-     │   │  6│                │   │  5│
-     │   │   │                │   │   │
-┌────┴───┴───┴────┐      ┌────┴───┴───┴────┐
-│     Session     │      │     Session     │
-└────┬───┬───┬────┘      └────┬───┬───┬────┘
-     │   │   │                │   │   │
-     │  2│   │                │  4│   ▼
-     │   │   │                │   │(locked)
-┌────▼───┴───▼────────────────▼───┴────────┐
-│               sessionFile                │
-└──────────────────────────────────────────┘
-```
-
-1. The Agent starts up a new Client and Session in response to a CLI call. The Session checks the session file (located at `~/.polykey/client/token`) for a valid token, which is found, and locks the file.
-2. The valid token from the session file is returned to the Client.
-3. The Agent starts up a second Client and associated Session in response to a second, concurrent CLI call. This Session also checks the session file for a valid token (which is found) and attempts to lock the session file, however this request fails because the file is already locked. This behavior is expected and does not throw an exception.
-4. The valid token from the session file is returned to the second Client.
-5. When the second Client finishes its process, its Session attempts to unlock the session file, however this fails because it does not possess the lock. The session refresh attempt is dropped and the process exits cleanly.
-6. When the first Client finishes its process, its Session unlocks the session file and refreshes the token.
-
-TODO: finish this, add diagrams.
-
+In this way, if the password is already supplied it will be made use of. Once we enter the CARL we know that all other options have been exhausted and we have to prompt the user for the password.
 
 ### Exceptions
 There are three exceptions that can occur during service authentication:
