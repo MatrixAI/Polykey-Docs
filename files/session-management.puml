@@ -3,7 +3,7 @@
 !theme plain
 skinparam style strictuml
 
-title "Session Interception"
+title "Session Management"
 
 participant User
 participant Client1
