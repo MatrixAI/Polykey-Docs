@@ -1,20 +1,13 @@
-
-### Usage
-Here is an outline of how sessions is used.
- 
 #### Starting a session
-When a client is started, it starts the `Session` object. this handles the current session token. It does three things, holds the current token, reads the token for the current session from the disk if it exists and writes a new tokens to the disk. it also provides a method to generate call credentials. 
+When a client is started, it starts the `Session` object. This handles the reading and writing of the current session token from the disk (it does not store a copy of the token internally).
 
-The Session is instantiated with `new Session({clientPath, logger, fs});`. The `clientPath` is used to find the Session file. There are two ways of starting the session. With `session.start({});` or `session.start({ token });` If a token is not provided it will attempt to read a token from the `clientPath` directory. 
+The Session must be provided with a `sessionTokenPath` during creation, and can optionally also be provided with a filesystem, logger, session token, and the option to overwrite old data if it exists. The `sessionTokenPath` is the location of the session file on disk, which stores the shared session token for all authenticated gRPC calls. When the Session is started (during creation) if a session token is provided it will be written to the session file, overwriting any existing data. This means that, when the session is started, the session file can be in any one of three possible states:
 
-At this stage the Session can be started with 3 possible states.
-1. Session started with no token.
-2. Session started with a valid token.
-3. Session started with an invalid token.
+1. Empty (no token)
+2. Contains a valid token
+3. Contains an invalid token
 
-
-States 1. and 3. will cause an exception when attempting to make a GRPC call. State 1. will cause an `ErrorClientJWTTokenNotProvided`. see [Exceptions](#Exceptions) for more details. State 3. will cause the agent to reply with an `ErrorSessionTokenInvalid` exception through the GRPC.
-
+A gRPC call can be attempted in all three cases, however, only states one and two have the potential to result in a successful execution after zero or more reattempts of the call. A gRPC call cannot be reattempted if the session token is invalid, unless a valid password is supplied when the call is made that can override the usage of the token for authentication (see CARL).
 
 #### CallCredentials
 
