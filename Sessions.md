@@ -186,20 +186,28 @@ TODO: finish this, add diagrams.
 
 
 ### Exceptions
-There are two exceptions that can occur with sessions.
+There are three exceptions that can occur during service authentication:
 
-The first is where you atempt a GRPC call without providing the token, either via a `CallCredential` when making the call or a `ClientCredential` when starting the `GRPCClientClient` by pasing a `Session` to it. Doing so will result in an `ErrorClientJWTTokenNotProvided` error.
+The first is when a gRPC call is made with no authorization metadata. This can occur when there is no existing session token stored on disk and no password is provided in the call options or in environment variables. In this case the call is unauthenticated and thus cannot be authorized to continue.
 ```ts
-class ErrorClientJWTTokenNotProvided extends ErrorClient {
-  description: string = 'JWT Token not provided in metadata';
-  exitCode: number = 77;
+class ErrorClientAuthMissing extends ErrorClient {
+  description = 'Authorisation metadata is required but missing';
+  exitCode = 77;
 }
 ```
 
-The second is when a session token expires or is invalid. So when a call is made with an invalid or expired token this results in an `ErrorSessionTokenInvalid` error. There are two ways this can happen currently. The session token expires after a time or all sessions are invalidated with a  `sessions.
+The second is when the authorization metadata is present but invalid. If the authentication type is a session token this means that the token has either expired naturally or has been invalidated through a refresh of the session key (invalidating all active tokens at once). If the authentication type is a password it means that the password is incorrect. In this case the call cannot be authorized to continue due to failed authentication.
 ```ts
-class ErrorSessionTokenInvalid extends ErrorSession {
-  description: string = 'Invalid JWT Token, please reauthenticate.';
-  exitCode: number = 65;
+class ErrorClientAuthDenied extends ErrorClient {
+  description = 'Authorisation metadata is incorrect or expired';
+  exitCode = 77;
+}
+```
+
+The third and final exception that can occur is when the authorization metadata is incorrectly formatted. This exception should only occur due to a programming error.
+```ts
+class ErrorClientAuthFormat extends ErrorClient {
+  description = 'Authorisation metadata has invalid format';
+  exitCode = 64;
 }
 ```
