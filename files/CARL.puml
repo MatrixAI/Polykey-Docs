@@ -7,7 +7,7 @@ title "CLI Authentication Retry Loop"
 
 User -> Client: Inputs CLI Command
 Client -> Agent: Attempts CLI Call
-Agent --> Client: ErrorClientAuthMissing
+Agent --> Client: ErrorClientAuthMissing | ErrorClientAuthDenied
 
 loop call unsuccessful
     Client --> User: Prompts for password
