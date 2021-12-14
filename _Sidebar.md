@@ -142,6 +142,7 @@
 * [Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
 * [Async Functions](https://github.com/MatrixAI/js-polykey/wiki/async-functions)
   - Promise Usage
+* [API Design](https://github.com/MatrixAI/js-polykey/wiki/api-design)
 * Logging and Logging Hierarchy
 * Async-Init - CreateDestroyStartStop vs StartStop... etc
 * Dependency Injection - Required vs Optional and External vs Internal
