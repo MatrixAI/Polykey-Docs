@@ -4,3 +4,17 @@ Don't use `_var` to indicate a new `var`. This by convention used for private va
 
 # TypeScript
 
+# Imports in Domains
+
+```
+     ┌──────────────────┐
+     │                  │
+     │                  │
+Errors────►Types ──┐    │
+  │         │      │    │
+  │         │      │    │
+  ▼         │      │    │
+Utils ◄─────┘      │    │
+  │                ▼    │
+  └─────────► Classes ◄─┘
+```
