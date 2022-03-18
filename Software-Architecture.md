@@ -61,3 +61,7 @@ These are not insurmountable (see Hierarchical Model View Controller), it is jus
 In PK's network API, instead of controllers we have GRPC handlers, and instead of models we have domains. Our handlers are thinner than controllers, and our domains are much fatter than models. For example, our domains handle transactions and authorisation, while our handlers often just proxy calls directly into the domains. Our domains also can have in-memory state, and can often coordinate with each other using locks. They are much richer objects.
 
 Our domains are highly "programmable". We wanted PK to work like a library/package and not just as an end-user web service. Therefore our handlers only do the bare minimum work to map GRPC semantics to function/method APIs of our domain objects.
+
+## 3 Layer Cake or Functional Core & Imperative Shell
+
+* https://www.parsonsmatt.org/2018/03/22/three_layer_haskell_cake.html
