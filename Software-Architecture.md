@@ -5,28 +5,35 @@ Polykey takes concepts and patterns for multiple inspirations.
 Many software applications are structured in a layered-tiers. One of the most common is the Model View Controller architecture which has many variants.
 
 ```
-                              ┌─────────────┐
-                              │             │
-┌──────────────┐              │ Model 1     │
-│              │              │ ┌─────────┐ │
-│ Controller 1 ├───────┬──────► │ Model 2 │ ├──────────────────────┐
-│              │       │      │ └─────────┘ │                      │
-└──────────────┘       │      │             │                      │
-                       │      └───────┬─────┘                      │
-                       │              │                            │
-                       │              │     ┌─────────┐            │
-                       │              └─────►         │         ┌──▼───┐
-                       │                    │         │         │      │
-                       └────────────────────► Model 3 ├─────────►  DB  │
-                                            │         │         │      │
-                                      ┌─────►         │         └──▲───┘
-                                      │     └─────────┘            │
-                                      │                            │
-┌──────────────┐               ┌──────┴─────┐                      │
-│              │               │            │                      │
-│ Controller 2 ├───────────────►  Model 4   ├──────────────────────┘
-│              │               │            │
-└──────────────┘               └────────────┘
+                               Encapsulates model
+
+Aggregates models together      ┌─────────────┐
+                                │             │
+  ┌──────────────┐              │ Model 1     │
+  │              │              │ ┌─────────┐ │
+  │ Controller 1 ├───────┬──────► │ Model 2 │ ├──────────────────────┐
+  │              │       │      │ └─────────┘ │                      │
+  └──────────────┘       │      │             │                      │
+                         │      └───────┬─────┘                      │
+                         │              │                            │
+                         │              │     ┌─────────┐            │
+                         │              └─────►         │         ┌──▼───┐
+                         │                    │         │         │      │
+                         └────────────────────► Model 3 ├─────────►  DB  │  Shared DB state
+                                              │         │         │      │
+ Manages mutual exclusion               ┌─────►         │         └──▲───┘
+ and cross cutting concerns             │     └─────────┘            │
+                                        │                            │
+  ┌──────────────┐               ┌──────┴─────┐                      │
+  │              │               │            │                      │
+  │ Controller 2 ├───────────────►  Model 4   ├──────────────────────┘
+  │              │               │            │
+  └──────────────┘               └────────────┘
+
+                    A ─► B means B is dependency injected into A
+
+                       Models are generally composable
+                       Controllers are generally not
 ```
 
 In many web services, controllers are the entry-point to the application. These represent the external API of a web service.
