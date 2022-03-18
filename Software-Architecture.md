@@ -65,3 +65,35 @@ Our domains are highly "programmable". We wanted PK to work like a library/packa
 ## 3 Layer Cake or Functional Core & Imperative Shell
 
 * https://www.parsonsmatt.org/2018/03/22/three_layer_haskell_cake.html
+
+## Import Dependency Order
+
+All of our domains follow a common structure of:
+
+* `types.ts`
+* `errors.ts`
+* `utils.ts`
+* `Class.ts`
+
+To avoid mutual dependencies, it's important to ensure that our imports follow this order.
+
+```
+     ┌──────────────────┐
+     │                  │
+     │                  │
+Errors────►Types ──┐    │
+  │         │      │    │
+  │         │      │    │
+  ▼         │      │    │
+Utils ◄─────┘      │    │
+  │                ▼    │
+  └─────────► Classes ◄─┘
+```
+
+* types can import errors
+* utils can import errors and types
+* classes can import types, errors and utils
+
+All files can import from standard library or NPM packages.
+
+This applies within a domain, and across domains, so errors can import other domain's errors, and types can import other domain's types.
