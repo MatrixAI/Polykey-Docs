@@ -74,6 +74,7 @@ All of our domains follow a common structure of:
 * `errors.ts`
 * `utils.ts`
 * `Class.ts`
+* `index.ts`
 
 To avoid mutual dependencies, it's important to ensure that our imports follow this order.
 
@@ -97,3 +98,5 @@ Utils ◄─────┘      │    │
 All files can import from standard library or NPM packages.
 
 This applies within a domain, and across domains, so errors can import other domain's errors, and types can import other domain's types.
+
+Avoid using index imports. Always import specifically. This avoids a deep import web when testing, and can allow us to partially change code without having to deal with all breakages across the import web before testing.
