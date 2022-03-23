@@ -6,7 +6,7 @@ Don't use `_var` to indicate a new `var`. This by convention used for private va
 
 ### Classes
 
-#### Extended Classes
+#### Class Extension
 
 Prefer appending the extended class name to the parent class name.
 
