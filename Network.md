@@ -20,6 +20,34 @@ New architecture:
 └────────────┘ serverPort reversePort                               reversePort serverPort└────────────┘
 ```
 
+Where you can get connection information.
+
+```
+       getConnectionInfoByClient
+                   │
+                   │
+                   │
+                   │
+                   ▼
+┌────────────┐ clientHost forwardHost                               forwardHost clientHost┌────────────┐
+│            │ clientPort forwardPort                               forwardPort clientPort│            │
+│ GRPCClient ├────────────────┐                                            ┌──────────────┤ GRPCClient │
+│            │                │      ┌───────┐             ┌───────┐       │              │            │
+└────────────┘                └──────►       │             │       ◄───────┘              └────────────┘
+                                     │ Proxy ◄─────────────► Proxy │
+┌────────────┐                ┌──────┤       │  proxyHost  │       ├───────┐              ┌────────────┐
+│            │                │      └───────┘  proxyPort  └───────┘       │              │            │
+│ GRPCServer ◄────────────────┘                     ▲                      └──────────────► GRPCServer │
+│            │ serverHost reverseHost               │               reverseHost serverHost│            │
+└────────────┘ serverPort reversePort               │               reversePort serverPort└────────────┘
+                                                    │                    ▲
+                                                    │                    │
+                                        getConnectionInfoByProxy         │
+                                                                         │
+                                                                         │
+                                                             getConnectionInfoByReverse
+```
+
 ---
 
 # Network Architecture
