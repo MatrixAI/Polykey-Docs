@@ -4,6 +4,23 @@ The network module establishes and maintains the network communication between a
 
 Under the hood, the network module is maintaining a forward proxy for forwarding data out of the keynode, and a reverse proxy for receiving data into the keynode. All the data going out and into the keynode are secured using TLS. Some keynodes are reachable using their IP addresses directly, while many live behind some NAT devices preventing direct connections to be established. For those connections that are natted, the network module uses a nat traversal technique called hole-punch to establish a direct p2p connection. It is worth noting that all types of connection other than Symmetric NAT are supported, and the Symmetric NAT connection can be supported through relay that are yet to be implemented. 
 
+New architecture:
+
+```
+┌────────────┐ clientHost forwardHost                               forwardHost clientHost┌────────────┐
+│            │ clientPort forwardPort                               forwardPort clientPort│            │
+│ GRPCClient ├────────────────┐                                            ┌──────────────┤ GRPCClient │
+│            │                │      ┌───────┐             ┌───────┐       │              │            │
+└────────────┘                └──────►       │             │       ◄───────┘              └────────────┘
+                                     │ Proxy ◄─────────────► Proxy │
+┌────────────┐                ┌──────┤       │  proxyHost  │       ├───────┐              ┌────────────┐
+│            │                │      └───────┘  proxyPort  └───────┘       │              │            │
+│ GRPCServer ◄────────────────┘                                            └──────────────► GRPCServer │
+│            │ serverHost reverseHost                               reverseHost serverHost│            │
+└────────────┘ serverPort reversePort                               reversePort serverPort└────────────┘
+```
+
+---
 
 # Network Architecture
 
