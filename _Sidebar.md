@@ -162,3 +162,4 @@
 * Release & Distribution
 * Testnet & Mainnet Deployment
 * [[Building]]
+* [[Chocolatey]]
