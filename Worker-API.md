@@ -22,11 +22,11 @@ This does mean it becomes part of setter injection, and each other domain that c
 
 Using worker pools requires access to a "worker script". This worker script then exposes functions that you can run on the worker. We need to see how this would work in the case when electron uses webpack to bundle this up. We need to ensure the path lookup still works. So any "fs" paths should be careful here, just as how we had to deal with the bootstrap.polykey.io certificate paths.
 
-Because the worker script has to be a relative path to a file on disk in the built distribution. When using `js-polykey` with webpack, you have to be careful to process the worker script paths.
+Because the worker script has to be a relative path to a file on disk in the built distribution. When using `Polykey` with webpack, you have to be careful to process the worker script paths.
 
 See: https://threads.js.org/getting-started#build-with-webpack
 
-This is especially relevant to Polykey GUI which uses webpack and electron., and later with Polykey Mobile/NativeScript. Note that Polykey Browser Extension would not be bundling js-polykey at all, as it is expected to not run polykey agent inside the browser.
+This is especially relevant to Polykey GUI which uses webpack and electron., and later with Polykey Mobile/NativeScript. Note that Polykey Browser Extension would not be bundling Polykey at all, as it is expected to not run polykey agent inside the browser.
 
 ---
 

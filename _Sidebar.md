@@ -1,6 +1,6 @@
 # Tutorials
 
-* [Getting Started With PolyKey](https://github.com/MatrixAI/js-polykey/wiki/getting-started)
+* [Getting Started With PolyKey](https://github.com/MatrixAI/Polykey/wiki/getting-started)
 
 # How-To Guides
 
@@ -23,6 +23,18 @@
 * [Device Provisioning](Device-Provisioning)
 * [Delegation of Authority](Delegation-of-Authority)
 
+### General
+
+* Managing Secret Sprawl (Secret Provenance)
+* Cryptocurrency Wallet
+
+# Theory
+
+* [Secrets Management](Secrets-Management)
+* [Decentralized Trust Network](Decentralized-Trust-Network)
+* [Centralized vs Decentralized Platforms](Centralized-vs-Decentralized-Platforms)
+* [Glossary](Glossary)
+
 # Reference
 
 ### CLI
@@ -31,12 +43,12 @@
 * environment variables
 * parameterisation configuration priority
 * different commands and their help pages
-* [Bootstrapping](https://github.com/MatrixAI/js-polykey/wiki/bootstrapping)
-* [CLI commands design](https://github.com/MatrixAI/js-polykey/wiki/CLI-commands-design-and-style)
+* [Bootstrapping](https://github.com/MatrixAI/Polykey/wiki/bootstrapping)
+* [CLI commands design](https://github.com/MatrixAI/Polykey/wiki/CLI-commands-design-and-style)
 
 ### Agent
 
-* [Agent Architecture](https://github.com/MatrixAI/js-polykey/wiki/agent-architecture)
+* [Agent Architecture](https://github.com/MatrixAI/Polykey/wiki/agent-architecture)
 * "Agent process" is the background process
 * Node State
 * State Version and Schema
@@ -44,58 +56,58 @@
 
 ### Keys
 
-* [Keys API](https://github.com/MatrixAI/js-polykey/wiki/key-api)
-* [Cryptography](https://github.com/MatrixAI/js-polykey/wiki/cryptography)
+* [Keys API](https://github.com/MatrixAI/Polykey/wiki/key-api)
+* [Cryptography](https://github.com/MatrixAI/Polykey/wiki/cryptography)
 * Root Keys
   - Key Renewal
 * Root Certificate
 
 ### Vaults
 
-* [Vault Storage](https://github.com/MatrixAI/js-polykey/wiki/vault-storage)
+* [Vault Storage](https://github.com/MatrixAI/Polykey/wiki/vault-storage)
   - facade
   - efs
-* [Vault Lifecycle](https://github.com/MatrixAI/js-polykey/wiki/vault-lifecycle)
-* [Vault Sharing](https://github.com/MatrixAI/js-polykey/wiki/vault-sharing)
+* [Vault Lifecycle](https://github.com/MatrixAI/Polykey/wiki/vault-lifecycle)
+* [Vault Sharing](https://github.com/MatrixAI/Polykey/wiki/vault-sharing)
   - permissions
-* [Vault Versioning](https://github.com/MatrixAI/js-polykey/wiki/Vault-Versioning)
-* [Vault Operations](https://github.com/MatrixAI/js-polykey/wiki/Vault-Operations)
-* [Vault API](https://github.com/MatrixAI/js-polykey/wiki/vault-api) - should be deleted
-* [Git API](https://github.com/MatrixAI/js-polykey/wiki/git-api) - should be deleted (function descriptions are not required)
+* [Vault Versioning](https://github.com/MatrixAI/Polykey/wiki/Vault-Versioning)
+* [Vault Operations](https://github.com/MatrixAI/Polykey/wiki/Vault-Operations)
+* [Vault API](https://github.com/MatrixAI/Polykey/wiki/vault-api) - should be deleted
+* [Git API](https://github.com/MatrixAI/Polykey/wiki/git-api) - should be deleted (function descriptions are not required)
 
 ### Nodes
 
-* [Node Connections](https://github.com/MatrixAI/js-polykey/wiki/Node-Connections)
-* [Node Discovery with Kademlia](https://github.com/MatrixAI/js-polykey/wiki/Node-Discovery-with-Kademlia)
-* [Node API](https://github.com/MatrixAI/js-polykey/wiki/node-api) - should be deleted
-* [Node Identification](https://github.com/MatrixAI/js-polykey/wiki/node-identification)
+* [Node Connections](https://github.com/MatrixAI/Polykey/wiki/Node-Connections)
+* [Node Discovery with Kademlia](https://github.com/MatrixAI/Polykey/wiki/Node-Discovery-with-Kademlia)
+* [Node API](https://github.com/MatrixAI/Polykey/wiki/node-api) - should be deleted
+* [Node Identification](https://github.com/MatrixAI/Polykey/wiki/node-identification)
 * Trusted Seed Nodes
 
 ### gRPC and HTTP API
 
-* [Client Service](https://github.com/MatrixAI/js-polykey/wiki/client-api)
+* [Client Service](https://github.com/MatrixAI/Polykey/wiki/client-api)
 * Agent Service
 * Service Error Handling
 * Service Versioning
 * [Session Management](Session-Management)
   - SessionManager and Session
-* [Infrastructure Overview](https://github.com/MatrixAI/js-polykey/wiki/infrastructure-overview) - should be synthesised
-* [Privilege Model](https://github.com/MatrixAI/js-polykey/wiki/privilege-model) - should be synthesised
+* [Infrastructure Overview](https://github.com/MatrixAI/Polykey/wiki/infrastructure-overview) - should be synthesised
+* [Privilege Model](https://github.com/MatrixAI/Polykey/wiki/privilege-model) - should be synthesised
 * [Using the PolykeyClient](Using-the-PolykeyClient)
 * Protobuf Schemas and Compilation
 
 ### Gestalts
 
-* [Gestalt Graph](https://github.com/MatrixAI/js-polykey/wiki/Gestalt-Graph)
+* [Gestalt Graph](https://github.com/MatrixAI/Polykey/wiki/Gestalt-Graph)
 * Gestalt Discovery
 
 ### Identities
 
-* [Identification with Third Party Services](https://github.com/MatrixAI/js-polykey/wiki/identification-with-third-party-services)
+* [Identification with Third Party Services](https://github.com/MatrixAI/Polykey/wiki/identification-with-third-party-services)
 
 ### Sigchain
 
-* [Sigchain](https://github.com/MatrixAI/js-polykey/wiki/Sigchain)
+* [Sigchain](https://github.com/MatrixAI/Polykey/wiki/Sigchain)
 * Claims
 
 ### ACL
@@ -111,8 +123,8 @@
 
 ### Network
 
-* [Network](https://github.com/MatrixAI/js-polykey/wiki/network)
-* [Nat Traversal](https://github.com/MatrixAI/js-polykey/wiki/nat-traversal)
+* [Network](https://github.com/MatrixAI/Polykey/wiki/network)
+* [Nat Traversal](https://github.com/MatrixAI/Polykey/wiki/nat-traversal)
   - Signalling & Bidirectional Hole Punching
   - TURN Relays
 * architecture
@@ -124,26 +136,19 @@
 
 ### Workers
 
-* [Workers API](https://github.com/MatrixAI/js-polykey/wiki/worker-api)
+* [Workers API](https://github.com/MatrixAI/Polykey/wiki/worker-api)
 * Zero Copy Transfer with ArrayBuffer
 * Worker Pool used by Keys and DB and Vaults (EFS)
-
-# Theory
-
-* [Secrets Management](Secrets-Management)
-* [Decentralized Trust Network](Decentralized-Trust-Network)
-* [Centralized vs Decentralized Platforms](Centralized-vs-Decentralized-Platforms)
-* [Glossary](Glossary)
 
 # Development Guide
 
 * [Roadmap](Roadmap)
-* [Software Architecture](https://github.com/MatrixAI/js-polykey/wiki/Software-Architecture)
-* [Style Guide](https://github.com/MatrixAI/js-polykey/wiki/style-guide)
-* [Error Handling in PolyKey](https://github.com/MatrixAI/js-polykey/wiki/errors)
-* [Async Functions](https://github.com/MatrixAI/js-polykey/wiki/async-functions)
+* [Software Architecture](https://github.com/MatrixAI/Polykey/wiki/Software-Architecture)
+* [Style Guide](https://github.com/MatrixAI/Polykey/wiki/style-guide)
+* [Error Handling in PolyKey](https://github.com/MatrixAI/Polykey/wiki/errors)
+* [Async Functions](https://github.com/MatrixAI/Polykey/wiki/async-functions)
   - Promise Usage
-* [API Design](https://github.com/MatrixAI/js-polykey/wiki/api-design)
+* [API Design](https://github.com/MatrixAI/Polykey/wiki/api-design)
 * Logging and Logging Hierarchy
 * Async-Init - CreateDestroyStartStop vs StartStop... etc
 * Dependency Injection - Required vs Optional and External vs Internal
