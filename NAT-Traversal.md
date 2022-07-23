@@ -21,7 +21,7 @@ Current situation is:
 
 References:
 
-* https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/84
+* https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/84
 
 ---
 

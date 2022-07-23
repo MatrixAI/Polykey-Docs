@@ -1,5 +1,5 @@
 # Overview
-The CLI for js-polykey is the first real `consumer` of `js-polykey`'s `gRPC` functionality. It uses the `PolykeyClient` class which wraps a `gRPC client` along with a few other things.
+The CLI for Polykey is the first real `consumer` of `Polykey`'s `gRPC` functionality. It uses the `PolykeyClient` class which wraps a `gRPC client` along with a few other things.
 
 When the `PolykeyClient` starts, it attempts to connect to a running `PolykeyAgent`'s gRPC server. If a connection cannot be established, the user is informed of it.
 
@@ -16,7 +16,7 @@ A few things happen.
 
 # Configuration from lockfile
 
-There exists a file in the filesystem, in the [polykey path](https://github.com/MatrixAI/js-polykey/wiki#polykey-directory) that contains information about a `PolykeyAgent` if it is running.
+There exists a file in the filesystem, in the [polykey path](https://github.com/MatrixAI/Polykey/wiki#polykey-directory) that contains information about a `PolykeyAgent` if it is running.
 It will be guaranteed to contain the following:
 * `PID`: Process ID
 * `GRPCHOST`: The host address of the grpc server that is running
