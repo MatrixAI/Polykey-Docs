@@ -16,7 +16,7 @@ If we consider two remote keynodes, `A` and `B`, the cloning process would be as
 
    This cloning process is depicted as follows:
 
-   ### TODO: Add diagram of process. See [#258](https://github.com/MatrixAI/js-polykey/issues/258)
+   ### TODO: Add diagram of process. See [#258](https://github.com/MatrixAI/Polykey/issues/258)
 
 Using the same setup, the pulling process would be as follows:
 

@@ -1,6 +1,6 @@
 Each Polykey keynode has a unique node ID. This node ID is the "public key fingerprint": a SAH-256 hash of the 4096-bit RSA public key. This produces 32 unique bytes that represent the node ID. 
 
-### TODO: Incorporate details from [#261](https://github.com/MatrixAI/js-polykey/issues/261), depending on how we choose to canonicalise the node ID.
+### TODO: Incorporate details from [#261](https://github.com/MatrixAI/Polykey/issues/261), depending on how we choose to canonicalise the node ID.
 
 <details>
 <summary>Old details... unnecessarily verbose and some out of date, but keeping for now</summary>

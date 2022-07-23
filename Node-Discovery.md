@@ -67,7 +67,7 @@ It will be itself, and also the bootstrap node `bootstrap.polykey.io`.
 
 If it is the bootstrap node, then it only has itself or OTHER bootstrap nodes.
 
-The information for the bootstrap node is hardcoded into the source code of the js-polykey.
+The information for the bootstrap node is hardcoded into the source code of the Polykey.
 
 Which means the source code has:
 
@@ -84,7 +84,7 @@ And in addition, there's an option to generate a CSR "certificate signing reques
 
 ## Node Certificate Rotation
 
-See: https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/165#note_528808669
+See: https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/165#note_528808669
 
 ## NAT Busting
 
@@ -102,4 +102,4 @@ References
 * https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/34
 * https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/28
 * https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/33
-* https://gitlab.com/MatrixAI/Engineering/Polykey/js-polykey/-/merge_requests/84
+* https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/84

@@ -1,0 +1,35 @@
+@startuml
+
+!theme plain
+
+title Gestalt Discovery Process 
+
+start
+
+while (Undiscovered vertices?) is (Yes)
+  if (Check vertex type) then (Node)
+    :Get sigchain data;
+    repeat
+      :Get next claim;
+      if (What type of claim is it?) then (Keynode)
+        :Get sigchain data;
+        :Create a link between the two \nKeynodes in our Gestalt Graph;
+      else (Digital Identity)
+        :Verify claim on Digital Identity Provider;
+        :Create a link between the Keynode \nand Digital Identity in our Gestalt Graph;
+      endif
+    repeat while (More claims on sigchain?) is (Yes)
+  else (Digital Identity)
+    :Get claims from Digital Identity Provider;
+    repeat
+      :Get next claim;
+      :Get sigchain of claimed Keynode;
+      note left: Claims on an Identity Provider \nwill always be over a Keynode
+      :Create a link between the Keynode \nand Digital Identity in our Gestalt Graph;
+    repeat while (More claims on Digital Identity?) is (Yes)
+  endif;
+endwhile (No)
+
+stop
+
+@enduml
