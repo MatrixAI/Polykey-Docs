@@ -38,6 +38,17 @@ const config = {
     [
       '@docusaurus/theme-classic',
       {}
+    ],
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        redirects: [
+          {
+            from: '/Home',
+            to: '/'
+          }
+        ]
+      }
     ]
   ],
 
