@@ -12,6 +12,7 @@ const config = {
   baseUrl: '/docs/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
+  trailingSlash: false,
   favicon: 'img/favicon.ico',
   i18n: {
     defaultLocale: 'en',
