@@ -6,7 +6,7 @@ Polykey's roadmap revolves around Polykey's 2 core concepts:
 ## Secret Management Workflow
 
 * Gestalt Sync
-* CQRS to GUI - end to end reactive architecture 
+* CQRS to GUI - end to end reactive architecture
 * Schemas File/Vault - impacts GUI/CLI/Vault History.. etc
 * Vault Automation
 * Vault Splitting and Joining
@@ -19,7 +19,7 @@ Polykey's roadmap revolves around Polykey's 2 core concepts:
 * CA to deal with PKI in general - https://en.wikipedia.org/wiki/Public_key_infrastructure
 * Expose crypto utilities for general use - replacing PGP - https://news.ycombinator.com/item?id=6662798
 * Notification Delay-Tolerant & Store and Forward Protocol - Integrate into SMTP
-* Browser Extension - low priority because if PK sits in the middle between password management and machine secrets, then password management is well done by other companies and organisations, and this reduces the importance of GRPC web gateway 
+* Browser Extension - low priority because if PK sits in the middle between password management and machine secrets, then password management is well done by other companies and organisations, and this reduces the importance of GRPC web gateway
 
 More usecases:
 
