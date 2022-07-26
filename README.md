@@ -1,9 +1,3 @@
-<!--
----
-title: Custom README title
----
--->
-
 # Polykey-Docs
 
 Documentation for Polykey. This uses GitHub wiki as a CMS. This wiki is mirrored to Gitlab at https://gitlab.com/MatrixAI/open-source/Polykey-Docs.

@@ -9,6 +9,9 @@
 /build
 # prebuildify
 /prebuilds
+# docusaurus
+.docusaurus
+.cache-loader
 
 # Logs
 logs
