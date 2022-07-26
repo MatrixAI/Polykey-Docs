@@ -1,5 +1,5 @@
 ---
-title: Custom README title (for sidebar etc)
+title: Custom README title
 ---
 
 # Polykey-Docs
