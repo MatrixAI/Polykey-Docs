@@ -10,8 +10,9 @@ The most commonly used digital identities are hosted on centralized identity pro
 
 <p align="center">
   <figure>
-    <img src="images/gestalts-and-DIs/di-ceos.png" width="60%">
-    <figcaption><br />From top left to bottom: Digital identities for the CEOs of Twitter, GitHub, LinkedIn, and FaceBook</figcaption>
+    <img src="images/gestalts-and-DIs/di-ceos.png" width="60%" />
+    <br />
+    <figcaption>From top left to bottom: Digital identities for the CEOs of Twitter, GitHub, LinkedIn, and FaceBook</figcaption>
   </figure>
 </p>
 
@@ -54,8 +55,9 @@ Polykey's secrets are stored in [Vaults](Glossary#vault) that are managed and sh
 
 <p align="center">
   <figure>
-    <img src="images/gestalts-and-DIs/X509.png" width="90%">
-    <figcaption><br>X.509 certificates act as the root of trust for Polykey Sigchains</figcaption>
+    <img src="images/gestalts-and-DIs/X509.png" width="90%" />
+    <br />
+    <figcaption>X.509 certificates act as the root of trust for Polykey Sigchains</figcaption>
   </figure>
 </p>
 
@@ -73,10 +75,11 @@ Our Gestalts are comprised of the following set of components:
 Keynodes store secrets, digital identities are artifacts of the agent's identity, and cryptolinks are what join these components together. These cryptolinks are simply signed statements on Keynode Sigchains and digital identities, however, they can be visualized as the edges of a graph with Keynodes and digital identities as its vertices.
 
 <p align="center">
-<figure>
-<img src="images/gestalts-and-DIs/GestaltDiagram.png" width="70%">
-<figcaption><br>Visual depiction of a Polykey Gestalt</figcaption>
-</figure>
+  <figure>
+    <img src="images/gestalts-and-DIs/GestaltDiagram.png" width="70%" />
+    <br />
+    <figcaption>Visual depiction of a Polykey Gestalt</figcaption>
+  </figure>
 </p>
 
 These cryptolink claims are statements of ownership:
@@ -87,13 +90,14 @@ These cryptolink claims are statements of ownership:
 
 ### Identity Augmentation Process
 
-Our augmentation process is what allows Polykey to utilize digital identities for authentication. The inspiration for this comes from [Keybase](https://book.keybase.io/docs/server), however, we have chosen to develop a decentralized platform over Keybase's use of a central server and distributed clients. 
+Our augmentation process is what allows Polykey to utilize digital identities for authentication. The inspiration for this comes from [Keybase](https://book.keybase.io/docs/server), however, we have chosen to develop a decentralized platform over Keybase's use of a central server and distributed clients.
 
 <p align="center">
-<figure>
-<img src="images/gestalts-and-DIs/keybase.png" width="70%">
-<figcaption><br>Digital identity augmentation as implemented within Keybase</figcaption>
-</figure>
+  <figure>
+    <img src="images/gestalts-and-DIs/keybase.png" width="70%" />
+    <br />
+    <figcaption>Digital identity augmentation as implemented within Keybase</figcaption>
+  </figure>
 </p>
 
 The process of digital identity augmentation within Polykey involves four main stages, however, only the final three belong to the augmentation itself:
@@ -103,17 +107,19 @@ The process of digital identity augmentation within Polykey involves four main s
 4. Posting of the claim on the digital identity: The final step is for a copy of the claim (which has been signed by the claiming Keynode) to be published by the digital identity on the digital identity provider. After this step has been completed, there is a record of the cryptolink (known as an [Identity Proof](Glossary#identity-proof)) both within Polykey (on the Keynode's Sigchain) and on the digital identity provider (in its record of statements made by the digital identity). This has the benefit of allowing augmentations to be visible to (and traceable by) both agents within Polykey (both human and machine) and the public.
 
 <p align="center">
-<figure>
-<img src="images/gestalts-and-DIs/augmentation.png" width="90%">
-<figcaption><br>Polykey's Digital Identity (DI) augmentation process</figcaption>
-</figure>
+  <figure>
+    <img src="images/gestalts-and-DIs/augmentation.png" width="90%" />
+    <br />
+    <figcaption>Polykey's Digital Identity (DI) augmentation process</figcaption>
+  </figure>
 </p>
 
 <p align="center">
-<figure>
-<img src="images/gestalts-and-DIs/augmentationv3.png" width="90%">
-<figcaption><br>Structure of a cryptolink generated via augmentation</figcaption>
-</figure>
+  <figure>
+    <img src="images/gestalts-and-DIs/augmentationv3.png" width="90%" />
+    <br />
+    <figcaption>Structure of a cryptolink generated via augmentation</figcaption>
+  </figure>
 </p>
 
 ### Gestalt Trust and Notifications
@@ -143,19 +149,21 @@ As a decentralized network, there is no central directory of Keynodes or digital
 Once we have found the Keynode claiming ownership of a particular digital identity, we can follow the cryptolink claims on its Sigchain to discover the rest of its Gestalt. In this way, it is possible to find other claimed digital identities on other providers, giving us more information that we can use in our decision of whether to trust the Gestalt or not. It is once we have made this decision that we can begin to share secret information because it is at this stage that we trust that the Gestalt is representative of the agent we wish to communicate with.
 
 <p align="center">
-<figure>
-<img src="images/gestalts-and-DIs/gestalt-discovery.png" width="90%">
-<figcaption><br>The Gestalt Discovery process</figcaption>
-</figure>
+  <figure>
+    <img src="images/gestalts-and-DIs/gestalt-discovery.png" width="90%" />
+    <br />
+    <figcaption>The Gestalt Discovery process</figcaption>
+  </figure>
 </p>
 
 Because all of Polykey's Gestalts are connected, the trust between them forms a network. This network of trust can have implications that we would like to develop and investigate further as Polykey continues to grow both in terms of functionality and application.
 
 <p align="center">
-<figure>
-<img src="images/gestalts-and-DIs/gestalt-trust-chain.png" width="90%">
-<figcaption><br>The beginnings of a trust network formed by Gestalts</figcaption>
-</figure>
+  <figure>
+    <img src="images/gestalts-and-DIs/gestalt-trust-chain.png" width="90%" />
+    <br />
+    <figcaption>The beginnings of a trust network formed by Gestalts</figcaption>
+  </figure>
 </p>
 
 It is clear that, in many ways, trust is the foundation of all of our interactions. If we wish to be able to securely share secrets with other agents, trust must be tied not only to our relationships with the agent, but also to the methods we use to discover, authenticate, and establish them. Not only that, but this trust must also extend to our authorization and establishment of information sharing protocols.
@@ -184,6 +192,6 @@ References:
 
 ---
 
-[^1]: Social influence is intuitively known to be valuable, however formal systems for capitalising quantified social influence is a recent development, for example see the [DESO project](deso.org).
+[^1]: Social influence is intuitively known to be valuable, however formal systems for capitalising quantified social influence is a recent development, for example see the [DESO project](https://deso.org).
 
 [^2]: Similar efforts have taken place in the [past](https://en.wikipedia.org/wiki/Trust_federation) and in the [current](https://en.wikipedia.org/wiki/Decentralized_identifiers), usually by creating a [new identity standard that subsumes all existing identities](https://xkcd.com/927/). Polykey is different because it doesn't introduce a new identity standard, it just cryptographically links existing popular digital identities that regular (non-technical) people understand and use on a daily basis.
