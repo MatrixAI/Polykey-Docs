@@ -1,6 +1,8 @@
+<!--
 ---
 title: Custom README title
 ---
+-->
 
 # Polykey-Docs
 
