@@ -8,6 +8,7 @@ in
     nativeBuildInputs = [
       nodejs
       gitAndTools.gh
+      wrangler
     ];
     shellHook = ''
       echo "Entering $(npm pkg get name)"
