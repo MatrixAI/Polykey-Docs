@@ -5,7 +5,7 @@ Each vault has a unique id, which is generated when it gets created. It is gener
 
 ## Secrets
 
-Vaults maintain their own encrypted file system (EFS) along with a virtual file system (VFS) to store secrets within their respective vault directories contained within the [`polykey` directory](./Home.md#polykey-directory). The EFS (https://gitlab.com/MatrixAI/Engineering/Polykey/js-encryptedfs) uses AES-256-GCM to encrypt data. In polykey, the respective vault keys are passed into the EFS for encryption and decryption. The cryptographic operations are performed in the VFS to maintain security.
+Vaults maintain their own encrypted file system (EFS) along with a virtual file system (VFS) to store secrets within their respective vault directories contained within the [`polykey` directory](/#polykey-directory). The EFS (https://gitlab.com/MatrixAI/Engineering/Polykey/js-encryptedfs) uses AES-256-GCM to encrypt data. In polykey, the respective vault keys are passed into the EFS for encryption and decryption. The cryptographic operations are performed in the VFS to maintain security.
 
 Each vault has a key that is used to lock and unlock secrets. These keys are stored in the `VaultManager` as:
 ```ts
@@ -14,10 +14,10 @@ type VaultKeys = {[key: string]: VaultKey};
 
 To ensure security when they are stored on disk, asymmetric encryption takes place on each vault key, using the Root Public Key. These keys are then stored on disk using the `level` library. For accessing secrets within a vault, the relevant key can be extracted from the `level` database which is then decrypted using the Root Private Key. Then this vault key can be used to access secrets.
 
-When the `VaultManager` is started, if metadata is found, then it is decrypted, and loaded into memory. 
+When the `VaultManager` is started, if metadata is found, then it is decrypted, and loaded into memory.
 
 ### Metadata
-Metadata is stored using `leveldb`, under `~/.local/share/polykey/vaultKeys`. It is simply a key-value store, and it is being used to store `vaultNames` as key, and the encrytped vault key as the value. It is updated on every relevant `VaultManager` operation including: 
+Metadata is stored using `leveldb`, under `~/.local/share/polykey/vaultKeys`. It is simply a key-value store, and it is being used to store `vaultNames` as key, and the encrytped vault key as the value. It is updated on every relevant `VaultManager` operation including:
 * `addVault`
 * `renameVault`
 * `deleteVault`
@@ -94,7 +94,7 @@ Also generates a new vault key and writes encrypted vault metadata to disk.
 * `currVaultName`: Current name of vault
 * `newVaultName`: New name of vault
 
-Renames an existing vault. Returns a boolean describing the success of the operation. 
+Renames an existing vault. Returns a boolean describing the success of the operation.
 
 * Throws `ErrorVaultUndefined` exception if name of current vault does not exist
 * Throws `ErrorVaultDefined` if the new vault name already exists.
@@ -106,7 +106,7 @@ Updates references to vault keys and writes new encrypted vault metadata to disk
 #### `public deleteVault(vaultName: string): boolean`
 * `vaultName`: Name of vault to be deleted
 
-Delete an existing vault. Deletes file from filesystem and updates mappings to vaults and vaultKeys. If it fails to delete from the filesystem, it will not modify any mappings and return false. 
+Delete an existing vault. Deletes file from filesystem and updates mappings to vaults and vaultKeys. If it fails to delete from the filesystem, it will not modify any mappings and return false.
 
 * Throws `ErrorVaultUndefined` if vault name does not exist.
 
@@ -115,7 +115,7 @@ Delete an existing vault. Deletes file from filesystem and updates mappings to v
 #### `public getVault(vaultName: string): Vault`
 * `vaultName`: Name of vault to get
 
-Retrieves a Vault instance from the vault manager's mapping of vaults. 
+Retrieves a Vault instance from the vault manager's mapping of vaults.
 
 * Throws `ErrorVaultUndefined` if the name given does not exist.
 
@@ -138,9 +138,9 @@ List all vaults for a node given a nodeId. Returns an string of vault names.
 * `vaultName`: Name of vault to pull
 * `nodeId`: ID of node to pull from
 
-Pull a vault from another node. 
+Pull a vault from another node.
 
-Returns `true` if successful. If the vault exists then the vault is pulled, changing the contents of the vault in the EFS by calling the corresponding `pullVault` function for the vault. If it doesn't exist then the vault is cloned and the contents of the vault are written using the EFS. 
+Returns `true` if successful. If the vault exists then the vault is pulled, changing the contents of the vault in the EFS by calling the corresponding `pullVault` function for the vault. If it doesn't exist then the vault is cloned and the contents of the vault are written using the EFS.
 
 * Throws `ErrorVaultUndefined` if the vault does not exist on the nodeIds store
 * Throws `ErrorNodeUndefined` if the node is not discoverable (in the node domain).
@@ -180,7 +180,7 @@ This method is called at the during the `start()` method and will attempt to pop
 
 ## `Vault`
 
-This class represents the Vaults inside polykey, including functionality to manage its secrets, and git functionalities. Vaults are generally handled through the VaultManager. 
+This class represents the Vaults inside polykey, including functionality to manage its secrets, and git functionalities. Vaults are generally handled through the VaultManager.
 ```ts
 const vaultManager = new VaultManager(...);
 await vaultManager.addVault('MyVault');
@@ -268,8 +268,8 @@ Pulls the vault changes from a nodeId. No exceptions occur as the node ID has al
 
 
 Adds a secret to the vault.
- 
-Returns `true` if success. 
+
+Returns `true` if success.
 
 * Throws `ErrorSecretExists` if a secret of the same name already exists or a directory of the same name exists
 * Throws `ErrorGitFile` exception if the file is a `.git` file
@@ -281,9 +281,9 @@ Returns `true` if success.
 #### `public async addSecretDirectory(secretDirectory: string): Promise<void>`
 * `secretDirectory`: Path to secret on disk
 
-Adds a secret to the vault. 
+Adds a secret to the vault.
 
-Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, that directory/secret will be updated. 
+Returns `true` if success. If a secret of the same name already exists or a directory of the same name exists, that directory/secret will be updated.
 
 * Throws `ErrorGitFile` if a secret is a `.git` file
 * Throws `ErrorVaultUninitialised` if a secret is being added without the vault being initialised
