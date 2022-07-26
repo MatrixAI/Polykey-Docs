@@ -142,6 +142,7 @@
 
 # Development Guide
 
+* [README](README)
 * [Roadmap](Roadmap)
 * [Software Architecture](https://github.com/MatrixAI/Polykey/wiki/Software-Architecture)
 * [Style Guide](https://github.com/MatrixAI/Polykey/wiki/style-guide)
