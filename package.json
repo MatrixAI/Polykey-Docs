@@ -14,7 +14,7 @@
     ]
   },
   "scripts": {
-    "dev": "docusaurus start",
+    "start": "docusaurus start",
     "build": "docusaurus build"
   },
   "dependencies": {
