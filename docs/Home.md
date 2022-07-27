@@ -36,17 +36,3 @@ The wiki is structured using Divio system: https://documentation.divio.com/
 * Theory - these are important for understanding the "why" of Polykey
 
 Each sub-project has their own `Reference` and `How-To Guides`, however most `Tutorials`, `How-To Guides` and `Theory` are all located here in the master-project.
-
----
-
-# Test Images
-
-Absolute IMG:
-
-<img src="/images/divio_quadrant.png" width="70%" />
-
-<img src={require('/images/divio_quadrant.png').default} />
-
-Absolute MD:
-
-![](/images/divio_quadrant.png)
