@@ -10,7 +10,7 @@ const config = {
   tagline: 'Documentation for Polykey - Tutorials, How-To Guides, Theory and Reference',
   url: 'https://polykey.io',
   baseUrl: '/docs/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   trailingSlash: false,
   favicon: 'img/favicon.ico',
@@ -18,11 +18,12 @@ const config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+  staticDirectories: ['static'],
   plugins: [
     [
       '@docusaurus/plugin-content-docs',
       {
-        path: '.',
+        path: 'docs',
         routeBasePath: '/',
         include: ['**/*.md', '**/*.mdx'],
         exclude: [
