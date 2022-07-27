@@ -78,7 +78,7 @@ release:deployment:
     - echo 'Perform service deployment for production'
     - >
       nix-shell --arg ci true --run $'
-      npm run deploy;
+      npm run deploy -- --branch master;
       '
   rules:
     # Runs on master commits
