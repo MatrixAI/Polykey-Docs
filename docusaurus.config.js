@@ -1,19 +1,19 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-// const lightCodeTheme = require('prism-react-renderer/themes/github');
-// const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const lightCodeTheme = require('prism-react-renderer/themes/github');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Polykey Documentation',
   tagline: 'Documentation for Polykey - Tutorials, How-To Guides, Theory and Reference',
   url: 'https://polykey.io',
-  baseUrl: '/docs/',
+  baseUrl: '/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   trailingSlash: false,
-  favicon: 'img/favicon.ico',
+  favicon: 'images/polykey-favicon.png',
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
@@ -24,12 +24,10 @@ const config = {
       '@docusaurus/plugin-content-docs',
       {
         path: 'docs',
-        routeBasePath: '/',
+        routeBasePath: 'docs',
+        sidebarPath: require.resolve('./sidebars.js'),
         include: ['**/*.md', '**/*.mdx'],
         exclude: [
-          'tmp',
-          'node_modules',
-          'build',
           '**/_*.{js,jsx,ts,tsx,md,mdx}',
           '**/_*/**',
           '**/.**'
@@ -45,86 +43,118 @@ const config = {
       {
         redirects: [
           {
-            from: '/Home',
-            to: '/'
+            from: '/docs/Home',
+            to: '/docs'
           }
         ]
       }
     ]
   ],
-
-  // themeConfig:
-  //   ({
-  //     navbar: {
-  //       title: 'My Site',
-  //       logo: {
-  //         alt: 'My Site Logo',
-  //         src: 'img/logo.svg',
-  //       },
-  //       items: [
-  //         {
-  //           type: 'doc',
-  //           docId: 'index',
-  //           position: 'left',
-  //           label: 'Index',
-  //         },
-  //         {
-  //           href: 'https://github.com/facebook/docusaurus',
-  //           label: 'GitHub',
-  //           position: 'right',
-  //         },
-  //       ],
-  //     },
-  //     footer: {
-  //       style: 'dark',
-  //       links: [
-  //         {
-  //           title: 'Docs',
-  //           items: [
-  //             {
-  //               label: 'Index',
-  //               to: '/index',
-  //             },
-  //           ],
-  //         },
-  //         {
-  //           title: 'Community',
-  //           items: [
-  //             {
-  //               label: 'Stack Overflow',
-  //               href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-  //             },
-  //             {
-  //               label: 'Discord',
-  //               href: 'https://discordapp.com/invite/docusaurus',
-  //             },
-  //             {
-  //               label: 'Twitter',
-  //               href: 'https://twitter.com/docusaurus',
-  //             },
-  //           ],
-  //         },
-  //         {
-  //           title: 'More',
-  //           items: [
-  //             {
-  //               label: 'Blog',
-  //               to: '/blog',
-  //             },
-  //             {
-  //               label: 'GitHub',
-  //               href: 'https://github.com/facebook/docusaurus',
-  //             },
-  //           ],
-  //         },
-  //       ],
-  //       copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
-  //     },
-  //     prism: {
-  //       theme: lightCodeTheme,
-  //       darkTheme: darkCodeTheme,
-  //     },
-  //   }),
+  /** @type {import('@docusaurus/types').ThemeConfig | import('@docusaurus/theme-common').UserThemeConfig} */
+  themeConfig: {
+    navbar: {
+      title: 'Polykey Documentation',
+      logo: {
+        alt: 'Polykey Logo',
+        src: 'images/Polykey Logo.svg',
+      },
+      items: [
+        {
+          type: 'doc',
+          docId: 'Home',
+          position: 'left',
+          label: 'Home',
+        },
+        {
+          href: 'https://github.com/MatrixAI/Polykey-Docs',
+          label: 'GitHub',
+          position: 'right',
+        },
+      ],
+    },
+    footer: {
+      style: 'dark',
+      logo: {
+        alt: 'Polykey Logo',
+        src: 'images/Polykey Logo Light.svg',
+      },
+      links: [
+        {
+          title: 'Open Source',
+          items: [
+            {
+              label: 'Polykey Core',
+              href: 'https://github.com/MatrixAI/Polykey',
+            },
+            {
+              label: 'Polykey CLI',
+              href: 'https://github.com/MatrixAI/Polykey-CLI',
+            },
+            {
+              label: 'Polykey Desktop',
+              href: 'https://github.com/MatrixAI/Polykey-Desktop',
+            },
+            {
+              label: 'Polykey Mobile',
+              href: 'https://github.com/MatrixAI/Polykey-Mobile',
+            },
+          ],
+        },
+        {
+          title: 'Resources',
+          items: [
+            {
+              label: 'Blog',
+              to: '/blog',
+            },
+            {
+              label: 'Documentation',
+              to: '/docs',
+            },
+          ],
+        },
+        {
+          title: 'Community',
+          items: [
+            {
+              label: 'Discussions',
+              href: 'https://github.com/MatrixAI/Polykey/discussions'
+            },
+            {
+              label: 'Twitter',
+              href: 'https://twitter.com/PolykeyIO',
+            },
+            {
+              label: 'Stack Overflow',
+              href: 'https://stackoverflow.com/questions/tagged/polykey',
+            },
+          ],
+        },
+        {
+          title: 'Company',
+          items: [
+            {
+              label: 'About Us',
+              href: '/about'
+            },
+            {
+              label: 'Contact Us',
+              href: '/contact'
+            },
+            {
+              label: 'Matrix AI',
+              href: 'https://matrix.ai'
+            },
+          ]
+        }
+      ],
+      copyright: `Copyright © ${new Date().getFullYear()} Matrix AI`,
+    },
+    prism: {
+      theme: lightCodeTheme,
+      darkTheme: darkCodeTheme,
+    },
+  },
 };
 
 module.exports = config;
