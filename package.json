@@ -15,7 +15,8 @@
   },
   "scripts": {
     "start": "docusaurus start",
-    "build": "docusaurus build"
+    "build": "docusaurus build --out-dir=./dist",
+    "deploy": "wrangler pages publish ./dist --project-name polykey-docs --branch master"
   },
   "dependencies": {
     "@docusaurus/core": "2.0.0-rc.1",
