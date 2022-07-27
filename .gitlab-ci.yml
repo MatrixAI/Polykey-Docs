@@ -26,6 +26,7 @@ cache:
   when: 'always'
   paths:
     - ./tmp/npm/
+    - ./.docusaurus
 
 stages:
   - check       # Linting, unit tests
@@ -48,10 +49,14 @@ build:docs:
   needs: []
   script:
     - echo 'Perform static docs generation'
+    - >
+      nix-shell --arg ci true --run $'
+      npm run build;
+      '
   artifacts:
     when: always
     paths:
-      - ./docs
+      - ./dist
   rules:
     # Runs on master commits
     - if: $CI_COMMIT_BRANCH == 'master'
@@ -65,8 +70,16 @@ release:deployment:
   interruptible: false
   # Requires mutual exclusion
   resource_group: release:deployment
+  environment:
+    name: 'production'
+    deployment_tier: 'production'
+    url: 'https://polykey.io/docs'
   script:
     - echo 'Perform service deployment for production'
+    - >
+      nix-shell --arg ci true --run $'
+      npm run deploy;
+      '
   rules:
     # Runs on master commits
     - if: $CI_COMMIT_BRANCH == 'master'
