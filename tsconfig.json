@@ -12,7 +12,7 @@
       "node",
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic",
-      "@cloudflare/workers-types"
+      "@cloudflare/workers-types",
     ],
     "baseUrl": ".",
     "noEmit": true
