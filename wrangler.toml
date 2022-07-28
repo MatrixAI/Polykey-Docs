@@ -6,11 +6,7 @@ workers_dev = true
 [site]
   bucket = "./public"
 
-[env.staging]
-  name = "polykey-docs-staging"
-  workers_dev = true
-
 [env.production]
   name = "polykey-docs"
-  route = "polykey.io/docs/*"
+  routes = ["polykey.io/docs", "polykey.io/docs/*"]
   workers_dev = false
