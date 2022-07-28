@@ -15,10 +15,11 @@
   },
   "scripts": {
     "start": "docusaurus start",
-    "build": "docusaurus build --out-dir=./dist",
-    "deploy": "wrangler pages publish ./dist --project-name polykey-docs"
+    "build": "docusaurus build --out-dir=./public",
+    "deploy": "wrangler publish"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.14.1",
     "@docusaurus/core": "2.0.0-rc.1",
     "@docusaurus/plugin-client-redirects": "2.0.0-rc.1",
     "@docusaurus/plugin-content-docs": "2.0.0-rc.1",
@@ -27,9 +28,7 @@
     "@docusaurus/plugin-google-gtag": "2.0.0-rc.1",
     "@docusaurus/theme-classic": "2.0.0-rc.1",
     "@docusaurus/theme-common": "2.0.0-rc.1",
-    "@docusaurus/theme-search-algolia": "2.0.0-rc.1"
-  },
-  "devDependencies": {
+    "@docusaurus/theme-search-algolia": "2.0.0-rc.1",
     "@docusaurus/module-type-aliases": "2.0.0-rc.1",
     "@docusaurus/types": "2.0.0-rc.1",
     "@tsconfig/docusaurus": "^1.0.5",
