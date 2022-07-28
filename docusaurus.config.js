@@ -56,7 +56,7 @@ const config = {
       title: 'Polykey Documentation',
       logo: {
         alt: 'Polykey Logo',
-        src: 'images/Polykey Logo.svg',
+        src: 'images/polykey-logo-dark.svg',
       },
       items: [
         {
@@ -76,7 +76,7 @@ const config = {
       style: 'dark',
       logo: {
         alt: 'Polykey Logo',
-        src: 'images/Polykey Logo Light.svg',
+        src: 'images/polykey-logo-light.svg',
       },
       links: [
         {
