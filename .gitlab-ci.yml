@@ -56,7 +56,7 @@ build:docs:
   artifacts:
     when: always
     paths:
-      - ./dist
+      - ./public
   rules:
     # Runs on master commits
     - if: $CI_COMMIT_BRANCH == 'master'
@@ -78,7 +78,7 @@ release:deployment:
     - echo 'Perform service deployment for production'
     - >
       nix-shell --arg ci true --run $'
-      npm run deploy -- --branch master;
+      npm run deploy -- --env production;
       '
   rules:
     # Runs on master commits
