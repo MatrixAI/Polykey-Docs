@@ -9,7 +9,7 @@ const config = {
   title: 'Polykey Documentation',
   tagline: 'Documentation for Polykey - Tutorials, How-To Guides, Theory and Reference',
   url: 'https://polykey.io',
-  baseUrl: '/',
+  baseUrl: '/docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   trailingSlash: false,
@@ -24,7 +24,7 @@ const config = {
       '@docusaurus/plugin-content-docs',
       {
         path: 'docs',
-        routeBasePath: 'docs',
+        routeBasePath: '/',
         sidebarPath: require.resolve('./sidebars.js'),
         include: ['**/*.md', '**/*.mdx'],
         exclude: [
@@ -43,8 +43,8 @@ const config = {
       {
         redirects: [
           {
-            from: '/docs/Home',
-            to: '/docs'
+            from: '/Home',
+            to: '/'
           }
         ]
       }
