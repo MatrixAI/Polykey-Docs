@@ -1,0 +1,16 @@
+name = "polykey-docs-dev"
+main = "src/index.ts"
+compatibility_date = "2022-07-28"
+usage_model = "bundled"
+workers_dev = true
+[site]
+  bucket = "./public"
+
+[env.staging]
+  name = "polykey-docs-staging"
+  workers_dev = true
+
+[env.production]
+  name = "polykey-docs"
+  route = "polykey.io/docs/*"
+  workers_dev = false

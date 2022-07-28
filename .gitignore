@@ -10,6 +10,7 @@
 # prebuildify
 /prebuilds
 # docusaurus
+/public
 .docusaurus
 .cache-loader
 
