@@ -4,14 +4,17 @@ addEventListener('fetch', (event) => {
   event.respondWith(handleEvent(event))
 });
 
-async function handleEvent(event): Promise<Response> {
-  console.log('HANDLING EVENT');
-  console.log('event', event);
-  console.log('event.request', event.request);
-  console.log('event.request.url', event.request.url);
-  // console.log('event.request.cf', event.request.cf);
+const cacheControl = {
+  browserTTL: 30 * 24 * 60 * 60,
+  edgeTTL: 2 * 24 * 60 * 60,
+  bypassCache: false
+};
 
-  // The URL is `https://polykey.io/docs/...`, it is the full URL
+const mapRequestTo404 = (req) => new Request(`${new URL(req.url).origin}/404.html`, req);
+
+async function handleEvent(event): Promise<Response> {
+  // This url will be `https://polykey.io/docs` or `https://polykey.io/docs/...`
+  console.log('Handling request from', event.request.url);
   // Use the `handlePrefix` to strip the `/docs/` out of the request
   // The end result is that we have a URL that doesn't have the route in it
   // So if we have `https://polykey.io/docs/index.html`
@@ -20,37 +23,34 @@ async function handleEvent(event): Promise<Response> {
   // Rather than the prefixed path
   // The `getAssetFromKV` ignores the hostname, and just uses the path directly
   // Which in this case will be index.html
-
   const stripPrefix = handlePrefix(/^\/docs/);
-
   try {
     return await getAssetFromKV(event, {
       mapRequestToAsset: (req) => {
         const r = stripPrefix(req);
         console.log('STRIPPED', r.url);
         return r;
-      }
+      },
+      cacheControl
     });
   } catch (e) {
     if (e instanceof NotFoundError) {
-      console.log('NOT FOUND', e.message);
+      console.log('Requested resource not found', e.message);
       const response404 = await getAssetFromKV(
         event,
         {
-          mapRequestToAsset: (req) =>  {
-            const url = new URL(req.url);
-            console.log('MAPPING TO', `${url.origin}/404.html`)
-            return new Request(`${url.origin}/404.html`, req);
-          },
+          mapRequestToAsset: mapRequestTo404,
+          cacheControl
         }
       );
-
-      console.log('GOT 404 response');
-
-      return new Response(response404.body, {
-        ...response404,
-        status: 404,
-      });
+      console.log('Responding with 404 resource');
+      return new Response(
+        response404.body,
+        {
+          ...response404,
+          status: 404,
+        }
+      );
     } else if (e instanceof MethodNotAllowedError) {
       return new Response('Method Not Allowed', { status: 405 });
     }
