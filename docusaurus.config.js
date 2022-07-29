@@ -25,7 +25,7 @@ const config = {
       {
         path: 'docs',
         routeBasePath: '/',
-        sidebarPath: require.resolve('./sidebars.js'),
+        // sidebarPath: require.resolve('./sidebars.js'),
         include: ['**/*.md', '**/*.mdx'],
         exclude: [
           '**/_*.{js,jsx,ts,tsx,md,mdx}',
