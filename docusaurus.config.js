@@ -124,11 +124,12 @@ const config = {
           items: [
             {
               label: 'Blog',
-              to: '/blog',
+              href: '../blog',
+              target: '_parent',
             },
             {
               label: 'Documentation',
-              to: '/docs',
+              to: '/',
             },
           ],
         },
@@ -154,11 +155,13 @@ const config = {
           items: [
             {
               label: 'About Us',
-              href: '/about'
+              href: '../about',
+              target: '_parent',
             },
             {
               label: 'Contact Us',
-              href: '/contact'
+              href: '../contact',
+              target: '_parent',
             },
             {
               label: 'Matrix AI',
