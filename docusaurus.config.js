@@ -6,16 +6,16 @@ const baseUrl = '/docs/';
 
 /**
  * Docusaurus does not process JSX `<img src ="...">` URLs
- * This plugin rewrites the URLs to be relative to `baseUrl`
+ * This plugin rewrites the src attribute to `src={require("...").default}`
  * Markdown links `[]()`, images `![](/image)` and anchor `<a href="...">`
  * are already automatically processed
  */
-const remarkImageSrcWithBase = (options) => {
+const remarkImageSrcWithRequire = (options) => {
   return (ast) => {
     visit(ast, 'jsx', (node) => {
-      const matches = node.value.match(/^(<img\s.*?src="\s*)\/(.*)$/);
+      const matches = node.value.match(/^(<img\s.*?src=)"(\s*\/.*?)"(.*)$/);
       if (matches != null) {
-        node.value = `${matches[1]}${baseUrl}${matches[2]}`;
+        node.value = `${matches[1]}{require("${matches[2]}").default}${matches[3]}`;
       }
     });
   };
@@ -44,7 +44,7 @@ const config = {
         path: 'docs',
         routeBasePath: '/',
         // sidebarPath: require.resolve('./sidebars.js'),
-        remarkPlugins: [remarkImageSrcWithBase],
+        remarkPlugins: [remarkImageSrcWithRequire],
         include: ['**/*.md', '**/*.mdx'],
         exclude: [
           '**/_*.{js,jsx,ts,tsx,md,mdx}',
