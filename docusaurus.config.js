@@ -1,14 +1,32 @@
-// @ts-check
-
+const visit = require('unist-util-visit');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+
+const baseUrl = '/docs/';
+
+/**
+ * Docusaurus does not process JSX `<img src ="...">` URLs
+ * This plugin rewrites the URLs to be relative to `baseUrl`
+ * Markdown links `[]()`, images `![](/image)` and anchor `<a href="...">`
+ * are already automatically processed
+ */
+const remarkImageSrcWithBase = (options) => {
+  return (ast) => {
+    visit(ast, 'jsx', (node) => {
+      const matches = node.value.match(/^(<img\s.*?src="\s*)\/(.*)$/);
+      if (matches != null) {
+        node.value = `${matches[1]}${baseUrl}${matches[2]}`;
+      }
+    });
+  };
+};
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Polykey Documentation',
   tagline: 'Documentation for Polykey - Tutorials, How-To Guides, Theory and Reference',
   url: 'https://polykey.io',
-  baseUrl: '/docs/',
+  baseUrl: baseUrl,
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   trailingSlash: false,
@@ -26,6 +44,7 @@ const config = {
         path: 'docs',
         routeBasePath: '/',
         // sidebarPath: require.resolve('./sidebars.js'),
+        remarkPlugins: [remarkImageSrcWithBase],
         include: ['**/*.md', '**/*.mdx'],
         exclude: [
           '**/_*.{js,jsx,ts,tsx,md,mdx}',

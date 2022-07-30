@@ -28,7 +28,7 @@ vaults with other users of PolyKey who are running their own keynodes.
 
 The wiki is structured using Divio system: https://documentation.divio.com/
 
-<img src="/docs/images/divio_quadrant.png" width="70%" />
+<img src="/images/divio_quadrant.png" width="70%" />
 
 * Tutorials - these are a series of steps to introduce Polykey to new beginners to achieve a practical outcome
 * How-To Guides - these are short guides on how to achieve a specific use-case which makes assumptions on the reader
