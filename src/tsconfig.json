@@ -3,7 +3,6 @@
 {
   "compilerOptions": {
     "allowJs": true,
-    "jsx": "react",
     "strictNullChecks": true,
     "noImplicitAny": false,
     "experimentalDecorators": true,
@@ -14,19 +13,14 @@
     "moduleResolution": "node",
     "module": "CommonJS",
     "target": "ES2021",
-    "lib": ["ES2021", "dom"],
+    "lib": ["ES2021"],
     "types": [
-      "@docusaurus/module-type-aliases",
-      "@docusaurus/theme-classic",
+      "node",
+      "@cloudflare/workers-types",
     ],
     "noEmit": true,
   },
   "include": [
-    "./docs/**/*"
-  ],
-  "references": [
-    {
-      "path": "./src",
-    },
+    "./**/*"
   ]
 }
