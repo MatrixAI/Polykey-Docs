@@ -1,4 +1,4 @@
-./Glossary.md of terminology in alphabetical order.
+Glossary of terminology in alphabetical order.
 
 ### Agent
 
