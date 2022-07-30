@@ -11,20 +11,20 @@
     "isolatedModules": true,
     "moduleResolution": "node",
     "module": "CommonJS",
-    "baseUrl": ".",
-    // "lib": ["ES2021"],
-    // "lib": ["DOM"],
+    "lib": ["dom"],
     "types": [
-      "@cloudflare/workers-types",
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic",
     ],
     "noEmit": true,
   },
-  "files": [],
+  "include": [
+    "./docs/**/*",
+    "./scripts/**/*"
+  ],
   "references": [
     {
-      "path": "./src"
-    }
+      "path": "./src",
+    },
   ]
 }
