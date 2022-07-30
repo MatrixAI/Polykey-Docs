@@ -1,6 +1,9 @@
 import { getAssetFromKV, NotFoundError, MethodNotAllowedError, mapRequestToAsset } from '@cloudflare/kv-asset-handler'
+// import type { Request } from '@cloudflare/workers-types';
 
-addEventListener('fetch', (event) => {
+/// <reference types="@cloudflare/workers-types" />
+
+addEventListener('fetch', (event: FetchEvent) => {
   event.respondWith(handleEvent(event))
 });
 
@@ -10,11 +13,17 @@ const cacheControl = {
   bypassCache: false
 };
 
-const mapRequestTo404 = (req) => new Request(`${new URL(req.url).origin}/404.html`, req);
+const mapRequestTo404 = (req: Request) => new Request(`${new URL(req.url).origin}/404.html`, req);
 
-async function handleEvent(event): Promise<Response> {
+async function handleEvent(event: FetchEvent): Promise<Response> {
+
+
   // This url will be `https://polykey.io/docs` or `https://polykey.io/docs/...`
   console.log('Handling request from', event.request.url);
+
+  event.request.cf
+
+
   // Use the `handlePrefix` to strip the `/docs/` out of the request
   // The end result is that we have a URL that doesn't have the route in it
   // So if we have `https://polykey.io/docs/index.html`
@@ -23,10 +32,13 @@ async function handleEvent(event): Promise<Response> {
   // Rather than the prefixed path
   // The `getAssetFromKV` ignores the hostname, and just uses the path directly
   // Which in this case will be index.html
+
   const stripPrefix = handlePrefix(/^\/docs/);
   try {
     return await getAssetFromKV(event, {
-      mapRequestToAsset: (req) => {
+      mapRequestToAsset: (req: Request) => {
+
+
         const r = stripPrefix(req);
         console.log('STRIPPED', r.url);
         return r;
