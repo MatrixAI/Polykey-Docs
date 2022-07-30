@@ -1,11 +1,9 @@
-import { getAssetFromKV, NotFoundError, MethodNotAllowedError, mapRequestToAsset } from '@cloudflare/kv-asset-handler'
-// import type { Request } from '@cloudflare/workers-types';
-
-/// <reference types="@cloudflare/workers-types" />
-
-addEventListener('fetch', (event: FetchEvent) => {
-  event.respondWith(handleEvent(event))
-});
+import {
+  getAssetFromKV,
+  mapRequestToAsset,
+  NotFoundError,
+  MethodNotAllowedError,
+} from '@cloudflare/kv-asset-handler'
 
 const cacheControl = {
   browserTTL: 30 * 24 * 60 * 60,
@@ -13,48 +11,26 @@ const cacheControl = {
   bypassCache: false
 };
 
-const mapRequestTo404 = (req: Request) => new Request(`${new URL(req.url).origin}/404.html`, req);
-
-async function handleEvent(event: FetchEvent): Promise<Response> {
-
-
-  // This url will be `https://polykey.io/docs` or `https://polykey.io/docs/...`
+/**
+ * Handles fetch event
+ * It is expected to be triggered from `https://polykey.io/docs` or
+ * `https://polykey.io/docs/...`
+ */
+async function handleFetchEvent(event: FetchEvent): Promise<Response> {
   console.log('Handling request from', event.request.url);
-
-  event.request.cf
-
-
-  // Use the `handlePrefix` to strip the `/docs/` out of the request
-  // The end result is that we have a URL that doesn't have the route in it
-  // So if we have `https://polykey.io/docs/index.html`
-  // This is converted to `https://polykey.io/index.html`
-  // The reason to do this is so that `mapRequestToAsset` will then use the `index.html` to look up
-  // Rather than the prefixed path
-  // The `getAssetFromKV` ignores the hostname, and just uses the path directly
-  // Which in this case will be index.html
-
-  const stripPrefix = handlePrefix(/^\/docs/);
   try {
+    // This ignores everything except the pathname
     return await getAssetFromKV(event, {
-      mapRequestToAsset: (req: Request) => {
-
-
-        const r = stripPrefix(req);
-        console.log('STRIPPED', r.url);
-        return r;
-      },
+      mapRequestToAsset: mapRequestToDocs,
       cacheControl
     });
   } catch (e) {
     if (e instanceof NotFoundError) {
       console.log('Requested resource not found', e.message);
-      const response404 = await getAssetFromKV(
-        event,
-        {
-          mapRequestToAsset: mapRequestTo404,
-          cacheControl
-        }
-      );
+      const response404 = await getAssetFromKV(event, {
+        mapRequestToAsset: mapRequestTo404,
+        cacheControl
+      });
       console.log('Responding with 404 resource');
       return new Response(
         response404.body,
@@ -70,16 +46,31 @@ async function handleEvent(event: FetchEvent): Promise<Response> {
   }
 }
 
-function handlePrefix(prefix) {
-  return (request) => {
-    // compute the default (e.g. / -> index.html)
-    let defaultAssetKey = mapRequestToAsset(request);
-    let url = new URL(defaultAssetKey.url);
-
-    // strip the prefix from the path for lookup
-    url.pathname = url.pathname.replace(prefix, "/");
-
-    // inherit all other props from the default request
-    return new Request(url.toString(), defaultAssetKey);
-  };
+/**
+ * Map request to documentation asset (HTML, CSS, JS, images, files... etc)
+ * This worker is routed from `polykey.io/docs`
+ * All of the `../docs` assets is uploaded to the "root" of the worker
+ * Therefore the `/docs` path segment must be removed, as `getAssetFromKV` uses the pathname
+ * of the URL to look up the correct asset
+ */
+function mapRequestToDocs(req: Request): Request {
+  // Default mapping resolves directory URLs e.g. `/dir` becomes `/dir/index.html`
+  const assetRequest = mapRequestToAsset(req);
+  const assetUrl = new URL(assetRequest.url);
+  // Strip the `/docs` segment: `https://polykey.io/docs/...` -> `https://polykey.io/...`
+  assetUrl.pathname = assetUrl.pathname.replace(/^\/docs/, '/');
+  return new Request(assetUrl.toString(), assetRequest);
 }
+
+/**
+ * Map request to 404.html page
+ * This does not need to use `mapRequestToAsset` because we are directly
+ * going to `404.html`
+ */
+function mapRequestTo404(req: Request): Request {
+  return new Request(`${new URL(req.url).origin}/404.html`, req);
+}
+
+addEventListener('fetch', (event: FetchEvent) => {
+  event.respondWith(handleFetchEvent(event));
+});

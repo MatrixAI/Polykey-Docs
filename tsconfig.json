@@ -1,3 +1,5 @@
+// TypeScript configuration is not used for compilation
+// It is only used for IDE checking and auto-completion
 {
   "compilerOptions": {
     "allowJs": true,
@@ -11,7 +13,8 @@
     "isolatedModules": true,
     "moduleResolution": "node",
     "module": "CommonJS",
-    "lib": ["dom"],
+    "target": "ES2021",
+    "lib": ["ES2021", "dom"],
     "types": [
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic",
@@ -19,8 +22,7 @@
     "noEmit": true,
   },
   "include": [
-    "./docs/**/*",
-    "./scripts/**/*"
+    "./docs/**/*"
   ],
   "references": [
     {
