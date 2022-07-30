@@ -27,6 +27,7 @@ const config = {
   baseUrl: '/docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
+  // Generate `index.html` for each markdown file for pretty URLs
   trailingSlash: undefined,
   favicon: 'images/polykey-favicon.png',
   i18n: {

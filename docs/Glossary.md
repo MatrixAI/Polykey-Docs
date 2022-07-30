@@ -1,4 +1,4 @@
-Glossary of terminology in alphabetical order.
+./Glossary.md of terminology in alphabetical order.
 
 ### Agent
 
@@ -6,7 +6,7 @@ Agent is any entity that possesses agency. That is the motivation and will to ac
 
 ### Augmentation
 
-The process of establishing a [cryptolink](Glossary#cryptolink) between a [Keynode](Glossary#keynode) and [digital identity](Glossary#digital-identity), making a claim of ownership of the Keynode over the digital identity, and of the [agent](Glossary#agent) who is represented by the digital identity over the Keynode.
+The process of establishing a [cryptolink](./Glossary.md#cryptolink) between a [Keynode](./Glossary.md#keynode) and [digital identity](./Glossary.md#digital-identity), making a claim of ownership of the Keynode over the digital identity, and of the [agent](./Glossary.md#agent) who is represented by the digital identity over the Keynode.
 
 ### Authenticity
 
@@ -14,27 +14,27 @@ The ability to check that the source of origin of a piece of data is correct.
 
 ### Cryptolink
 
-A statement of a [Keynode's](Glossary#keynode) ownership over a [digital identity](Glossary#digital-identity), or its relatedness to another Keynode.
+A statement of a [Keynode's](./Glossary.md#keynode) ownership over a [digital identity](./Glossary.md#digital-identity), or its relatedness to another Keynode.
 
 ### Digital identity
 
-Digital information that can be used to represent a physical [agent](Glossary#agent) or entity. In the case of Polykey, digital identities are social media accounts existing on providers such as GitHub, Facebook, Instagram, and LinkedIn.
+Digital information that can be used to represent a physical [agent](./Glossary.md#agent) or entity. In the case of Polykey, digital identities are social media accounts existing on providers such as GitHub, Facebook, Instagram, and LinkedIn.
 
 ### Discovery
 
-The process of systematically finding other Polykey users, represented by their [Gestalts](Glossary#gestalt), as well as the components of the Gestalt.
+The process of systematically finding other Polykey users, represented by their [Gestalts](./Glossary.md#gestalt), as well as the components of the Gestalt.
 
 ### Gestalt
 
-The representation of an [agent](Glossary#agent) within Polykey. They combine [identity](Glossary#identity) information from [digital identities](Glossary#digital-identity) with Polykey [Keynodes](Glossary#keynode).
+The representation of an [agent](./Glossary.md#agent) within Polykey. They combine [identity](./Glossary.md#identity) information from [digital identities](./Glossary.md#digital-identity) with Polykey [Keynodes](./Glossary.md#keynode).
 
 ### Identity
 
-Information about a specific [agent](Glossary#agent), as well as its attributes, that uniquely distinguishes it from other agents within a particular context.
+Information about a specific [agent](./Glossary.md#agent), as well as its attributes, that uniquely distinguishes it from other agents within a particular context.
 
 ### Identity Proof
 
-The claim existing on both a [Keynode's](Glossary#keynode) [Sigchain](Glossary#sigchain) and on a [digital identity](Glossary#digital-identity) as proof of the existence of an [augmentation](Glossary#augmentation) between them.
+The claim existing on both a [Keynode's](./Glossary.md#keynode) [Sigchain](./Glossary.md#sigchain) and on a [digital identity](./Glossary.md#digital-identity) as proof of the existence of an [augmentation](./Glossary.md#augmentation) between them.
 
 ### Integrity
 
@@ -42,11 +42,11 @@ The ability to check that a piece of data had not been mutated since its creatio
 
 ### Keynode
 
-Distributed nodes living on a user's computing device, identified by their own public and private key pair. Keynodes store and manage [Vaults](Glossary#vault).
+Distributed nodes living on a user's computing device, identified by their own public and private key pair. Keynodes store and manage [Vaults](./Glossary.md#vault).
 
 ### Point-of-presence
 
-A point of communication between two entities. For example, a [digital identity](Glossary#digital-identity) is a point-of-presence between two [agents](Glossary#agent), usually human, at which information pertaining to [identity](Glossary#identity) can be exchanged.
+A point of communication between two entities. For example, a [digital identity](./Glossary.md#digital-identity) is a point-of-presence between two [agents](./Glossary.md#agent), usually human, at which information pertaining to [identity](./Glossary.md#identity) can be exchanged.
 
 ### Resource
 
@@ -54,7 +54,7 @@ A resource is any digital object that can be interacted with. Usually a resource
 
 ### Sigchain
 
-A chain of signed statements stored on a [Keynode](Glossary#keynode), documenting the claims it has made over [digital identities](Glossary#digital-identity) and other Keynodes.
+A chain of signed statements stored on a [Keynode](./Glossary.md#keynode), documenting the claims it has made over [digital identities](./Glossary.md#digital-identity) and other Keynodes.
 
 ### Secret
 
@@ -73,8 +73,8 @@ In Polykey, we consider secrets that have extrinsic value, the currency of acces
 
 ### Social Discovery
 
-A form of [discovery](Glossary#discovery) by which [Gestalts](Glossary#gestalt) are discovered through [digital identities](Glossary#digital-identity), rather than from within Polykey.
+A form of [discovery](./Glossary.md#discovery) by which [Gestalts](./Glossary.md#gestalt) are discovered through [digital identities](./Glossary.md#digital-identity), rather than from within Polykey.
 
 ### Vault
 
-The base file structure used within Polykey to store [secrets](Glossary#secret). Each Vault makes use of an encrypted file system to manage and share the secrets it contains.
+The base file structure used within Polykey to store [secrets](./Glossary.md#secret). Each Vault makes use of an encrypted file system to manage and share the secrets it contains.
