@@ -2,6 +2,24 @@
 
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const visit = require('unist-util-visit');
+
+const sectionPrefix = (options) => {
+  const transformer = async (ast) => {
+    visit(ast, 'heading', (node) => {
+      // @ts-ignore
+      if (node.depth === 2 && node.children.length > 0) {
+        // @ts-ignore
+        node.children.unshift({
+          type: 'text',
+          value: `Section 1`,
+        });
+      }
+    });
+  };
+  return transformer;
+};
+
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -26,6 +44,7 @@ const config = {
         path: 'docs',
         routeBasePath: '/',
         // sidebarPath: require.resolve('./sidebars.js'),
+        remarkPlugins: [sectionPrefix],
         include: ['**/*.md', '**/*.mdx'],
         exclude: [
           '**/_*.{js,jsx,ts,tsx,md,mdx}',
