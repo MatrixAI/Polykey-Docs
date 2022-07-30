@@ -2,8 +2,6 @@ const visit = require('unist-util-visit');
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
-const baseUrl = '/docs/';
-
 /**
  * Docusaurus does not process JSX `<img src ="...">` URLs
  * This plugin rewrites the src attribute to `src={require("...").default}`
@@ -26,10 +24,10 @@ const config = {
   title: 'Polykey Documentation',
   tagline: 'Documentation for Polykey - Tutorials, How-To Guides, Theory and Reference',
   url: 'https://polykey.io',
-  baseUrl: baseUrl,
+  baseUrl: '/docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  trailingSlash: false,
+  trailingSlash: undefined,
   favicon: 'images/polykey-favicon.png',
   i18n: {
     defaultLocale: 'en',
