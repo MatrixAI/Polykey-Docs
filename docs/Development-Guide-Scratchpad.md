@@ -12,7 +12,7 @@ Keeping a list of things to be integrated into programmer's reference documentat
 
 
 ### Module usage:
-* No usage of sync functions from `fs`: https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/213#note_719283071: 
+* No usage of sync functions from `fs`: https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/213#note_719283071:
 * Importing:
    - utils and errors: `import * as domainUtils from '../domain';` or `import { utils as domainUtils, errors as domainErrors } from '../domain';`
    - don't do `import { errors } from '.';`
@@ -26,3 +26,11 @@ Keeping a list of things to be integrated into programmer's reference documentat
 
 ### Reviewing
 * Ensure exceptions are defined where expected. From **Code** section: errors occurring from service handler logic should be in either `client/errors.ts` or `agent/errors.ts` (as opposed to the domain-level). For example, only GRPC-specific errors should be defined in `grpc/errors.ts`. https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/213#note_732415633
+
+### Fast Check Usage
+
+See for fast check usage, model checking, async model checking, concurrent model checking:
+
+* https://github.com/MatrixAI/Polykey/issues/382
+* https://github.com/MatrixAI/Polykey/issues/382#issuecomment-1280285365
+* https://github.com/MatrixAI/Polykey/issues/382#issuecomment-1294353491
