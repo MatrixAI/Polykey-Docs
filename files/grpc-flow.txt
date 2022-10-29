@@ -1,0 +1,50 @@
+                44443     44445        55555      55553    55554
+┌────────┐         ┌───────┐              ┌───────┐          ┌────────┐
+│ Client ├─────────┤ Proxy ├──────────────┤ Proxy ├──────────┤ Server │
+└────────┘         └───────┘              └───────┘          └────────┘
+
+                                                 ◄─────────────1
+                                                    SETTINGS
+       2─────────────►
+         MAGIC
+         SETTINGS
+         HEADER
+         DATA
+                                            3(2)───────────────►
+                                                  MAGIC
+                                                  SETTINGS
+                                                  HEADER
+                                                  DATA
+
+       ◄─────────────4(1)
+          SETTINGS
+
+
+                                               ◄────────────────5
+                                                  SETTINGS ACK
+                                                  HEADERS
+                                                  DATA
+
+       6──────────────►
+         SETTINGS ACK
+                                               ◄────────────────7
+                                                HEADERS TRAILING
+
+       ◄───────────────8(5)
+         SETTINGS ACK
+         HEADERS
+         DATA
+
+                                             9(6)───────────────►
+                                                  SETTINGS ACK
+        ◄────────────────10(7)
+         HEADERS TRAILING
+
+
+
+
+       11────────────────►
+            RST_STREAM
+
+                                             12(11)──────────────►
+                                                    RST_STREAM
