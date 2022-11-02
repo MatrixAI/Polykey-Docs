@@ -2,7 +2,7 @@
 slug: /
 ---
 
-Welcome to our Polykey repo!
+Polykey - a decentralized secrets management system!
 
 Visit our [Getting Started](https://github.com/MatrixAI/Polykey/wiki/getting-started) Guide to deploy your very own PolyKey agent.
 
