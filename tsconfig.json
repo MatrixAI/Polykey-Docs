@@ -16,10 +16,15 @@
     "target": "ES2021",
     "lib": ["ES2021", "dom"],
     "types": [
+      "node",
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic",
     ],
     "noEmit": true,
+    "paths": {
+      "@site/*": ["./*"]
+    },
+    "skipLibCheck": true
   },
   "include": [
     "./docs/**/*"
