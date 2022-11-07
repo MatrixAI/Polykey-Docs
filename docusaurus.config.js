@@ -42,7 +42,7 @@ const config = {
       ({
         path: 'docs',
         routeBasePath: '/',
-        // sidebarPath: require.resolve('./sidebars.js'),
+        sidebarPath: require.resolve('./sidebars.js'),
         remarkPlugins: [remarkImageSrcWithRequire],
         include: ['**/*.md', '**/*.mdx'],
         exclude: [
@@ -54,14 +54,15 @@ const config = {
     ],
     [
       '@docusaurus/theme-classic',
-      {}
+      {
+      }
     ],
     [
       '@docusaurus/plugin-client-redirects',
       {
         redirects: [
           {
-            from: '/Home',
+            from: '/home',
             to: '/'
           }
         ]
@@ -70,6 +71,9 @@ const config = {
   ],
   /** @type {import('@docusaurus/types').ThemeConfig | import('@docusaurus/theme-common').UserThemeConfig} */
   themeConfig: {
+    docs: {
+      sidebar: {}
+    },
     navbar: {
       title: 'Polykey Documentation',
       logo: {
@@ -79,7 +83,7 @@ const config = {
       items: [
         {
           type: 'doc',
-          docId: 'Home',
+          docId: 'home',
           position: 'left',
           label: 'Home',
         },
