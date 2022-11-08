@@ -83,9 +83,9 @@ const config = {
       items: [
         {
           type: 'doc',
-          docId: 'home',
+          docId: 'README',
           position: 'left',
-          label: 'Home',
+          label: 'Docs',
         },
         {
           href: 'https://github.com/MatrixAI/Polykey-Docs',
