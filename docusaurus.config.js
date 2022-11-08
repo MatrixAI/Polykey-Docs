@@ -60,12 +60,6 @@ const config = {
     [
       '@docusaurus/plugin-client-redirects',
       {
-        redirects: [
-          {
-            from: '/home',
-            to: '/'
-          }
-        ]
       }
     ]
   ],
@@ -178,6 +172,7 @@ const config = {
     prism: {
       theme: lightCodeTheme,
       darkTheme: darkCodeTheme,
+      additionalLanguages: ['shell-session'],
     },
   },
 };
