@@ -7,14 +7,23 @@ const sidebars = {
       type: 'category',
       label: 'Tutorials',
       collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'tutorials/README',
+      },
       items: [
-        'tutorials/getting-started'
+        'tutorials/installation',
+        'tutorials/getting-started',
       ]
     },
     {
       type: 'category',
       label: 'How To Guides',
       collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'how-to-guides/README',
+      },
       items: [
         {
           type: 'category',
@@ -55,6 +64,10 @@ const sidebars = {
       type: 'category',
       label: 'Theory',
       collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'theory/README',
+      },
       items: [
         'theory/secrets-management',
         'theory/decentralized-trust-network',
@@ -66,6 +79,10 @@ const sidebars = {
       type: 'category',
       label: 'Reference',
       collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'reference/README',
+      },
       items: [
         {
           type: 'category',
@@ -192,6 +209,10 @@ const sidebars = {
       type: 'category',
       label: 'Development Guide',
       collapsed: false,
+      link: {
+        type: 'doc',
+        id: 'development-guide/README',
+      },
       items: [
         'development-guide/roadmap',
         'development-guide/software-architecture',
