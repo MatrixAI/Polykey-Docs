@@ -15,6 +15,7 @@
   },
   "scripts": {
     "start": "docusaurus start",
+    "swizzle": "docusaurus swizzle",
     "build": "docusaurus build --out-dir=./public",
     "deploy": "wrangler publish"
   },
