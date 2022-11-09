@@ -65,6 +65,9 @@ const config = {
   ],
   /** @type {import('@docusaurus/types').ThemeConfig | import('@docusaurus/theme-common').UserThemeConfig} */
   themeConfig: {
+    colorMode: {
+      disableSwitch: true,
+    },
     docs: {
       sidebar: {}
     },
