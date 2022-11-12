@@ -3,6 +3,7 @@ import NavbarLayout from "@theme/Navbar/Layout";
 import NavbarContent from "@theme/Navbar/Content";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import Logo from "../../../images/polykey-logo-light.svg";
+
 export default function Navbar() {
   const [dynamicClass, setDynamicClass] = React.useState(false);
   const [email, setEmail] = React.useState("");
