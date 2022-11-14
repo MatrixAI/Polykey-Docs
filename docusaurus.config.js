@@ -8,7 +8,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
  * Markdown links `[]()`, images `![](/image)` and anchor `<a href="...">`
  * are already automatically processed
  */
-const remarkImageSrcWithRequire = (_options) => {
+const remarkImageSrcWithRequire = (options) => {
   return (ast) => {
     visit(ast, "jsx", (node) => {
       const matches = node.value.match(/^(<img\s.*?src=)"(\s*\/.*?)"(.*)$/);
@@ -66,7 +66,6 @@ const config = {
       sidebar: {},
     },
     navbar: {
-      style: "dark",
       title: "Polykey Documentation",
       logo: {
         alt: "Polykey Logo",
@@ -74,20 +73,28 @@ const config = {
       },
       items: [
         {
+          href: "https://polykey.io/blog",
+          label: "Blog",
+          position: "left",
+        },
+        {
           type: "doc",
           docId: "README",
           position: "left",
           label: "Docs",
+          href: "/",
         },
+        {
+          position: "right",
+          label: "Download",
+          href: "https://polykey.io/download",
+        },
+
         {
           href: "https://github.com/MatrixAI/Polykey-Docs",
-          label: "GitHub",
+          src: "images/github-logo.svg",
           position: "right",
-        },
-        {
-          href: "https://polykey.io/blog",
-          label: "Blog",
-          position: "left",
+          alt: "Github Logo",
         },
       ],
     },
