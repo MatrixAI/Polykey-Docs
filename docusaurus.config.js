@@ -8,7 +8,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
  * Markdown links `[]()`, images `![](/image)` and anchor `<a href="...">`
  * are already automatically processed
  */
-const remarkImageSrcWithRequire = (options) => {
+const remarkImageSrcWithRequire = (_options) => {
   return (ast) => {
     visit(ast, "jsx", (node) => {
       const matches = node.value.match(/^(<img\s.*?src=)"(\s*\/.*?)"(.*)$/);
