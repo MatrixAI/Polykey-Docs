@@ -3,9 +3,21 @@ import NavbarLayout from "@theme/Navbar/Layout";
 import NavbarContent from "@theme/Navbar/Content";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 import Logo from "../../../images/polykey-logo-light.svg";
+import NavbarComponent from "../../../docusaurus.config";
+import sidebars from "../../../sidebars";
+import axios from "axios";
+
 export default function Navbar() {
   const [dynamicClass, setDynamicClass] = React.useState(false);
   const [email, setEmail] = React.useState("");
+  const [sideBars, setSideBars] = React.useState();
+  console.log(sidebars, "Hey");
+  React.useEffect(() => {
+    setSideBars(sidebars.docs);
+  }, []);
+  const headers = {
+    "Content-Type": "text/plain",
+  };
   return (
     <NavbarLayout>
       <div className="container">
@@ -15,23 +27,19 @@ export default function Navbar() {
           </div>
           <div className="header_menu">
             <ul>
-              <li>
-                <a href="https://polykey.io/blog">Blog</a>
-              </li>
-              <li>
-                <a href="https://polykey.io/docs">Docs</a>
-              </li>
-              <li>
-                <a href="https://polykey.io/download">Download</a>
-              </li>
-              <li>
-                <a href="https://github.com/MatrixAI/PolyKey/discussions">
-                  <img
-                    src="https://uploads-ssl.webflow.com/6098c4e3255a0a67635c1de5/6098c4e3255a0a39ef5c1e04_git-hub-white.svg"
-                    alt=""
-                  />
-                </a>
-              </li>
+              {NavbarComponent.themeConfig.navbar.items.map((data, index) => {
+                return data.hasOwnProperty("src") ? (
+                  <li>
+                    <a href="https://github.com/MatrixAI/PolyKey/discussions">
+                      <img src={data.src} alt={data.alt} />
+                    </a>
+                  </li>
+                ) : (
+                  <li id="index">
+                    <a href={data.href}>{data.label}</a>
+                  </li>
+                );
+              })}
               <li className="email_box">
                 <input
                   type="email"
@@ -42,7 +50,20 @@ export default function Navbar() {
                 />
                 <button
                   onClick={() => {
-                    console.log(email);
+                    axios
+                      .post(
+                        "https://matrix.us9.list-manage.com/subscribe/post?u=c95e0a682d8937f12732b48d4&amp;id=863aebab0f",
+                        {
+                          EMAIL: email,
+                        },
+                        { headers: headers }
+                      )
+                      .then((res) => {
+                        console.log(res);
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
                   }}
                 >
                   Get Started
