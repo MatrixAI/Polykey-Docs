@@ -1,18 +1,35 @@
 import React from "react";
 import { useThemeConfig } from "@docusaurus/theme-common";
-import FooterLinks from "@theme/Footer/Links";
-import FooterLogo from "@theme/Footer/Logo";
-import FooterCopyright from "@theme/Footer/Copyright";
-import FooterLayout from "@theme/Footer/Layout";
+import FooterContent from "../../../docusaurus.config"
 function Footer() {
+ const [footerLink,setFooterLink] = React.useState()
+ const [footerLinkMobile,setFooterLinkMobile] = React.useState()
+  const [currentWidth, setCurrentWidth] = React.useState(window.innerWidth)
   const { footer } = useThemeConfig();
   if (!footer) {
     return null;
   }
+  var year = new Date().getFullYear();
+  React.useEffect(() =>
+  {
+    console.log("footer",FooterContent?.themeConfig.footer.links[0].forDesktop.data)
+    setFooterLink(FooterContent?.themeConfig.footer.links[0].forDesktop.data)
+    setFooterLinkMobile(FooterContent?.themeConfig.footer.links[0].forMobile.data)
+  }, [])
+  //  console.log(wind,"Footer")
+  React.useEffect(() => {
+    function handleResize()
+    {
+      
+      setCurrentWidth(window.innerWidth)
+    }
+
+    window.addEventListener('resize',handleResize)
+  })
   const { copyright, links, logo, style } = footer;
   return (
     <footer>
-      <div className="FooterContainer">
+      <div className="container">
         {/* <div className="padding-both"> */}
         <div className="row justify-content-between">
           <div className="logo">
@@ -22,11 +39,36 @@ function Footer() {
           </div>
           <div className="company-name">
             <p className="company-product">Polykey is a product of Matrix AI</p>
-            <p className="copyright">copyright @2022 All Rights Reserved</p>
+            <p className="copyright">copyright @{year} Matrix AI</p>
           </div>
           <div className="useful-links">
             <ul className="row">
-              <li>
+              {currentWidth > 769 ? footerLink?.map((data, index) => {
+                return (<li id={index}>
+                  <a href={data.href}>{data.title}</a>
+                </li>
+                )
+              }) : footerLinkMobile?.map((data, index) =>
+              {
+                return (
+                  <div id={index}>
+                    <h5 className="footerTitle">{data.title}</h5>
+                    {data.items && (<ul>
+
+                    { data.items.map((subData,index) =>
+                    {
+                      return (
+                        <ol id={index} >
+                          <a href={subData?.href}>{ subData.label}</a>
+                        </ol>
+                      )
+                    })}
+                    </ul>)}
+                    </div>
+                  ) 
+              })
+              }
+              {/* <li>
                 <a href="https://matrix.ai/">Matrix AI</a>
               </li>
               <li>
@@ -40,7 +82,7 @@ function Footer() {
               </li>
               <li>
                 <a href="https://polykey.io/privacy">Privacy</a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

@@ -104,8 +104,11 @@ const config = {
         alt: "Polykey Logo",
         src: "images/polykey-logo-light.svg",
       },
+      
       links: [
         {
+          forMobile: {
+            data:[{
           title: "Open Source",
           items: [
             {
@@ -175,8 +178,33 @@ const config = {
               href: "https://matrix.ai",
             },
           ],
+        }]
+          },
+          forDesktop: {
+            data :[{
+          title: "Matrix AI",
+          href :"https://matrix.ai/"
         },
+        {
+          title: "About Us",
+          href :"https://polykey.io/about"
+        },
+        {
+          title: "Contact Us",
+          href :"https://matrix.ai/contact"
+        },
+        {
+          title: "Terms",
+          href :"https://matrix.ai/terms-of-service"
+        },
+        {
+          title: "Privacy",
+          href :"https://matrix.ai/privacy"
+        }]
+          }
+      }
       ],
+      
       copyright: `Copyright © ${new Date().getFullYear()} Matrix AI`,
     },
     prism: {
@@ -188,3 +216,4 @@ const config = {
 };
 
 module.exports = config;
+

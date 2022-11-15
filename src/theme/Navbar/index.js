@@ -1,8 +1,5 @@
 import React from "react";
 import NavbarLayout from "@theme/Navbar/Layout";
-import NavbarContent from "@theme/Navbar/Content";
-import useBaseUrl from "@docusaurus/useBaseUrl";
-import Logo from "../../../images/polykey-logo-light.svg";
 import NavbarComponent from "../../../docusaurus.config";
 import sidebars from "../../../sidebars";
 import axios from "axios";
@@ -29,7 +26,7 @@ export default function Navbar() {
             <ul>
               {NavbarComponent.themeConfig.navbar.items.map((data, index) => {
                 return data.hasOwnProperty("src") ? (
-                  <li>
+                  <li className="github_main">
                     <a href="https://github.com/MatrixAI/PolyKey/discussions">
                       <img src={data.src} alt={data.alt} />
                     </a>
@@ -95,8 +92,39 @@ export default function Navbar() {
                   alt=""
                 />
               </div>
-              <ul>
-                <li>
+            {sideBars &&  <ul>
+                {
+                  sideBars.map((mainData) =>
+                  {
+                    return (<li> <a><b>{mainData.label}</b></a> 
+                      <ul>
+
+                      
+                      {mainData.items.map((subMenu) =>
+                      {
+                        return subMenu.hasOwnProperty("label") ? (<ul><a>{subMenu.label}</a>
+                          <ul>
+                          {
+                            subMenu.items.map((child) =>
+                            {
+                              return (
+                                <li><a>{child}</a></li>
+                              )
+                            })
+                        }</ul>
+                        </ul>) : (<li><a>{subMenu}</a></li>)
+                        
+                        })}
+</ul>
+                    </li>
+                    
+                    )
+                    
+                 })
+                  }
+              </ul>}
+              {/* <ul> */}
+                {/* <li>
                   <img src="https://uploads-ssl.webflow.com/6098c4e3255a0a67635c1de5/6098c4e3255a0a4de85c1e10_polykey-logo-black.svg" />
                 </li>
                 <li>
@@ -105,7 +133,7 @@ export default function Navbar() {
                 <li>
                   <a href="https://polykey.io/docs">Docs</a>
                 </li>
-                <li>
+                <li >
                   <a href="https://github.com/MatrixAI/PolyKey/discussions">
                     <img
                       src="https://uploads-ssl.webflow.com/6098c4e3255a0a67635c1de5/6098c4e3255a0a15a65c1e03_github-logo-btn.svg"
@@ -116,8 +144,8 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a href="https://polykey.io/download">Download Now</a>
-                </li>
-              </ul>
+                </li> */}
+              {/* </ul> */}
             </div>
           </div>
         </div>
