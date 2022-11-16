@@ -38,6 +38,8 @@ export default function Navbar() {
                 );
               })}
               <li className="email_box">
+                <form id="email-form" name="email-form" data-name="Email Form" action="https://matrix.us9.list-manage.com/subscribe/post?u=c95e0a682d8937f12732b48d4&amp;id=863aebab0f" method="post" className="form nav" aria-label="Email Form">
+
                 <input
                   type="email"
                   placeholder="Your Email"
@@ -45,26 +47,8 @@ export default function Navbar() {
                     setEmail(e.target.value);
                   }}
                 />
-                <button
-                  onClick={() => {
-                    axios
-                      .post(
-                        "https://matrix.us9.list-manage.com/subscribe/post?u=c95e0a682d8937f12732b48d4&amp;id=863aebab0f",
-                        {
-                          EMAIL: email,
-                        },
-                        { headers: headers }
-                      )
-                      .then((res) => {
-                        console.log(res);
-                      })
-                      .catch((err) => {
-                        console.log(err);
-                      });
-                  }}
-                >
-                  Get Started
-                </button>
+                  <input type="submit"  value="Get Started" data-wait="Please wait..." className="email_box_button" id="email_box_button"  />
+                      </form>
               </li>
             </ul>
           </div>
