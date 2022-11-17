@@ -492,7 +492,13 @@ footer {
 }
 
 @media (max-width: 767px) {
-    
+    .navbar-sidebar {
+     left: inherit !important;
+     right: 0 !important;
+     transform: translateY(0%) !important;
+     opacity: 1 !important;
+     /* visibility: inherit !important; */
+    }
     .header_main {
         padding: 0px 10px !important;
     }

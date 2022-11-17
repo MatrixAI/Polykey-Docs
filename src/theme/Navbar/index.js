@@ -1,20 +1,10 @@
 import React from "react";
 import NavbarLayout from "@theme/Navbar/Layout";
 import NavbarComponent from "../../../docusaurus.config";
-import sidebars from "../../../sidebars";
-import axios from "axios";
 
 export default function Navbar() {
   const [dynamicClass, setDynamicClass] = React.useState(false);
-  const [email, setEmail] = React.useState("");
-  const [sideBars, setSideBars] = React.useState();
-  console.log(sidebars, "Hey");
-  React.useEffect(() => {
-    setSideBars(sidebars.docs);
-  }, []);
-  const headers = {
-    "Content-Type": "text/plain",
-  };
+  
   return (
     <NavbarLayout>
       <div className="container">
@@ -43,9 +33,7 @@ export default function Navbar() {
                 <input
                   type="email"
                   placeholder="Your Email"
-                  onChange={(e) => {
-                    setEmail(e.target.value);
-                  }}
+                  
                 />
                   <input type="submit"  value="Get Started" data-wait="Please wait..." className="email_box_button" id="email_box_button"  />
                       </form>
@@ -56,7 +44,11 @@ export default function Navbar() {
             <div
               className="mobile_menu_icon"
               onClick={() => {
-                setDynamicClass(true);
+                const boxes = document.querySelector('.navbar--fixed-top');
+                const body = document.querySelector('body');
+                console.log(body)
+                body.setAttribute('style','overflow:hidden')
+              boxes.classList.add("navbar-sidebar--show")
               }}
             >
               <img
@@ -64,7 +56,7 @@ export default function Navbar() {
                 alt=""
               />
             </div>
-            <div className="mobile_menu" id={dynamicClass ? "show" : "hide"}>
+            {/* <div className="mobile_menu" id={dynamicClass ? "show" : "hide"}>
               <div
                 className="mobile_menu_close"
                 onClick={() => {
@@ -75,8 +67,9 @@ export default function Navbar() {
                   src="https://uploads-ssl.webflow.com/6098c4e3255a0a67635c1de5/6098c4e3255a0a2de55c1e0e_menu-exist.svg"
                   alt=""
                 />
-              </div>
-            {sideBars &&  <ul>
+              </div> */}
+              {/* <NavbarMobileSidebar/> */}
+            {/* {sideBars &&  <ul>
                 {
                   sideBars.map((mainData) =>
                   {
@@ -106,31 +99,9 @@ export default function Navbar() {
                     
                  })
                   }
-              </ul>}
-              {/* <ul> */}
-                {/* <li>
-                  <img src="https://uploads-ssl.webflow.com/6098c4e3255a0a67635c1de5/6098c4e3255a0a4de85c1e10_polykey-logo-black.svg" />
-                </li>
-                <li>
-                  <a href="https://polykey.io/blog">Blog</a>
-                </li>
-                <li>
-                  <a href="https://polykey.io/docs">Docs</a>
-                </li>
-                <li >
-                  <a href="https://github.com/MatrixAI/PolyKey/discussions">
-                    <img
-                      src="https://uploads-ssl.webflow.com/6098c4e3255a0a67635c1de5/6098c4e3255a0a15a65c1e03_github-logo-btn.svg"
-                      alt=""
-                    />
-                    Join Discussion
-                  </a>
-                </li>
-                <li>
-                  <a href="https://polykey.io/download">Download Now</a>
-                </li> */}
-              {/* </ul> */}
-            </div>
+              </ul>} */}
+              
+            {/* </div> */}
           </div>
         </div>
       </div>
