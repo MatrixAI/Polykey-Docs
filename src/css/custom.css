@@ -1,0 +1,558 @@
+@font-face {
+    font-family: 'open sans';
+    src: url(/fonts/Open_Sans/OpenSans-Regular.ttf);
+}
+@font-face {
+    font-family: 'open sans Bold';
+    src: url(/fonts/Open_Sans/OpenSans-Bold.ttf);
+}
+@font-face {
+    font-family: 'open sans BoldItalic';
+    src: url(/fonts/Open_Sans/OpenSans-BoldItalic.ttf);
+}
+@font-face {
+    font-family: 'open sans ExtraBold';
+    src: url(/fonts/Open_Sans/OpenSans-ExtraBold.ttf);
+}
+@font-face {
+    font-family: 'open sans ExtraBoldItalic';
+    src: url(/fonts/Open_Sans/OpenSans-ExtraBoldItalic.ttf);
+}
+@font-face {
+    font-family: 'open sans Italic';
+    src: url(/fonts/Open_Sans/OpenSans-Italic.ttf);
+}
+@font-face {
+    font-family: 'open sans Light';
+    src: url(/fonts/Open_Sans/OpenSans-Light.ttf);
+}
+@font-face {
+    font-family: 'open sans LightItalic';
+    src: url(/fonts/Open_Sans/OpenSans-LightItalic.ttf);
+}
+@font-face {
+    font-family: 'open sans SemiBold';
+    src: url(/fonts/Open_Sans/OpenSans-SemiBold.ttf);
+}
+@font-face {
+    font-family: 'open sans SemiBoldItalic';
+    src: url(/fonts/Open_Sans/OpenSans-SemiBoldItalic.ttf);
+}
+
+@font-face {
+    font-family: 'roboto mono';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-Regular.ttf);
+}
+@font-face {
+    font-family: 'roboto mono Bold';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-Bold.ttf);
+}
+@font-face {
+    font-family: 'roboto mono BoldItalic';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-BoldItalic.ttf);
+}
+@font-face {
+    font-family: 'roboto mono ExtraLight';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-ExtraLight.ttf);
+}
+@font-face {
+    font-family: 'roboto mono ExtraLightItalic';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-ExtraLightItalic.ttf);
+}
+@font-face {
+    font-family: 'roboto mono Italic';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-Italic.ttf);
+}
+@font-face {
+    font-family: 'roboto mono Light';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-Light.ttf);
+}
+@font-face {
+    font-family: 'roboto mono LightItalic';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-LightItalic.ttf);
+}
+@font-face {
+    font-family: 'roboto mono Medium';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-Medium.ttf);
+}
+@font-face {
+    font-family: 'roboto mono MediumItalic';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-MediumItalic.ttf);
+}
+@font-face {
+    font-family: 'roboto mono SemiBold';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-SemiBold.ttf);
+}
+@font-face {
+    font-family: 'roboto mono SemiBoldItalic';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-SemiBoldItalic.ttf);
+}
+@font-face {
+    font-family: 'roboto mono Thin';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-Thin.ttf);
+}
+@font-face {
+    font-family: 'roboto mono ThinItalic';
+    src: url(/fonts/Roboto_Mono/static/RobotoMono-ThinItalic.ttf);
+}
+
+:root {
+    --color-white: #fff;
+    --color-black: #000;
+    --bg-blue: #0e0e0e;
+    --ifm-color-primary: #25C2A0;
+    --ifm-code-font-size: 95%;
+    --get-started-btn: #116466;
+    --link-hover: #289295;
+    --footer-grey: #7f88a5;
+    --ifm-footer-link-color: #ebedf0;
+
+}
+
+a {
+    cursor: pointer !important;
+}
+
+body {
+    font-family: 'open sans';
+}
+
+body code {
+    font-family: 'roboto mono';
+    font-size: small !important;
+    /* font-weight: 100 !important; */
+}
+
+.navbarText {
+    color: var(--ifm-color-primary);
+}
+
+nav.navbar {
+    padding: 0px 0 !important;
+    height: auto !important;
+    background: var(--bg-blue);
+}
+
+.header_main {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1px 0;
+}
+
+.useful-links ul {
+    padding: 0 !important;
+}
+
+.header_logo {
+    width: 160px;
+}
+
+.header_logo img {
+    width: 100%;
+    vertical-align: top;
+}
+
+.header_main ul {
+    margin: 0;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.header_main ul li a {
+    padding: 0 16px;
+}
+
+.header_main ul li.github_icon {
+    margin-left: 16px;
+    margin-right: 32px;
+}
+
+.header_main ul li.github_icon a {
+    padding: 0;
+}
+
+.header_main ul li a {
+    color: var(--color-white);
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none;
+}
+
+.header_main ul li a img {
+    vertical-align: top;
+}
+
+.header_main ul li a:hover {
+    color: var(--link-hover);
+}
+
+.email_box form {
+    display: inline-flex;
+    align-items: center;
+}
+
+.email_box input {
+    background-color: var(--color-white);
+    outline: none;
+    border: none;
+    font-size: 14px;
+    padding: 0 12px;
+    border-radius: 6px 0 0 6px !important;
+}
+
+#email_box_button {
+    background-color: var(--get-started-btn);
+    outline: none;
+    border: none;
+    color: var(--color-white);
+    padding: 0 16px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 0 6px 6px 0 !important;
+}
+
+.email_box input,
+.email_box button {
+    height: 40px;
+}
+
+.header_mobile_menu {
+    display: none;
+}
+
+.mobile_menu {
+    width: 100%;
+    position: fixed;
+    overflow: scroll;
+    top: 0;
+    left: 0;
+    transform: translateX(100%);
+    height: 100%;
+    width: 100%;
+    transition: .5s;
+    background-color: var(--color-white);
+}
+
+.mobile_menu_icon {
+    margin-right: 20px;
+}
+
+.mobile_menu#show {
+    transform: translateX(0%);
+}
+
+.mobile_menu_close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+}
+
+.mobile_menu ul {
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0;
+}
+
+.mobile_menu ul li {
+    margin: 15px 0;
+}
+
+.mobile_menu ul li a {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--color-black);
+}
+
+.mobile_menu ul li img {
+    margin-right: 10px;
+}
+
+
+.container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    margin: 0 auto;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo,
+.company-name,
+.useful-links {
+    width: 33%;
+}
+
+.useful-links ul li {
+    margin-left: 20px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    font-family: 'open sans', sans-serif;
+}
+
+.container>.row {
+    margin: 0 !important;
+}
+
+.logo img {
+    vertical-align: middle;
+    max-width: 100%;
+}
+
+.padding-both {
+    padding-left: 100px;
+    padding-right: 100px;
+    margin: 0 auto;
+}
+
+.useful-links {
+    text-align: center;
+    /* margin: 0 auto; */
+}
+
+.useful-links ul {
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    justify-content: space-between;
+}
+
+.company-product,
+.copyright {
+    color: #7f88a5;
+    font-size: 14px;
+    line-height: 20px;
+    font-style: italic;
+    font-weight: 600;
+    letter-spacing: normal;
+}
+
+.useful-links ul li {
+    list-style: none;
+}
+
+.useful-links ul li a {
+    color: var(--color-white);
+    font-weight: 500;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.useful-links ul li a:hover {
+    text-decoration: underline;
+}
+
+.github_main a {
+    padding-right: 0 !important;
+}
+
+footer .container {
+    padding: 24px 60px;
+}
+
+footer {
+    height: auto !important;
+}
+
+.company-name {
+    text-align: center;
+}
+
+.company-product {
+    margin: 0;
+    font-style: italic;
+    color: var(--footer-grey);
+    padding-bottom: 5px;
+
+}
+
+.copyright {
+    padding-top: 0px;
+    margin: 0;
+    font-style: italic;
+    color: var(--footer-grey);
+}
+
+.header_menu ul li:nth-child(4) {
+    margin-right: 32px;
+}
+
+.container {
+    display: block;
+    max-width: 1290px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-right: 60px;
+    padding-left: 60px;
+}
+
+.email_box button {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 12px;
+    font-family: 'open sans';
+    letter-spacing: 0;
+}
+
+.email_box input::placeholder {
+    color: #7f88a5;
+}
+
+/* ---------------------------Footer-------------------------- */
+footer {
+    background-color: var(--color-black);
+    display: flex;
+    color: var(--color-white);
+}
+
+/* ---------------------------Footer-------------------------- */
+
+@media (max-width: 1024px) {
+    .navbar>.container {
+        padding: 12px 96px;
+    }
+
+    footer .container {
+        padding: 24px 96px;
+    }
+}
+
+@media (max-width: 992px) {
+    .useful-links ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .useful-links ul li {
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header_menu {
+        display: none;
+    }
+
+    .header_mobile_menu {
+        display: block;
+    }
+
+    .container>.row {
+        flex-direction: row;
+        margin: 0;
+    }
+
+    .container {
+        padding: 20px 15px;
+        width: 100%;
+        display: inline-block;
+    }
+
+    .navbar>.container {
+        padding: 12px 36px;
+    }
+
+    footer .container {
+        padding: 24px 36px;
+    }
+
+    .header_main {
+        padding: 0 !important;
+    }
+
+
+    .mobile_menu_icon {
+        margin-right: 0px;
+    }
+}
+
+@media (max-width: 767px) {
+    .navbar-sidebar {
+     left: inherit !important;
+     right: 0 !important;
+     transform: translateY(0%) !important;
+     opacity: 1 !important;
+     /* visibility: inherit !important; */
+    }
+    .header_main {
+        padding: 0px 10px !important;
+    }
+
+    .navbar>.container {
+        padding: 12px 16px;
+    }
+
+    .company-name {
+        margin: 30px 0;
+    }
+footer .container > .row {
+    flex-direction: column-reverse !important;
+    }
+        footer .useful-links .row > div {
+            width: 100%;
+            margin-bottom: 51px;
+        }
+    footer .useful-links .row ul {
+        flex-direction: column;
+        padding: 0;
+    }
+        h5.footerTitle {
+            font-size: 17px;
+        }
+    footer .useful-links .row ul ol {
+        padding: 0 !important;
+    }
+        footer .useful-links .row ul ol a {
+            color: var(--ifm-footer-link-color);
+        }
+    footer .container {
+        padding: 24px 16px;
+    }
+
+
+    .mobile_menu_icon img,
+    .mobile_menu_close img {
+        vertical-align: top;
+    }
+
+    .logo,
+    .company-name,
+    .useful-links {
+        width: 100%;
+        text-align: center;
+    }
+
+    .useful-links ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .useful-links ul li {
+        margin: 0 10px;
+    }
+}
