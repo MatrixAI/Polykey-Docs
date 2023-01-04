@@ -12,8 +12,9 @@ const sidebars = {
         id: 'tutorials/README',
       },
       items: [
-        'tutorials/getting-started',
         'tutorials/installation',
+        'tutorials/getting-started',
+        'tutorials/getting-started-library',
       ]
     },
     {
