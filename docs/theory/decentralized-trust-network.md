@@ -57,7 +57,7 @@ Polykey's secrets are stored in [Vaults](./glossary.md#vault) that are managed a
 
 <p align="center">
   <figure>
-    <img src="images/divio_quadrant.png" width="100%" />
+    <img src="/images/divio_quadrant.png" width="100%" />
     <br />
     <figcaption>X.509 certificates act as the root of trust for Polykey Sigchains</figcaption>
   </figure>
@@ -78,7 +78,7 @@ Keynodes store secrets, digital identities are artifacts of the agent's identity
 
 <p align="center">
   <figure>
-    <img src="images/gestalts-and-DIs/GestaltDiagram.png" width="70%" />
+    <img src="/images/gestalts-and-DIs/GestaltDiagram.png" width="70%" />
     <br />
     <figcaption>Visual depiction of a Polykey Gestalt</figcaption>
   </figure>
@@ -96,7 +96,7 @@ Our augmentation process is what allows Polykey to utilize digital identities fo
 
 <p align="center">
   <figure>
-    <img src="images/gestalts-and-DIs/keybase.png" width="70%" />
+    <img src="/images/gestalts-and-DIs/keybase.png" width="70%" />
     <br />
     <figcaption>Digital identity augmentation as implemented within Keybase</figcaption>
   </figure>
@@ -110,7 +110,7 @@ The process of digital identity augmentation within Polykey involves four main s
 
 <p align="center">
   <figure>
-    <img src="images/gestalts-and-DIs/augmentation.png" width="90%" />
+    <img src="/images/gestalts-and-DIs/augmentation.png" width="90%" />
     <br />
     <figcaption>Polykey's Digital Identity (DI) augmentation process</figcaption>
   </figure>
@@ -118,7 +118,7 @@ The process of digital identity augmentation within Polykey involves four main s
 
 <p align="center">
   <figure>
-    <img src="images/gestalts-and-DIs/augmentationv3.png" width="90%" />
+    <img src="/images/gestalts-and-DIs/augmentationv3.png" width="90%" />
     <br />
     <figcaption>Structure of a cryptolink generated via augmentation</figcaption>
   </figure>
@@ -152,7 +152,7 @@ Once we have found the Keynode claiming ownership of a particular digital identi
 
 <p align="center">
   <figure>
-    <img src="images/gestalts-and-DIs/gestalt-discovery.png" width="90%" />
+    <img src="/images/gestalts-and-DIs/gestalt-discovery.png" width="90%" />
     <br />
     <figcaption>The Gestalt Discovery process</figcaption>
   </figure>
@@ -162,7 +162,7 @@ Because all of Polykey's Gestalts are connected, the trust between them forms a 
 
 <p align="center">
   <figure>
-    <img src="images/gestalts-and-DIs/gestalt-trust-chain.png" width="90%" />
+    <img src="/images/gestalts-and-DIs/gestalt-trust-chain.png" width="90%" />
     <br />
     <figcaption>The beginnings of a trust network formed by Gestalts</figcaption>
   </figure>
