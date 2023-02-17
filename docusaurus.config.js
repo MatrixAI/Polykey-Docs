@@ -11,9 +11,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const remarkImageSrcWithRequire = (options) => {
   return (ast) => {
     visit(ast, 'jsx', (node) => {
-      const matches = node.value.match(/^(<img\s.*?src=)"(\s*\/.*?)"(.*)$/);
+      const matches = node.value.match(/^(.*)(<img\s.*?src=)"(\s*\/.*?)"(.*)$/s);
       if (matches != null) {
-        node.value = `${matches[1]}{require("${matches[2]}").default}${matches[3]}`;
+        node.value = `${matches[1]}${matches[2]}{require("${matches[3]}").default}${matches[4]}`;
       }
     });
   };
