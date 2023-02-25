@@ -34,7 +34,7 @@ used to identify the node in the peer to peer distributed hash table (DHT).
 Our current root keys are RSA keys. Eventually we will move to using Ed25519 keys.
 Because our current root keys are RSA keys, they are very long. Our node IDs are
 therefore MD5 hashes of the PEM-encoded RSA public key. This is temporary until
- we have integrated Ed25519 keys, and our node IDs will be much shorter.
+we have integrated Ed25519 keys, and our node IDs will be much shorter.
 
 Note that current modern websites tend to use ECDSA root keys, this is similar to
 Ed25519, but we will be looking to use Ed22519 instead of ECDSA in the future.

@@ -4,8 +4,8 @@ It is possible to have 1 server listening on one socket that dispatches to multi
 
 We have 2 main services:
 
-* Agent to Agent - `Agent.proto` - this is peer to peer (and involves communication between untrusted agents)
-* Agent to Client - `Client.proto` - PK GUI, PK CLI, PK Browser Extension
+- Agent to Agent - `Agent.proto` - this is peer to peer (and involves communication between untrusted agents)
+- Agent to Client - `Client.proto` - PK GUI, PK CLI, PK Browser Extension
 
 Why should there be multiple services?
 
@@ -33,6 +33,7 @@ For agent to agent communication:
 Now if it is not a direct connection. The Node Table operating as the DHT isn't giving you the actual raw IP address and Port of the node. Instead it would be asking you to connect via a Relay.
 
 ---
+
 The proposed communication architecture of all the PK projects are:
 
 1. PK CLI grpc-js <=> PK Agent grpc-js
@@ -106,5 +107,5 @@ One possible solution is to keep using our own adhoc proxies, and wait until the
 
 Resources:
 
-* https://grpc.io/blog/state-of-grpc-web/
-* https://github.com/grpc/grpc-web/blob/master/doc/in-process-proxy.md
+- https://grpc.io/blog/state-of-grpc-web/
+- https://github.com/grpc/grpc-web/blob/master/doc/in-process-proxy.md

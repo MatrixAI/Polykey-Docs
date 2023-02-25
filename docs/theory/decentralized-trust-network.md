@@ -22,7 +22,7 @@ The most commonly used digital identities are hosted on centralized identity pro
 
 Public identity provider platforms are [reputation systems](https://en.wikipedia.org/wiki/Reputation_system) that incentivise agents to perform digital activities (that may have physical real-world effects) in order to signal social proof, and thus build a network of trust via reputation. Reputation is a quantified unit of trust (a.k.a. [trust metric](https://en.wikipedia.org/wiki/Trust_metric)), and it is valuable[^1] because it represents status, grants privileges, and can be exchanged for benefits. Private platforms are simpler as trust/reputation is dictated by the platform's owner. For the purposes of this article, we're going to focus on public platforms.
 
-[Social trust](https://en.wikipedia.org/wiki/Trust_(social_science)) is a subjective assessment of the quality and significance of another's influence on your own outcomes for a given situation. This assessment affects your expectation of, openness to and inclination of such influence. It is the heuristic shortcut that enables social cooperation, as without it decision makers would be paralysed by analysing all possibilities. Social trust is a vague notion that can be quantified into formal trust metrics or reputation. This is what enables the invention of automated reputation systems.
+[Social trust](<https://en.wikipedia.org/wiki/Trust_(social_science)>) is a subjective assessment of the quality and significance of another's influence on your own outcomes for a given situation. This assessment affects your expectation of, openness to and inclination of such influence. It is the heuristic shortcut that enables social cooperation, as without it decision makers would be paralysed by analysing all possibilities. Social trust is a vague notion that can be quantified into formal trust metrics or reputation. This is what enables the invention of automated reputation systems.
 
 Reputation systems create a trust network between their users. At a high level, trust networks have 3 phases for any [trust-based decision making](https://en.wikipedia.org/wiki/Computational_trust):
 
@@ -50,10 +50,10 @@ Polykey's trust network architecture is composed of several components.
 
 Polykey's secrets are stored in [Vaults](./glossary.md#vault) that are managed and shared between [Keynodes](./glossary.md#keynode). Each Keynode possesses a digital identity in Polykey's trust network. These identities start with root public & private key pair and along with other information is put together into a [X.509 certificate](https://en.wikipedia.org/wiki/X.509).
 
-* The Keynode Identity Certificate provides information about its public key, as well as the owner of this public key.
-* The key owner, as well as other entities (represented by their own X.509 certificates) can sign claims held on the Keynode Identity Certificate to verify their authenticity.
-* This chain of signed claims (known as a [Sigchain](./glossary.md#sigchain)) allows for the maintenance of a [chain of trust](https://en.wikipedia.org/wiki/Chain_of_trust), serving as an append-only log of signed actions and claims made by the Keynode.
-* The Keynode's [root certificate](https://en.wikipedia.org/wiki/Root_certificate) acts as a [trust anchor](https://en.wikipedia.org/wiki/Trust_anchor), establishing trust for the entire Sigchain and allowing claims to hold an assumed level of trust, provided you trust the Keynode.
+- The Keynode Identity Certificate provides information about its public key, as well as the owner of this public key.
+- The key owner, as well as other entities (represented by their own X.509 certificates) can sign claims held on the Keynode Identity Certificate to verify their authenticity.
+- This chain of signed claims (known as a [Sigchain](./glossary.md#sigchain)) allows for the maintenance of a [chain of trust](https://en.wikipedia.org/wiki/Chain_of_trust), serving as an append-only log of signed actions and claims made by the Keynode.
+- The Keynode's [root certificate](https://en.wikipedia.org/wiki/Root_certificate) acts as a [trust anchor](https://en.wikipedia.org/wiki/Trust_anchor), establishing trust for the entire Sigchain and allowing claims to hold an assumed level of trust, provided you trust the Keynode.
 
 <p align="center">
   <figure>
@@ -70,6 +70,7 @@ These Keynodes are at the core of Polykey's system of authentication, which is m
 Within Polykey, a [Gestalt](./glossary.md#gestalt) refers to the representation of an agent. The name comes from the field of [Gestaltism](https://en.wikipedia.org/wiki/Gestalt_psychology), which is based on the idea that "the whole is greater than the sum of its parts". For our purposes, the "whole" here refers to an agent, and the "sum of its parts" refers both to digital identities and to secrets.
 
 Our Gestalts are comprised of the following set of components:
+
 - At least one Keynode
 - Zero or more digital identities
 - Node-to-Node and Node-to-Identity [cryptolinks](./glossary.md#cryptolink)
@@ -85,6 +86,7 @@ Keynodes store secrets, digital identities are artifacts of the agent's identity
 </p>
 
 These cryptolink claims are statements of ownership:
+
 - Node-to-Node claims consist of a doubly-signed statement on each of two Keynodes (with each of these signed by both Keynodes) and indicate that the two Keynodes are members of the same Gestalt.
 - Node-to-Identity claims consist of a singly-signed statement on one Keynode claiming ownership over a particular digital identity, as well as a similar singly-signed statement (signed by the Keynode) on the digital identity (made by itself). This process is known as digital identity [augmentation](./glossary.md#augmentation).
 - Claims are ordered and are immutable once created, ensuring both their [authenticity](./glossary.md#authenticity) and [integrity](./glossary.md#integrity), and preventing the insertion of false claims into the Sigchain.
@@ -103,6 +105,7 @@ Our augmentation process is what allows Polykey to utilize digital identities fo
 </p>
 
 The process of digital identity augmentation within Polykey involves four main stages, however, only the final three belong to the augmentation itself:
+
 1. Authorization: Before a digital identity can be augmented, Polykey needs permission to access, and make changes to, the digital identity through its provider. We utilize [OAuth](https://auth0.com/docs/authorization/flows/device-authorization-flow) for this process, allowing only secure, delegated access to user data.
 2. Updating access permissions: The first step of the augmentation process itself is to update Keynode and Gestalt permissions. This step links the Keynode and digital identity inside the user's Gestalt and updates (or creates) Keynode permissions in the ACL to reflect these changes (see [Sharing](Gestalts-and-Digital-Identities#sharing) below for an explanation of the ACL).
 3. Generating a claim on the Sigchain: A cryptolink claim between a Keynode and digital identity begins on the Keynode. The claim is generated by providing the name of both the digital identity and its provider to the Keynode, which then constructs and appends the claim to its Sigchain. This claim can subsequently be retrieved and decoded by the Polykey Agent.
@@ -131,6 +134,7 @@ Once a Gestalt is trusted it then becomes possible to share secret information w
 The need for trust to be a basis of authentication, which is then used to authorize secret sharing, ties in with Polykey's [access-control list](https://en.wikipedia.org/wiki/Access-control_list) (ACL), whereby Gestalt Trust is used as a basis for allowing and disallowing permissions that extend to both Keynodes and Vaults. Since there is no single encapsulating definition of trust, it is important for a strictly managed [trust network](https://en.wikipedia.org/wiki/Web_of_trust) to adaptively ensure security of secrets, especially as agents, services, and the relationships between them continue to evolve and change over time.
 
 The ACL is a record of the access permissions that you allow other agents to have over the secrets you share. These permissions can only be given and revoked by yourself, and they can extend to either your entire Gestalt or only to certain Vaults. There are two types of permissions within Polykey's ACL: Keynode Permissions and Vault Permissions.
+
 - Keynode Permissions: Permissions given to other Keynodes that extend to your entire Gestalt.
   - Notify: This permission allows a Keynode to send notifications to any of your own, including simple messages, invitations to join the Keynode's Gestalt (via a Node-to-Node claim), and notifications of the Keynode giving your access permissions over one of their Vaults.
   - Scan: This permission allows a Keynode to scan your Vaults to find any that they have access to.
@@ -184,16 +188,15 @@ With secrets as a currency of access control, even more sophisticated privilege 
 
 References:
 
-* https://en.wikipedia.org/wiki/Trust_metric
-* https://en.wikipedia.org/wiki/Computational_trust
-* https://en.wikipedia.org/wiki/Reputation_system
-* https://en.wikipedia.org/wiki/Reputation_capital
-* https://en.wikipedia.org/wiki/Trust_federation
-* https://www.inkandswitch.com/backchannel/
-* https://docs.deso.org/
+- https://en.wikipedia.org/wiki/Trust_metric
+- https://en.wikipedia.org/wiki/Computational_trust
+- https://en.wikipedia.org/wiki/Reputation_system
+- https://en.wikipedia.org/wiki/Reputation_capital
+- https://en.wikipedia.org/wiki/Trust_federation
+- https://www.inkandswitch.com/backchannel/
+- https://docs.deso.org/
 
 ---
 
 [^1]: Social influence is intuitively known to be valuable, however formal systems for capitalising quantified social influence is a recent development, for example see the [DESO project](https://deso.org).
-
 [^2]: Similar efforts have taken place in the [past](https://en.wikipedia.org/wiki/Trust_federation) and in the [current](https://en.wikipedia.org/wiki/Decentralized_identifiers), usually by creating a [new identity standard that subsumes all existing identities](https://xkcd.com/927/). Polykey is different because it doesn't introduce a new identity standard, it just cryptographically links existing popular digital identities that regular (non-technical) people understand and use on a daily basis.

@@ -4,8 +4,8 @@ This entry refers to the errors that Polykey may encounter, whether they be inte
 
 There are 2 kinds of errors:
 
-* Client Errors "caller errors" "400 errors" - errors that originate from the client
-* Agent Errors "500 errors" - errors that originate from within the agent
+- Client Errors "caller errors" "400 errors" - errors that originate from the client
+- Agent Errors "500 errors" - errors that originate from within the agent
 
 It's important to understand that other Agents talking to your Agent, can still create a Client Error.
 
@@ -26,6 +26,7 @@ Reporting an Agent Error to the client is for notification purposes, akin to whe
 The errors currently can be serialised as JSON but can also be encoded into protobuf so it can be returned on a gRPC response.
 
 ---
+
 ## Security concerns
 
 For Client to Agent communication, both Client Errors and Agent Errors are communicated.
@@ -39,6 +40,7 @@ You don't want to leak information.
 ## Encoding into Protobuf
 
 In `protobuf`, there exists the `oneof` operator. This allows for message definitions such as:
+
 ```proto
 message SuccessMessage {
   string rsp = 1;
@@ -75,12 +77,12 @@ mygrpcmethod: handleUnaryCall<RequestMessage, ResponseMessage> = (
     callback(null, response);
   } catch (error) {
     if (error instanceof MyError) {
-        const errorMsg = new ErrorMessage();
-        response.setError(errorMsg);
-        callback(null, errorMsg);
+      const errorMsg = new ErrorMessage();
+      response.setError(errorMsg);
+      callback(null, errorMsg);
     } else {
-      callback(error, null)
+      callback(error, null);
     }
   }
-}
+};
 ```

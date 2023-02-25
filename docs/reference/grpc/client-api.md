@@ -5,11 +5,13 @@ The CLI for Polykey is the first real `consumer` of `Polykey`'s `gRPC` functiona
 When the `PolykeyClient` starts, it attempts to connect to a running `PolykeyAgent`'s gRPC server. If a connection cannot be established, the user is informed of it.
 
 When the user calls a CLI command, e.g.
+
 ```bash
 >$ pk vaults ls
 ```
 
 A few things happen.
+
 1. A `PolykeyClient` object gets created and is started, (attemping to connect to the `PolykeyAgent`)
 2. PolykeyClient sends a `gRPC` request to the `PolykeyAgent` which responds with the appropriate information, or performs the appropriate action
 3. Any relevant information is displayed to the user
@@ -19,9 +21,10 @@ A few things happen.
 
 There exists a file in the filesystem, in the [polykey path](https://github.com/MatrixAI/Polykey/wiki#polykey-directory) that contains information about a `PolykeyAgent` if it is running.
 It will be guaranteed to contain the following:
-* `PID`: Process ID
-* `GRPCHOST`: The host address of the grpc server that is running
-* `GRPCPORT`: The port of the grpc server that is running
+
+- `PID`: Process ID
+- `GRPCHOST`: The host address of the grpc server that is running
+- `GRPCPORT`: The port of the grpc server that is running
 
 This file gets deleted when the PolykeyAgent is stopped.
 
