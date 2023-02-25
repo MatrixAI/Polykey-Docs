@@ -98,3 +98,12 @@
     display: none;
   }
 }
+
+/**
+ * Footer
+ */
+.footer {
+  background: #000;
+  /*height: 6em;*/
+  padding: 1.5em 0;
+}
