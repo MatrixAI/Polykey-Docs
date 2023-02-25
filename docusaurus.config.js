@@ -55,6 +55,7 @@ const config = {
     [
       '@docusaurus/theme-classic',
       {
+        customCss: require.resolve('./src/css/custom.css'),
       }
     ],
     [
@@ -75,15 +76,9 @@ const config = {
       title: 'Polykey Documentation',
       logo: {
         alt: 'Polykey Logo',
-        src: 'images/polykey-logo-dark.svg',
+        src: 'images/polykey-logo-light.svg',
       },
       items: [
-        {
-          type: 'doc',
-          docId: 'README',
-          position: 'left',
-          label: 'Docs',
-        },
         {
           href: 'https://github.com/MatrixAI/Polykey-Docs',
           label: 'GitHub',

@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --ifm-font-family-base: 'Open Sans', sans-serif;
+
+  --ifm-color-primary: #289295;
+  --ifm-navbar-link-hover-color: #fff;
+
+  --ifm-navbar-link-color: #fff;
+  --ifm-footer-background-color: #000;
+}
+
+.navbar {
+  background: #0e0e0e;
+  height: 4.5em;
+}
+
+.navbar__inner {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.navbar__logo {
+  height: 3em;
+}
+
+.navbar__items {
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+}
+
+.navbar__items > .navbar__brand {
+  position: absolute;
+  left: 0;
+}
+
+.navbar__items--right {
+  font-size: 0.9em;
+}
+
+.navbar__toggle {
+  color: #fff;
+}
+
+#email-form {
+  height: 2.5em;
+}
+
+@media only screen and (max-width: 1000px) {
+  #email-form {
+    display: none;
+  }
+}
