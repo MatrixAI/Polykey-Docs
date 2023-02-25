@@ -11,7 +11,8 @@ Creating a vault will generate a vault Id and link this to a provided name that 
 Vaults are stored in a `VaultMap`, mapping from the vault ID to the `Vault` itself. Locking is required on this `VaultMap` to ensure consistent creation, destruction, opening, and closing. This `VaultMap` follows the generic `ObjectMap` flow for creation of a vault:
 
 ```ts
-type ObjectMap = Map<ObjectId,
+type ObjectMap = Map<
+  ObjectId,
   {
     resource?: Object;
     lock: MutexInterface;

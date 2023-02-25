@@ -12,25 +12,25 @@ Operating systems will run software processes within process environment, and en
 
 Developers use shells including `bash`, `zsh` and `sh` to create "parent" program environments that can be inherited by child programs. Environment variables in Unix-shells can be setup in 3 ways:
 
-* For the shell itself - `X=3; echo "$X"`
-* For the shell and child programs - `export X=3; echo "$X" && sh -c 'echo $X'`
-* For the child program and its child programs (but not the shell) - `X=3 sh -c 'echo $X'`
+- For the shell itself - `X=3; echo "$X"`
+- For the shell and child programs - `export X=3; echo "$X" && sh -c 'echo $X'`
+- For the child program and its child programs (but not the shell) - `X=3 sh -c 'echo $X'`
 
 The command `X=3 sh -c 'echo $X'` first sets the variable `X` to `3`, then runs the program `sh` (as a child program with respect to the shell) which will read and output the value of `X`.
 
 This has several advantages:
 
-* The environment variables are not persisted in the source code, this avoids a common vector for leaking secrets accidentally via source code version control systems such as Git, GitHub and GitLab.
-* The environment variables can be easily programatically changed depending on different environments, so there is minimal change required between development and production environments.
-* There is only 1 place to set secret configuration, which is the shell/process environment, which simplifies how to configure software.
-* Environment variables are framework and programming language agnostic, all major operating systems support environment variables.
-* Environment variables only exist while the process is alive, when the process dies, the environment variables would automatically be deleted.
+- The environment variables are not persisted in the source code, this avoids a common vector for leaking secrets accidentally via source code version control systems such as Git, GitHub and GitLab.
+- The environment variables can be easily programatically changed depending on different environments, so there is minimal change required between development and production environments.
+- There is only 1 place to set secret configuration, which is the shell/process environment, which simplifies how to configure software.
+- Environment variables are framework and programming language agnostic, all major operating systems support environment variables.
+- Environment variables only exist while the process is alive, when the process dies, the environment variables would automatically be deleted.
 
 There is one major challenge with using environment variables: If environment variables are temporary and only exist while the process is alive, then:
 
-* How do we remember what environment variables need to be set when we log off for the day and start working on the application after a restart of the computer?
-* How do we communicate what environment variables are required to other developers who are also working on the same software system?
-* How do we handle the increasing number of environment variables to be set as our software gains more features? It would be a chore to have to set them every time we ran our application.
+- How do we remember what environment variables need to be set when we log off for the day and start working on the application after a restart of the computer?
+- How do we communicate what environment variables are required to other developers who are also working on the same software system?
+- How do we handle the increasing number of environment variables to be set as our software gains more features? It would be a chore to have to set them every time we ran our application.
 
 In order to meet these challenges, the development community evolved the above idea into a workflow pattern called "dotenv".
 
@@ -65,10 +65,10 @@ However by using `.env` file we end up now managing a configuration file.
 
 There are still some problems here:
 
-* The usage of `.env` is not secure at rest, the `.env` is a plaintext file and can easily be read by malicious programs or accidentally leaked or exposed.
-* Security in transit isn't addressed, when working with other developers, you still need to communicate the right environment variable values to be used to access AWS, PostgreSQL or other services.
-* Security in use is still primitive, there's nothing to address the principle of least privilege, and nothing tracking secret provenance.
-* If you work on multiple projects with different environment variable configuration, it is possible to mix up your development shell environments by forgetting to exit a shell, and end up clobbering your secret variables
+- The usage of `.env` is not secure at rest, the `.env` is a plaintext file and can easily be read by malicious programs or accidentally leaked or exposed.
+- Security in transit isn't addressed, when working with other developers, you still need to communicate the right environment variable values to be used to access AWS, PostgreSQL or other services.
+- Security in use is still primitive, there's nothing to address the principle of least privilege, and nothing tracking secret provenance.
+- If you work on multiple projects with different environment variable configuration, it is possible to mix up your development shell environments by forgetting to exit a shell, and end up clobbering your secret variables
 
 This is where Polykey can help.
 

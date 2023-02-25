@@ -20,7 +20,7 @@ There is a limited set of HTML tags are here: https://github.com/gjtorikian/html
 
 Furthermore not all attributes are kept. The `style` attribute for example is filtered out.
 
-The most common styling attributes to be used will most likely be `align`, `width`, and `height`. See:  https://davidwells.io/snippets/how-to-align-images-in-markdown
+The most common styling attributes to be used will most likely be `align`, `width`, and `height`. See: https://davidwells.io/snippets/how-to-align-images-in-markdown
 
 ### Linking Assets (files, images)
 

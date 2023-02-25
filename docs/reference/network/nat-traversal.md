@@ -2,12 +2,12 @@
 
 STUN references:
 
-* https://tools.ietf.org/html/rfc8489
-* https://tailscale.com/blog/how-nat-traversal-works/
+- https://tools.ietf.org/html/rfc8489
+- https://tailscale.com/blog/how-nat-traversal-works/
 
 TURN reference:
 
-* https://tools.ietf.org/html/rfc8656
+- https://tools.ietf.org/html/rfc8656
 
 ---
 
@@ -21,15 +21,14 @@ Current situation is:
 
 References:
 
-* https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/84
+- https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/84
 
 ---
 
 Example implementation of STUN and TURN:
 
-* https://github.com/coturn/coturn
-* https://www.rtcsec.com/post/2020/04/how-we-abused-slacks-turn-servers-to-gain-access-to-internal-services/
-
+- https://github.com/coturn/coturn
+- https://www.rtcsec.com/post/2020/04/how-we-abused-slacks-turn-servers-to-gain-access-to-internal-services/
 
 # Network Module
 
@@ -95,6 +94,7 @@ We can test our NAT Traversal by simulating various NAT architectures using linu
 The `nftables` rules for simulating different NAT architectures are as follows:
 
 All of the below commands share the following values:
+
 - `AGENT_HOST` = proxy host of the agent behind NAT
 - `AGENT_PORT` = proxy port of the agent behind NAT
 - `ROUTER_EXT` = name of the outfacing interface on the router the agent is behind (for connecting to servers)
@@ -102,6 +102,7 @@ All of the below commands share the following values:
 - `DMZ_PORT` = port on the router for sending packets to the DMZ
 
 ## DMZ (no NAT)
+
 ```
 nft add table ip nat
 nft "add chain ip nat prerouting { type nat hook prerouting priority -100 ; }"
@@ -111,6 +112,7 @@ nft add rule ip nat prerouting udp dport $DMZ_PORT meta iif $ROUTER_EXT dnat to 
 ```
 
 ## Port-Restrited Cone NAT (endpoint-independent NAT)
+
 ```
 nft add table ip nat
 nft "add chain ip nat prerouting { type nat hook prerouting priority -100 ; }"
@@ -119,6 +121,7 @@ nft add rule ip nat postrouting meta oif $ROUTER_EXT masquerade persistent
 ```
 
 ## Symmetric NAT (endpoint-dependent NAT)
+
 ```
 nft add table ip nat
 nft "add chain ip nat prerouting { type nat hook prerouting priority -100 ; }"
