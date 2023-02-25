@@ -94,14 +94,14 @@ See NAT Busting.
 
 ## Discovery Techniques
 
-* Hardcoded Discovery - bootstrap.polykey.io
-* Manual Discovery - the user submits a certficate to PK node, and the PK adds it to the node table (I actually also know the NodeAddress) (if i know the NodeCertificate and NodeAddress, then I can add it manually to the NodeTable)
-* Local Area Network Discovery - use multicast (not been tested (there is hardcoded port for this))
-* Wide Area Network Discovery - use the DHT + Kademlia (you are synchronising the DHT automatically via kademlia protocol)
+- Hardcoded Discovery - bootstrap.polykey.io
+- Manual Discovery - the user submits a certficate to PK node, and the PK adds it to the node table (I actually also know the NodeAddress) (if i know the NodeCertificate and NodeAddress, then I can add it manually to the NodeTable)
+- Local Area Network Discovery - use multicast (not been tested (there is hardcoded port for this))
+- Wide Area Network Discovery - use the DHT + Kademlia (you are synchronising the DHT automatically via kademlia protocol)
 
 References
 
-* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/34
-* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/28
-* https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/33
-* https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/84
+- https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/34
+- https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/28
+- https://gitlab.com/MatrixAI/Engineering/Polykey/polykey-design/-/issues/33
+- https://gitlab.com/MatrixAI/Engineering/Polykey/Polykey/-/merge_requests/84

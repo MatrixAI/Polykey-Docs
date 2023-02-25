@@ -42,13 +42,13 @@ In many web services, controllers are the entry-point to the application. These 
 
 Controllers handle all the boilerplate work of managing network requests such as:
 
-* Authentication & Authorisation
-* Caching
-* Routing
-* Transactions and Isolation
-* Logging
-* Validation
-* Presentation & Formatting
+- Authentication & Authorisation
+- Caching
+- Routing
+- Transactions and Isolation
+- Logging
+- Validation
+- Presentation & Formatting
 
 Controllers will compose together models to perform business logic. Controllers will generally be "thin" compared to "fat" models. This is because the models do all the business logic. The business logic should be the bulk of the program, and may involve working with state, either in-memory or persisted state.
 
@@ -66,17 +66,17 @@ Our domains are highly "programmable". We wanted PK to work like a library/packa
 
 ## 3 Layer Cake or Functional Core & Imperative Shell
 
-* https://www.parsonsmatt.org/2018/03/22/three_layer_haskell_cake.html
+- https://www.parsonsmatt.org/2018/03/22/three_layer_haskell_cake.html
 
 ## Import Dependency Order
 
 All of our domains follow a common structure of:
 
-* `types.ts`
-* `errors.ts`
-* `utils.ts`
-* `Class.ts`
-* `index.ts`
+- `types.ts`
+- `errors.ts`
+- `utils.ts`
+- `Class.ts`
+- `index.ts`
 
 To avoid mutual dependencies, it's important to ensure that our imports follow this order.
 
@@ -93,9 +93,9 @@ Utils ◄─────┘      │    │
   └─────────► Classes ◄─┘
 ```
 
-* types can import errors
-* utils can import errors and types
-* classes can import types, errors and utils
+- types can import errors
+- utils can import errors and types
+- classes can import types, errors and utils
 
 All files can import from standard library or NPM packages.
 

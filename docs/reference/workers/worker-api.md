@@ -35,24 +35,24 @@ This is especially relevant to Polykey GUI which uses webpack and electron., and
 How to use the worker manager:
 
 ```ts
-const workers = new WorkerManager;
+const workers = new WorkerManager();
 await workers.start();
 
 const r1 = await workers.call((w) => {
   const r = w.add(1, 2);
-  console.log('INTERNAL RESULT 1', r);
+  console.log("INTERNAL RESULT 1", r);
   return r;
 });
 
-console.log('EXTERNAL RESULT 1', r1);
+console.log("EXTERNAL RESULT 1", r1);
 
 const r2 = await workers.call(async (w) => {
   const r = await w.add(1, 2);
-  console.log('INTERNAL RESULT 2', r);
+  console.log("INTERNAL RESULT 2", r);
   return r;
 });
 
-console.log('EXTERNAL RESULT 2', r2);
+console.log("EXTERNAL RESULT 2", r2);
 
 await workers.stop();
 ```

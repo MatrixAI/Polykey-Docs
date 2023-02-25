@@ -10,10 +10,10 @@ Special things to start, special things to stop.
 
 ## Node Permissions
 
-* Set Node Actions
-* Unset Node Actions
+- Set Node Actions
+- Unset Node Actions
 
 ## Vault Permissions
 
-* Set Vault Actions
-* Unset Vault Actions
+- Set Vault Actions
+- Unset Vault Actions

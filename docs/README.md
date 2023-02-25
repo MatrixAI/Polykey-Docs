@@ -9,10 +9,10 @@ Welcome to the Polykey documentation.
 
 The documentation is structured using [Divio system](https://documentation.divio.com/).
 
-* [Tutorials](./tutorials/) -  these are a series of steps to introduce Polykey to new beginners to achieve a practical outcome
-* [How-To Guides](./how-to-guides/) - these are short guides on how to achieve a specific use-case which makes assumptions on the reader
-* [Theory](./reference/) - these are important for understanding the "why" of Polykey
-* [Reference](./reference/) - these are useful when you need remember how to use a particular command or function
+- [Tutorials](./tutorials/) - these are a series of steps to introduce Polykey to new beginners to achieve a practical outcome
+- [How-To Guides](./how-to-guides/) - these are short guides on how to achieve a specific use-case which makes assumptions on the reader
+- [Theory](./reference/) - these are important for understanding the "why" of Polykey
+- [Reference](./reference/) - these are useful when you need remember how to use a particular command or function
 
 Check out [Getting Started](./tutorials/getting-started.md) to deploy your first Polykey node.
 
@@ -22,13 +22,13 @@ Check out [Getting Started](./tutorials/getting-started.md) to deploy your first
 
 Polykey helps yourself, teams and software agents to manage and share secrets in a secure and easy-to-use manner.
 
-* Usable for average humans, you don't need to be a cryptography or cybersecurity expert to securely manage and share secrets.
-* Can be integrated into software for automation of secret workflows.
-* Unifies the workflow between interactive password management and infrastructure key management.
-* Decentralized and local-first software that does not hand over your secrets to the cloud. You maintain sovereignty over your secrets on your devices.
-* Easily backup and synchronise your secrets across all your devices: desktop, mobile or server.
-* End to end encryption for all network communication.
-* All data is encrypted at rest, thus preventing compromise even if devices are lost or stolen.
+- Usable for average humans, you don't need to be a cryptography or cybersecurity expert to securely manage and share secrets.
+- Can be integrated into software for automation of secret workflows.
+- Unifies the workflow between interactive password management and infrastructure key management.
+- Decentralized and local-first software that does not hand over your secrets to the cloud. You maintain sovereignty over your secrets on your devices.
+- Easily backup and synchronise your secrets across all your devices: desktop, mobile or server.
+- End to end encryption for all network communication.
+- All data is encrypted at rest, thus preventing compromise even if devices are lost or stolen.
 
 PolyKey is an open-source decentralised peer to peer secrets management system. It provides a software agent that runs on your device locally. Each agent process is a node in the Polykey peer to peer network. This agent manages your secret data and is capable of sharing secrets with other trusted Polykey agents. The secret data can be placed inside any directory on your computer including on USB storage.
 
@@ -40,8 +40,8 @@ TBD
 
 There are 2 main concepts to understand in Polykey:
 
-* Secrets Management
-* Decentralized Trust
+- Secrets Management
+- Decentralized Trust
 
 ### Secrets Management
 

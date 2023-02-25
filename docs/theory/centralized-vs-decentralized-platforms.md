@@ -1,11 +1,11 @@
 # Centralized vs Decentralized Platforms
 
-* It is about control
-* Centralized systems are controlled by a single agent
-* Decentralized systems have resources controlled by multiple agents
-* It's also a continuum, it's not discrete. There's a continuum of centralization to decentralization.
-* The implementation of such platforms may be distributed or monolithic. Most decentralized systems are also distributed.
-* The effects of decentralization:
+- It is about control
+- Centralized systems are controlled by a single agent
+- Decentralized systems have resources controlled by multiple agents
+- It's also a continuum, it's not discrete. There's a continuum of centralization to decentralization.
+- The implementation of such platforms may be distributed or monolithic. Most decentralized systems are also distributed.
+- The effects of decentralization:
   - Censorship resistance
   - Competitive vs non-competitive - which means relying on market forces, wisdom of the crowd
   - Redundancy and increased availability, removing single points of failure, robustness
@@ -13,7 +13,7 @@
   - Politics! Some political agendas are decentralization friendly, some agendas less decentralization friendly
   - Avoiding the centralized tax can increase the efficiency, that means reduction of rent-seeking behaviour
   - Trust and power (you need more consent of the the platform users to do anything, "consent of the governed")
-* Maybe it's better to do pros and cons instead, cause centralized systems have advantages as well such as natural monopolies, spam control (ddos capabilities).
+- Maybe it's better to do pros and cons instead, cause centralized systems have advantages as well such as natural monopolies, spam control (ddos capabilities).
 
 Social networking platforms are centralized reputation networks. They act as middlemen between consumers and producers of trust and user-generated content.
 

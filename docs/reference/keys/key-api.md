@@ -1,6 +1,7 @@
 # Key API
 
 ## ED25519 (ssh-keygen)
+
 ```
 Encoding: Base64
 Character Length: 68 (Not including prefix)
@@ -8,6 +9,7 @@ Example: "AAAAC3NzaC1lZDI1NTE5AAAAIINmZfQTk1NpZcfbkZinFf0w99OF0/CJ88VRajsJ4xrT"
 ```
 
 ## MD5Sum (128 bit)
+
 ```
 Encoding: Hex
 Scheme: PEM
@@ -22,6 +24,7 @@ Example: "Z9J+hHG04g/FId/Jc7u0mw=="
 ```
 
 ## SHA256
+
 ```
 Encoding: Hex
 Character Length: 32
