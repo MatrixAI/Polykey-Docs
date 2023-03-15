@@ -89,6 +89,10 @@
   color: #fff;
 }
 
+.navbar-sidebar .navbar__title {
+  color: #7f88a5;
+}
+
 #email-form {
   height: 2.5em;
 }
