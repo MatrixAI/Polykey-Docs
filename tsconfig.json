@@ -27,11 +27,14 @@
     "skipLibCheck": true
   },
   "include": [
-    "./docs/**/*"
+    "./docs/**/*",
+    "./server/**/*",
+    "./src/**/*",
   ],
   "references": [
     {
       "path": "./server",
+      "@site/*": ["./*"]
     },
   ]
 }
