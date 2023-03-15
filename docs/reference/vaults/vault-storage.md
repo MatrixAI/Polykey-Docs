@@ -39,4 +39,4 @@ However, the root of the vaults filesystem is contained inside a contents folder
     /contents
       secret-1
       secret-2
-````
+```

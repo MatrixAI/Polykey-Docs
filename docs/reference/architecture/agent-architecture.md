@@ -25,9 +25,11 @@ of the nodes to identify the nodes.
 In Node Discovery, we use a peer to peer distributed hash table (DHT) and the
 kademlia protocol to resolve node public keys to their IP addresses. From here
 we can then perform connection attempt.
+
 ## Polykey Directory
-| Platform | Directory |
-|----------|-----------|
-| Linux | `HOMEDIR/.local/share/polykey` |
-| Darwin | `HOMEDIR/Library/Application Support/polykey` |
-| Windows | `HOMEDIR/AppData/Local/polykey` |
+
+| Platform | Directory                                     |
+| -------- | --------------------------------------------- |
+| Linux    | `HOMEDIR/.local/share/polykey`                |
+| Darwin   | `HOMEDIR/Library/Application Support/polykey` |
+| Windows  | `HOMEDIR/AppData/Local/polykey`               |

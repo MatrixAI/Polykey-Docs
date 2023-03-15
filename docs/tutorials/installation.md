@@ -2,10 +2,10 @@
 
 Polykey is a set of open source projects:
 
-* [Polykey Core](https://github.com/MatrixAI/Polykey)
-* [Polykey CLI](https://github.com/MatrixAI/Polykey-CLI)
-* [Polykey Desktop](https://github.com/MatrixAI/Polykey-Desktop)
-* [Polykey Mobile](https://github.com/MatrixAI/Polykey-Mobile)
+- [Polykey Core](https://github.com/MatrixAI/Polykey)
+- [Polykey CLI](https://github.com/MatrixAI/Polykey-CLI)
+- [Polykey Desktop](https://github.com/MatrixAI/Polykey-Desktop)
+- [Polykey Mobile](https://github.com/MatrixAI/Polykey-Mobile)
 
 ## Polykey Core
 
@@ -27,9 +27,9 @@ Once this is done, users will not directly interact with the [Polykey Core](http
 
 ### Requirements
 
-* 64-bit Linux Operating System
-* Node v16.15 or above and Node Package Manager
-* Optionally `nix-shell` to setup development environment
+- 64-bit Linux Operating System
+- Node v16.15 or above and Node Package Manager
+- Optionally `nix-shell` to setup development environment
 
 ### Source Repository
 
@@ -99,10 +99,10 @@ Go to https://github.com/MatrixAI/Polykey/releases and download the relevant ass
 
 We currently bundle for these platforms:
 
-* linux-x64 - this should work for any Linux distribution that follows the Filesystem Hierarchy Standard.
-* win-x64
-* macos-x64
-* macos-arm64
+- linux-x64 - this should work for any Linux distribution that follows the Filesystem Hierarchy Standard.
+- win-x64
+- macos-x64
+- macos-arm64
 
 :::caution
 
