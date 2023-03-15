@@ -3,7 +3,7 @@ import styles from "./SearchBar.module.css";
 
 type Props = {};
 
-export default function FooterLayout(props: Props): JSX.Element {
+export default function FooterLayout(_props: Props): JSX.Element {
   return (
     <form
       id="email-form"

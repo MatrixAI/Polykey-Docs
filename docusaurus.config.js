@@ -145,12 +145,12 @@ const config = {
           items: [
             {
               label: "About Us",
-              href: "pathname:///../about",
+              href: "https://matrix.ai/about",
               target: "_parent",
             },
             {
               label: "Contact Us",
-              href: "pathname:///../contact",
+              href: "https://matrix.ai/contact",
               target: "_parent",
             },
             {
