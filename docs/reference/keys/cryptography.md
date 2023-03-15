@@ -110,8 +110,8 @@ All cryptographic primitives (including CSPRNG) are implemented with `node-forge
 
 Other potential libraries include:
 
-* `kbpgp`
-* `PKI.js`
+- `kbpgp`
+- `PKI.js`
 
 We have aliased types from inside `node-forge` in `keys/types.ts` in case we need to change our cryptographic library.
 

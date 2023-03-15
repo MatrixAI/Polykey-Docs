@@ -5,7 +5,8 @@ Connections can be established between keynodes across the global Polykey networ
 `NodeConnection` objects are stored in a `NodeConnectionMap`, mapping from the node ID of the target node to the connection to this node. Locking is required on this `NodeConnectionMap` to ensure consistent creation and usage of existing node connections. This `NodeConnectionMap` follows the generic `ObjectMap` flow for creation of a vault, where the `resource` is the `NodeConnection` itself:
 
 ```ts
-type ObjectMap = Map<ObjectId,
+type ObjectMap = Map<
+  ObjectId,
   {
     resource?: Object;
     lock: MutexInterface;

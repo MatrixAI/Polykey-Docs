@@ -4,8 +4,8 @@ Agent to Client communication is privileged. It is assumed that the client is tr
 
 The way the client is trusted is because:
 
-* The client is expected to run on the same computer as where the agent is running.
-* The client is expected to be run by the user who "owns" the agent's resources
+- The client is expected to run on the same computer as where the agent is running.
+- The client is expected to be run by the user who "owns" the agent's resources
 
 The client finds the agent's port and address by the node path.
 

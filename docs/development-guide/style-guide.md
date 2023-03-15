@@ -13,17 +13,11 @@ Don't use `_var` to indicate a new `var`. This by convention used for private va
 Prefer appending the extended class name to the parent class name.
 
 ```ts
-class Connection {
+class Connection {}
 
-}
+class ConnectionForward extends Connection {}
 
-class ConnectionForward extends Connection {
-
-}
-
-class ConnectionReverse extends Connection {
-
-}
+class ConnectionReverse extends Connection {}
 ```
 
 ### Encapsulated Variance
@@ -31,11 +25,7 @@ class ConnectionReverse extends Connection {
 You can prepend a name to indicate different variations of the same behaviour:
 
 ```ts
-class ForwardProxy {
+class ForwardProxy {}
 
-}
-
-class ReverseProxy {
-
-}
+class ReverseProxy {}
 ```
