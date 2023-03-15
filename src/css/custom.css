@@ -89,8 +89,22 @@
   color: #fff;
 }
 
+.navbar-sidebar .navbar__logo {
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url(/images/polykey-logo-dark.svg) no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 42px;
+}
+
+.navbar-sidebar .navbar__logo>img {
+  display: none;
+}
+
 .navbar-sidebar .navbar__title {
-  color: #7f88a5;
+  color: #333333;
 }
 
 #email-form {
