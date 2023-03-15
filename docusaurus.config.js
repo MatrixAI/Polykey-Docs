@@ -114,7 +114,7 @@ const config = {
           items: [
             {
               label: "Blog",
-              href: "../blog",
+              href: "pathname:///../blog",
               target: "_parent",
             },
             {
@@ -145,12 +145,12 @@ const config = {
           items: [
             {
               label: "About Us",
-              href: "../about",
+              href: "pathname:///../about",
               target: "_parent",
             },
             {
               label: "Contact Us",
-              href: "../contact",
+              href: "pathname:///../contact",
               target: "_parent",
             },
             {
