@@ -22,7 +22,7 @@ async function handleFetchEvent(event: FetchEvent): Promise<Response> {
   try {
     // This ignores everything except the pathname
     return await getAssetFromKV(event, {
-      mapRequestToAsset,
+      mapRequestToAsset: mapRequestToDocs,
       cacheControl,
     });
   } catch (e) {
@@ -42,6 +42,22 @@ async function handleFetchEvent(event: FetchEvent): Promise<Response> {
     }
     return new Response("Server Error", { status: 500 });
   }
+}
+
+/**
+ * Map request to documentation asset (HTML, CSS, JS, images, files... etc)
+ * This worker is routed from `polykey.io/docs`
+ * All of the `../docs` assets is uploaded to the "root" of the worker
+ * Therefore the `/docs` path segment must be removed, as `getAssetFromKV` uses the pathname
+ * of the URL to look up the correct asset
+ */
+ function mapRequestToDocs(req: Request): Request {
+  // Default mapping resolves directory URLs e.g. `/dir` becomes `/dir/index.html`
+  const assetRequest = mapRequestToAsset(req);
+  const assetUrl = new URL(assetRequest.url);
+  // Strip the `/docs` segment: `https://polykey.io/docs/...` -> `https://polykey.io/...`
+  assetUrl.pathname = assetUrl.pathname.replace(/^\/docs/, '/');
+  return new Request(assetUrl.toString(), assetRequest);
 }
 
 /**
