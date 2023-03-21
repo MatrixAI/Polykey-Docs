@@ -10,7 +10,7 @@ export default function FooterLayout(_props: Props): JSX.Element {
       name="email-form"
       className={styles.form}
       data-name="Email Form"
-      action="//matrix.us9.list-manage.com/subscribe/post?u=c95e0a682d8937f12732b48d4&amp;amp;id=863aebab0f"
+      action="//forms.hubspot.com/uploads/form/v2/23899433/e98d21e5-de4a-47b6-990e-83818c19ce66"
       method="post"
       aria-label="Email Form"
     >
