@@ -109,8 +109,8 @@
 /**
   Hide the icon next to the link to the homepage in the mobile sidebar
  */
-.menu__list .menu__list-item a[href="https://polykey.io/"] svg,
-.menu__list .menu__list-item a[href="https://www.polykey.io/"] svg {
+.menu__list .menu__list-item a[href^="https://polykey.io"] svg,
+.menu__list .menu__list-item a[href^="https://www.polykey.io"] svg {
   display: none;
 }
 
