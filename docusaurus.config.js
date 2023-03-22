@@ -75,6 +75,11 @@ const config = {
       },
       items: [
         {
+          href: "https://polykey.io/",
+          label: "Home",
+          position: "right",
+        },
+        {
           href: "https://github.com/MatrixAI/Polykey-Docs",
           label: "GitHub",
           position: "right",
