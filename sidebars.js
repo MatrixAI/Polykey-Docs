@@ -11,7 +11,7 @@ const sidebars = {
         type: "doc",
         id: "tutorials/README",
       },
-      items: ["tutorials/getting-started", "tutorials/installation"],
+      items: ["tutorials/getting-started", "tutorials/installation", "tutorials/vault-sharing"],
     },
     {
       type: "category",
