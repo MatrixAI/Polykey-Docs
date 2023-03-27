@@ -1,9 +1,9 @@
 
-# nodes agent interaction tutorial
+# Vault Sharing
 
 This tutorial assumes that you are working in the `Polykey` project's directory, and you have successfully built it using `npm run build`.
 
-### Setting up nodes
+### Setting Up Nodes
 For two agents to communicate with each other we need two agents to be running. For this example we're going to run two `Polykey` nodes on the same machine and have them communicate over the loop-back device.
 
 First we want to start the first node. Since we are going to run two nodes on the same machine, we need to keep them separate. For this we need to override the `node-path` to a directory we want the `Polykey` node to be created in. for this example we're going to use a temp directory `tmp`.  We're also going to set a static port value for the proxy.
@@ -36,7 +36,7 @@ Note the `NodeId` here as `vvrijg034ie10dnn05mv0b2lfo1g7nhv6kb63c03lh7qcc4eqo79g
 
 Now create a 2nd node using the same method, this time with the `node-path` of `tmp/nodeB` and port `55552`. You should see the same password prompt and status read-out. For our example the 2nd node has a `NodeId` of `vd2nmd13qqj718ivke8n8si6cgdsd6ufgche84moofr2fhh9vj2jg`.
 
-### Connecting and trusting nodes
+### Connecting and Trusting Nodes
 
 Normally when a `Polykey` node is started, the first thing it does is automatically contact a seed node to join the network. In the absence of seed nodes to act as an entry point for a network. We can tell a node how to find other nodes directly.
 
@@ -85,7 +85,7 @@ We should also have `NodeA` trust `NodeB`.
 node dist/bin/polykey identities trust --node-path tmp/nodeB vd2nmd13qqj718ivke8n8si6cgdsd6ufgche84moofr2fhh9vj2jg
 ```
 
-### Sharing vaults
+### Sharing Vaults
 
 #### Creating a Vault
 A core feature of `Polykey` is sharing secrets between nodes. This is done by sharing the vaults that contain the secrets. In order to do this we need a vault to share. Start by creating a vault on `NodeB`. We can do this with the `vaults create` command, doing so will return a unique `VaultId` to identify that vault.
@@ -147,7 +147,7 @@ node dist/bin/polykey secrets get --node-path tmp/nodeA someVault:someSecret
 this is a secret
 ```
 
-#### Pulling vault changes
+#### Pulling Vault Changes
 
 Vaults can be updated. If we wanted these changes then we can pull the vault. If a vault was cloned from another node then it keeps track of where it came from. So pulling a vault is pretty simple.
 
