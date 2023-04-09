@@ -93,9 +93,8 @@
   display: block;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background: url(/images/polykey-logo-dark.svg) no-repeat center;
-  background-size: contain;
-  width: 42px;
+  background: url(/images/polykey-logotype-dark-dark.svg) no-repeat center;
+  width: 142px;
 }
 
 .navbar-sidebar .navbar__logo>img {
@@ -106,11 +105,8 @@
   color: #333333;
 }
 
-/**
-  Hide the icon next to the link to the homepage in the mobile sidebar
- */
-.menu__list .menu__list-item a[href^="https://polykey.io"] svg,
-.menu__list .menu__list-item a[href^="https://www.polykey.io"] svg {
+/* Remove the external link icon */
+.navbar-sidebar .menu__list-item svg[class^="iconExternalLink"] {
   display: none;
 }
 
