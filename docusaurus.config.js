@@ -68,10 +68,10 @@ const config = {
       sidebar: {},
     },
     navbar: {
-      title: "Polykey Documentation",
+      title: '',
       logo: {
-        alt: "Polykey Logo",
-        src: "images/polykey-logo-light.svg",
+        alt: 'Polykey Logo',
+        src: 'images/polykey-logotype-light-light.svg',
       },
       items: [
         {
@@ -79,6 +79,9 @@ const config = {
           label: "Home",
           position: "right",
         },
+        { to: 'https://polykey.io/blog', label: 'Blog', position: 'right' },
+        { to: 'pathname:///docs', label: 'Docs', position: 'right' },
+        { to: 'https://polykey.io/download', label: 'Download', position: 'right' },
         {
           href: "https://github.com/MatrixAI/Polykey-Docs",
           label: "GitHub",
