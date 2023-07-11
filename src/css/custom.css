@@ -93,10 +93,8 @@
   display: block;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  background: url(/images/polykey-logo-dark.svg) no-repeat;
-  background-position: center;
-  background-size: contain;
-  width: 42px;
+  background: url(/images/polykey-logotype-dark-dark.svg) no-repeat center;
+  width: 142px;
 }
 
 .navbar-sidebar .navbar__logo>img {
@@ -105,6 +103,11 @@
 
 .navbar-sidebar .navbar__title {
   color: #333333;
+}
+
+/* Remove the external link icon */
+.navbar-sidebar .menu__list-item svg[class^="iconExternalLink"] {
+  display: none;
 }
 
 #email-form {
