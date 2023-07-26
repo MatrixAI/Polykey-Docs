@@ -8,5 +8,5 @@ workers_dev = true
 
 [env.production]
   name = "polykey-docs"
-  routes = ["polykey.io/docs", "polykey.io/docs/*"]
+  routes = ["polykey.com/docs", "polykey.com/docs/*"]
   workers_dev = false

@@ -22,7 +22,7 @@ Given that it has a lifetime, it seems it should be part of async start and stop
 
 This does mean it becomes part of setter injection, and each other domain that checks whether it has access to the pool or not in order to perform the functionality.
 
-Using worker pools requires access to a "worker script". This worker script then exposes functions that you can run on the worker. We need to see how this would work in the case when electron uses webpack to bundle this up. We need to ensure the path lookup still works. So any "fs" paths should be careful here, just as how we had to deal with the bootstrap.polykey.io certificate paths.
+Using worker pools requires access to a "worker script". This worker script then exposes functions that you can run on the worker. We need to see how this would work in the case when electron uses webpack to bundle this up. We need to ensure the path lookup still works. So any "fs" paths should be careful here, just as how we had to deal with the bootstrap.polykey.com certificate paths.
 
 Because the worker script has to be a relative path to a file on disk in the built distribution. When using `Polykey` with webpack, you have to be careful to process the worker script paths.
 
