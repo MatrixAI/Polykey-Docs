@@ -14,7 +14,7 @@ type NodeAddress = {
   port: number;
 } | {
   type: 'dns':
-  address: 'bootstrap.polykey.io';
+  address: 'bootstrap.polykey.com';
   port: number;
 };
 
@@ -65,7 +65,7 @@ type NodeTable = {
 
 When PK first begins. There will be 2 nodes in the `NodeTable`.
 
-It will be itself, and also the bootstrap node `bootstrap.polykey.io`.
+It will be itself, and also the bootstrap node `bootstrap.polykey.com`.
 
 If it is the bootstrap node, then it only has itself or OTHER bootstrap nodes.
 
@@ -75,7 +75,7 @@ Which means the source code has:
 
 1. The bootstrap node's NodeId
 2. The bootstrap node's certificate (which means it has the bootstrap node's public key)
-3. The bootstrap node's NodeAddress `bootstrap.polykey.io`
+3. The bootstrap node's NodeAddress `bootstrap.polykey.com`
 
 The current node (if it is not a bootstrap node), will need to generate it's own:
 
@@ -94,7 +94,7 @@ See NAT Busting.
 
 ## Discovery Techniques
 
-- Hardcoded Discovery - bootstrap.polykey.io
+- Hardcoded Discovery - bootstrap.polykey.com
 - Manual Discovery - the user submits a certficate to PK node, and the PK adds it to the node table (I actually also know the NodeAddress) (if i know the NodeCertificate and NodeAddress, then I can add it manually to the NodeTable)
 - Local Area Network Discovery - use multicast (not been tested (there is hardcoded port for this))
 - Wide Area Network Discovery - use the DHT + Kademlia (you are synchronising the DHT automatically via kademlia protocol)

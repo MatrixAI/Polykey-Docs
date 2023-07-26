@@ -118,17 +118,17 @@ It will also start an uTP server on `0.0.0.0:1314` over UDP for NAT traversal.
 It will also start an HTTP 1.1 server on `0.0.0.0:1315` for HTTP integration.
 
 All keynodes are preconfigured to trust and contact the bootstrap keynode
-`bootstrap.polykey.io`. This in the future will likely be load balanced via
+`bootstrap.polykey.com`. This in the future will likely be load balanced via
 both DNS load balancing and also TCP/UDP load balancing.
 
-The `bootstrap.polykey.io` is itself a Polykey keynode. This node is maintained
+The `bootstrap.polykey.com` is itself a Polykey keynode. This node is maintained
 by the official Polykey team. This nodes serves 3 duties:
 
 1. P2P DHT synchronisation to allow globally decentralised nodes to share their node table information
 2. STUN NAT traversal - to faciliate direct P2P connections between compatible nodes
 3. TURN Relay NAT traversal - to facilitate proxied P2P connections between incompatible nodes
 
-The first duty is the most important one. Without the `bootstrap.polykey.io`, it
+The first duty is the most important one. Without the `bootstrap.polykey.com`, it
 is not possible for nodes that are on separate subnets to discover each other.
 
 Users are able to run their own "bootstrap nodes". Corporate networks can run
