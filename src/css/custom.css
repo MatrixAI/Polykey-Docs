@@ -72,8 +72,13 @@
 
 .navbar__items {
   display: flex;
-  flex-direction: row-reverse;
   position: relative;
+}
+
+@media only screen and (max-width: 1000px) {
+  .navbar__items {
+    flex-direction: row-reverse;
+  }
 }
 
 .navbar__items > .navbar__brand {
