@@ -26,7 +26,7 @@ const config = {
   title: "Polykey Documentation",
   tagline:
     "Documentation for Polykey - Tutorials, How-To Guides, Theory and Reference",
-  url: "https://polykey.io",
+  url: "https://polykey.com",
   baseUrl: "/docs/",
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
@@ -75,13 +75,13 @@ const config = {
       },
       items: [
         {
-          to: "https://polykey.io/",
+          to: "https://polykey.com/",
           label: "Home",
           position: "right",
         },
-        { to: 'https://polykey.io/blog', label: 'Blog', position: 'right' },
+        { to: 'https://polykey.com/blog', label: 'Blog', position: 'right' },
         { to: 'pathname:///docs', label: 'Docs', position: 'right' },
-        { to: 'https://polykey.io/download', label: 'Download', position: 'right' },
+        { to: 'https://polykey.com/download', label: 'Download', position: 'right' },
         {
           href: "https://github.com/MatrixAI/Polykey-Docs",
           label: "GitHub",
