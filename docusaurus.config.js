@@ -75,7 +75,7 @@ const config = {
       },
       items: [
         {
-          href: "https://polykey.io/",
+          to: "https://polykey.io/",
           label: "Home",
           position: "right",
         },
