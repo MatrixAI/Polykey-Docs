@@ -73,7 +73,7 @@ release:deployment:
   environment:
     name: 'production'
     deployment_tier: 'production'
-    url: 'https://polykey.io/docs'
+    url: 'https://polykey.com/docs'
   script:
     - echo 'Perform service deployment for production'
     - >
