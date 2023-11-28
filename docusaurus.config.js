@@ -59,7 +59,7 @@ const config = {
     ],
     ["@docusaurus/plugin-client-redirects", {}],
   ],
-  /** @type {import('@docusaurus/types').ThemeConfig | import('@docusaurus/theme-common').UserThemeConfig} */
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
   themeConfig: {
     colorMode: {
       disableSwitch: true,
@@ -74,101 +74,37 @@ const config = {
         src: 'images/polykey-logotype-light-light.svg',
       },
       items: [
-        {
-          to: "https://polykey.com/",
-          label: "Home",
-          position: "right",
-        },
         { to: 'https://polykey.com/blog', label: 'Blog', position: 'right' },
         { to: 'pathname:///docs', label: 'Docs', position: 'right' },
         { to: 'https://polykey.com/download', label: 'Download', position: 'right' },
         {
           href: "https://github.com/MatrixAI/Polykey-Docs",
-          label: "GitHub",
+          label: "GitHub", // Keep this as a placeholder or accessibility
           position: "right",
+          className: "navbar-github-link", // Custom class name
         },
       ],
     },
     footer: {
-      style: "dark",
+      style: "light",
       logo: {
         alt: "Polykey Logo",
-        src: "images/polykey-logo-light.svg",
+        src: "/images/polykey-logotype-light-light.svg",
       },
       links: [
         {
-          title: "Open Source",
-          items: [
-            {
-              label: "Polykey Core",
-              href: "https://github.com/MatrixAI/Polykey",
-            },
-            {
-              label: "Polykey CLI",
-              href: "https://github.com/MatrixAI/Polykey-CLI",
-            },
-            {
-              label: "Polykey Desktop",
-              href: "https://github.com/MatrixAI/Polykey-Desktop",
-            },
-            {
-              label: "Polykey Mobile",
-              href: "https://github.com/MatrixAI/Polykey-Mobile",
-            },
-          ],
+          label: 'Matrix AI',
+          href: 'https://www.matrix.ai',
         },
         {
-          title: "Resources",
-          items: [
-            {
-              label: "Blog",
-              href: "pathname:///../blog",
-              target: "_parent",
-            },
-            {
-              label: "Documentation",
-              to: "/",
-            },
-          ],
+          label: 'Terms',
+          to: '/terms-of-service',
         },
         {
-          title: "Community",
-          items: [
-            {
-              label: "Discussions",
-              href: "https://github.com/MatrixAI/Polykey/discussions",
-            },
-            {
-              label: "Twitter",
-              href: "https://twitter.com/PolykeyIO",
-            },
-            {
-              label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/polykey",
-            },
-          ],
-        },
-        {
-          title: "Company",
-          items: [
-            {
-              label: "About Us",
-              href: "https://matrix.ai/about",
-              target: "_parent",
-            },
-            {
-              label: "Contact Us",
-              href: "https://matrix.ai/contact",
-              target: "_parent",
-            },
-            {
-              label: "Matrix AI",
-              href: "https://matrix.ai",
-            },
-          ],
+          label: 'Privacy',
+          to: '/privacy',
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Matrix AI`,
     },
     prism: {
       theme: lightCodeTheme,

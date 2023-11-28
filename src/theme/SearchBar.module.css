@@ -1,3 +1,6 @@
+.helpme{
+  visibility: hidden;
+}
 .body {
   height: 2.5em;
   display: flex;

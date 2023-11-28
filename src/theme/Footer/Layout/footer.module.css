@@ -1,0 +1,42 @@
+.footer {
+  background: #000;
+  /*height: 6em;*/
+  padding: .5em 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+
+.footer__logo {
+  scale: 90%;
+  horiz-align: right;
+}
+
+.footer .col {
+}
+
+.slogan {
+  font-weight: bold;
+  color: #7f88a5;
+}
+
+@media only screen and (min-width: 1000px) {
+  .footer .col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .textLeft {
+    text-align: left !important;
+  }
+
+}
