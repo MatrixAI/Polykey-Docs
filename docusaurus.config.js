@@ -70,22 +70,18 @@ const config = {
     navbar: {
       title: '',
       logo: {
-        alt: 'Polykey Logo',
-        src: 'images/polykey-logotype-light-light.svg',
+        alt: 'Polykey',
+        src: "images/polykey.svg",
       },
       items: [
-        {
-          to: "https://polykey.com/",
-          label: "Home",
-          position: "right",
-        },
         { to: 'https://polykey.com/blog', label: 'Blog', position: 'right' },
         { to: 'pathname:///docs', label: 'Docs', position: 'right' },
         { to: 'https://polykey.com/download', label: 'Download', position: 'right' },
         {
           href: "https://github.com/MatrixAI/Polykey-Docs",
-          label: "GitHub",
+          label: "GitHub", // Keep this as a placeholder or accessibility
           position: "right",
+          className: "navbar-github-link", // Custom class name
         },
       ],
     },
@@ -93,7 +89,7 @@ const config = {
       style: "dark",
       logo: {
         alt: "Polykey Logo",
-        src: "images/polykey-logo-light.svg",
+        src: "images/polykey.svg",
       },
       links: [
         {
