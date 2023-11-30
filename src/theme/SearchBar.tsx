@@ -1,10 +1,6 @@
-import React from "react";
-import styles from "./SearchBar.module.css";
+import React from 'react';
+import styles from './SearchBar.module.css';
 
-type Props = {};
-
-export default function FooterLayout(_props: Props): JSX.Element {
-  return (
-    <div className={styles.hide} />
-  );
+export default function FooterLayout(): JSX.Element {
+  return <div className={styles.hide} />;
 }
