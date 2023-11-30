@@ -27,6 +27,8 @@ const config = {
   tagline:
     "Documentation for Polykey - Tutorials, How-To Guides, Theory and Reference",
   url: "https://polykey.com",
+  // ...
+  themes: ['@docusaurus/theme-search-algolia'],
   baseUrl: "/docs/",
   onBrokenLinks: "warn",
   onBrokenMarkdownLinks: "warn",
@@ -61,6 +63,7 @@ const config = {
   ],
   /** @type {import('@docusaurus/types').ThemeConfig | import('@docusaurus/theme-common').UserThemeConfig} */
   themeConfig: {
+
     colorMode: {
       disableSwitch: true,
     },
@@ -165,6 +168,18 @@ const config = {
         },
       ],
       copyright: `Copyright © ${new Date().getFullYear()} Matrix AI`,
+    },
+    algolia: {
+      // The application ID provided by Algolia
+      appId: '6MOCW50NJK',
+
+      // Public API key: it is safe to commit it
+      apiKey: 'abfd2c5cbdf3894b0fd5a5d1e3d3fe6e',
+
+      indexName: 'polykey',
+
+      placeholder: 'CAN YOU SEE THIS????????',
+
     },
     prism: {
       theme: lightCodeTheme,
