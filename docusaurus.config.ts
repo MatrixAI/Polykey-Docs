@@ -1,4 +1,4 @@
-import type { Config, ThemeConfig } from '@docusaurus/types';
+import type { Config } from '@docusaurus/types';
 import type { UserThemeConfig } from '@docusaurus/theme-common';
 import type { Options as PluginDocsOptions } from '@docusaurus/plugin-content-docs';
 import type { Options as ThemeClassicOptions } from '@docusaurus/theme-classic';
@@ -49,15 +49,11 @@ const pluginThemeClassic: [string, ThemeClassicOptions] = [
 
 const pluginClientRedirects = ["@docusaurus/plugin-client-redirects", {}];
 
-const themeConfig: ThemeConfig & UserThemeConfig =  {
+const themeConfig: UserThemeConfig =  {
   colorMode: {
     disableSwitch: true,
   },
-  docs: {
-    sidebar: {},
-  },
   navbar: {
-    title: '',
     logo: {
       alt: 'Polykey Logo',
       src: 'images/polykey-logotype-light-light.svg',
@@ -90,7 +86,7 @@ const themeConfig: ThemeConfig & UserThemeConfig =  {
         position: 'right'
       },
       {
-        href: "https://github.com/MatrixAI/Polykey",
+        to: "https://github.com/MatrixAI/Polykey",
         label: "GitHub",
         position: "right",
       },
