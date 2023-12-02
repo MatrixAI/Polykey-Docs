@@ -15,7 +15,7 @@ const cacheControl = {
 /**
  * Handles fetch event
  * It is expected to be triggered from `https://matrix.ai` or
- * `https://polykey.ai/...`
+ * `https://polykey.com/...`
  */
 async function handleFetchEvent(event: FetchEvent): Promise<Response> {
   console.log("Handling request from", event.request.url);
