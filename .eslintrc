@@ -10,8 +10,7 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "plugins": [
     "import"
@@ -27,7 +26,7 @@
     "no-prototype-builtins": 1,
     "no-constant-condition": 0,
     "no-useless-escape": 0,
-    "no-console": "warn",
+    "no-console": "error",
     "no-restricted-globals": [
       "error",
       {
@@ -39,6 +38,7 @@
         "message": "Use `globalThis` instead"
       }
     ],
+    "prefer-rest-params": 0,
     "require-yield": 0,
     "eqeqeq": ["error", "smart"],
     "spaced-comment": [

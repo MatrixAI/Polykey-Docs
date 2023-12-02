@@ -2,8 +2,8 @@
 // It is only used for IDE checking and auto-completion
 {
   "compilerOptions": {
-    "allowJs": true,
     "jsx": "react",
+    "allowJs": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
     "experimentalDecorators": true,
@@ -11,25 +11,28 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "moduleResolution": "node",
-    "module": "CommonJS",
-    "target": "ES2021",
-    "lib": ["ES2021", "dom"],
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "target": "ES2022",
+    "lib": ["ES2022", "dom"],
     "types": [
       "node",
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic",
     ],
-    "noEmit": true,
+    "baseUrl": "./src",
     "paths": {
       "@site/*": ["./*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noEmit": true
   },
   "include": [
     "./docs/**/*",
     "./server/**/*",
     "./src/**/*",
+    "./docusaurus.config.ts",
+    "./sidebars.ts"
   ],
   "references": [
     {
