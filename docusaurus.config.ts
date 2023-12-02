@@ -70,20 +70,23 @@ const themeConfig: UserThemeConfig = {
     items: [
       {
         label: 'Home',
-        href: '/',
+        to: 'pathname:///',
         autoAddBaseUrl: false,
+        target: '_self',
         position: 'right',
       },
       {
         label: 'Download',
-        href: '/download',
+        to: 'pathname:///download',
         autoAddBaseUrl: false,
+        target: '_self',
         position: 'right',
       },
       {
         label: 'Blog',
-        href: '/blog',
+        to: 'pathname:///blog',
         autoAddBaseUrl: false,
+        target: '_self',
         position: 'right',
       },
       {
@@ -113,13 +116,15 @@ const themeConfig: UserThemeConfig = {
         items: [
           {
             label: 'Download',
-            href: '/download',
+            to: 'pathname:///download',
             autoAddBaseUrl: false,
+            target: '_self',
           },
           {
             label: 'Blog',
-            href: '/blog',
+            to: 'pathname:///blog',
             autoAddBaseUrl: false,
+            target: '_self',
           },
           {
             label: 'Docs',
@@ -133,15 +138,15 @@ const themeConfig: UserThemeConfig = {
         items: [
           {
             label: 'Discord',
-            href: 'https://discord.gg/vfXQZwwugc',
+            to: 'https://discord.gg/vfXQZwwugc',
           },
           {
             label: 'Twitter/X',
-            href: 'https://twitter.com/PolykeyIO',
+            to: 'https://twitter.com/PolykeyIO',
           },
           {
             label: 'Stack Overflow',
-            href: 'https://stackoverflow.com/questions/tagged/polykey',
+            to: 'https://stackoverflow.com/questions/tagged/polykey',
           },
         ],
       },
@@ -150,19 +155,19 @@ const themeConfig: UserThemeConfig = {
         items: [
           {
             label: 'Polykey Core',
-            href: 'https://github.com/MatrixAI/Polykey',
+            to: 'https://github.com/MatrixAI/Polykey',
           },
           {
             label: 'Polykey CLI',
-            href: 'https://github.com/MatrixAI/Polykey-CLI',
+            to: 'https://github.com/MatrixAI/Polykey-CLI',
           },
           {
             label: 'Polykey Desktop',
-            href: 'https://github.com/MatrixAI/Polykey-Desktop',
+            to: 'https://github.com/MatrixAI/Polykey-Desktop',
           },
           {
             label: 'Polykey Mobile',
-            href: 'https://github.com/MatrixAI/Polykey-Mobile',
+            to: 'https://github.com/MatrixAI/Polykey-Mobile',
           },
         ],
       },
@@ -171,21 +176,23 @@ const themeConfig: UserThemeConfig = {
         items: [
           {
             label: 'Matrix AI',
-            href: 'https://matrix.ai',
+            to: 'https://matrix.ai',
           },
           {
             label: 'About Us',
-            href: 'https://matrix.ai/about',
+            to: 'https://matrix.ai/about',
           },
           {
             label: 'Terms of Service',
-            href: '/terms-of-service',
+            to: 'pathname:///terms-of-service',
             autoAddBaseUrl: false,
+            target: '_self',
           },
           {
             label: 'Privacy Policy',
-            href: '/privacy-policy',
+            to: 'pathname:///privacy-policy',
             autoAddBaseUrl: false,
+            target: '_self',
           },
         ],
       },
