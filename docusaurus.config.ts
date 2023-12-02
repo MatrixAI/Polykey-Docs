@@ -62,32 +62,32 @@ const themeConfig: UserThemeConfig =  {
     },
     items: [
       {
+        label: "Home",
         href: "/",
         autoAddBaseUrl: false,
-        label: "Home",
         position: "right",
       },
       {
+        label: 'Download',
         href: '/download',
         autoAddBaseUrl: false,
-        label: 'Download',
         position: 'right',
       },
       {
+        label: 'Blog',
         href: '/blog',
         autoAddBaseUrl: false,
-        label: 'Blog',
         position: 'right',
       },
       {
+        label: 'Docs',
         href: '/docs',
         autoAddBaseUrl: false,
-        label: 'Docs',
         position: 'right'
       },
       {
-        to: "https://github.com/MatrixAI/Polykey",
         label: "GitHub",
+        to: "https://github.com/MatrixAI/Polykey",
         position: "right",
       },
     ],
@@ -96,9 +96,48 @@ const themeConfig: UserThemeConfig =  {
     style: "dark",
     logo: {
       alt: "Polykey Logo",
-      src: "images/polykey-logo-light.svg",
+      src: 'images/polykey-logotype-light-light.svg',
+      href: 'https://polykey.com',
+      target: '_self',
     },
     links: [
+      {
+        title: "Resources",
+        items: [
+          {
+            label: 'Download',
+            href: '/download',
+            autoAddBaseUrl: false,
+          },
+          {
+            label: 'Blog',
+            href: '/blog',
+            autoAddBaseUrl: false,
+          },
+          {
+            label: "Docs",
+            href: '/docs',
+            autoAddBaseUrl: false,
+          },
+        ],
+      },
+      {
+        title: "Community",
+        items: [
+          {
+            label: 'Discord',
+            href: 'https://discord.gg/vfXQZwwugc'
+          },
+          {
+            label: "Twitter/X",
+            href: "https://twitter.com/PolykeyIO",
+          },
+          {
+            label: "Stack Overflow",
+            href: "https://stackoverflow.com/questions/tagged/polykey",
+          },
+        ],
+      },
       {
         title: "Open Source",
         items: [
@@ -121,53 +160,26 @@ const themeConfig: UserThemeConfig =  {
         ],
       },
       {
-        title: "Resources",
-        items: [
-          {
-            label: "Blog",
-            href: "pathname:///../blog",
-            target: "_parent",
-          },
-          {
-            label: "Documentation",
-            to: "/",
-          },
-        ],
-      },
-      {
-        title: "Community",
-        items: [
-          {
-            label: "Discussions",
-            href: "https://github.com/MatrixAI/Polykey/discussions",
-          },
-          {
-            label: "Twitter",
-            href: "https://twitter.com/PolykeyIO",
-          },
-          {
-            label: "Stack Overflow",
-            href: "https://stackoverflow.com/questions/tagged/polykey",
-          },
-        ],
-      },
-      {
         title: "Company",
         items: [
-          {
-            label: "About Us",
-            href: "https://matrix.ai/about",
-            target: "_parent",
-          },
-          {
-            label: "Contact Us",
-            href: "https://matrix.ai/contact",
-            target: "_parent",
-          },
           {
             label: "Matrix AI",
             href: "https://matrix.ai",
           },
+          {
+            label: "About Us",
+            href: "https://matrix.ai/about",
+          },
+          {
+            label: 'Terms of Service',
+            href: '/terms-of-service',
+            autoAddBaseUrl: false,
+          },
+          {
+            label: 'Privacy Policy',
+            href: '/privacy-policy',
+            autoAddBaseUrl: false,
+          }
         ],
       },
     ],
