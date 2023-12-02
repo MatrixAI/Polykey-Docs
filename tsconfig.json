@@ -31,6 +31,8 @@
     "./docs/**/*",
     "./server/**/*",
     "./src/**/*",
+    "./docusaurus.config.ts",
+    "./sidebars.ts"
   ],
   "references": [
     {

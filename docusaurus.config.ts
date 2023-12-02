@@ -10,46 +10,53 @@ const darkCodeTheme = prismThemes.dracula;
 
 /**
  * Docusaurus does not process JSX `<img src ="...">` URLs
- * This plugin rewrites the src attribute to `src={require("...").default}`
+ * This plugin rewrites the src attribute to `src="/docs/..."`
  * Markdown links `[]()`, images `![](/image)` and anchor `<a href="...">`
- * are already automatically processed
+ * are already automatically processed.
+ * Note that this is a hack, and it's ideal to instead prefer using `require`.
+ * However those images would not be viewable in the GitHub markdown.
  */
-const remarkImageSrcWithRequire = (options) => {
-  return (ast) => {
-    visit(ast, "jsx", (node) => {
-      const matches = node.value.match(
-        /^(.*)(<img\s.*?src=)"(\s*\/.*?)"(.*)$/s
-      );
-      if (matches != null) {
-        node.value = `${matches[1]}${matches[2]}{require("${matches[3]}").default}${matches[4]}`;
+const remarkImageSrcWithRequire = () => {
+  return (tree) => {
+    visit(tree, 'mdxJsxFlowElement', (node) => {
+      if (node.name === 'img') {
+        const srcAttribute = node.attributes.find(
+          (attr) => attr.name === 'src',
+        );
+        if (
+          srcAttribute != null &&
+          typeof srcAttribute.value === 'string' &&
+          srcAttribute.value.startsWith('/images/')
+        ) {
+          srcAttribute.value = `/docs${srcAttribute.value}`;
+        }
       }
     });
   };
 };
 
-
 const pluginDocs: [string, PluginDocsOptions] = [
-  "@docusaurus/plugin-content-docs",
+  '@docusaurus/plugin-content-docs',
   {
-    path: "docs",
-    routeBasePath: "/",
-    sidebarPath: "./sidebars.ts",
+    path: 'docs',
+    routeBasePath: '/',
+    sidebarPath: './sidebars.ts',
     remarkPlugins: [remarkImageSrcWithRequire],
-    include: ["**/*.md", "**/*.mdx"],
-    exclude: ["**/_*.{js,jsx,ts,tsx,md,mdx}", "**/_*/**", "**/.**"],
-  }
+    include: ['**/*.md', '**/*.mdx'],
+    exclude: ['**/_*.{js,jsx,ts,tsx,md,mdx}', '**/_*/**', '**/.**'],
+  },
 ];
 
 const pluginThemeClassic: [string, ThemeClassicOptions] = [
-  "@docusaurus/theme-classic",
+  '@docusaurus/theme-classic',
   {
-    customCss: "./src/css/custom.css",
-  }
+    customCss: './src/css/custom.css',
+  },
 ];
 
-const pluginClientRedirects = ["@docusaurus/plugin-client-redirects", {}];
+const pluginClientRedirects = ['@docusaurus/plugin-client-redirects', {}];
 
-const themeConfig: UserThemeConfig =  {
+const themeConfig: UserThemeConfig = {
   colorMode: {
     disableSwitch: true,
   },
@@ -62,10 +69,10 @@ const themeConfig: UserThemeConfig =  {
     },
     items: [
       {
-        label: "Home",
-        href: "/",
+        label: 'Home',
+        href: '/',
         autoAddBaseUrl: false,
-        position: "right",
+        position: 'right',
       },
       {
         label: 'Download',
@@ -83,26 +90,26 @@ const themeConfig: UserThemeConfig =  {
         label: 'Docs',
         href: '/docs',
         autoAddBaseUrl: false,
-        position: 'right'
+        position: 'right',
       },
       {
-        label: "GitHub",
-        to: "https://github.com/MatrixAI/Polykey",
-        position: "right",
+        label: 'GitHub',
+        to: 'https://github.com/MatrixAI/Polykey',
+        position: 'right',
       },
     ],
   },
   footer: {
-    style: "dark",
+    style: 'dark',
     logo: {
-      alt: "Polykey Logo",
+      alt: 'Polykey Logo',
       src: 'images/polykey-logotype-light-light.svg',
       href: 'https://polykey.com',
       target: '_self',
     },
     links: [
       {
-        title: "Resources",
+        title: 'Resources',
         items: [
           {
             label: 'Download',
@@ -115,60 +122,60 @@ const themeConfig: UserThemeConfig =  {
             autoAddBaseUrl: false,
           },
           {
-            label: "Docs",
+            label: 'Docs',
             href: '/docs',
             autoAddBaseUrl: false,
           },
         ],
       },
       {
-        title: "Community",
+        title: 'Community',
         items: [
           {
             label: 'Discord',
-            href: 'https://discord.gg/vfXQZwwugc'
+            href: 'https://discord.gg/vfXQZwwugc',
           },
           {
-            label: "Twitter/X",
-            href: "https://twitter.com/PolykeyIO",
+            label: 'Twitter/X',
+            href: 'https://twitter.com/PolykeyIO',
           },
           {
-            label: "Stack Overflow",
-            href: "https://stackoverflow.com/questions/tagged/polykey",
-          },
-        ],
-      },
-      {
-        title: "Open Source",
-        items: [
-          {
-            label: "Polykey Core",
-            href: "https://github.com/MatrixAI/Polykey",
-          },
-          {
-            label: "Polykey CLI",
-            href: "https://github.com/MatrixAI/Polykey-CLI",
-          },
-          {
-            label: "Polykey Desktop",
-            href: "https://github.com/MatrixAI/Polykey-Desktop",
-          },
-          {
-            label: "Polykey Mobile",
-            href: "https://github.com/MatrixAI/Polykey-Mobile",
+            label: 'Stack Overflow',
+            href: 'https://stackoverflow.com/questions/tagged/polykey',
           },
         ],
       },
       {
-        title: "Company",
+        title: 'Open Source',
         items: [
           {
-            label: "Matrix AI",
-            href: "https://matrix.ai",
+            label: 'Polykey Core',
+            href: 'https://github.com/MatrixAI/Polykey',
           },
           {
-            label: "About Us",
-            href: "https://matrix.ai/about",
+            label: 'Polykey CLI',
+            href: 'https://github.com/MatrixAI/Polykey-CLI',
+          },
+          {
+            label: 'Polykey Desktop',
+            href: 'https://github.com/MatrixAI/Polykey-Desktop',
+          },
+          {
+            label: 'Polykey Mobile',
+            href: 'https://github.com/MatrixAI/Polykey-Mobile',
+          },
+        ],
+      },
+      {
+        title: 'Company',
+        items: [
+          {
+            label: 'Matrix AI',
+            href: 'https://matrix.ai',
+          },
+          {
+            label: 'About Us',
+            href: 'https://matrix.ai/about',
           },
           {
             label: 'Terms of Service',
@@ -179,7 +186,7 @@ const themeConfig: UserThemeConfig =  {
             label: 'Privacy Policy',
             href: '/privacy-policy',
             autoAddBaseUrl: false,
-          }
+          },
         ],
       },
     ],
@@ -188,32 +195,27 @@ const themeConfig: UserThemeConfig =  {
   prism: {
     theme: lightCodeTheme,
     darkTheme: darkCodeTheme,
-    additionalLanguages: ["shell-session"],
+    additionalLanguages: ['shell-session'],
   },
 };
 
 const config: Config = {
-  title: "Polykey Documentation",
-  tagline:
-    "Tutorials, How-To Guides, Theory and Reference",
-  url: "https://polykey.com",
-  baseUrl: "/docs/",
-  onBrokenLinks: "warn",
-  onBrokenMarkdownLinks: "warn",
+  title: 'Polykey Documentation',
+  tagline: 'Tutorials, How-To Guides, Theory and Reference',
+  url: 'https://polykey.com',
+  baseUrl: '/docs/',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   // Generate `index.html` for each markdown file for pretty URLs
   trailingSlash: undefined,
-  favicon: "images/polykey-favicon.png",
+  favicon: 'images/polykey-favicon.png',
   i18n: {
-    defaultLocale: "en",
-    locales: ["en"],
+    defaultLocale: 'en',
+    locales: ['en'],
   },
-  staticDirectories: [ "static" ],
-  plugins: [
-    pluginDocs,
-    pluginThemeClassic,
-    pluginClientRedirects,
-  ],
-  themeConfig
+  staticDirectories: ['static'],
+  plugins: [pluginDocs, pluginThemeClassic, pluginClientRedirects],
+  themeConfig,
 };
 
 export default config;
