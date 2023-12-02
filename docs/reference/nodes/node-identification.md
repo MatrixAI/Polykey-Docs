@@ -49,7 +49,7 @@ Verify this: http://www.oid-info.com/#ra to ensure we have proper custom OID gen
 
 ---
 
-https://pen.iana.org/pen/PenApplication.page <- we have applied for an OID.
+https://pen.iana.org/pen/PenApplication.page - OID
 
 https://waterjuiceweb.wordpress.com/2019/08/21/oh-my-oid/
 
