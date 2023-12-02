@@ -1,13 +1,7 @@
-import type { Config, PluginConfig, ThemeConfig } from '@docusaurus/types';
+import type { Config, ThemeConfig } from '@docusaurus/types';
 import type { UserThemeConfig } from '@docusaurus/theme-common';
-import type {
-  SidebarsConfig as DocsSidebarsConfig,
-  Options as PluginDocsOptions
-} from '@docusaurus/plugin-content-docs';
-import type {
-  Options as ThemeClassicOptions
-} from '@docusaurus/theme-classic';
-
+import type { Options as PluginDocsOptions } from '@docusaurus/plugin-content-docs';
+import type { Options as ThemeClassicOptions } from '@docusaurus/theme-classic';
 import { visit } from 'unist-util-visit';
 import { themes as prismThemes } from 'prism-react-renderer';
 
@@ -39,7 +33,7 @@ const pluginDocs: [string, PluginDocsOptions] = [
   {
     path: "docs",
     routeBasePath: "/",
-    sidebarPath: require.resolve("./sidebars.js"),
+    sidebarPath: "./sidebars.ts",
     remarkPlugins: [remarkImageSrcWithRequire],
     include: ["**/*.md", "**/*.mdx"],
     exclude: ["**/_*.{js,jsx,ts,tsx,md,mdx}", "**/_*/**", "**/.**"],
@@ -49,7 +43,7 @@ const pluginDocs: [string, PluginDocsOptions] = [
 const pluginThemeClassic: [string, ThemeClassicOptions] = [
   "@docusaurus/theme-classic",
   {
-    customCss: require.resolve("./src/css/custom.css"),
+    customCss: "./src/css/custom.css",
   }
 ];
 
