@@ -1,12 +1,17 @@
 name = "polykey-docs-dev"
-main = "server/index.ts"
-compatibility_date = "2022-07-28"
-usage_model = "bundled"
+main = "worker.ts"
+compatibility_date = "2023-03-06"
 workers_dev = true
+send_metrics = false
 [site]
   bucket = "./public"
 
 [env.production]
   name = "polykey-docs"
-  routes = ["polykey.com/docs", "polykey.com/docs/*"]
+  routes = [
+    # This routing pattern should not collide with polykey.com/*
+    # https://community.cloudflare.com/t/exclude-paths-from-worker-routes/219395/2
+    "polykey.com/docs",
+    "polykey.com/docs/*"
+  ]
   workers_dev = false
