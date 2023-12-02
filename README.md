@@ -6,7 +6,32 @@ GitLab builds the wiki via the CI/CD into static pages, rendering the markdown f
 
 The CI/CD pushes it to [polykey.com/docs](https://polykey.com/docs) which is hosted by Cloudflare's pages and worker system.
 
-## Contributing
+## Development
+
+Run `nix-shell`, and once you're inside, you can use:
+
+```sh
+# starts a local version of the documentation
+npm run start
+# build the the static site
+npm run build
+# deploy to cloudflare
+npm run deploy
+# lint the source code
+npm run lint
+# automatically fix the source
+npm run lintfix
+```
+
+We use Git LFS to store all media in `images/**`. It's important to ensure that `git-lfs` is installed on your system before you contribute anything (on NixOS, it is installed as a separate package to `git`). By default anything put under `images/**` when using `git add` (after LFS is setup) will be uploaded to LFS, and thus the repository will only have links. Because LFS is enabled, it is used on both GitHub and GitLab.
+
+If this is the first time you cloned the repository, you must use `git lfs install` to ensure your local repository has LFS setup. It may be automatically setup if you already had it installed prior to cloning.
+
+Pro-tip, if we need to make sure files that were accidentally not put into LFS must be put into LFS, the command to use is:
+
+```sh
+git lfs migrate import --include="images/**" --everything
+```
 
 ### HTML Syntax
 
