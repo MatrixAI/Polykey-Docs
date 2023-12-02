@@ -4,7 +4,7 @@ import {
   mapRequestToAsset,
   NotFoundError,
   MethodNotAllowedError,
-} from "@cloudflare/kv-asset-handler";
+} from '@cloudflare/kv-asset-handler';
 
 const cacheControl = {
   browserTTL: 30 * 24 * 60 * 60,
@@ -18,7 +18,7 @@ const cacheControl = {
  * `https://polykey.com/...`
  */
 async function handleFetchEvent(event: FetchEvent): Promise<Response> {
-  console.log("Handling request from", event.request.url);
+  console.log('Handling request from', event.request.url);
   try {
     // This ignores everything except the pathname
     return await getAssetFromKV(event, {
@@ -27,20 +27,20 @@ async function handleFetchEvent(event: FetchEvent): Promise<Response> {
     });
   } catch (e) {
     if (e instanceof NotFoundError) {
-      console.log("Requested resource not found", e.message);
+      console.log('Requested resource not found', e.message);
       const response404 = await getAssetFromKV(event, {
         mapRequestToAsset: mapRequestTo404,
         cacheControl,
       });
-      console.log("Responding with 404 resource");
+      console.log('Responding with 404 resource');
       return new Response(response404.body, {
         ...response404,
         status: 404,
       });
     } else if (e instanceof MethodNotAllowedError) {
-      return new Response("Method Not Allowed", { status: 405 });
+      return new Response('Method Not Allowed', { status: 405 });
     }
-    return new Response("Server Error", { status: 500 });
+    return new Response('Server Error', { status: 500 });
   }
 }
 
@@ -56,7 +56,7 @@ function mapRequestToDocs(req: Request): Request {
   const assetRequest = mapRequestToAsset(req);
   const assetUrl = new URL(assetRequest.url);
   // Strip the `/docs` segment: `https://polykey.com/docs/...` -> `https://polykey.com/...`
-  assetUrl.pathname = assetUrl.pathname.replace(/^\/docs/, "/");
+  assetUrl.pathname = assetUrl.pathname.replace(/^\/docs/, '/');
   return new Request(assetUrl.toString(), assetRequest);
 }
 
@@ -69,6 +69,6 @@ function mapRequestTo404(req: Request): Request {
   return new Request(`${new URL(req.url).origin}/404.html`, req);
 }
 
-addEventListener("fetch", (event: FetchEvent) => {
+addEventListener('fetch', (event: FetchEvent) => {
   event.respondWith(handleFetchEvent(event));
 });

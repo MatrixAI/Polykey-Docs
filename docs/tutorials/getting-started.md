@@ -6,7 +6,7 @@ This class is responsible for managing the public and private keys as well as an
 
 The KeyManager is able to be loaded separately to the PolyKey main class and then passed into PolyKey. This is useful for loading the keypair prior to initializing PolyKey.
 
-```
+```ts
 // Initialize key manager first
 const keyManager = new KeyManager()
 await keyManager.loadKeyPair('./keys/private.key', './keys/public.key')
@@ -19,6 +19,6 @@ const pk = new PolyKey(keyManager)
 
 The key manager class can generate new symmetric keys using key derivation and the loaded private key
 
-```
+```ts
 const newKey = await keyManager.generateKey('secret passphrase')
 ```
