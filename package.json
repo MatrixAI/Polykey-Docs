@@ -22,8 +22,8 @@
     "deploy": "wrangler publish"
   },
   "devDependencies": {
-    "@cloudflare/kv-asset-handler": "^0.2.0",
-    "@cloudflare/workers-types": "^3.14.1",
+    "@cloudflare/kv-asset-handler": "^0.3.0",
+    "@cloudflare/workers-types": "^4.20230228.0",
     "@docusaurus/core": "^3.0.0",
     "@docusaurus/module-type-aliases": "^3.0.0",
     "@docusaurus/plugin-client-redirects": "^3.0.0",
@@ -44,6 +44,6 @@
     "prettier": "^3.0.0",
     "typescript": "^5.1.6",
     "unist-util-visit": "^5.0.0",
-    "wrangler": "^2.0.23"
+    "wrangler": "^3.17.1"
   }
 }
