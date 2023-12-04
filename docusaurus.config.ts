@@ -131,6 +131,14 @@ const themeConfig: UserThemeConfig = {
             href: '/docs',
             autoAddBaseUrl: false,
           },
+          {
+            label: 'Mainnet Network',
+            to: 'https://mainnet.polykey.com',
+          },
+          {
+            label: 'Testnet Network',
+            to: 'https://testnet.polykey.com',
+          },
         ],
       },
       {
