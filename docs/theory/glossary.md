@@ -80,3 +80,15 @@ A form of [discovery](./glossary.md#discovery) by which [Gestalts](./glossary.md
 ### Vault
 
 The base file structure used within Polykey to store [secrets](./glossary.md#secret). Each Vault makes use of an encrypted file system to manage and share the secrets it contains.
+
+### CLI
+
+Command Line Interface
+
+### UI
+
+User Interface
+
+### UX
+
+User Experience

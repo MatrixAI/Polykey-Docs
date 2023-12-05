@@ -1,8 +1,8 @@
 # Polykey-Docs
 
-Documentation for Polykey. This uses GitHub wiki as a CMS. This wiki is mirrored to Gitlab at https://gitlab.com/MatrixAI/open-source/Polykey-Docs.
+Documentation for Polykey. This is mirrored to Gitlab at https://gitlab.com/MatrixAI/open-source/Polykey-Docs.
 
-GitLab builds the wiki via the CI/CD into static pages, rendering the markdown files and templates it within the branding of [polykey.com](https://polykey.com).
+GitLab builds it via the CI/CD into static pages, rendering the markdown files and templates it within the branding of [polykey.com](https://polykey.com).
 
 The CI/CD pushes it to [polykey.com/docs](https://polykey.com/docs) which is hosted by Cloudflare's pages and worker system.
 
@@ -11,7 +11,7 @@ The CI/CD pushes it to [polykey.com/docs](https://polykey.com/docs) which is hos
 Run `nix-shell`, and once you're inside, you can use:
 
 ```sh
-# starts a local version of the documentation
+# starts a local version
 npm run start
 # build the the static site
 npm run build
@@ -23,6 +23,8 @@ npm run lint
 npm run lintfix
 ```
 
+You need to do setup the `.env` from `.env.example` if you want to successfully deploy to Cloudflare.
+
 We use Git LFS to store all media in `images/**`. It's important to ensure that `git-lfs` is installed on your system before you contribute anything (on NixOS, it is installed as a separate package to `git`). By default anything put under `images/**` when using `git add` (after LFS is setup) will be uploaded to LFS, and thus the repository will only have links. Because LFS is enabled, it is used on both GitHub and GitLab.
 
 If this is the first time you cloned the repository, you must use `git lfs install` to ensure your local repository has LFS setup. It may be automatically setup if you already had it installed prior to cloning.
@@ -32,6 +34,10 @@ Pro-tip, if we need to make sure files that were accidentally not put into LFS m
 ```sh
 git lfs migrate import --include="images/**" --everything
 ```
+
+## Contributing
+
+Because we use docusaurus, we can choose to write in markdown, TSX or MDX.
 
 ### HTML Syntax
 
@@ -85,3 +91,32 @@ Therefore if you want to add inline styles to an image and still use markdown sy
 Take note of the whitespace newlines between, if no newlines are used, GitHub will interpret this as all HTML. Also note that `<p></p>` will not work.
 
 Note that this won't work for resizing the images unfortunately. You have to apply the `width` attribute directly to the `<img />` tag. See: https://github.com/facebook/docusaurus/discussions/6465 for more information.
+
+### Linking
+
+In the navigation in Docusaurus, there are several properties that controls how the routing works. Because `polykey.com` is composed of separate cloudflare workers stitched together into a single domain, we have to hack around client side routing even for what looks like relative links.
+
+```js
+{
+  to: 'pathname:///docs/',
+  target: '_self'
+}
+```
+
+The `to` ensures it shows up as a relative link.
+
+The `pathname://` bypasses the client side routing forcing server side routing.
+
+The `target: '_self'` ensures that the same frame is used instead of creating a new frame.
+
+## Deployment
+
+You need to setup `.env` from `.env.example`.
+
+Then you can build `npm run build`.
+
+Finally run `npm run deploy`.
+
+This will deploy the development workers first.
+
+If you want to deploy production workers, you have to `npm run deploy -- --env production`.
