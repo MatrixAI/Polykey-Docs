@@ -91,8 +91,7 @@ const themeConfig: UserThemeConfig = {
       },
       {
         label: 'Docs',
-        href: '/docs',
-        autoAddBaseUrl: false,
+        to: '/docs',
         position: 'right',
       },
       {
@@ -128,8 +127,7 @@ const themeConfig: UserThemeConfig = {
           },
           {
             label: 'Docs',
-            href: '/docs',
-            autoAddBaseUrl: false,
+            to: '/docs'
           },
           {
             label: 'Mainnet Network',
