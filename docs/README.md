@@ -14,8 +14,6 @@ The documentation is structured using [Divio system](https://documentation.divio
 - [Theory](./reference/) - these are important for understanding the "why" of Polykey
 - [Reference](./reference/) - these are useful when you need remember how to use a particular command or function
 
-Check out [Getting Started](./tutorials/getting-started.md) to deploy your first Polykey node.
-
 <img src="/images/divio_quadrant.png" width="100%" />
 
 ## Introduction
