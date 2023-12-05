@@ -1,4 +1,4 @@
-# Delgation of Authority
+# Delegation of Authority
 
 Access control is the management, assignment and delegation of authority to resources for individuals groups and machines.
 
