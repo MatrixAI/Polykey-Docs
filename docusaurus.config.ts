@@ -91,7 +91,7 @@ const themeConfig: UserThemeConfig = {
       },
       {
         label: 'Docs',
-        to: '/docs',
+        to: '/docs/',
         position: 'right',
       },
       {
@@ -127,7 +127,7 @@ const themeConfig: UserThemeConfig = {
           },
           {
             label: 'Docs',
-            to: '/docs'
+            to: '/docs/'
           },
           {
             label: 'Mainnet Network',
@@ -219,8 +219,8 @@ const config: Config = {
   baseUrl: '/docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  // Generate `index.html` for each markdown file for pretty URLs
-  trailingSlash: undefined,
+  // The `baseUrl` always must end with a trailing slash.
+  trailingSlash: false,
   favicon: 'images/polykey-favicon.png',
   i18n: {
     defaultLocale: 'en',
