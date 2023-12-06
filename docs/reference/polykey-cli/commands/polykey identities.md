@@ -72,7 +72,7 @@ Usage:
 polykey identities discover github.com:maverick
 ```
 
-### `get`
+## `get`
 
 Fetches gestalt with node or identity ID from the Gestalt Graph.
 
@@ -85,7 +85,7 @@ v3usps342tkciga4emkgaac2jichbqs0dr3v0bav90d2dh1q2f1cg
 github.com:maverick
 ```
 
-### `invite`
+## `invite`
 
 Invites another node to the gestalt graph.
 
@@ -97,7 +97,7 @@ polykey identities invite v3usps342tkciga4emkgaac2jichbqs0dr3v0bav90d2dh1q2f1cg
 Successfully sent Gestalt Invite notification to Keynode with ID v3usps342tkciga4emkgaac2jichbqs0dr3v0bav90d2dh1q2f1cg
 ```
 
-### `list`
+## `list`
 
 Lists all Gestalts in the Gestalt Graph
 
@@ -112,7 +112,7 @@ v3usps342tkciga4emkgaac2jichbqs0dr3v0bav90d2dh1q2f1cg
 github.com:maverick
 ```
 
-### `permissions`
+## `permissions`
 
 Lists the permissions for current gestalt.
 
@@ -124,7 +124,7 @@ polykey identities permissions github.com:maverick
 permissions     ["claim"]
 ```
 
-### `trust`
+## `trust`
 
 Enables the `notify` permission for a gestalt.
 
@@ -146,7 +146,7 @@ v3usps342tkciga4emkgaac2jichbqs0dr3v0bav90d2dh1q2f1cg
 github.com:maverick
 ```
 
-### `untrust`
+## `untrust`
 
 Removes the `notify` permission from a gestalt.
 
