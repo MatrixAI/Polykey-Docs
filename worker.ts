@@ -19,6 +19,12 @@ const cacheControl = {
  */
 async function handleFetchEvent(event: FetchEvent): Promise<Response> {
   console.log('Handling request from', event.request.url);
+  const url = new URL(event.request.url);
+  // Check if the URL pathname is exactly '/docs'
+  if (url.pathname === '/docs') {
+    console.log('Redirecting /docs to /docs/');
+    return Response.redirect(url.origin + '/docs/', 301);
+  }
   try {
     // This ignores everything except the pathname
     return await getAssetFromKV(event, {
