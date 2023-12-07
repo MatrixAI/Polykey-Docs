@@ -94,7 +94,7 @@ Usage:
 ```sh
 polykey identities invite v3usps342tkciga4emkgaac2jichbqs0dr3v0bav90d2dh1q2f1cg
 
-Successfully sent Gestalt Invite notification to Keynode with ID v3usps342tkciga4emkgaac2jichbqs0dr3v0bav90d2dh1q2f1cg
+Successfully sent Gestalt Invite notification to node with ID v3usps342tkciga4emkgaac2jichbqs0dr3v0bav90d2dh1q2f1cg
 ```
 
 ## `list`
