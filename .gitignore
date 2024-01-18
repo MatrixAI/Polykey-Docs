@@ -13,6 +13,8 @@
 /public
 .docusaurus
 .cache-loader
+# wrangler
+.wrangler
 
 # Logs
 logs

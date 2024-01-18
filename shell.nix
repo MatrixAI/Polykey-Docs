@@ -6,7 +6,7 @@ mkShell {
     nodejs
     shellcheck
     gitAndTools.gh
-    jq
+    patchelf
   ];
   shellHook = ''
     echo "Entering $(npm pkg get name)"
@@ -29,6 +29,13 @@ mkShell {
     export PATH="$(pwd)/dist/bin:$(npm root)/.bin:$PATH"
 
     npm install --ignore-scripts
+
+    # Patches the `workerd` used by `wrangler`
+    if [ -f 'node_modules/@cloudflare/workerd-linux-64/bin/workerd' ]; then
+      patchelf \
+        --set-interpreter $(cat $NIX_CC/nix-support/dynamic-linker) \
+        node_modules/@cloudflare/workerd-linux-64/bin/workerd
+    fi
 
     set +v
   '';
