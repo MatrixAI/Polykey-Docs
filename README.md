@@ -1,5 +1,8 @@
 # Polykey-Docs
 
+staging:[![pipeline status](https://gitlab.com/MatrixAI/open-source/Polykey-Docs/badges/staging/pipeline.svg)](https://gitlab.com/MatrixAI/open-source/Polykey-Docs/commits/staging)
+master:[![pipeline status](https://gitlab.com/MatrixAI/open-source/Polykey-Docs/badges/master/pipeline.svg)](https://gitlab.com/MatrixAI/open-source/Polykey-Docs/commits/master)
+
 Documentation for Polykey. This is mirrored to Gitlab at https://gitlab.com/MatrixAI/open-source/Polykey-Docs.
 
 GitLab builds it via the CI/CD into static pages, rendering the markdown files and templates it within the branding of [polykey.com](https://polykey.com).
