@@ -239,6 +239,7 @@ const sidebars: SidebarsConfig = {
         'development-guide/timeouts',
         'development-guide/release-procedure',
         'development-guide/chocolatey',
+        'development-guide/docker',
       ],
     },
   ],
