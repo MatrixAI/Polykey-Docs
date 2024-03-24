@@ -118,10 +118,12 @@ Make sure to cd into the directory where your Polykey CLI executable is located 
 
 :::
 
-Make it executable:
+Make the Executable Runnable:
+
+Before you can run the Polykey CLI, you need to make it executable. Use the chmod command to add executable permissions to the file. Replace polykey-cli-0.2.6-darwin-universal with the actual name of the file if it's different:
 
 ```sh
-chmod +x polykey
+chmod +x polykey-cli-V.V.V-darwin-universal
 ```
 
 MacOS requires additional steps for the binary to be allowed to execute,
