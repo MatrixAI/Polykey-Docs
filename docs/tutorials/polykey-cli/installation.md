@@ -4,7 +4,7 @@ Installing the CLI can be done in different ways depending on your operating env
 
 :::warning
 
-Polykey-CLI has only been tested on Linux. We are working on supporting other platforms. There's minor teething problems when it comes supporting other platforms. Help us by reporting issues.
+Polykey-CLI has only been tested on Linux and macOS. We are working on supporting other platforms. There's minor teething problems when it comes supporting other platforms. Help us by reporting issues.
 
 :::
 
@@ -12,12 +12,12 @@ Polykey-CLI has only been tested on Linux. We are working on supporting other pl
 
 Polykey-CLI code is compiled, bundled and wrapped into a single file executable. You just have to download the executable, give it executable permissions and run it. The executable is not statically linked. It requires a subset of the system libraries that Node.js requires.
 
-* `libdl.so.2`
-* `libstdc++.so.6`
-* `libm.so.6`
-* `libgcc_s.so.1`
-* `libpthread.so.0`
-* `libc.so.6`
+- `libdl.so.2`
+- `libstdc++.so.6`
+- `libm.so.6`
+- `libgcc_s.so.1`
+- `libpthread.so.0`
+- `libc.so.6`
 
 ### Manually
 
@@ -37,7 +37,7 @@ chmod u+x ./polykey
 
 1. `cd` into directory where polykey exec is stored.
 2. Edit the zsh config to add polykey to your path, to streamline the process, run the following command making sure to change the path to polykey if the polykey executable is not in the downloads folder.
-3. For most users, this would be ``~/downloads`` on Debian based systems.
+3. For most users, this would be `~/downloads` on Debian based systems.
 
 :::warning
 
@@ -52,6 +52,7 @@ echo 'export PATH=~/downloads/polykey:$PATH' >> ~/.zshrc && source ~/.zshrc
 You can now run it with `polykey`.
 
 ---
+
 #### For Bash:
 
 1. If you're using Bash, run the following command to add polykey to your path. Ensure to change the path if the executable is not in the downloads folder. For most users, this would be `~/downloads` on Debian-based systems.
@@ -107,11 +108,9 @@ However, building polykey yourself on MacOS resolves in a working binary.
 
 :::
 
-
 Builds for MacOS are released on GitHub: https://github.com/MatrixAI/Polykey-CLI/releases.
 
 Download the executable named `...-polykey-cli-V.V.V-darwin-x64`, and rename it to `polykey`.
-
 
 :::tip
 
@@ -144,6 +143,7 @@ and MacOS permits running of unsigned binaries, however, to progress past this, 
 ```shell
 sudo ./polykey
 ```
+
 5. Following this, you will get another similar prompt
 
 ![install3](../../../images/mac-install3.png)
@@ -198,27 +198,25 @@ Polykey doesn't work on Windows at all as of **20-12-23**, regardless of binarie
 
 :::
 
-
 Builds for Windows are released on GitHub: https://github.com/MatrixAI/Polykey-CLI/releases.
 
 Download the executable named `...-polykey-cli-V.V.V-win32-x64`, and rename it to `polykey.exe`.
 
-
-
 #### Add to PATH
 
-1. Run the following when you are in the same directory as ``polykey.exe``.
+1. Run the following when you are in the same directory as `polykey.exe`.
 
 ```shell
 setx PATH "%PATH%;%CD%" /M
 ```
+
 :::tip
 
 Make sure you're in the correct directory where "polykey.exe" is placed.
 
 :::
 
-2. Now you can run polykey system-wide by using ``polykey``.
+2. Now you can run polykey system-wide by using `polykey`.
 
 ## Docker
 
@@ -246,13 +244,14 @@ Nix for mac can be installed by running
 ```sh
 sh <(curl -L https://nixos.org/nix/install)
 ```
+
 :::
 
 1. Download the latest build of Polykey-CLI for docker from https://polykey.com/download.
 
 2. Download Docker for MacOS depending on your instruction-set (arm vs x86) from https://docs.docker.com/desktop/install/mac-install/
 
-3. Rename the Polykey dist from ``x-docker-image-polykey-cli-x.x.x-alpha.x.tar.gz`` to ``docker-polykey.tar.gz``
+3. Rename the Polykey dist from `x-docker-image-polykey-cli-x.x.x-alpha.x.tar.gz` to `docker-polykey.tar.gz`
 
 4. Load the image in docker using the following:
 
@@ -264,11 +263,11 @@ docker load --input docker-polykey.tar.gz
 
 ![img.png](../../../images/docker-mac-img1.png)
 
-6. Run ```mkdir /tmp/polykey``` to create a directory for the polykey nodepath
+6. Run `mkdir /tmp/polykey` to create a directory for the polykey nodepath
 
-7. Set the volume host path to ```/tmp/polykey``` and the container path to ```/tmp/polykey/```
+7. Set the volume host path to `/tmp/polykey` and the container path to `/tmp/polykey/`
 
-8. Run ``docker images`` to grab the Image ID of your installed image.
+8. Run `docker images` to grab the Image ID of your installed image.
 
 ```shell
 > docker images
@@ -282,8 +281,7 @@ polykey-cli-0.1.2-alpha.2   gygbx1qgpnhbvbcbaby3sfm19bamg7sx   0e1addd9855a   12
 docker run -it 0e1addd9855a agent start --background -np /tmp/polykey
 ```
 
-Making sure to replace ``0e1addd9855a`` with your corresponding image ID.
-
+Making sure to replace `0e1addd9855a` with your corresponding image ID.
 
 ```shell
  docker run -it  0e1addd9855a agent start --background -np /tmp/polykey
@@ -299,7 +297,6 @@ agentPort   	37468
 recoveryCode	net elephant gentle eight pulp oyster panther sing own autumn silly whip simple warfare daughter pepper detail bachelor awkward forget ignore cream silly raw
 
 ```
-
 
 ## Node Package Manager
 
