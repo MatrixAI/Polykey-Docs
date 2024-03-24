@@ -110,7 +110,7 @@ However, building polykey yourself on MacOS resolves in a working binary.
 
 Builds for MacOS are released on GitHub: https://github.com/MatrixAI/Polykey-CLI/releases.
 
-Download the executable named `...-polykey-cli-V.V.V-darwin-x64`, and rename it to `polykey`.
+Download the executable named `...-polykey-cli-V.V.V-darwin-universal`, and rename it to `polykey`.
 
 :::tip
 
