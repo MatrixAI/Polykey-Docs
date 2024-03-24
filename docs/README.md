@@ -55,7 +55,7 @@ For this reason, we think of secrets as "capabilities".
 
 All secrets put into vaults. Each vault is a persistent fully-encrypted virtual filesystem with automatic version history. Vaults can be shared with other Polykey agents.
 
-Polykey's secrets management concept provides users with secure commuication and secure computation.
+Polykey's secrets management concept provides users with secure communication and secure computation.
 
 ### Decentralized Trust
 
