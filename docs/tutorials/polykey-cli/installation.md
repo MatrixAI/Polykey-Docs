@@ -4,7 +4,7 @@ Installing the CLI can be done in different ways depending on your operating env
 
 :::warning
 
-Polykey-CLI has only been tested on Linux and macOS. We are working on supporting other platforms. There's minor teething problems when it comes supporting other platforms. Help us by reporting issues.
+Polykey-CLI has only been tested on Linux and macOS. We are working on supporting other platforms. There's minor teething problems when it comes supporting other platforms. Help us by reporting issues. `where & How?`
 
 :::
 
