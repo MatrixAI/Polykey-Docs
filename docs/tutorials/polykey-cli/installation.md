@@ -114,7 +114,7 @@ Download the executable named `...-polykey-cli-V.V.V-darwin-universal`, and rena
 
 :::tip
 
-Make sure to cd into the directory where your Polykey CLI executable is located first.
+Make sure to cd into the directory where your Polykey CLI executable is located first. Typically this would be your Downloads directory.
 
 :::
 
