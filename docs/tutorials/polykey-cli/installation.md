@@ -125,23 +125,35 @@ However, building Polykey yourself on MacOS resolves in a working binary. Follow
 
 :::
 
-Make the Executable Runnable:
-
-Before you can run the Polykey CLI, you need to make it executable. Use the chmod command to add executable permissions to the file. Replace polykey-cli-0.2.6-darwin-universal with the actual name of the file if it's different:
+3. Make the Executable Runnable: Before you can run the Polykey CLI, you need to make it executable. Use the `chmod +x` command to add executable permissions to the file. Replace `polykey` with the actual name of your file if it's different:
 
 ```sh
 chmod +x polykey
 ```
 
+### MacOS Security Bypass
+
 MacOS requires additional steps for the binary to be allowed to execute,
 this is due to the fact that as of 20-12-23, the binaries we release are unsigned,
-and MacOS permits running of unsigned binaries, however, to progress past this, follow these steps:
+and MacOS permits running of unsigned binaries, however, to progress past this, there are 2 common methods we will provide here:
 
-1. MacOS will prompt you with the following:
+#### Method #1 - Manual Intervention through MacOS Settings
+
+First type the following command to try running the Polykey CLI but will instead trigger a pop-up.
+
+```sh
+./polykey --version
+```
+
+1. MacOS will then prompt you with the following:
+
+:::important
+Do not close this prompt. If you do, the 'Allow Anyway' option will not appear in the next step.
+:::
 
 ![install1](../../../images/mac-install1.png)
 
-2. Head over to `Settings -> Privacy & Security` and scroll down till you see '"polykey" was blocked from use because it is not from an identified developer.'
+2. While keeping the prompt open, head over to `Settings -> Privacy & Security` and scroll down till you see '"polykey" was blocked from use because it is not from an identified developer.'
 
 ![install2](../../../images/mac-install2.png)
 
@@ -153,11 +165,24 @@ and MacOS permits running of unsigned binaries, however, to progress past this, 
 sudo ./polykey
 ```
 
+:::tip
+When prompted in the terminal, type your administrator password and hit enter.
+:::
+
 5. Following this, you will get another similar prompt
 
 ![install3](../../../images/mac-install3.png)
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
+
+:::tip
+You can now verify the version of polykey that was installed with:
+
+```sh
+./polykey --version
+```
+
+:::
 
 ### Add it to your `$PATH`.
 
@@ -210,6 +235,8 @@ Polykey doesn't work on Windows at all as of **20-12-23**, regardless of binarie
 Builds for Windows are released on GitHub: https://github.com/MatrixAI/Polykey-CLI/releases.
 
 Download the executable named `...-polykey-cli-V.V.V-win32-x64`, and rename it to `polykey.exe`.
+
+#### Sudo Method with your terminal
 
 #### Add to PATH
 
