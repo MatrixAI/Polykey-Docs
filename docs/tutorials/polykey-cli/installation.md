@@ -103,18 +103,25 @@ We will be working on other distribution methods.
 
 :::info
 
-ARM-64 builds don't work on MacOS as of **20-12-23.**
-However, building polykey yourself on MacOS resolves in a working binary.
+ARM-64 builds are not currently supported on MacOS as of **26-03-24.**
+However, building Polykey yourself on MacOS resolves in a working binary. Follow this guide below to manually build and install Polykey on macOS.
 
 :::
 
-Builds for MacOS are released on GitHub: https://github.com/MatrixAI/Polykey-CLI/releases.
+### Manually
 
-Download the executable named `...-polykey-cli-V.V.V-darwin-universal`, and rename it to `polykey`.
+1. Download the Polykey CLI for macOS from the [GitHub releases page](https://github.com/MatrixAI/Polykey-CLI/releases). Look for the file named `polykey-cli-V.V.V-darwin-universal`, where `V.V.V` is the version number. For Mac, you want to download the file with the `darwin-universal` file extension.
+
+2. Rename the downloaded file to `polykey` for easier access. In your terminal, make sure to navigate to the directory where the file is located (usually the Downloads directory) and run the following command:
+
+```sh
+ mv polykey-cli-V.V.V-darwin-universal polykey
+```
 
 :::tip
 
-Make sure to cd into the directory where your Polykey CLI executable is located first. Typically this would be your Downloads directory.
+- Replace `V.V.V.` with the actual version number of the file you downloaded.
+- Navigate into the directory where the file is saved to execute commands.
 
 :::
 
@@ -123,7 +130,7 @@ Make the Executable Runnable:
 Before you can run the Polykey CLI, you need to make it executable. Use the chmod command to add executable permissions to the file. Replace polykey-cli-0.2.6-darwin-universal with the actual name of the file if it's different:
 
 ```sh
-chmod +x polykey-cli-V.V.V-darwin-universal
+chmod +x polykey
 ```
 
 MacOS requires additional steps for the binary to be allowed to execute,
