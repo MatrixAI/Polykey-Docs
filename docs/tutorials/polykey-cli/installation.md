@@ -99,6 +99,8 @@ nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(pr
 
 We will be working on other distribution methods.
 
+---
+
 ## MacOS
 
 :::info
@@ -131,13 +133,13 @@ However, building Polykey yourself on MacOS resolves in a working binary. Follow
 chmod +x polykey
 ```
 
+---
+
 ### MacOS Security Bypass
 
 MacOS requires additional steps for the binary to be allowed to execute,
 this is due to the fact that as of 20-12-23, the binaries we release are unsigned,
-and MacOS permits running of unsigned binaries, however, to progress past this, there are 2 common methods we will provide here:
-
-#### Method #1 - Manual Intervention through MacOS Settings
+and MacOS permits running of unsigned binaries, however, to progress past this, follow these steps:
 
 First type the following command to try running the Polykey CLI but will instead trigger a pop-up.
 
@@ -176,7 +178,7 @@ When prompted in the terminal, type your administrator password and hit enter.
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
 :::tip
-You can now verify the version of polykey that was installed with:
+You can also verify the version of polykey that was installed with:
 
 ```sh
 ./polykey --version
@@ -184,24 +186,40 @@ You can now verify the version of polykey that was installed with:
 
 :::
 
+---
+
 ### Add it to your `$PATH`.
 
-#### For ZSH:
-
-1. `cd` into the directory where the "polykey" executable is stored.
-2. Edit the Zsh config to add "polykey" to your path. To streamline the process, run the following command, making sure to change the path to "polykey" if the executable is not in the downloads folder. For most users, this would be `~/downloads` on Debian-based systems.
+To add the Polykey CLI executable to your $PATH on macOS, which allows you to run the polykey command from any directory in the terminal, you need to update the shell configuration file.
 
 :::tip
 
-Make sure your path to the "polykey" executable is correct.
+To check the shell you're currently using (ZSH vs Bash), in terminal type `echo $SHELL`
+:::
+
+#### For ZSH (default shell on recent versions of macOS):
+
+1. `cd` into the directory where the "polykey" executable is stored.
+
+2. Edit the Zsh config to add "polykey" to your $path. To streamline the process, run the following command, making sure to change the path to "polykey" if the executable is not in the downloads folder. For most users, this would be `~/downloads` on Debian-based systems.
+
+:::tip
+
+Make sure your path to the "polykey" executable is correct. Replace `downloads` with the path to the working directory. Use the `pwd` command to print the working directory.
 
 :::
 
 ```sh
-echo 'export PATH=~/downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
+echo 'export PATH=~/downloads/polykey:$PATH' >> ~/.zshrc && source ~/.zshrc
 ```
 
-You can now run it with `polykey`.
+:::tip
+
+You can check if the PATH environment variable for Polykey has been updated correctly with `echo $PATH`
+
+:::
+
+You can now run `polykey` from anywhere in your terminal.
 
 ---
 
@@ -212,7 +230,7 @@ You can now run it with `polykey`.
 
 :::tip
 
-Make sure your path to the "polykey" executable is correct.
+Make sure your path to the "polykey" executable is correct. Replace `downloads` with the path to the working directory
 
 :::
 
@@ -220,7 +238,7 @@ Make sure your path to the "polykey" executable is correct.
 echo 'export PATH=~/downloads:$PATH' >> ~/.bashrc && source ~/.bashrc
 ```
 
-You can now run it with `polykey`.
+You can now run `polykey` from anywhere in your terminal.
 
 ---
 
