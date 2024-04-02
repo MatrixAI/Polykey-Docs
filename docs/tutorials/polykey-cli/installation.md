@@ -1,3 +1,18 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+  <TabItem value="apple" label="Apple" default>
+    This is an apple 🍎
+  </TabItem>
+  <TabItem value="orange" label="Orange">
+    This is an orange 🍊
+  </TabItem>
+  <TabItem value="banana" label="Banana">
+    This is a banana 🍌
+  </TabItem>
+</Tabs>
+
 # Installation
 
 Installing the CLI can be done in different ways depending on your operating environment.
@@ -122,8 +137,8 @@ However, building Polykey yourself on MacOS resolves in a working binary. Follow
 
 :::tip
 
-- Replace `V.V.V.` with the actual version number of the file you downloaded.
 - Navigate into the directory where the file is saved to execute commands.
+- Replace `V.V.V.` with the actual version number of the file you downloaded.
 
 :::
 
@@ -139,7 +154,19 @@ chmod +x polykey
 
 MacOS requires additional steps for the binary to be allowed to execute,
 this is due to the fact that as of 20-12-23, the binaries we release are unsigned,
-and MacOS permits running of unsigned binaries, however, to progress past this, follow these steps:
+and MacOS permits running of unsigned binaries, however, to progress past this, there are a couple options:
+
+#### Method #1 - quickest method
+
+The xattr command will remove the quarantine attribute from the polykey executable, allowing you to run it without triggering macOS security warnings. Remember to ensure that the file path matches the location of your polykey file.
+
+```sh
+sudo xattr -r -d com.apple.quarantine ~/Downloads/polykey
+```
+
+If you have completed this sucesfully, you may ignore Method #2 and move to the next section on how to add polykey to your `$PATH`.
+
+#### Method #2 - Using the Apple Systems Settings GUI
 
 First type the following command to try running the Polykey CLI but will instead trigger a pop-up.
 
@@ -188,38 +215,37 @@ You can also verify the version of polykey that was installed with:
 
 ---
 
-### Add it to your `$PATH`.
+### Add Polykey to your `$PATH`.
 
-To add the Polykey CLI executable to your $PATH on macOS, which allows you to run the polykey command from any directory in the terminal, you need to update the shell configuration file.
+To enable running the Polykey CLI from any directory in the terminal on macOS, you'll need to update your shell configuration file.
 
-:::tip
+#### For ZSH (default shell on recent macOS versions):
 
-To check the shell you're currently using (ZSH vs Bash), in terminal type `echo $SHELL`
-:::
+1. Navigate (cd) into the directory where the "polykey" executable is stored.
 
-#### For ZSH (default shell on recent versions of macOS):
-
-1. `cd` into the directory where the "polykey" executable is stored.
-
-2. Edit the Zsh config to add "polykey" to your $path. To streamline the process, run the following command, making sure to change the path to "polykey" if the executable is not in the downloads folder. For most users, this would be `~/downloads` on Debian-based systems.
+2. Edit the Zsh configuration file to add "polykey" to your $PATH. Use the following command, ensuring to replace ~/Downloads with the correct path to the "polykey" executable if it's not in the downloads folder. For most users, this path would be ~/Downloads on Debian-based systems.
 
 :::tip
 
-Make sure your path to the "polykey" executable is correct. Replace `downloads` with the path to the working directory. Use the `pwd` command to print the working directory.
+Make sure your path to the "polykey" executable is correct.
 
 :::
 
 ```sh
-echo 'export PATH=~/downloads/polykey:$PATH' >> ~/.zshrc && source ~/.zshrc
+echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
 ```
 
 :::tip
 
-You can check if the PATH environment variable for Polykey has been updated correctly with `echo $PATH`
+You can check if the PATH environment variable for Polykey has been updated correctly by running:
+
+```sh
+polykey --version
+```
+
+If this command returns the current version, then you have successfully added Polykey to your PATH, and you can now run polykey from anywhere in your terminal.
 
 :::
-
-You can now run `polykey` from anywhere in your terminal.
 
 ---
 
