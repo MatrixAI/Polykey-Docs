@@ -1,27 +1,18 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-<Tabs>
-  <TabItem value="apple" label="Apple" default>
-    This is an apple 🍎
-  </TabItem>
-  <TabItem value="orange" label="Orange">
-    This is an orange 🍊
-  </TabItem>
-  <TabItem value="banana" label="Banana">
-    This is a banana 🍌
-  </TabItem>
-</Tabs>
-
 # Installation
 
 Installing the CLI can be done in different ways depending on your operating environment.
 
-:::warning
+:::info
 
-Polykey-CLI has only been tested on Linux and macOS. We are working on supporting other platforms. There's minor teething problems when it comes supporting other platforms. Help us by reporting issues. `where & How?`
+Polykey-CLI has only been tested on Linux and macOS. We are working on supporting other platforms. There's minor teething problems when it comes supporting other platforms. Help us by reporting any issues with the CLI tool in our Github Repo [here](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) or by dropping a message to the developers in our discord server [here](https://discord.gg/dC32r35TeE).
 
 :::
+
+<Tabs>
+  <TabItem value="linux" label="Linux" default>
 
 ## Linux
 
@@ -114,7 +105,8 @@ nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(pr
 
 We will be working on other distribution methods.
 
----
+  </TabItem>
+  <TabItem value="macos" label="MacOs">
 
 ## MacOS
 
@@ -156,8 +148,10 @@ MacOS requires additional steps for the binary to be allowed to execute,
 this is due to the fact that as of 20-12-23, the binaries we release are unsigned,
 and MacOS permits running of unsigned binaries, however, to progress past this, there are a couple options:
 
-#### Method #1 - quickest method
-
+ <Tabs>
+      <TabItem value="method1" label="Method #1 - Admin CLI ">
+      
+      #### Method #1 - quickest method
 The xattr command will remove the quarantine attribute from the polykey executable, allowing you to run it without triggering macOS security warnings. Remember to ensure that the file path matches the location of your polykey file.
 
 ```sh
@@ -165,6 +159,13 @@ sudo xattr -r -d com.apple.quarantine ~/Downloads/polykey
 ```
 
 If you have completed this sucesfully, you may ignore Method #2 and move to the next section on how to add polykey to your `$PATH`.
+
+## <!-- I need to add a link to skip ahead  -->
+
+---
+
+</TabItem>
+<TabItem value="method2" label="Method #2 - Apple Setting GUI">
 
 #### Method #2 - Using the Apple Systems Settings GUI
 
@@ -215,9 +216,15 @@ You can also verify the version of polykey that was installed with:
 
 ---
 
+</TabItem>
+</Tabs>
+
 ### Add Polykey to your `$PATH`.
 
 To enable running the Polykey CLI from any directory in the terminal on macOS, you'll need to update your shell configuration file.
+
+<Tabs>
+      <TabItem value="zsh" label="ZSH (default shell on recent macOS versions)">
 
 #### For ZSH (default shell on recent macOS versions):
 
@@ -235,19 +242,8 @@ Make sure your path to the "polykey" executable is correct.
 echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
 ```
 
-:::tip
-
-You can check if the PATH environment variable for Polykey has been updated correctly by running:
-
-```sh
-polykey --version
-```
-
-If this command returns the current version, then you have successfully added Polykey to your PATH, and you can now run polykey from anywhere in your terminal.
-
-:::
-
----
+</TabItem>
+ <TabItem value="bash" label="Bash">
 
 #### For Bash:
 
@@ -264,41 +260,34 @@ Make sure your path to the "polykey" executable is correct. Replace `downloads` 
 echo 'export PATH=~/downloads:$PATH' >> ~/.bashrc && source ~/.bashrc
 ```
 
-You can now run `polykey` from anywhere in your terminal.
-
----
-
-## Windows
-
-:::danger
-
-Polykey doesn't work on Windows at all as of **20-12-23**, regardless of binaries or building it yourself.
-
-:::
-
-Builds for Windows are released on GitHub: https://github.com/MatrixAI/Polykey-CLI/releases.
-
-Download the executable named `...-polykey-cli-V.V.V-win32-x64`, and rename it to `polykey.exe`.
-
-#### Sudo Method with your terminal
-
-#### Add to PATH
-
-1. Run the following when you are in the same directory as `polykey.exe`.
-
-```shell
-setx PATH "%PATH%;%CD%" /M
-```
+</TabItem>
+</Tabs>
 
 :::tip
 
-Make sure you're in the correct directory where "polykey.exe" is placed.
+You can check if the PATH environment variable for Polykey has been updated correctly by running:
+
+```sh
+polykey --version
+```
+
+If this command returns the current version, then you have successfully added Polykey to your PATH, and you can now run polykey from anywhere in your terminal.
 
 :::
 
-2. Now you can run polykey system-wide by using `polykey`.
+  </TabItem>
+  <TabItem value="windows" label="Windows">
 
-## Docker
+:::warning
+
+Polykey for windows should be working but we have yet to create documentation on the installation process for this.
+
+:::
+
+  </TabItem>
+  <TabItem value="docker" label="Docker">
+ 
+ ## Docker
 
 The Docker image can be used so that Polykey can be deployed into the cloud. It is also possible to use the CLI via the docker container, but it isn't as convenient. The intention is to run the Polykey agent in the cloud.
 
@@ -378,6 +367,9 @@ recoveryCode	net elephant gentle eight pulp oyster panther sing own autumn silly
 
 ```
 
+  </TabItem>
+  <TabItem value="npm" label="npm">
+   
 ## Node Package Manager
 
 The CLI is published as [`npm` package](https://www.npmjs.com/package/polykey-cli).
@@ -391,6 +383,9 @@ npm install -g polykey-cli
 This will install the Polykey-CLI into `$(npm config get prefix)`.
 
 If the `npm` bin path is added to the `$PATH` environment variable, then you will be able to execute `pk` or `polykey`.
+
+  </TabItem>
+  <TabItem value="source" label="Source">
 
 ## Source
 
@@ -407,3 +402,7 @@ Use `npm install` to setup the project.
 If you have `nix-shell` available, enter into `nix-shell` and it will automatically setup the development environment.
 
 :::
+
+  </TabItem>
+
+</Tabs>
