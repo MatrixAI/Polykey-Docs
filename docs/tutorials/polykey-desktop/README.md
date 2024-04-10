@@ -6,4 +6,10 @@ import DocCardList from '@theme/DocCardList';
 
 Follow our development on [GitHub](https://github.com/MatrixAI/Polykey-Desktop).
 
+:::note
+
+- The Polykey Command Line Interface (CLI) dev tool is currently availiable.
+
+:::
+
 <DocCardList />

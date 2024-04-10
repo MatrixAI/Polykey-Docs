@@ -29,24 +29,24 @@ const sidebars: SidebarsConfig = {
             'tutorials/polykey-cli/sharing-vaults',
           ],
         },
-        {
-          type: 'category',
-          label: 'Polykey Desktop',
-          link: {
-            type: 'doc',
-            id: 'tutorials/polykey-desktop/README',
-          },
-          items: [],
-        },
-        {
-          type: 'category',
-          label: 'Polykey Mobile',
-          link: {
-            type: 'doc',
-            id: 'tutorials/polykey-mobile/README',
-          },
-          items: [],
-        },
+        // {
+        //   type: 'category',
+        //   label: 'Polykey Desktop',
+        //   link: {
+        //     type: 'doc',
+        //     id: 'tutorials/polykey-desktop/README',
+        //   },
+        //   items: [],
+        // },
+        // {
+        //   type: 'category',
+        //   label: 'Polykey Mobile',
+        //   link: {
+        //     type: 'doc',
+        //     id: 'tutorials/polykey-mobile/README',
+        //   },
+        //   items: [],
+        // },
         {
           type: 'category',
           label: 'Polykey Core',
@@ -152,24 +152,24 @@ const sidebars: SidebarsConfig = {
             },
           ],
         },
-        {
-          type: 'category',
-          label: 'Polykey-Desktop',
-          link: {
-            type: 'doc',
-            id: 'reference/polykey-desktop/README',
-          },
-          items: [],
-        },
-        {
-          type: 'category',
-          label: 'Polykey-Mobile',
-          link: {
-            type: 'doc',
-            id: 'reference/polykey-mobile/README',
-          },
-          items: [],
-        },
+        // {
+        //   type: 'category',
+        //   label: 'Polykey-Desktop',
+        //   link: {
+        //     type: 'doc',
+        //     id: 'reference/polykey-desktop/README',
+        //   },
+        //   items: [],
+        // },
+        // {
+        //   type: 'category',
+        //   label: 'Polykey-Mobile',
+        //   link: {
+        //     type: 'doc',
+        //     id: 'reference/polykey-mobile/README',
+        //   },
+        //   items: [],
+        // },
         {
           type: 'category',
           label: 'Polykey-Core',
