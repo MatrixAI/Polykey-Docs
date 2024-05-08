@@ -56,10 +56,8 @@ async function main(argv = process.argv) {
     wranglerConfig.env[feature] = {
       name: `${wranglerConfig.name}-${feature}`,
       routes: [
-        {
-          pattern: `${feature}.${wranglerConfig.routes[0].pattern}`,
-          custom_domain: true,
-        },
+        `${feature}.${wranglerConfig.routes[0].pattern}`,
+        `${feature}.${wranglerConfig.routes[1].pattern}`,
       ],
     };
     fs.writeFileSync('./wrangler.toml', TOML.stringify(wranglerConfig), {
