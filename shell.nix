@@ -7,7 +7,6 @@ mkShell {
     shellcheck
     patchelf
     gitAndTools.gh
-    gitAndTools.git
   ];
   shellHook = ''
     echo "Entering $(npm pkg get name)"
