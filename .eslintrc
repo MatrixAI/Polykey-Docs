@@ -127,12 +127,6 @@
     "@typescript-eslint/naming-convention": [
       "error",
       {
-        "selector": "default",
-        "format": ["camelCase"],
-        "leadingUnderscore": "allow",
-        "trailingUnderscore": "allowSingleOrDouble"
-      },
-      {
         "selector": "function",
         "format": ["camelCase", "PascalCase"],
         "leadingUnderscore": "allow",
