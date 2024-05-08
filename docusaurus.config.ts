@@ -1,7 +1,8 @@
 import type { Config } from '@docusaurus/types';
-import type { UserThemeConfig } from '@docusaurus/theme-common';
 import type { Options as PluginDocsOptions } from '@docusaurus/plugin-content-docs';
-import type { Options as ThemeClassicOptions } from '@docusaurus/theme-classic';
+import type { Options as PluginGTagOptions } from '@docusaurus/plugin-google-gtag';
+import type { Options as ThemeOptions } from '@docusaurus/theme-classic';
+import type { UserThemeConfig } from '@docusaurus/theme-common';
 import { visit } from 'unist-util-visit';
 import { themes as prismThemes } from 'prism-react-renderer';
 
@@ -16,7 +17,7 @@ const darkCodeTheme = prismThemes.dracula;
  * Note that this is a hack, and it's ideal to instead prefer using `require`.
  * However those images would not be viewable in the GitHub markdown.
  */
-const remarkImageSrcWithRequire = () => {
+const remarkImageSrcWithDocsPrefix = () => {
   return (tree) => {
     visit(tree, 'mdxJsxFlowElement', (node) => {
       if (node.name === 'img') {
@@ -41,20 +42,26 @@ const pluginDocs: [string, PluginDocsOptions] = [
     path: 'docs',
     routeBasePath: '/',
     sidebarPath: './sidebars.ts',
-    remarkPlugins: [remarkImageSrcWithRequire],
+    remarkPlugins: [remarkImageSrcWithDocsPrefix],
     include: ['**/*.md', '**/*.mdx'],
     exclude: ['**/_*.{js,jsx,ts,tsx,md,mdx}', '**/_*/**', '**/.**'],
   },
 ];
 
-const pluginThemeClassic: [string, ThemeClassicOptions] = [
-  '@docusaurus/theme-classic',
+const pluginGTag: [string, PluginGTagOptions] = [
+  '@docusaurus/plugin-google-gtag',
   {
-    customCss: './src/css/custom.css',
+    trackingID: 'G-GSMHXNB32E',
+    anonymizeIP: false,
   },
 ];
 
-const pluginClientRedirects = ['@docusaurus/plugin-client-redirects', {}];
+const pluginTheme: [string, ThemeOptions] = [
+  '@docusaurus/theme-classic',
+  {
+    customCss: require.resolve('./src/css/custom.css'),
+  },
+];
 
 const themeConfig: UserThemeConfig = {
   colorMode: {
@@ -127,7 +134,7 @@ const themeConfig: UserThemeConfig = {
           },
           {
             label: 'Docs',
-            to: '/docs/'
+            to: '/docs/',
           },
           {
             label: 'Mainnet Network',
@@ -216,18 +223,22 @@ const config: Config = {
   title: 'Polykey Documentation',
   tagline: 'Tutorials, How-To Guides, Theory and Reference',
   url: 'https://polykey.com',
+  // The `baseUrl` always must end with a trailing slash.
   baseUrl: '/docs/',
   onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
-  // The `baseUrl` always must end with a trailing slash.
-  trailingSlash: false,
+  // This ensures that `/x.md` is generated as `/x/index.html` and not `/x.html`.
+  // Which is the expected directory layout for most web servers.
+  trailingSlash: undefined,
   favicon: 'images/polykey-favicon.png',
+  organizationName: 'MatrixAI',
+  projectName: 'PolyKey-Docs',
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
   },
   staticDirectories: ['static'],
-  plugins: [pluginDocs, pluginThemeClassic, pluginClientRedirects],
+  plugins: [pluginDocs, pluginTheme, pluginGTag],
   themeConfig,
 };
 
