@@ -31,9 +31,9 @@
   "include": [
     "./src/**/*",
     "./docs/**/*",
+    "./server/**/*",
     "./scripts/**/*",
     "./docusaurus.config.ts",
-    "./sidebars.ts",
-    "./worker.ts"
+    "./sidebars.ts"
   ]
 }
