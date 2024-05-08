@@ -16,7 +16,7 @@ const darkCodeTheme = prismThemes.dracula;
  * Note that this is a hack, and it's ideal to instead prefer using `require`.
  * However those images would not be viewable in the GitHub markdown.
  */
-const remarkImageSrcWithRequire = () => {
+const remarkImageSrcWithDocsPrefix = () => {
   return (tree) => {
     visit(tree, 'mdxJsxFlowElement', (node) => {
       if (node.name === 'img') {
@@ -41,7 +41,7 @@ const pluginDocs: [string, PluginDocsOptions] = [
     path: 'docs',
     routeBasePath: '/',
     sidebarPath: './sidebars.ts',
-    remarkPlugins: [remarkImageSrcWithRequire],
+    remarkPlugins: [remarkImageSrcWithDocsPrefix],
     include: ['**/*.md', '**/*.mdx'],
     exclude: ['**/_*.{js,jsx,ts,tsx,md,mdx}', '**/_*/**', '**/.**'],
   },
