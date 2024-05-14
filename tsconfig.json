@@ -22,7 +22,7 @@
       "@docusaurus/module-type-aliases",
       "@docusaurus/theme-classic",
     ],
-    "baseUrl": "./src",
+    "baseUrl": "./.",
     "paths": {
       "@site/*": ["./*"]
     },
