@@ -35,7 +35,7 @@ const sidebars: SidebarsConfig = {
             type: 'doc',
             id: 'tutorials/polykey-desktop/README',
           },
-          items: []
+          items: [],
         },
         {
           type: 'category',
@@ -44,7 +44,7 @@ const sidebars: SidebarsConfig = {
             type: 'doc',
             id: 'tutorials/polykey-mobile/README',
           },
-          items: []
+          items: [],
         },
         {
           type: 'category',
@@ -53,9 +53,7 @@ const sidebars: SidebarsConfig = {
             type: 'doc',
             id: 'tutorials/polykey-core/README',
           },
-          items: [
-            'tutorials/polykey-core/installation'
-          ]
+          items: ['tutorials/polykey-core/installation'],
         },
       ],
     },
@@ -146,11 +144,10 @@ const sidebars: SidebarsConfig = {
                 'reference/polykey-cli/commands/secrets',
                 'reference/polykey-cli/commands/vaults',
                 'reference/polykey-cli/commands/keys',
-                'reference/polykey-cli/commands/vaults',
                 'reference/polykey-cli/commands/identities',
                 'reference/polykey-cli/commands/notifications',
               ],
-            }
+            },
           ],
         },
         {

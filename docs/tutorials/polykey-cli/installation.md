@@ -150,7 +150,7 @@ and MacOS permits running of unsigned binaries, however, to progress past this, 
 
  <Tabs>
       <TabItem value="method1" label="Method #1 - Admin CLI ">
-      
+
       #### Method #1 - quickest method
 The xattr command will remove the quarantine attribute from the polykey executable, allowing you to run it without triggering macOS security warnings. Remember to ensure that the file path matches the location of your polykey file.
 
@@ -181,11 +181,11 @@ First type the following command to try running the Polykey CLI but will instead
 Do not close this prompt. If you do, the 'Allow Anyway' option will not appear in the next step.
 :::
 
-![install1](../../../images/mac-install1.png)
+![install1](/images/mac-install1.png)
 
 2. While keeping the prompt open, head over to `Settings -> Privacy & Security` and scroll down till you see '"polykey" was blocked from use because it is not from an identified developer.'
 
-![install2](../../../images/mac-install2.png)
+![install2](/images/mac-install2.png)
 
 3. Click on `Allow Anyway` and authenticate.
 
@@ -201,7 +201,7 @@ When prompted in the terminal, type your administrator password and hit enter.
 
 5. Following this, you will get another similar prompt
 
-![install3](../../../images/mac-install3.png)
+![install3](/images/mac-install3.png)
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
@@ -286,7 +286,7 @@ Polykey for windows should be working but we have yet to create documentation on
 
   </TabItem>
   <TabItem value="docker" label="Docker">
- 
+
  ## Docker
 
 The Docker image can be used so that Polykey can be deployed into the cloud. It is also possible to use the CLI via the docker container, but it isn't as convenient. The intention is to run the Polykey agent in the cloud.
@@ -330,7 +330,7 @@ docker load --input docker-polykey.tar.gz
 
 5. Go to your docker application and configure the Polykey image
 
-![img.png](../../../images/docker-mac-img1.png)
+![img.png](/images/docker-mac-img1.png)
 
 6. Run `mkdir /tmp/polykey` to create a directory for the polykey nodepath
 
@@ -369,7 +369,7 @@ recoveryCode	net elephant gentle eight pulp oyster panther sing own autumn silly
 
   </TabItem>
   <TabItem value="npm" label="npm">
-   
+
 ## Node Package Manager
 
 The CLI is published as [`npm` package](https://www.npmjs.com/package/polykey-cli).
