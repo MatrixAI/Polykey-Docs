@@ -11,7 +11,7 @@ The documentation is structured using [Divio system](https://documentation.divio
 
 - [Tutorials](./tutorials) - these are a series of steps to introduce Polykey to new beginners to achieve a practical outcome
 - [How-To Guides](/docs/how-to-guides) - these are short guides on how to achieve a specific use-case which makes assumptions on the reader
-- [Theory](./reference/) - these are important for understanding the "why" of Polykey
+- [Theory](./theory/) - these are important for understanding the "why" of Polykey
 - [Reference](./reference/) - these are useful when you need remember how to use a particular command or function
 
 <img src="/images/divio_quadrant.png" width="100%" />
