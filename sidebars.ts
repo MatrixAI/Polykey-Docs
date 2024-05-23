@@ -24,7 +24,7 @@ const sidebars: SidebarsConfig = {
             'tutorials/polykey-cli/managing-vaults',
             'tutorials/polykey-cli/managing-secrets',
             'tutorials/polykey-cli/claiming-digital-identities',
-            'tutorials/polykey-cli/connecting-to-the-network',
+            'tutorials/polykey-cli/discovering-other-users',
             'tutorials/polykey-cli/sharing-vaults',
           ],
         },
