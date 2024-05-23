@@ -35,13 +35,13 @@ To begin managing & sharing secrets effectively with Polykey, follow the tutoria
 You may also reference the following [demo video](https://vimeo.com/884649667) for the getting started tutorial but you will first need to complete the installation instructions for Polykey-CLI.
 :::
 
-1. **[Installation](/docs/tutorials/polykey-cli/installation.md)**: Set up Polykey CLI on your preferred platform.
-2. **[Bootstrap Keypair](/docs/tutorials/polykey-cli/bootstrapping.md)**: Initialize your node and connect to the Polykey network.
-3. **[Managing Vaults](/docs/tutorials/polykey-cli/managing-vaults.md)**: Create and manage secure vaults for effective secrets storage.
-4. **[Managing Secrets](/docs/tutorials/polykey-cli/managing-secrets.md)**: Explore comprehensive methods for handling and organizing secrets within vaults.
-5. **[Claiming Digital Identities](/docs/tutorials/polykey-cli/claiming-digital-identities.md)**: Authenticate and establish your identity across the Polykey network.
-6. **[Discovering Other User's Identities](/docs/tutorials/polykey-cli/discovering-other-users.md)**: Locate and verify identities of other users to manage access.
-7. **[Sharing Vaults](/docs/tutorials/polykey-cli/sharing-vaults.md)**: Share vaults securely with trusted peers.
+1. **[Installation](/docs/tutorials/polykey-cli/installation)**: Set up Polykey CLI on your preferred platform.
+2. **[Bootstrap Keypair](/docs/tutorials/polykey-cli/bootstrapping)**: Initialize your node and connect to the Polykey network.
+3. **[Managing Vaults](/docs/tutorials/polykey-cli/managing-vaults)**: Create and manage secure vaults for effective secrets storage.
+4. **[Managing Secrets](/docs/tutorials/polykey-cli/managing-secrets)**: Explore comprehensive methods for handling and organizing secrets within vaults.
+5. **[Claiming Digital Identities](/docs/tutorials/polykey-cli/claiming-digital-identities)**: Authenticate and establish your identity across the Polykey network.
+6. **[Discovering Other User's Identities](/docs/tutorials/polykey-cli/discovering-other-users)**: Locate and verify identities of other users to manage access.
+7. **[Sharing Vaults](/docs/tutorials/polykey-cli/sharing-vaults)**: Share vaults securely with trusted peers.
 
 These initial tutorials will guide new users through the basic functionalities of setting up Polykey, starting their node (similar to creating a Web3 wallet connected to a P2P network), creating virtual encrypted vaults, and managing secret files within these vaults. This foundation prepares users for more advanced network functionalities, such as identity claims, discovery of other users' nodes, and secure sharing of secrets and vaults through end-to-end encryption.
 
