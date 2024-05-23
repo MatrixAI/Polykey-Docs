@@ -1,1 +1,2 @@
-# Discovering other user's Identities
+
+# Discovering Other Users
