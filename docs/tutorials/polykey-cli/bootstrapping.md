@@ -114,3 +114,5 @@ Node is Active
 ## Conclusion
 
 Bootstrapping your node is the first step to using Polykey effectively. It prepares your node for managing and sharing secrets securely within the network. By following these guidelines, you ensure that your node is well-configured, secure, and ready for advanced operations in the Polykey ecosystem.
+
+Stay tuned for upcoming sections where we will discuss managing multiple nodes, assigning different file paths to each node, and other advanced configurations.
