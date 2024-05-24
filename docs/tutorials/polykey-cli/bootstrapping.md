@@ -10,9 +10,6 @@ Bootstrapping is the initial process where a new Polykey node is set up and conn
 
 When you first start Polykey, you will be prompted to create a password. This password secures your local encryption keys and other sensitive data managed by Polykey.
 
-#### Password Requirements
-
-[Insert password parameter details here]
 :::note
 Remember to keep your password in a secure location as you will need it each time you start the Polykey agent.
 :::
