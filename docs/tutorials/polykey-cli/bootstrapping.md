@@ -42,7 +42,7 @@ polykey agent stop
 
 #### Troubleshooting
 
-If the Polykey agent does not terminate properly, you can force quit the process through the Activity Monitor on your machine. If you encounter this or any other issue, please consider making a bug report to help improve Polykey.
+If the Polykey agent does not terminate properly, you can force quit the process through the Activity Monitor on your machine. If you encounter this or any other issue, please consider making a [bug report](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) to help improve Polykey.
 
 ## Verifying Network Status
 
