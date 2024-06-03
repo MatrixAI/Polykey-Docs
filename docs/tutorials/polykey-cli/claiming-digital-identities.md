@@ -38,6 +38,23 @@ This command begins the authentication process with GitHub. Follow the prompts i
 The code prompted by the browser will be displayed in your terminal as the user code.
 :::
 
+### Lists all authenticated identities across all providers
+
+`polykey identities authenticated` command will output the providerID and corresponding identityID of the authenticated IdP. This is a way to check that you completed the authentication process correctly.
+
+#### Example Usage
+
+```bash
+polykey identities authenticated
+```
+
+##### Example Output
+
+```bash
+providerId	github.com
+identityId	maverick
+```
+
 ### Technical Use of Permissions
 
 During the authentication process, here's what Polykey requests access to and why:
@@ -86,25 +103,13 @@ _This image shows a demo example of the link to the gist that was created when c
 
 ### Primary Verification Method
 
-Navigate directly to the provided gist link:
+Check your GH gists. Replace `my-github-username` with your actual gh username and navigate to the url.
 
 ```bash
 https://gist.github.com/my-github-username
 ```
 
 This gist contains the cryptographic link confirming that your Polykey identity is correctly linked to your GitHub profile. Viewing this gist ensures your claim was successful and publicly verifiable.
-
-### Additional Verification Options
-
-While navigating to the gist is sufficient for most users, Polykey also offers ways to internally verify the identity claim:
-
-- **Polykey Gestalt List:** You can list all gestalts, including your own, to see the internal record of your claim.
-
-```bash
-polykey identities list
-```
-
-This command shows details about your claimed identities and connected nodes, providing an extra layer of verification.
 
 ## Understanding Gestalt Graphs
 

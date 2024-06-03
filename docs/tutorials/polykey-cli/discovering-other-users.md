@@ -1,2 +1,1 @@
-
-# Discovering Other Users
+# Discovering Users' Nodes and Managing Access Permissions
