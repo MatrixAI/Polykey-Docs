@@ -1,4 +1,4 @@
-# Claiming Digital Identities
+# Claiming Digital Identities: Establishing Identity Linkages in Polykey
 
 In Polykey, claiming a digital identity is a crucial step that allows users to establish their identity across various platforms and link these identities to their cryptographic keys. This process involves authenticating with external services, such as GitHub, and claiming ownership of an identity by posting a cryptographic link to a publicly verifiable location.
 
@@ -120,10 +120,11 @@ Each node within the graph represents an identity or a claim, and edges represen
 
 ### Claiming Multiple Identities
 
-Polykey enables you to claim multiple identities, providing flexibility in how you manage your digital presence. For example, you can:
+Polykey enables you to manage your digital presence flexibly by supporting the claiming of multiple identities across different scenarios. Specifically, you can:
 
-- Claim a separate GitHub identity for each node you control.
-- Link one node to multiple identity providers, thus broadening your digital footprint and verification avenues.
+- Link one node to several identity providers (IdPs), broadening your digital footprint and verification avenues as more IdPs are supported.
+
+- Claim the same identity provider, such as a GitHub username, across multiple unique nodes you control, consolidating your digital identity while expanding your network's reach.
 
 ### Future Plans and IdP Support
 
