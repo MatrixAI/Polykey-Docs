@@ -128,3 +128,11 @@ You can explicitly trust or untrust a node to refine how notifications and acces
 polykey identities trust <gestaltId>
 polykey identities untrust <gestaltId>
 ```
+
+## Conclusion
+
+Managing node interactions and user discovery in Polykey is vital for maintaining a secure and efficient network. By carefully managing who can access your nodes and how they can interact with your resources, you enhance the overall security and functionality of your network.
+
+This guide has provided the steps and commands necessary to effectively discover nodes and manage permissions within Polykey.
+
+This addition ensures users understand the significance and usage of `gestaltId` and permissions within the context of discovering and managing nodes in Polykey, providing clear and actionable information for efficient network management.
