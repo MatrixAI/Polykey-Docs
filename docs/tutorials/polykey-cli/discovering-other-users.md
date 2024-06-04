@@ -1,7 +1,5 @@
 # Discovering Users' Nodes and Managing Access Permissions
 
-# Discovering Users' Nodes and Managing Access Permissions
-
 In the Polykey network, discovering other users' nodes and managing access permissions is crucial for secure and efficient collaboration. This guide will walk you through the process of finding other users' nodes using their claimed digital identities and setting permissions to manage how these nodes interact with your secrets and vaults.
 
 ## Introduction to Node Discovery and Permission Management
@@ -29,6 +27,36 @@ polykey identities discover github.com:maverick
 ```
 
 This command adds the node associated with the GitHub username "maverick" to your discovery queue, allowing you to initiate interactions with this user.
+:::note
+
+## Troubleshooting Discovery and Connection Issues
+
+When attempting to discover other users' nodes and manage permissions within Polykey, there are specific requirements and common issues you may encounter. Understanding and addressing these can ensure smoother operations within the network.
+
+### Requirements for Successful Discovery
+
+1. **Active Polykey Agents:** Both users involved in the discovery must have their Polykey agents actively running. This ensures that both nodes are reachable and responsive within the network.
+
+2. **Network Connection:** Both nodes need to be connected to the Polykey network. Currently, both users must be online simultaneously for the discovery process to succeed.
+
+### Common Issues and Solutions
+
+1. **Gestalt Creation:** Ensure that the user you are trying to discover has already created their gestalt. A gestalt is necessary for the identity to be discoverable in the network. Without it, the discovery process will fail.
+
+2. **Symmetric NAT or Restrictive Networks:** Connection issues can arise if one or both users are behind symmetric NATs or other restrictive network setups. These environments can block the necessary network communications for successful node discovery.
+
+   - **Solution:** Attempt the discovery process from a network with less restrictive settings, such as home Wi-Fi or a less secure public network, to see if the issue persists.
+
+:::
+
+:::info
+
+### Future Enhancements
+
+Polykey is actively working to enhance the discovery process by implementing features that would allow one-sided connectivity. This means that in the future, users may not need to be online simultaneously. One user could initiate a discovery, akin to sending a friend request, and the other could respond at their convenience, simplifying the process and reducing the dependency on simultaneous network presence.
+
+This section helps users understand the prerequisites for successful node discovery and provides solutions to common issues that might impede the process. By following these guidelines, users can more effectively manage their interactions within the Polykey network.
+:::
 
 ## GestaltId and Permissions Explained
 
