@@ -1,181 +1,111 @@
-# Sharing Vaults
+# Sharing Vaults With Secrets
 
-This tutorial assumes that you are working in the `Polykey` project's directory, and you have successfully built it using `npm run build`.
+In Polykey, sharing vaults containing secrets is essential for collaborative environments. This guide will walk you through the process of securely sharing your vaults and enabling other users to access and synchronize secrets between trusted nodes.
 
-### Setting Up Nodes
-For two agents to communicate with each other we need two agents to be running. For this example we're going to run two `Polykey` nodes on the same machine and have them communicate over the loop-back device.
+## Prerequisites for Sharing Vaults
 
-First we want to start the first node. Since we are going to run two nodes on the same machine, we need to keep them separate. For this we need to override the `node-path` to a directory we want the `Polykey` node to be created in. for this example we're going to use a temp directory `tmp`.  We're also going to set a static port value for the proxy.
+Before sharing a vault, ensure that both nodes have established trust and appropriate permissions are set. For details on setting trust and access permissions, refer to the "Discovering Users' Nodes and Managing Access Permissions" section.
 
-Run the following command
+### Common Debugging Techniques for Sharing Secrets
 
-```
-node dist/bin/polykey agent start --node-path tmp/nodeA --proxy-port 55551
-```
+To share secrets between two nodes on different machines, both must be actively connected to the Polykey network. Here are some techniques to ensure connectivity and troubleshoot common issues:
 
-If this is the first time creating the node you should be prompted for the password twice. After that some information about the node should be printed.
+- **Node Ping:** Use `polykey nodes ping <nodeID>` to check if the intended recipient's node is active and reachable.
 
-```
-✔ Enter new password … ********
-✔ Confirm new password … ********
-pid     476567
-nodeId  "vfjqk9v06k6p1tnuc4444irt0krasjmi1btmmf7ptaqg477em9390"
-clientHost      "127.0.0.1"
-clientPort      50617
-agentHost       "127.0.0.1"
-agentPort       35629
-proxyHost       "0.0.0.0"
-proxyPort       55551
-forwardHost     "127.0.0.1"
-forwardPort     38331
-recoveryCode    "drill video walnut message stone exhibit render snack comic maze deposit decline bless unit crater correct stool remain legend problem egg lecture approve normal"
+- **Node Connections:** The `polykey nodes connections` command lists all nodes currently connected to the network. Ensure your node appears on this list.
+
+- **Restarting Polykey Agent:** If connectivity issues persist, try restarting the Polykey agent. Persistent errors might indicate restrictive network settings blocking communication.
+
+- **Network Alternatives:** If connectivity issues are due to restrictive networks, try connecting from a different network environment.
+
+- **Multiple Nodes:** To test sharing functionality without another user, set up multiple nodes on your system. Refer to the managing multiple nodes section for guidance.
+
+## Sharing the Vault
+
+Share a vault with another node using the `polykey vaults share` command:
+
+```bash
+polykey vaults share <vaultName> <nodeId>
 ```
 
-Note the `NodeId` here as `vvrijg034ie10dnn05mv0b2lfo1g7nhv6kb63c03lh7qcc4eqo79g`. This will differ for your node.
+- `<vaultName>`: The name of the vault you wish to share.
+- `<nodeId>`: The Node ID of the node you are sharing the vault with.
 
-Now create a 2nd node using the same method, this time with the `node-path` of `tmp/nodeB` and port `55552`. You should see the same password prompt and status read-out. For our example the 2nd node has a `NodeId` of `vd2nmd13qqj718ivke8n8si6cgdsd6ufgche84moofr2fhh9vj2jg`.
+:::tip
 
-### Connecting and Trusting Nodes
+Remember, you can run the following commands to reference the argument names to pass into your command:
 
-Normally when a `Polykey` node is started, the first thing it does is automatically contact a seed node to join the network. In the absence of seed nodes to act as an entry point for a network. We can tell a node how to find other nodes directly.
+- `polykey vaults list`
+- `polykey identities list`
 
-First we need to tell `NodeA` how to contact `NodeB`. For this we need to know the `NodeId`, `host` and `port` of `NodeB`. If we read the status output of `NodeB` when we started it up, we can see the following information.
+:::
 
-```
-nodeId  "vvrijg034ie10dnn05mv0b2lfo1g7nhv6kb63c03lh7qcc4eqo79g"
-...
-proxyHost       "0.0.0.0"
-proxyPort       55551
-```
+### Example
 
-Using this we give `NodeA` `NodeB`'s information using the following command.
-
-```
-node dist/bin/polykey nodes add --node-path tmp/nodeA vd2nmd13qqj718ivke8n8si6cgdsd6ufgche84moofr2fhh9vj2jg 127.0.0.1 55552
+```bash
+polykey vaults share my-software-project v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv500
 ```
 
-This will add the `NodeB`'s connection information into `NodeA`'s node graph. Now whenever we refer to `NodeB` via it's `NodeId` of `vd2nmd13qqj718ivke8n8si6cgdsd6ufgche84moofr2fhh9vj2jg`, `NodeA` will know where to connect to. Note that this step is only needed because both nodes do not share a network. If they did share a network then they could query nodes within the network to find each other.
+This command shares the "my-software-project" vault with the specified node.
 
-To verify if this information is correct and a connection can be made, we can ping `NodeB` using the following command.
+## Receiving a Shared Vault
 
-```
-node dist/bin/polykey nodes ping --node-path tmp/nodeA vd2nmd13qqj718ivke8n8si6cgdsd6ufgche84moofr2fhh9vj2jg
-```
+### Scanning for Available Vaults
 
-If a connection can be made then you should get `Node is Active.` as the response. Otherwise, you will get `No response received`.
+Once a vault is shared, the recipient should scan for available vaults:
 
-When a connection is made between two nodes then they learn about each other. So when `NodeA` pinged `NodeB`, `NodeB` learned how to connect to `NodeA`. You can verify this by pinging `NodeA` from `NodeB`.
-
-```
-node dist/bin/polykey nodes ping --node-path tmp/nodeB vfjqk9v06k6p1tnuc4444irt0krasjmi1btmmf7ptaqg477em9390
-
-Node is Active.
+```bash
+polykey vaults scan <nodeId>
 ```
 
-Now if `NodeA` wants to do anything more complex than pinging `NodeB`, we need to make `NodeB` trust `NodeA`. We can do this with the trust command. This will allow `NodeB` to receive notifications from `NodeA`, otherwise `NodeB` will just ignore them.
+- `<nodeId>`: The Node ID of the node that shared the vault with you.
 
-```
-node dist/bin/polykey identities trust --node-path tmp/nodeB vfjqk9v06k6p1tnuc4444irt0krasjmi1btmmf7ptaqg477em9390
-```
+#### Example
 
-We should also have `NodeA` trust `NodeB`.
-
-```
-node dist/bin/polykey identities trust --node-path tmp/nodeB vd2nmd13qqj718ivke8n8si6cgdsd6ufgche84moofr2fhh9vj2jg
+```bash
+polykey vaults scan v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv500
 ```
 
-### Sharing Vaults
+This command lists the vaults shared by the specified node.
 
-#### Creating a Vault
-A core feature of `Polykey` is sharing secrets between nodes. This is done by sharing the vaults that contain the secrets. In order to do this we need a vault to share. Start by creating a vault on `NodeB`. We can do this with the `vaults create` command, doing so will return a unique `VaultId` to identify that vault.
+## Cloning the Shared Vault
 
-```
-node dist/bin/polykey vaults create --node-path tmp/nodeB someVault
+After identifying the shared vaults, the recipient can clone the desired vault to their own local node:
 
-Vault zRMeFutQmJErPNR5rAE1LmN created successfully
-```
-
-Vaults and generally be referenced by its name, here it's `someVault`. Or it's `VaultId`, here as `zRMeFutQmJErPNR5rAE1LmN`. An empty vault Is not very useful so let's add some data to it.
-
-
-```
-echo "this is a secret" > tmp/someSecret
-
-node dist/bin/polykey secrets create --node-path tmp/nodeB tmp/someSecret someVault:someSecret
+```bash
+polykey vaults clone <vaultName> <nodeId>
 ```
 
-We should be able to see the secret in the vault now.
+- `<vaultName>`: The name of the vault to be cloned.
+- `<nodeId>`: The Node ID from which to clone the vault.
 
-```
-node dist/bin/polykey secrets list --node-path tmp/nodeB someVault
+### Example
 
-someSecret
-```
-
-#### Sharing a Vault
-
-The next step is allowing `NodeA` to clone a vault from `NodeB`. This is done with the `vaults share` command. This will give `NodeA` permission to clone and pull this vault and send a notification to `NodeA`.
-
-```
-node dist/bin/polykey vaults share --node-path tmp/nodeB someVault vfjqk9v06k6p1tnuc4444irt0krasjmi1btmmf7ptaqg477em9390
+```bash
+polykey vaults clone myvault v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv500
 ```
 
-`NodeA` should be able to clone the vault now. This is done with the `vaults clone` command.
+This command clones "myvault" from the specified node to the local system.
 
-```
-node dist/bin/polykey vaults clone --node-path tmp/nodeA someVault vd2nmd13qqj718ivke8n8si6cgdsd6ufgche84moofr2fhh9vj2jg
-```
+## Synchronizing Changes
 
-If this completed with no errors, we should be able to see the vault in `NodeA` now.
+If updates are made to the original vault, such as key rotations or new secrets added, the receiving node can synchronize these changes by pulling the latest version of the vault:
 
-```
-node dist/bin/polykey vaults list --node-path tmp/nodeA
-
-someVault:              zEsnWCGvgBqSuuu8r2SscSQ
+```bash
+polykey vaults pull <vaultNameOrId> <targetNodeId>
 ```
 
-We can access the secret as well.
+- `<vaultNameOrId>`: The name or ID of the vault to update.
+- `<targetNodeId>`: (Optional) The node ID from which to pull updates.
 
-```
-node dist/bin/polykey secrets list --node-path tmp/nodeA someVault
+### Example
 
-someSecret
-
-node dist/bin/polykey secrets get --node-path tmp/nodeA someVault:someSecret
-
-this is a secret
+```bash
+polykey vaults pull myvault v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv500
 ```
 
-#### Pulling Vault Changes
+This command updates "myvault" with the latest changes from the specified node.
 
-Vaults can be updated. If we wanted these changes then we can pull the vault. If a vault was cloned from another node then it keeps track of where it came from. So pulling a vault is pretty simple.
+## Conclussion
 
-First we need to add a new secret to `NodeB`'s vault.
-
-```
-node dist/bin/polykey secrets create --node-path tmp/nodeB tmp/newSecret someVault:newSecret
-
-node dist/bin/polykey secrets list --node-path tmp/nodeB someVault
-
-newSecret
-someSecret
-```
-
-Now we can tell `NodeA` to pull the changes from `NodeB` with `Vaults pull`.
-
-```
-node dist/bin/polykey vaults pull --node-path tmp/nodeA someVault
-```
-
-And see the changes
-
-```
-node dist/bin/polykey secrets list --node-path tmp/nodeA someVault
-
-newSecret
-someSecret
-
-node dist/bin/polykey secrets get --node-path tmp/nodeA someVault:newSecret
-
-This is a new secret
-```
+Sharing and synchronizing vaults in Polykey enhances collaboration and security across the network. By following these guidelines, users can effectively manage sensitive data, ensuring all parties involved have secure and up-to-date access to shared resources.
