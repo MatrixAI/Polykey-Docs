@@ -12,11 +12,9 @@ To share secrets between two nodes on different machines, both must be actively 
 
 - **Node Ping:** Use `polykey nodes ping <nodeID>` to check if the intended recipient's node is active and reachable.
 
-- **Node Connections:** The `polykey nodes connections` command lists all nodes currently connected to the network. Ensure your node appears on this list.
-
 - **Restarting Polykey Agent:** If connectivity issues persist, try restarting the Polykey agent. Persistent errors might indicate restrictive network settings blocking communication.
 
-- **Network Alternatives:** If connectivity issues are due to restrictive networks, try connecting from a different network environment.
+- **Network Alternatives:** Connectivity issues may also be due to restrictive networks, try connecting from a different network environment.
 
 - **Multiple Nodes:** To test sharing functionality without another user, set up multiple nodes on your system. Refer to the managing multiple nodes section for guidance.
 
@@ -92,7 +90,7 @@ This command clones "myvault" from the specified node to the local system.
 If updates are made to the original vault, such as key rotations or new secrets added, the receiving node can synchronize these changes by pulling the latest version of the vault:
 
 ```bash
-polykey vaults pull <vaultNameOrId> <targetNodeId>
+polykey vaults pull <vaultName> <targetNodeId>
 ```
 
 - `<vaultNameOrId>`: The name or ID of the vault to update.
