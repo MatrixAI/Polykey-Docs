@@ -1,22 +1,56 @@
-# Managing Multiple Nodes
+# Managing Multiple Local Nodes
 
-Managing multiple local nodes can be useful for various scenarios. For instance, you might want one node for personal projects and another for professional work, ensuring that the vaults and their contents remain separate according to their usage context.
+Managing multiple local
 
-This setup is also beneficial for demonstrations, allowing you to simulate sharing vaults between two nodes on a network without needing another live user.
+nodes in Polykey can serve various purposes. For example, you might maintain one node for personal projects and another for professional work. This segregation ensures that the vaults and their respective contents remain distinct based on their usage context.
 
-## Steps to Manage Multiple Nodes Locally
+This approach is particularly advantageous for demonstrations or training purposes, as it allows you to simulate sharing vaults between two nodes on the network without requiring another live user. It also enables a robust environment for testing node interactions and features in a controlled manner.
 
-### 1. Initialize Your Nodes
+Each node in Polykey operates with its own dedicated agent, and nodes are stored locally with specified node paths. When you first initialize Polykey, a default node and its path are created. This default node path can be viewed by running specific Polykey commands, which we will cover. To manage multiple nodes effectively, each node you create will have its designated node path that directs all operations specifically to that node's environment.
 
-Open two terminal sessions (Shell A and Shell B). Assuming you have already bootstrapped one node with a default node path:
+## Understanding Node Paths
 
-**Shell B (for your new node, now called nodeB):**
+The default node, which you bootstrap when you first install Polykey, resides at a standard location on your file system. This location can be found using:
+
+```bash
+polykey nodes --help
+```
+
+For any additional nodes, such as nodeB, you will specify a new node path during their creation. This is critical because each node operates independently, requiring its unique path for all interactions:
 
 ```bash
 polykey agent start --node-path ./nodeB --background
 ```
 
-This command starts a new Polykey agent in the background for nodeB. When you run this for the first time, it will prompt you to set a password, similar to the initial bootstrap of any new node.
+This command initializes a Polykey agent using the nodePath flag to specify the node we are starting an agent for. If unsure of the syntax to use for command operations, adding the --help at the end of each subcommand provides useful context.
+
+:::note
+If a node has not been created before, initializing the Polykey agent for it will also initiate the bootstrap process.
+:::
+
+When working with multiple nodes, specifying the node path in each command can become cumbersome. To streamline this process in your terminal shell session, you can set an environment variable for the node path, which we will demonstrate later.
+
+## Steps to Manage Multiple Nodes Locally
+
+### 1. Initialize Your Nodes
+
+Open two terminal sessions (Shell A for your default node and Shell B for your new node that we will save a new path called nodeB). If you have not already started the Polykey agent for your default node, you can start it as follows:
+
+**Shell A (default node):**
+
+```bash
+polykey agent start --background
+```
+
+This initializes your default node in the background. The command does not specify a node path, so it automatically targets the default node path.
+
+**Shell B (for your new node, nodeB):**
+
+```bash
+polykey agent super_start --node-path ./nodeB --background
+```
+
+This command starts a new Polykey agent for nodeB in the background. The first time you run this, it will prompt you to set a password, just like bootstrapping any new node. Remember, each node operates with its dedicated agent, ensuring that their operations are isolated from each other.
 
 ### 2. Configure Node Environment
 
