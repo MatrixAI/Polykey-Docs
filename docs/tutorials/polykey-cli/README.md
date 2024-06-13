@@ -14,12 +14,12 @@ The tutorial here should be followed in order, and the goal is to make use of Po
 
 The CLI is open-source and available on GitHub: [Polykey CLI](https://github.com/MatrixAI/Polykey-CLI).
 
-We automatically build and test the CLI on the following platforms:
+### Supported Platforms
 
-- Linux x64
-- Linux arm64
-- MacOS x64
-- MacOS arm64
+Polykey is continuously built and tested on:
+
+- Linux x64 / arm64
+- MacOS x64 / arm64
 - Windows x64
 - Docker
 
@@ -29,28 +29,28 @@ Polykey is currently in beta. Its interface is at various levels of stability. S
 
 ## Getting Started
 
-To begin managing & sharing secrets effectively with Polykey, follow the tutorials in the sequence outlined below:
+Start your journey with Polykey by following the tutorials below in sequence:
 
 :::tip
-You may also reference the following [demo video](https://vimeo.com/884649667) for the getting started tutorial but you will first need to complete the installation instructions for Polykey-CLI.
+For a visual walkthrough, check out our [getting started demo video](https://vimeo.com/884649667) after installing Polykey.
 :::
 
-1. **[Installation](/docs/tutorials/polykey-cli/installation)**: Set up Polykey CLI on your preferred platform.
-2. **[Bootstrap Keypair](/docs/tutorials/polykey-cli/bootstrapping)**: Initialize your node and connect to the Polykey network.
-3. **[Managing Vaults](/docs/tutorials/polykey-cli/managing-vaults)**: Create and manage secure vaults for effective secrets storage.
-4. **[Managing Secrets](/docs/tutorials/polykey-cli/managing-secrets)**: Explore comprehensive methods for handling and organizing secrets within vaults.
-5. **[Claiming Digital Identities](/docs/tutorials/polykey-cli/claiming-digital-identities)**: Authenticate and establish your identity across the Polykey network.
-6. **[Discovering Other User's Identities](/docs/tutorials/polykey-cli/discovering-other-users)**: Locate and verify identities of other users to manage access.
-7. **[Sharing Vaults](/docs/tutorials/polykey-cli/sharing-vaults)**: Share vaults securely with trusted peers.
+1. **[Installation](/docs/tutorials/polykey-cli/installation)** - Install Polykey CLI on your platform.
+2. **[Bootstrap Keypair](/docs/tutorials/polykey-cli/bootstrapping)** - Set up your node and connect to the network.
+3. **[Managing Vaults](/docs/tutorials/polykey-cli/managing-vaults)** - Securely store secrets within encrypted vaults.
+4. **[Managing Secrets](/docs/tutorials/polykey-cli/managing-secrets)** - Organize and handle secrets within your vaults.
+5. **[Claiming Digital Identities](/docs/tutorials/polykey-cli/claiming-digital-identities)** - Establish and authenticate your identity within the network.
+6. **[Discovering Other User's Identities](/docs/tutorials/polykey-cli/discovering-other-users)** - Find and verify other users to manage permissions.
+7. **[Sharing Vaults](/docs/tutorials/polykey-cli/sharing-vaults)** - Share your encrypted vaults securely with peers.
+8. **[Managing Multiple Nodes](/docs/tutorials/polykey-cli/managing-multiple-nodes)** - Operate multiple local nodes/agents.
+9. **[Using Environment Variables](/docs/tutorials/polykey-cli/using-environment-variables)** - Master `polykey secrets env` for dynamic environment management.
 
-These initial tutorials will guide new users through the basic functionalities of setting up Polykey, starting their node (similar to creating a Web3 wallet connected to a P2P network), creating virtual encrypted vaults, and managing secret files within these vaults. This foundation prepares users for more advanced network functionalities, such as identity claims, discovery of other users' nodes, and secure sharing of secrets and vaults through end-to-end encryption.
-
-After mastering these basics, you'll be ready to explore intermediate use-cases such as:
+Explore advanced scenarios in subsequent sections, including:
 
 - Managing multiple local nodes
-- Linking multiple nodes to a single identity
-- Using Polykey's `env` command to inject secrets into your development environment
+- Integrating multiple nodes with a single identity
+- Injecting secrets directly into your development environments using Polykey’s `env` command
 
-These topics will be covered in more detail in the next section of our documentation, providing you with the tools to leverage Polykey's full potential in more complex operational environments.
+This will prepare you to fully exploit Polykey’s capabilities in diverse and complex operational settings.
 
 <DocCardList />
