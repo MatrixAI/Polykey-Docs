@@ -28,38 +28,30 @@ async function main(argv = process.argv) {
     const wranglerConfig = TOML.parse(
       fs.readFileSync('./wrangler.toml', { encoding: 'utf-8' }),
     );
+    let handled = false;
+    const handle = () => {
+      if (handled) return;
+      handled = true;
+      fs.renameSync('./wrangler.toml.bak', './wrangler.toml');
+    };
     // Backup the original wrangler.toml
     fs.renameSync('./wrangler.toml', './wrangler.toml.bak');
-    // All the handlers for swapping back the original wrangler.toml
-    process.on('beforeExit', () => {
-      fs.renameSync('./wrangler.toml.bak', './wrangler.toml');
-    });
-    process.on('uncaughtException', () => {
-      fs.renameSync('./wrangler.toml.bak', './wrangler.toml');
-    });
-    process.on('unhandledRejection', () => {
-      fs.renameSync('./wrangler.toml.bak', './wrangler.toml');
-    });
-    process.on('SIGINT', () => {
-      fs.renameSync('./wrangler.toml.bak', './wrangler.toml');
-    });
-    process.on('SIGTERM', () => {
-      fs.renameSync('./wrangler.toml.bak', './wrangler.toml');
-    });
-    process.on('SIGQUIT', () => {
-      fs.renameSync('./wrangler.toml.bak', './wrangler.toml');
-    });
-    process.on('SIGHUP', () => {
-      fs.renameSync('./wrangler.toml.bak', './wrangler.toml');
-    });
+    process.on('beforeExit', handle);
+    process.on('uncaughtException', handle);
+    process.on('unhandledRejection', handle);
+    process.on('SIGINT', handle);
+    process.on('SIGTERM', handle);
+    process.on('SIGQUIT', handle);
+    process.on('SIGHUP', handle);
     // Add in the feature environment
     wranglerConfig.env[feature] = {
       name: `${wranglerConfig.name}-${feature}`,
       routes: [
-        `${feature}.${wranglerConfig.routes[0].pattern}`,
-        `${feature}.${wranglerConfig.routes[1].pattern}`,
+        `${feature}.${wranglerConfig.routes[0]}`,
+        `${feature}.${wranglerConfig.routes[1]}`,
       ],
     };
+    console.log('0:', `${feature}.${wranglerConfig.routes[0].pattern}`);
     fs.writeFileSync('./wrangler.toml', TOML.stringify(wranglerConfig), {
       encoding: 'utf-8',
     });
