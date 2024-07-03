@@ -172,7 +172,6 @@ jobs:
     needs: integration-merge
     if: github.ref == 'refs/heads/staging'
     steps:
-      - run: entrypoint
       - uses: actions/checkout@v4
         with:
           lfs: true
