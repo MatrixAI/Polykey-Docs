@@ -4,16 +4,16 @@ const sidebars: SidebarsConfig = {
   docs: [
     {
       type: 'category',
-      label: 'Tutorials',
+      label: 'Getting Started',
       collapsed: false,
-      link: {
-        type: 'doc',
-        id: 'tutorials/README',
-      },
+      // link: {
+      //   type: 'doc',
+      //   id: 'tutorials/README',
+      // },
       items: [
         {
           type: 'category',
-          label: 'Polykey CLI',
+          label: 'Set Up Polykey CLI',
           link: {
             type: 'doc',
             id: 'tutorials/polykey-cli/README',
@@ -30,24 +30,24 @@ const sidebars: SidebarsConfig = {
             'tutorials/polykey-cli/using-environment-variables',
           ],
         },
-        {
-          type: 'category',
-          label: 'Polykey Desktop',
-          link: {
-            type: 'doc',
-            id: 'tutorials/polykey-desktop/README',
-          },
-          items: [],
-        },
-        {
-          type: 'category',
-          label: 'Polykey Mobile',
-          link: {
-            type: 'doc',
-            id: 'tutorials/polykey-mobile/README',
-          },
-          items: [],
-        },
+        // {
+        //   type: 'category',
+        //   label: 'Polykey Desktop',
+        //   link: {
+        //     type: 'doc',
+        //     id: 'tutorials/polykey-desktop/README',
+        //   },
+        //   items: [],
+        // },
+        // {
+        //   type: 'category',
+        //   label: 'Polykey Mobile',
+        //   link: {
+        //     type: 'doc',
+        //     id: 'tutorials/polykey-mobile/README',
+        //   },
+        //   items: [],
+        // },
         {
           type: 'category',
           label: 'Polykey Core',
