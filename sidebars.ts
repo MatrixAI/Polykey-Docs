@@ -28,24 +28,6 @@ const sidebars: SidebarsConfig = {
         },
         {
           type: 'category',
-          label: 'Polykey Desktop',
-          link: {
-            type: 'doc',
-            id: 'getting-started/polykey-desktop/README',
-          },
-          items: [],
-        },
-        {
-          type: 'category',
-          label: 'Polykey Mobile',
-          link: {
-            type: 'doc',
-            id: 'getting-started/polykey-mobile/README',
-          },
-          items: [],
-        },
-        {
-          type: 'category',
           label: 'Polykey Core',
           link: {
             type: 'doc',
@@ -147,24 +129,6 @@ const sidebars: SidebarsConfig = {
               ],
             },
           ],
-        },
-        {
-          type: 'category',
-          label: 'Polykey-Desktop',
-          link: {
-            type: 'doc',
-            id: 'reference/polykey-desktop/README',
-          },
-          items: [],
-        },
-        {
-          type: 'category',
-          label: 'Polykey-Mobile',
-          link: {
-            type: 'doc',
-            id: 'reference/polykey-mobile/README',
-          },
-          items: [],
         },
         {
           type: 'category',
