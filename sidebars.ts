@@ -3,91 +3,98 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 const sidebars: SidebarsConfig = {
   docs: [
     {
-      type: 'html',
-      value: '<b>Getting Started</b>', // The HTML to be rendered
-      defaultStyle: true, // Use the default menu item styling
-    },
-    {
       type: 'category',
-      label: 'Polykey CLI',
-      link: {
-        type: 'doc',
-        id: 'tutorials/polykey-cli/README',
-      },
+      label: 'Getting Started',
+      collapsed: false,
       items: [
-        'tutorials/polykey-cli/installation',
-        'tutorials/polykey-cli/bootstrapping',
-        'tutorials/polykey-cli/managing-vaults',
-        'tutorials/polykey-cli/managing-secrets',
-        'tutorials/polykey-cli/claiming-digital-identities',
-        'tutorials/polykey-cli/discovering-other-users',
-        'tutorials/polykey-cli/sharing-vaults',
-        'tutorials/polykey-cli/managing-multiple-nodes',
-        'tutorials/polykey-cli/using-environment-variables',
+        {
+          type: 'category',
+          label: 'Polykey CLI',
+          link: {
+            type: 'doc',
+            id: 'getting-started/polykey-cli/README',
+          },
+          items: [
+            'getting-started/polykey-cli/installation',
+            'getting-started/polykey-cli/bootstrapping',
+            'getting-started/polykey-cli/managing-vaults',
+            'getting-started/polykey-cli/managing-secrets',
+            'getting-started/polykey-cli/claiming-digital-identities',
+            'getting-started/polykey-cli/discovering-other-users',
+            'getting-started/polykey-cli/sharing-vaults',
+            'getting-started/polykey-cli/managing-multiple-nodes',
+            'getting-started/polykey-cli/using-environment-variables',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Polykey Desktop',
+          link: {
+            type: 'doc',
+            id: 'getting-started/polykey-desktop/README',
+          },
+          items: [],
+        },
+        {
+          type: 'category',
+          label: 'Polykey Mobile',
+          link: {
+            type: 'doc',
+            id: 'getting-started/polykey-mobile/README',
+          },
+          items: [],
+        },
+        {
+          type: 'category',
+          label: 'Polykey Core',
+          link: {
+            type: 'doc',
+            id: 'getting-started/polykey-core/README',
+          },
+          items: ['getting-started/polykey-core/installation'],
+        },
       ],
     },
     {
       type: 'category',
-      label: 'Polykey Desktop',
+      label: 'How To Guides',
+      collapsed: false,
       link: {
         type: 'doc',
-        id: 'tutorials/polykey-desktop/README',
+        id: 'how-to-guides/README',
       },
-      items: [],
-    },
-    {
-      type: 'category',
-      label: 'Polykey Mobile',
-      link: {
-        type: 'doc',
-        id: 'tutorials/polykey-mobile/README',
-      },
-      items: [],
-    },
-    {
-      type: 'category',
-      label: 'Polykey Core',
-      link: {
-        type: 'doc',
-        id: 'tutorials/polykey-core/README',
-      },
-      items: ['tutorials/polykey-core/installation'],
-    },
-    {
-      type: 'html',
-      value: '<b>How To Guides</b>', // The HTML to be rendered
-      defaultStyle: true, // Use the default menu item styling
-    },
-    {
-      type: 'category',
-      label: 'Developers',
-      items: ['how-to-guides/developers/development-environment-secrets'],
-    },
-    {
-      type: 'category',
-      label: 'DevOps',
       items: [
-        'how-to-guides/devops/service-deployment-secrets-with-aws-ecs',
-        'how-to-guides/devops/cloud-agnostic-secrets-management',
-        'how-to-guides/devops/ci-cd-secrets-with-gitlab',
-        'how-to-guides/devops/microservice-authentication-with-zero-trust-and-mtls',
+        {
+          type: 'category',
+          label: 'Developers',
+          items: ['how-to-guides/developers/development-environment-secrets'],
+        },
+        {
+          type: 'category',
+          label: 'DevOps',
+          items: [
+            'how-to-guides/devops/service-deployment-secrets-with-aws-ecs',
+            'how-to-guides/devops/cloud-agnostic-secrets-management',
+            'how-to-guides/devops/ci-cd-secrets-with-gitlab',
+            'how-to-guides/devops/microservice-authentication-with-zero-trust-and-mtls',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'Companies and Teams',
+          items: [
+            'how-to-guides/companies-and-teams/employee-onboarding-and-offboarding',
+            'how-to-guides/companies-and-teams/device-provisioning',
+            'how-to-guides/companies-and-teams/delegation-of-authority',
+          ],
+        },
+        {
+          type: 'category',
+          label: 'General',
+          items: ['how-to-guides/general/cryptocurrency-wallet'],
+        },
       ],
     },
-    {
-      type: 'category',
-      label: 'Companies and Teams',
-      items: [
-        'how-to-guides/companies-and-teams/employee-onboarding-and-offboarding',
-        'how-to-guides/companies-and-teams/device-provisioning',
-        'how-to-guides/companies-and-teams/delegation-of-authority',
-      ],
-    },
-    {
-      type: 'category',
-      label: 'General',
-      items: ['how-to-guides/general/cryptocurrency-wallet'],
-    },
-
     {
       type: 'category',
       label: 'Theory',
