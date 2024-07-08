@@ -35,15 +35,15 @@ Start your journey with Polykey by following the tutorials below in sequence:
 For a visual walkthrough, check out our [getting started demo video](https://vimeo.com/884649667) after installing Polykey.
 :::
 
-1. **[Installation](/docs/tutorials/polykey-cli/installation)** - Install Polykey CLI on your platform.
-2. **[Bootstrap Keypair](/docs/tutorials/polykey-cli/bootstrapping)** - Set up your node and connect to the network.
-3. **[Managing Vaults](/docs/tutorials/polykey-cli/managing-vaults)** - Securely store secrets within encrypted vaults.
-4. **[Managing Secrets](/docs/tutorials/polykey-cli/managing-secrets)** - Organize and handle secrets within your vaults.
-5. **[Claiming Digital Identities](/docs/tutorials/polykey-cli/claiming-digital-identities)** - Establish and authenticate your identity within the network.
-6. **[Discovering Other User's Identities](/docs/tutorials/polykey-cli/discovering-other-users)** - Find and verify other users to manage permissions.
-7. **[Sharing Vaults](/docs/tutorials/polykey-cli/sharing-vaults)** - Share your encrypted vaults securely with peers.
-8. **[Managing Multiple Nodes](/docs/tutorials/polykey-cli/managing-multiple-nodes)** - Operate multiple local nodes/agents.
-9. **[Using Environment Variables](/docs/tutorials/polykey-cli/using-environment-variables)** - Master `polykey secrets env` for dynamic environment management.
+1. **[Installation](/docs/getting-started/polykey-cli/installation)** - Install Polykey CLI on your platform.
+2. **[Bootstrap Keypair](/docs/getting-started/polykey-cli/bootstrapping)** - Set up your node and connect to the network.
+3. **[Managing Vaults](/docs/getting-started/polykey-cli/managing-vaults)** - Securely store secrets within encrypted vaults.
+4. **[Managing Secrets](/docs/getting-started/polykey-cli/managing-secrets)** - Organize and handle secrets within your vaults.
+5. **[Claiming Digital Identities](/docs/getting-started/polykey-cli/claiming-digital-identities)** - Establish and authenticate your identity within the network.
+6. **[Discovering Other User's Identities](/docs/getting-started/polykey-cli/discovering-other-users)** - Find and verify other users to manage permissions.
+7. **[Sharing Vaults](/docs/getting-started/polykey-cli/sharing-vaults)** - Share your encrypted vaults securely with peers.
+8. **[Managing Multiple Nodes](/docs/getting-started/polykey-cli/managing-multiple-nodes)** - Operate multiple local nodes/agents.
+9. **[Using Environment Variables](/docs/getting-started/polykey-cli/using-environment-variables)** - Master `polykey secrets env` for dynamic environment management.
 
 Explore advanced scenarios in subsequent sections, including:
 
