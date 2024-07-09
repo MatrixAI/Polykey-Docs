@@ -7,6 +7,7 @@ const sidebars: SidebarsConfig = {
       label: 'Getting Started',
       collapsed: false,
       items: [
+        'getting-started/installing-polykey-cli',
         {
           type: 'category',
           label: 'Polykey CLI',
@@ -15,7 +16,6 @@ const sidebars: SidebarsConfig = {
             id: 'getting-started/polykey-cli/README',
           },
           items: [
-            'getting-started/polykey-cli/installation',
             'getting-started/polykey-cli/bootstrapping',
             'getting-started/polykey-cli/managing-vaults',
             'getting-started/polykey-cli/managing-secrets',

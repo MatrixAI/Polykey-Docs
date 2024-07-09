@@ -1,17 +1,55 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Installation
+# Install Polykey-CLI
+
+<!-- # Polykey-CLI Overview -->
+
+<!-- I am debating on whether this overview section is even necessary here  -->
+
+The Polykey Command Line Interface (CLI) is the primary user interface for the Polykey system. We designed the CLI user-experience (UX) to be suitable for a human operator, but also to be easily scripted and integrated into other tools. It is intended for developers and system administrators who require an advanced tool for managing secrets efficiently.
+
+<!-- In this tutorial, you'll install Polykey on your machine and bootstrap your first node.
+
+This is somehwat akin to setting-up a metamask wallet for the first time in your web browser. -->
 
 Installing the CLI can be done in different ways depending on your operating environment.
 
 :::info
 
-Polykey-CLI has only been tested on Linux and macOS. We are working on supporting other platforms. There's minor teething problems when it comes supporting other platforms. Help us by reporting any issues with the CLI tool in our Github Repo [here](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) or by dropping a message to the developers in our discord server [here](https://discord.gg/dC32r35TeE).
+Polykey-CLI is supported on all platforms but has only been tested on Linux and macOS. There's minor teething problems when it comes supporting multiple platforms. Help us by reporting any issues with the CLI tool in our Github Repo [here](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) or by dropping a message to the developers in our discord server [here](https://discord.gg/dC32r35TeE).
 
 :::
 
 <Tabs>
+
+ <TabItem value="npm" label="npm">
+
+:::note
+
+- NPM is the easiest most streamlined method that is preferred for installing the CLI.
+- This requires having the latest version of node and npm installed.
+
+:::
+
+## Node Package Manager
+
+The CLI is published as [`npm` package](https://www.npmjs.com/package/polykey-cli).
+
+# Step 1
+
+Install it with:
+
+```sh
+npm install -g polykey-cli
+```
+
+This will install the Polykey-CLI into `$(npm config get prefix)`.
+
+If the `npm` bin path is added to the `$PATH` environment variable, then you will be able to execute `pk` or `polykey`.
+
+  </TabItem>
+
   <TabItem value="linux" label="Linux" default>
 
 ## Linux
@@ -152,6 +190,7 @@ and MacOS permits running of unsigned binaries, however, to progress past this, 
       <TabItem value="method1" label="Method #1 - Admin CLI ">
 
       #### Method #1 - quickest method
+
 The xattr command will remove the quarantine attribute from the polykey executable, allowing you to run it without triggering macOS security warnings. Remember to ensure that the file path matches the location of your polykey file.
 
 ```sh
@@ -287,7 +326,7 @@ Polykey for windows should be working but we have yet to create documentation on
   </TabItem>
   <TabItem value="docker" label="Docker">
 
- ## Docker
+## Docker
 
 The Docker image can be used so that Polykey can be deployed into the cloud. It is also possible to use the CLI via the docker container, but it isn't as convenient. The intention is to run the Polykey agent in the cloud.
 
@@ -368,23 +407,7 @@ recoveryCode	net elephant gentle eight pulp oyster panther sing own autumn silly
 ```
 
   </TabItem>
-  <TabItem value="npm" label="npm">
-
-## Node Package Manager
-
-The CLI is published as [`npm` package](https://www.npmjs.com/package/polykey-cli).
-
-Install it with:
-
-```sh
-npm install -g polykey-cli
-```
-
-This will install the Polykey-CLI into `$(npm config get prefix)`.
-
-If the `npm` bin path is added to the `$PATH` environment variable, then you will be able to execute `pk` or `polykey`.
-
-  </TabItem>
+ 
   <TabItem value="source" label="Source">
 
 ## Source
