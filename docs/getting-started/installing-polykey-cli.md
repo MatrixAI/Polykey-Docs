@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Install Polykey-CLI
+# Set Up Your First Polykey
 
 <!-- # Polykey-CLI Overview -->
 

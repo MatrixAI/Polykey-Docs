@@ -7,6 +7,11 @@ const sidebars: SidebarsConfig = {
       label: 'Getting Started',
       collapsed: false,
       items: [
+        {
+          type: 'doc',
+          id: 'README', // This should match the path to your symlink
+          label: 'Welcome to Polykey Docs', // Label for the sidebar item
+        },
         'getting-started/installing-polykey-cli',
         {
           type: 'category',
