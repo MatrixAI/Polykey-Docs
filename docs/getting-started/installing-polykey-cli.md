@@ -1,58 +1,55 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Set Up Your First Polykey
+# Set-Up Polykey on your Machine
 
-<!-- # Polykey-CLI Overview -->
-
-<!-- I am debating on whether this overview section is even necessary here  -->
-
+:::note
 The Polykey Command Line Interface (CLI) is the primary user interface for the Polykey system. We designed the CLI user-experience (UX) to be suitable for a human operator, but also to be easily scripted and integrated into other tools. It is intended for developers and system administrators who require an advanced tool for managing secrets efficiently.
-
-<!-- In this tutorial, you'll install Polykey on your machine and bootstrap your first node.
-
-This is somehwat akin to setting-up a metamask wallet for the first time in your web browser. -->
-
-Installing the CLI can be done in different ways depending on your operating environment.
-
-:::info
-
-Polykey-CLI is supported on all platforms but has only been tested on Linux and macOS. There's minor teething problems when it comes supporting multiple platforms. Help us by reporting any issues with the CLI tool in our Github Repo [here](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) or by dropping a message to the developers in our discord server [here](https://discord.gg/dC32r35TeE).
-
 :::
+
+## Choose Your Installation Method for the Polykey-CLI
 
 <Tabs>
 
- <TabItem value="npm" label="npm">
+ <TabItem value="npm" label="NPM CLI Installation Method" default>
 
-:::note
+### Install using Node Package Manager
 
-- NPM is the easiest most streamlined method that is preferred for installing the CLI.
-- This requires having the latest version of node and npm installed.
+The Polykey CLI is available as an [`npm` package](https://www.npmjs.com/package/polykey-cli). This method allows for easy installation across various operating systems using Node.js and npm.
+
+:::info
+
+#### System Requirements
+
+Before installing, ensure your system meets the following requirements:
+
+- Node.js: Install the latest stable version of Node.js from nodejs.org
+- npm (Node Package Manager): Comes with Node.js, but verify it’s updated by running `npm install -g npm` in your terminal.
+- Environment Variables: Add the `npm` binary path to your system’s `$PATH` to run Polykey CLI from any terminal window.
 
 :::
 
-## Node Package Manager
+#### Install the Polykey-CLI using this single command
 
-The CLI is published as [`npm` package](https://www.npmjs.com/package/polykey-cli).
-
-# Step 1
-
-Install it with:
+To install the Polykey CLI globally on your system, execute the following command:
 
 ```sh
 npm install -g polykey-cli
 ```
 
-This will install the Polykey-CLI into `$(npm config get prefix)`.
-
-If the `npm` bin path is added to the `$PATH` environment variable, then you will be able to execute `pk` or `polykey`.
+**This command installs Polykey CLI globally, allowing you to access it with `pk` or `polykey` from any directory in your command line.**
 
   </TabItem>
 
-  <TabItem value="linux" label="Linux" default>
+<TabItem value="manual" label="Manual CLI Installation Method">
 
-## Linux
+### Install Manually
+
+<Tabs>
+
+  <TabItem value="linux" label="Linux">
+
+#### Linux
 
 Polykey-CLI code is compiled, bundled and wrapped into a single file executable. You just have to download the executable, give it executable permissions and run it. The executable is not statically linked. It requires a subset of the system libraries that Node.js requires.
 
@@ -63,7 +60,7 @@ Polykey-CLI code is compiled, bundled and wrapped into a single file executable.
 - `libpthread.so.0`
 - `libc.so.6`
 
-### Manually
+##### Manually
 
 Builds for Linux is released on GitHub: https://github.com/MatrixAI/Polykey-CLI/releases.
 
@@ -75,9 +72,9 @@ Make it executable:
 chmod u+x ./polykey
 ```
 
-### Add it to your `$PATH`.
+#### Add it to your `$PATH`.
 
-#### For ZSH:
+##### For ZSH:
 
 1. `cd` into directory where polykey exec is stored.
 2. Edit the zsh config to add polykey to your path, to streamline the process, run the following command making sure to change the path to polykey if the polykey executable is not in the downloads folder.
@@ -97,7 +94,7 @@ You can now run it with `polykey`.
 
 ---
 
-#### For Bash:
+##### For Bash:
 
 1. If you're using Bash, run the following command to add polykey to your path. Ensure to change the path if the executable is not in the downloads folder. For most users, this would be `~/downloads` on Debian-based systems.
 
@@ -115,7 +112,7 @@ You can now run it with `polykey`.
 
 ---
 
-### NixOS
+#### NixOS
 
 We have not yet published a Nixpkgs expression for Polykey. When we do, you will be able to just install `polykey-cli` from Nixpkgs.
 
@@ -139,14 +136,14 @@ Build the application and install it into the user profile:
 nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(prefetch-npm-deps ./package-lock.json)"
 ```
 
-### Other
+#### Other
 
 We will be working on other distribution methods.
 
   </TabItem>
   <TabItem value="macos" label="MacOs">
 
-## MacOS
+#### MacOS
 
 :::info
 
@@ -155,7 +152,7 @@ However, building Polykey yourself on MacOS resolves in a working binary. Follow
 
 :::
 
-### Manually
+#### Manually
 
 1. Download the Polykey CLI for macOS from the [GitHub releases page](https://github.com/MatrixAI/Polykey-CLI/releases). Look for the file named `polykey-cli-V.V.V-darwin-universal`, where `V.V.V` is the version number. For Mac, you want to download the file with the `darwin-universal` file extension.
 
@@ -180,7 +177,7 @@ chmod +x polykey
 
 ---
 
-### MacOS Security Bypass
+#### MacOS Security Bypass
 
 MacOS requires additional steps for the binary to be allowed to execute,
 this is due to the fact that as of 20-12-23, the binaries we release are unsigned,
@@ -189,7 +186,7 @@ and MacOS permits running of unsigned binaries, however, to progress past this, 
  <Tabs>
       <TabItem value="method1" label="Method #1 - Admin CLI ">
 
-      #### Method #1 - quickest method
+##### Method #1 - quickest method
 
 The xattr command will remove the quarantine attribute from the polykey executable, allowing you to run it without triggering macOS security warnings. Remember to ensure that the file path matches the location of your polykey file.
 
@@ -206,7 +203,7 @@ If you have completed this sucesfully, you may ignore Method #2 and move to the 
 </TabItem>
 <TabItem value="method2" label="Method #2 - Apple Setting GUI">
 
-#### Method #2 - Using the Apple Systems Settings GUI
+##### Method #2 - Using the Apple Systems Settings GUI
 
 First type the following command to try running the Polykey CLI but will instead trigger a pop-up.
 
@@ -242,7 +239,7 @@ When prompted in the terminal, type your administrator password and hit enter.
 
 ![install3](/images/mac-install3.png)
 
-#### Click on Open and now Polykey-CLI should be running in your terminal window.
+##### Click on Open and now Polykey-CLI should be running in your terminal window.
 
 :::tip
 You can also verify the version of polykey that was installed with:
@@ -258,14 +255,14 @@ You can also verify the version of polykey that was installed with:
 </TabItem>
 </Tabs>
 
-### Add Polykey to your `$PATH`.
+#### Add Polykey to your `$PATH`.
 
 To enable running the Polykey CLI from any directory in the terminal on macOS, you'll need to update your shell configuration file.
 
 <Tabs>
       <TabItem value="zsh" label="ZSH (default shell on recent macOS versions)">
 
-#### For ZSH (default shell on recent macOS versions):
+##### For ZSH (default shell on recent macOS versions):
 
 1. Navigate (cd) into the directory where the "polykey" executable is stored.
 
@@ -284,7 +281,7 @@ echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
 </TabItem>
  <TabItem value="bash" label="Bash">
 
-#### For Bash:
+##### For Bash:
 
 1. `cd` into the directory where the "polykey" executable is stored.
 2. Edit the Bash config to add "polykey" to your path. To streamline the process, run the following command, making sure to change the path to "polykey" if the executable is not in the downloads folder. For most users, this would be `~/downloads` on Debian-based systems.
@@ -324,9 +321,14 @@ Polykey for windows should be working but we have yet to create documentation on
 :::
 
   </TabItem>
-  <TabItem value="docker" label="Docker">
 
-## Docker
+  </Tabs>
+
+  </TabItem>
+
+   <TabItem value="Docker" label="Install PK CLI on Docker" >
+
+## Installing PK CLI on Docker
 
 The Docker image can be used so that Polykey can be deployed into the cloud. It is also possible to use the CLI via the docker container, but it isn't as convenient. The intention is to run the Polykey agent in the cloud.
 
@@ -406,26 +408,47 @@ recoveryCode	net elephant gentle eight pulp oyster panther sing own autumn silly
 
 ```
 
-  </TabItem>
- 
-  <TabItem value="source" label="Source">
-
-## Source
-
-The official source repository is on GitHub. There is an additional mirror on GitLab.
-
-```shell
-git clone https://github.com/MatrixAI/Polykey-CLI.git
-```
-
-Use `npm install` to setup the project.
-
-:::tip
-
-If you have `nix-shell` available, enter into `nix-shell` and it will automatically setup the development environment.
-
-:::
-
-  </TabItem>
+   </TabItem>
 
 </Tabs>
+
+## Setting Up Your First Node
+
+When you run the `polykey agent start` for the first time after installing the CLI, it begins a bootstrapping process for you.
+:::info
+Bootstrapping is the process where the Polykey agent sets itself up as a new Polykey node. This involves creating the encrypted-at-rest node state, and connecting to the [mainnet](https://mainnet.polykey.com/) or a custom specified network domain.
+:::
+
+<Tabs>
+
+ <TabItem value="Foreground" label="Run it in the Foreground" default>
+
+### Starting the PK agent in the Foreground
+
+ </TabItem>
+
+ <TabItem value="Background" label="Run it in the Background (optional)" default>
+
+### Starting the PK agent in the Background
+
+</TabItem>
+
+</Tabs>
+
+Bootstrapping is the process where the Polykey agent sets itself up as a new Polykey node. This involves creating the encrypted-at-rest node state, and connecting to the [mainnet](https://mainnet.polykey.com/) or a custom specified network domain.
+
+<!-- <Tabs>
+
+ <TabItem value="foreground" label="NPM CLI Installation Method" default> -->
+
+### Starting the Polykey Agent
+
+You can start the Polykey agent in the foreground of your terminal by running:
+
+```bash
+polykey agent start
+```
+
+:::note
+Running the agent in the foreground allows you to monitor its output directly in the terminal. Ensure this terminal session remains active to keep the agent running. You can execute Polykey commands from any other terminal session while this runs.
+:::

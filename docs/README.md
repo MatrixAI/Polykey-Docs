@@ -5,16 +5,25 @@ displayed_sidebar: docs
 
 # Polykey Documentation
 
-Welcome to the Polykey documentation.
+<!-- Web of Trust that has a blockchain wallet feeling to it
 
-The documentation is structured using [Divio system](https://documentation.divio.com/).
+- Introduce the Polykey network (have some sort of media)
+  - a pk agent needs to run for a specified node.
+  - this allows the node the agent is running for, to communicate through the network
+    - you can share vaults b/w nodes that contain secrets
+    - You can more easily discovery, trust, and grant permissions to nodes
+    - you can push/pull secrets in the vaults
+    - secrets are encrypted at rest and in transit
+ -->
 
-- [Tutorials](./getting-started) - these are a series of steps to introduce Polykey to new beginners to achieve a practical outcome
-- [How-To Guides](/docs/how-to-guides) - these are short guides on how to achieve a specific use-case which makes assumptions on the reader
-- [Theory](./theory/) - these are important for understanding the "why" of Polykey
-- [Reference](./reference/) - these are useful when you need remember how to use a particular command or function
+ <!-- Polykey-CLI usage 
 
-<img src="/images/divio_quadrant.png" width="100%" />
+ - breakdown some functionality 
+ - The CLI on your machine is somewhat of an entry point to Polykey because it's how you familiarize yourself better with the functionality but mostly because it lets you become a node operator  -->
+
+<!-- Polykey Client Library
+
+- this will be where most of the innovation and value from PK comes from, integrating a free and open-source secrets manager in your deployed applications for running secrets management operations  -->
 
 ## Introduction
 
@@ -29,10 +38,6 @@ Polykey helps yourself, teams and software agents to manage and share secrets in
 - All data is encrypted at rest, thus preventing compromise even if devices are lost or stolen.
 
 PolyKey is an open-source decentralised peer to peer secrets management system. It provides a software agent that runs on your device locally. Each agent process is a node in the Polykey peer to peer network. This agent manages your secret data and is capable of sharing secrets with other trusted Polykey agents. The secret data can be placed inside any directory on your computer including on USB storage.
-
-## Features
-
-TBD
 
 ## Principles
 
@@ -71,6 +76,38 @@ As you deploy more Polykey agents, you can join existing gestalts.
 
 Your gestalt is how other users are able to share secrets with a trusted identity. Your identity is the sum of the reputation of all your digital identities that are part of the gestalt.
 
-## Comparison to other Tools
+<!-- I deleted the instructions for downloading the CLI repo source code... should mention it here.
 
-TBD
+I deleted instructions on how to contribute. We should have that somewhere else.
+
+  </TabItem>
+
+  <TabItem value="source" label="Source">
+
+## Source
+
+The official source repository is on GitHub. There is an additional mirror on GitLab.
+
+```shell
+git clone https://github.com/MatrixAI/Polykey-CLI.git
+```
+
+Use `npm install` to setup the project.
+
+:::tip
+
+If you have `nix-shell` available, enter into `nix-shell` and it will automatically setup the development environment.
+
+:::
+
+  </TabItem> -->
+
+<!-- ---
+
+We need to have a sepererate section on installing Polykey-CLI on docker
+
+ <TabItem value="docker" label="Docker">
+
+
+
+  </TabItem> -->
