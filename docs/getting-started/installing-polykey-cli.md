@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # Set-Up Polykey on your Machine
 
 :::note
-The Polykey Command Line Interface (CLI) is the primary user interface for the Polykey system. We designed the CLI user-experience (UX) to be suitable for a human operator, but also to be easily scripted and integrated into other tools. It is intended for developers and system administrators who require an advanced tool for managing secrets efficiently.
+The Polykey Command Line Interface (CLI) is the primary user interface for the Polykey system. It is designed to be human-operable and easily scriptable for integration into other tools. It targets developers and system administrators who need an advanced tool for efficient secrets management.
 :::
 
 ## Choose Your Installation Method for the Polykey-CLI
@@ -15,29 +15,29 @@ The Polykey Command Line Interface (CLI) is the primary user interface for the P
 
 ### Install using Node Package Manager
 
-The Polykey CLI is available as an [`npm` package](https://www.npmjs.com/package/polykey-cli). This method allows for easy installation across various operating systems using Node.js and npm.
+The Polykey CLI is available as an [`npm` package](https://www.npmjs.com/package/polykey-cli). This method facilitates easy installation across different operating systems using Node.js and npm.
 
 :::info
 
 #### System Requirements
 
-Before installing, ensure your system meets the following requirements:
+Before installing, ensure your system meets the following criteria:
 
-- Node.js: Install the latest stable version of Node.js from nodejs.org
-- npm (Node Package Manager): Comes with Node.js, but verify it’s updated by running `npm install -g npm` in your terminal.
-- Environment Variables: Add the `npm` binary path to your system’s `$PATH` to run Polykey CLI from any terminal window.
+- **Node.js**: Install the latest stable version from [nodejs.org](https://nodejs.org).
+- **npm (Node Package Manager)**: Ensure it is up to date by running `npm install -g npm` in your terminal.
+- **Environment Variables**: Add the `npm` binary path to your system’s `$PATH` to execute Polykey CLI commands from any terminal window.
 
 :::
 
-#### Install the Polykey-CLI using this single command
+#### Install Command
 
-To install the Polykey CLI globally on your system, execute the following command:
+To install the Polykey CLI globally on your system, use the following command:
 
 ```sh
 npm install -g polykey-cli
 ```
 
-**This command installs Polykey CLI globally, allowing you to access it with `pk` or `polykey` from any directory in your command line.**
+**Note**: This installs the Polykey CLI globally, allowing you to use `pk` or `polykey` commands from any directory.
 
   </TabItem>
 
@@ -45,11 +45,13 @@ npm install -g polykey-cli
 
 ### Install Manually
 
+Choose your operating system below to view specific installation instructions.
+
 <Tabs>
 
   <TabItem value="linux" label="Linux">
 
-#### Linux
+#### Linux Installation
 
 Polykey-CLI code is compiled, bundled and wrapped into a single file executable. You just have to download the executable, give it executable permissions and run it. The executable is not statically linked. It requires a subset of the system libraries that Node.js requires.
 
@@ -412,43 +414,77 @@ recoveryCode	net elephant gentle eight pulp oyster panther sing own autumn silly
 
 </Tabs>
 
-## Setting Up Your First Node
+## Bootstrapping Your First Node
 
-When you run the `polykey agent start` for the first time after installing the CLI, it begins a bootstrapping process for you.
 :::info
 Bootstrapping is the process where the Polykey agent sets itself up as a new Polykey node. This involves creating the encrypted-at-rest node state, and connecting to the [mainnet](https://mainnet.polykey.com/) or a custom specified network domain.
 :::
 
-<Tabs>
-
- <TabItem value="Foreground" label="Run it in the Foreground" default>
-
-### Starting the PK agent in the Foreground
-
- </TabItem>
-
- <TabItem value="Background" label="Run it in the Background (optional)" default>
-
-### Starting the PK agent in the Background
-
-</TabItem>
-
-</Tabs>
-
-Bootstrapping is the process where the Polykey agent sets itself up as a new Polykey node. This involves creating the encrypted-at-rest node state, and connecting to the [mainnet](https://mainnet.polykey.com/) or a custom specified network domain.
-
-<!-- <Tabs>
-
- <TabItem value="foreground" label="NPM CLI Installation Method" default> -->
-
-### Starting the Polykey Agent
-
-You can start the Polykey agent in the foreground of your terminal by running:
+### 1. Start the Polykey Agent
 
 ```bash
-polykey agent start
+polykey agent start --background
 ```
 
+:::info
+When you run the `polykey agent start --background` for the first time after installing the CLI, it begins a bootstrapping process for you using a **default node path**. A default node is created for you when you run the polykey agent without specifying an argument for a custom node path.
+:::
+
+### 2. Create & Confirm Your Password
+
 :::note
-Running the agent in the foreground allows you to monitor its output directly in the terminal. Ensure this terminal session remains active to keep the agent running. You can execute Polykey commands from any other terminal session while this runs.
+
+You'll be prompted to enter a **new password** for the default node on your machine. Once you confirm the new password, it will generate a node with a unique **nodeId** and **recoveryCode**.
+
+:::warning
+Everytime you start the polykey agent for your default node, you'll be prompted to enter the password you created for that node so ensure you can remember it each time to access your node.
+:::
+
+![pk-agent-start-bkg-bootstrap.png](/images/pk-agent-start-bkg-bootstrap.png)
+
+<details>
+<summary>Click here for a detailed explanation</summary>
+
+</details>
+
+### 3. Verify the status of your PK agent
+
+:::info
+
+This command provides detailed information about your node's current state, including its connectivity and activity within the network.
+
+```bash
+polykey agent status
+```
+
+![pk-agent-status.png](/images/pk-agent-status.png)
+
+:::note
+
+If you made it this far, this means you sucesfully bootstrapped your first node on Polykey!
+
+:::
+
+### 4. Explore Polykey using the CLI's Helper
+
+```bash
+polykey --help
+```
+
+![pk-help.png](/images/pk-help.png)
+
+### 5. Stopping the Polykey Agent
+
+You can stop the Polykey agent by running:
+
+```bash
+polykey agent stop
+```
+
+:::info
+
+#### Troubleshooting
+
+If the Polykey agent does not terminate properly, you can force quit the process through the Activity Monitor on your machine.
+
 :::
