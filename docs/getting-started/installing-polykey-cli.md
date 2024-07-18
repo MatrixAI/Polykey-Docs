@@ -37,7 +37,9 @@ To install the Polykey CLI globally on your system, use the following command:
 npm install -g polykey-cli
 ```
 
-**Note**: This installs the Polykey CLI globally, allowing you to use `pk` or `polykey` commands from any directory.
+:::note
+This installs the Polykey CLI globally, allowing you to use `pk` or `polykey` commands from any directory.
+:::
 
   </TabItem>
 
@@ -414,58 +416,66 @@ recoveryCode	net elephant gentle eight pulp oyster panther sing own autumn silly
 
 </Tabs>
 
+---
+
 ## Bootstrapping Your First Node
 
-:::info
-Bootstrapping is the process where the Polykey agent sets itself up as a new Polykey node. This involves creating the encrypted-at-rest node state, and connecting to the [mainnet](https://mainnet.polykey.com/) or a custom specified network domain.
+:::note
+Bootstrapping is the process for setting up a new Polykey node. This involves generating a key pair, creating the encrypted-at-rest node state, and connecting to the [mainnet](https://mainnet.polykey.com/) or a custom specified network domain.
 :::
 
 ### 1. Start the Polykey Agent
+
+To start the Polykey agent in the background, run the following command:
 
 ```bash
 polykey agent start --background
 ```
 
 :::info
-When you run the `polykey agent start --background` for the first time after installing the CLI, it begins a bootstrapping process for you using a **default node path**. A default node is created for you when you run the polykey agent without specifying an argument for a custom node path.
+Running `polykey agent start --background` for the first time initiates the bootstrapping process using a **default node path**. The Polykey agent creates a default node when no custom node path is specified. Meaning that simply running `polykey agent start` will always launch the pk agent for accessing the default node unless a node path argument is provided for accessing a different node.
 :::
 
 ### 2. Create & Confirm Your Password
 
 :::note
 
-You'll be prompted to enter a **new password** for the default node on your machine. Once you confirm the new password, it will generate a node with a unique **nodeId** and **recoveryCode**.
+When prompted, create a **new password** for your default node. Confirm the password to generate a node with a unique **nodeId** and **recoveryCode**.
 
 :::warning
-Everytime you start the polykey agent for your default node, you'll be prompted to enter the password you created for that node so ensure you can remember it each time to access your node.
+You will need to enter this password every time you start the Polykey agent for your default node. Ensure you remember it to access your node.
 :::
 
 ![pk-agent-start-bkg-bootstrap.png](/images/pk-agent-start-bkg-bootstrap.png)
 
 <details>
 <summary>Click here for a detailed explanation</summary>
-
+Detailed explanations about the bootstrapping process can be expanded here for users who want to understand more about the underlying mechanisms and security implications.
 </details>
 
 ### 3. Verify the status of your PK agent
 
-:::info
-
-This command provides detailed information about your node's current state, including its connectivity and activity within the network.
+To check the status of your Polykey agent, run:
 
 ```bash
 polykey agent status
 ```
 
+:::info
+
+This command provides detailed information about your node's current state, including its **nodeId**, connectivity status, and any running processes.
+
 ![pk-agent-status.png](/images/pk-agent-status.png)
 
 :::note
 
-If you made it this far, this means you sucesfully bootstrapped your first node on Polykey!
+If you have reached this step, you have successfully bootstrapped your first node on Polykey!
 
 :::
 
 ### 4. Explore Polykey using the CLI's Helper
+
+To explore the available primary commands and get more detailed help, use:
 
 ```bash
 polykey --help
@@ -473,18 +483,28 @@ polykey --help
 
 ![pk-help.png](/images/pk-help.png)
 
+:::tip
+
+- Use polykey `[insert a primary command] --help` to list all sub-commands for a primary command.
+
+- Use polykey `[insert a primary command] [insert a sub-command] --help` for detailed information on specific sub-commands.
+
+:::
+
 ### 5. Stopping the Polykey Agent
 
-You can stop the Polykey agent by running:
+To stop the Polykey agent, use:
 
 ```bash
 polykey agent stop
 ```
 
+### Troubleshooting
+
 :::info
 
-#### Troubleshooting
+If you encounter issues with starting or stopping the Polykey agent, try the following:
 
-If the Polykey agent does not terminate properly, you can force quit the process through the Activity Monitor on your machine.
+- **Ensure the agent is not already running:** Use polykey agent status to check the current status.
 
-:::
+- **Force quit the agent:** If the agent does not terminate properly, use the Activity Monitor or equivalent process management tool on your operating system.
