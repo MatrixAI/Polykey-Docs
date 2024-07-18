@@ -13,6 +13,8 @@ const sidebars: SidebarsConfig = {
           label: 'Welcome to Polykey', // Label for the sidebar item
         },
         'getting-started/installing-polykey-cli',
+        'getting-started/claiming-digital-identities',
+
         {
           type: 'category',
           label: 'Polykey CLI',
@@ -24,7 +26,6 @@ const sidebars: SidebarsConfig = {
             'getting-started/polykey-cli/bootstrapping',
             'getting-started/polykey-cli/managing-vaults',
             'getting-started/polykey-cli/managing-secrets',
-            'getting-started/polykey-cli/claiming-digital-identities',
             'getting-started/polykey-cli/discovering-other-users',
             'getting-started/polykey-cli/sharing-vaults',
             'getting-started/polykey-cli/managing-multiple-nodes',
