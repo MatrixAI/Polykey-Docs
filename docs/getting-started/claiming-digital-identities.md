@@ -26,14 +26,6 @@ Follow the prompts in your terminal to complete the authentication, which may in
 
 ![GitHub Authentication](/images/github-authentication.png)
 
-<details>
-<summary>How to Verify Your Authentication?</summary>
-
-- **Technical Use of Permissions**: During the authentication process, Polykey requests access to create gists, read all user profile data, and access user email addresses (read-only) to ensure accurate identity verification and manage notifications.
-
-- **Security and Privacy Considerations**: Polykey adheres to high standards of security and privacy, using accessed data strictly for mentioned operations and not sharing it with third parties. For more details, refer to our [privacy policy](https://polykey.com/privacy-policy).
-</details>
-
 ## Step 2: Claim Your Identity
 
 After successfully authenticating with GitHub, claim your identity by posting a cryptographic link to a publicly verifiable location, such as a GitHub gist. This link serves as proof of ownership of the identity.
@@ -50,11 +42,7 @@ Replace `my-gh-username` with your actual GitHub username.
 
 ## Step 3: Verify Your Claim
 
-After claiming your identity, you have two primary methods to verify that your identity has been correctly claimed.
-
-### Method 1: Check Your GitHub Gist
-
-Polykey provides a link to a GitHub gist in your terminal. This is one method to verify that your identity has been correctly claimed.
+After claiming your identity, polykey provides a link to a GitHub gist in your terminal. This is one method to verify that your identity has been correctly claimed.
 
 ![Claim Id](/images/claim-id.png)
 :::note
