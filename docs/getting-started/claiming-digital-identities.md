@@ -1,11 +1,19 @@
 # Claim Your Digital Identity
 
-Welcome to Polykey, where securing your digital identity is seamless and secure. This guide walks you through linking your Polykey node with GitHub, enabling you to claim and authenticate your digital identity effortlessly. By posting a cryptographic link to a publicly verifiable location, you enhance security and simplify identity verification, making trust-building with others straightforward.
-
-Let's start by authenticating with GitHub, your gateway to claiming ownership of your digital identity in Polykey.
+This guide helps you link your Polykey node to a GitHub identity, enhancing discoverability and trust within the network.
 
 <details>
-<summary>More Details</summary>
+<summary>Why Link a GitHub Identity?</summary>
+Linking your node to GitHub allows other users to discover and interact with your node using a familiar and verifiable identity, simplifying trust-building across the network.
+</details>
+
+## Prerequisites
+
+- Ensure your Polykey node is installed and running.
+- Have your GitHub login credentials ready.
+
+<details>
+<summary>What data does Polykey manage from the authenticated IdP ?</summary>
 
 - **Technical Use of Permissions**: During the authentication process, Polykey requests access to create gists, read all user profile data, and access user email addresses (read-only) to ensure accurate identity verification and manage notifications.
 
@@ -14,24 +22,26 @@ Let's start by authenticating with GitHub, your gateway to claiming ownership of
 
 ## Step 1: Authenticate with GitHub
 
-Authentication with GitHub is the first step toward claiming your digital identity. This process allows Polykey to interact with GitHub on your behalf and access necessary information to claim your identity.
+Authenticate your node with GitHub to allow Polykey to access necessary information for identity linking.
 
 ```bash
 polykey identities authenticate github.com
 ```
 
 :::tip
-Follow the prompts in your terminal to complete the authentication, which may involve logging into your GitHub account and authorizing Polykey to access your GitHub information via a popup window.
+
+Follow the prompts in your terminal, log into your GitHub account, and authorize the requested permissions.
+
 :::
 
 ![GitHub Authentication](/images/github-authentication.png)
 
 ## Step 2: Claim Your Identity
 
-After successfully authenticating with GitHub, claim your identity by posting a cryptographic link to a publicly verifiable location, such as a GitHub gist. This link serves as proof of ownership of the identity.
+Claim your GitHub identity to establish a verifiable link between your node and your GitHub account.
 
 ```bash
-polykey identities claim github.com:my-gh-username
+polykey identities claim github.com:<my-gh-username>
 ```
 
 :::tip
@@ -42,59 +52,56 @@ Replace `my-gh-username` with your actual GitHub username.
 
 ## Step 3: Verify Your Claim
 
-After claiming your identity, polykey provides a link to a GitHub gist in your terminal. This is one method to verify that your identity has been correctly claimed.
+Once claimed, you'll receive a link to a GitHub gist that verifies the identity link.
 
 ![Claim Id](/images/claim-id.png)
 :::note
-This gist contains the cryptographic link confirming that your Polykey identity is correctly linked to your GitHub profile.
+Visit the provided gist URL to confirm the link's presence and validity.
 :::
 
-### Primary Verification Method
+## Understanding the Impact
 
-Check your GH gists. Replace `my-github-username` with your actual gh username and navigate to the url.
-
-```bash
-https://gist.github.com/my-github-username
-```
-
-This gist contains the cryptographic link confirming that your Polykey identity is correctly linked to your GitHub profile. Viewing this gist ensures your claim was successful and publicly verifiable.
-
-## Understanding Gestalt Graphs
-
-In Polykey, claiming identities creates a **gestalt graph**—a dynamic, interconnected network of your digital identities across various platforms. This graph facilitates the federated identity model, allowing for more robust and streamlined identity verification and management.
+Claiming a GitHub identity with your Polykey node creates a gestalt graph, enhancing your node's discoverability and trust within the network.
 
 ![gestalts](/images/gestalts.png)
 
-_This image shows a federated gestalt graph example concept map._
+<details>
+<summary>Learn More About Gestalt Graphs</summary>
 
-### How Gestalt Graphs Work
+### Understanding Gestalt Graphs
 
-Each node within the graph represents an identity or a claim, and edges represent trust relationships or cryptographic verifications. As you claim more identities or add nodes, the graph expands, enhancing its utility by making identity verification straightforward and trust relationships more transparent.
+**Gestalt Graphs** are visual representations of the relationships and trust connections between different digital identities within Polykey. Each node on a graph symbolizes an identity or a claim, and the edges between nodes represent cryptographic verifications or trust relationships.
 
-### Claiming Multiple Identities
+#### How Gestalt Graphs Work
 
-Polykey enables you to manage your digital presence flexibly by supporting the claiming of multiple identities across different scenarios. Specifically, you can:
+- **Nodes**: Represent individual identities linked to Polykey, such as a GitHub username.
+- **Edges**: Signify the trust connections or verification links between various identities.
 
-- Link one node to several identity providers (IdPs), broadening your digital footprint and verification avenues as more IdPs are supported.
+As you expand your digital presence by claiming more identities, or by adding more nodes to your network, the gestalt graph grows accordingly. This dynamic expansion enhances the network's utility by streamlining the process of identity verification and making the establishment of trust relationships more transparent and traceable.
 
-- Claim the same identity provider, such as a GitHub username, across multiple unique nodes you control, consolidating your digital identity while expanding your network's reach.
+#### Claiming Multiple Identities
 
-### Future Plans and IdP Support
+Polykey allows for flexible management of digital identities, accommodating multiple use cases:
 
-Currently, Polykey supports GitHub as an identity provider (IdP). However, we are actively working to expand our support to include a wider range of major IdPs. This expansion will enhance Polykey's accessibility and versatility, accommodating a broader user base. Additionally, organizations will have the option to maintain their own IdPs, allowing for even greater customization and control over identity management within Polykey.
+- **Multiple IdPs for a Single Node**: You can link one Polykey node to several identity providers, enhancing your digital verification pathways and security.
+- **Single IdP Across Multiple Nodes**: Claim and link the same identity provider, like a GitHub username, across multiple Polykey nodes you control, thus broadening your digital identity and reach within the network.
 
-### Benefits of Federated Identities
+#### Future Plans and IdP Support
 
-Using a federated identity model through gestalt graphs offers several benefits:
+Currently, Polykey integrates with GitHub as a primary identity provider. Our ongoing development aims to broaden this integration to include various major identity providers (IdPs), significantly enhancing accessibility and user engagement. Future updates will also allow organizations to implement their own IdPs, offering even greater control and customization of identity management operations within Polykey.
 
-- **Enhanced Security**: By linking various identity proofs, it strengthens the authenticity and credibility of your digital identity.
-- **Simplified Management**: Manage multiple identities through a single interface, reducing complexity and improving user experience.
-- **Interoperability:** Easily interact across different platforms and services using a unified identity framework.
+#### Benefits of Federated Identities
 
-Understanding and utilizing gestalt graphs in Polykey not only secures your operations but also significantly simplifies the process of digital identity management.
+Adopting a federated identity model through gestalt graphs provides several advantages:
+
+- **Enhanced Security**: Links multiple identity proofs to fortify the authenticity and credibility of your digital identity.
+- **Simplified Identity Management**: Manages multiple identities through a unified interface, reducing complexity and streamlining user interactions.
+- **Interoperability**: Facilitates seamless interactions across different platforms and services, leveraging a cohesive identity framework.
+
+Utilizing gestalt graphs within Polykey enhances operational security and simplifies digital identity management, making it an indispensable tool for users navigating complex digital environments.
+
+</details>
 
 ## Conclusion
 
-Claiming your digital identity in Polykey links your cryptographic operations to external accounts like GitHub, securing your operations and facilitating identity verification by others. This guide details the essential steps for authenticating, claiming, and verifying your identity in Polykey.
-
-In the next section, we will explore additional operations related to digital identity management in Polykey, including discovery of other users, trust management and permissions handling.
+Successfully linking your Polykey node to your GitHub identity not only secures your digital interactions but also facilitates easier and more reliable verification by other network participants.
