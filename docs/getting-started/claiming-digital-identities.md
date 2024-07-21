@@ -1,4 +1,4 @@
-# Claiming Your Digital Identity
+# Claim Your Digital Identity
 
 Welcome to Polykey, where securing your digital identity is seamless and secure. This guide walks you through linking your Polykey node with GitHub, enabling you to claim and authenticate your digital identity effortlessly. By posting a cryptographic link to a publicly verifiable location, you enhance security and simplify identity verification, making trust-building with others straightforward.
 
