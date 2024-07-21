@@ -1,19 +1,19 @@
 # Claim Your Digital Identity
 
-This guide helps you link your Polykey node to a GitHub identity, enhancing discoverability and trust within the network.
+This guide demonstrates how to link your Polykey node to a GitHub identity, enhancing discoverability and trust within the network.
 
 <details>
 <summary>Why Link a GitHub Identity?</summary>
-Linking your node to GitHub allows other users to discover and interact with your node using a familiar and verifiable identity, simplifying trust-building across the network.
+Linking your Polykey node to GitHub improves discoverability and simplifies trust-building within the network by providing a familiar and verifiable identity.
 </details>
 
 ## Prerequisites
 
-- Ensure your Polykey node is installed and running.
-- Have your GitHub login credentials ready.
+- Your default Polykey node must be installed and operational.
+- Have access to your GitHub credentials.
 
 <details>
-<summary>What data does Polykey manage from the authenticated IdP ?</summary>
+<summary>Handled Data and Privacy</summary>
 
 - **Technical Use of Permissions**: During the authentication process, Polykey requests access to create gists, read all user profile data, and access user email addresses (read-only) to ensure accurate identity verification and manage notifications.
 
@@ -22,7 +22,7 @@ Linking your node to GitHub allows other users to discover and interact with you
 
 ## Step 1: Authenticate with GitHub
 
-Authenticate your node with GitHub to allow Polykey to access necessary information for identity linking.
+Initiate authentication with GitHub to allow your node to access necessary identity information.
 
 ```bash
 polykey identities authenticate github.com
@@ -30,7 +30,7 @@ polykey identities authenticate github.com
 
 :::tip
 
-Follow the prompts in your terminal, log into your GitHub account, and authorize the requested permissions.
+Follow the terminal prompts to log into GitHub and authorize Polykey to access your information.
 
 :::
 
@@ -38,7 +38,7 @@ Follow the prompts in your terminal, log into your GitHub account, and authorize
 
 ## Step 2: Claim Your Identity
 
-Claim your GitHub identity to establish a verifiable link between your node and your GitHub account.
+Link your GitHub identity with your Polykey node to establish a verifiable identity connection.
 
 ```bash
 polykey identities claim github.com:<my-gh-username>
@@ -52,16 +52,16 @@ Replace `my-gh-username` with your actual GitHub username.
 
 ## Step 3: Verify Your Claim
 
-Once claimed, you'll receive a link to a GitHub gist that verifies the identity link.
+Check the link to the GitHub gist provided by Polykey to verify your identity claim.
 
 ![Claim Id](/images/claim-id.png)
 :::note
-Visit the provided gist URL to confirm the link's presence and validity.
+Visit the gist URL to ensure it exists and is correct.
 :::
 
 ## Understanding the Impact
 
-Claiming a GitHub identity with your Polykey node creates a gestalt graph, enhancing your node's discoverability and trust within the network.
+Claiming a GitHub identity creates a gestalt graph that enhances the discoverability of your node.
 
 ![gestalts](/images/gestalts.png)
 
@@ -104,4 +104,4 @@ Utilizing gestalt graphs within Polykey enhances operational security and simpli
 
 ## Conclusion
 
-Successfully linking your Polykey node to your GitHub identity not only secures your digital interactions but also facilitates easier and more reliable verification by other network participants.
+Linking your GitHub identity with Polykey enhances both security and usability, making your digital interactions within the network more seamless and verifiable.
