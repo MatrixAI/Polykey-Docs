@@ -213,9 +213,18 @@ const themeConfig: UserThemeConfig = {
     copyright: `Copyright © ${new Date().getFullYear()} Matrix AI`,
   },
   prism: {
-    additionalLanguages: ['shell-session', 'bash'],
-    theme: require('./src/css/custom-prism-theme.ts'),
-    darkTheme: darkCodeTheme,
+    additionalLanguages: [
+      'shell-session',
+      'bash',
+      'yaml',
+      'powershell',
+      'python',
+      'java',
+      'sql',
+      'json',
+    ],
+    theme: prismThemes.github,
+    darkTheme: prismThemes.dracula,
   },
 };
 

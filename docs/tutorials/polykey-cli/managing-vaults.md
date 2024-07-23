@@ -8,7 +8,7 @@ Vaults in Polykey are secure containers where you can store and manage secrets l
 
 To create a new vault, use the following command:
 
-```pkcli
+```bash
 polykey vaults create <vaultName>
 ```
 
@@ -16,13 +16,13 @@ polykey vaults create <vaultName>
 
 Create a new vault named `myvault`:
 
-```pkcli
+```yaml
 polykey vaults create myvault
 ```
 
 #### Example Output
 
-```bash
+```java
 Vault zUvPxC9aKNw94E1yR9dffzY created successfully
 ```
 
@@ -30,13 +30,13 @@ Vault zUvPxC9aKNw94E1yR9dffzY created successfully
 
 To see all the vaults you have, use the list command. This provides a simple way to view all vault names and their identifiers.
 
-```pkcli
+```bash
 polykey vaults list
 ```
 
 #### Example Output
 
-```bash
+```sql
 my-software-project	zD8XRJw2SoRoUW5e2mBR9tJ
 myvault            	zD3cWJLBDEMWcbwNbjuUevo
 myvault-101        	zErezdpLocYs1VRZPV3wcqS
@@ -46,7 +46,7 @@ myvault-101        	zErezdpLocYs1VRZPV3wcqS
 
 If you need to remove a vault, you can delete it using the delete command:
 
-```pkcli
+```bash
 polykey vaults delete <vaultName>
 ```
 
@@ -54,7 +54,7 @@ polykey vaults delete <vaultName>
 
 Delete the vault named myvault:
 
-```pkcli
+```yaml
 polykey vaults delete myvault
 ```
 
@@ -64,7 +64,7 @@ This operation does not produce output on successful execution, indicating the v
 
 Each vault maintains a version history which tracks changes over time. Use the log command to view the history of commits to a vault.
 
-```pkcli
+```bash
 polykey vaults log <vaultName>
 ```
 
@@ -72,13 +72,13 @@ polykey vaults log <vaultName>
 
 View the log for `my-software-project`:
 
-```pkcli
+```bash
 polykey vaults log my-software-project
 ```
 
 #### Example Output
 
-```bash
+```sql
 commitId   b568873376cd74a6c58755f73d1068cbb52cbc84
 committer  vgijtpv0h8m1eajeir77g73muq88n5kj0413t6fjdqsv9kt8dq4pg
 timestamp  Tue May 14 2024 21:27:52 GMT-0600 (Mountain Daylight Time)
@@ -93,7 +93,7 @@ message    "AWS_ACCESS_KEY_ID added\n"
 
 To change the name of an existing vault, use the rename command. This allows you to update the vault's name to something more descriptive or appropriate.
 
-```pkcli
+```bash
 polykey vaults rename <oldVaultName> <newVaultName>
 ```
 
@@ -101,13 +101,13 @@ polykey vaults rename <oldVaultName> <newVaultName>
 
 Rename `myvault-1` to `myvault-101`:
 
-```pkcli
+```bash
 polykey vaults rename myvault-1 myvault-101
 ```
 
 Confirm the rename by running:
 
-```pkcli
+```bash
 polykey vaults list
 ```
 
@@ -117,6 +117,6 @@ Managing vaults is a foundational skill in using Polykey effectively. This secti
 
 For a full list of vault commands and options, run:
 
-```pkcli
+```bash
 polykey vaults -h
 ```
