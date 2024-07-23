@@ -8,7 +8,7 @@ Vaults in Polykey are secure containers where you can store and manage secrets l
 
 To create a new vault, use the following command:
 
-```bash
+```pkcli
 polykey vaults create <vaultName>
 ```
 
@@ -16,7 +16,7 @@ polykey vaults create <vaultName>
 
 Create a new vault named `myvault`:
 
-```bash
+```pkcli
 polykey vaults create myvault
 ```
 
@@ -30,7 +30,7 @@ Vault zUvPxC9aKNw94E1yR9dffzY created successfully
 
 To see all the vaults you have, use the list command. This provides a simple way to view all vault names and their identifiers.
 
-```bash
+```pkcli
 polykey vaults list
 ```
 
@@ -46,7 +46,7 @@ myvault-101        	zErezdpLocYs1VRZPV3wcqS
 
 If you need to remove a vault, you can delete it using the delete command:
 
-```bash
+```pkcli
 polykey vaults delete <vaultName>
 ```
 
@@ -54,7 +54,7 @@ polykey vaults delete <vaultName>
 
 Delete the vault named myvault:
 
-```bash
+```pkcli
 polykey vaults delete myvault
 ```
 
@@ -64,7 +64,7 @@ This operation does not produce output on successful execution, indicating the v
 
 Each vault maintains a version history which tracks changes over time. Use the log command to view the history of commits to a vault.
 
-```bash
+```pkcli
 polykey vaults log <vaultName>
 ```
 
@@ -72,7 +72,7 @@ polykey vaults log <vaultName>
 
 View the log for `my-software-project`:
 
-```bash
+```pkcli
 polykey vaults log my-software-project
 ```
 
@@ -93,7 +93,7 @@ message    "AWS_ACCESS_KEY_ID added\n"
 
 To change the name of an existing vault, use the rename command. This allows you to update the vault's name to something more descriptive or appropriate.
 
-```bash
+```pkcli
 polykey vaults rename <oldVaultName> <newVaultName>
 ```
 
@@ -101,13 +101,13 @@ polykey vaults rename <oldVaultName> <newVaultName>
 
 Rename `myvault-1` to `myvault-101`:
 
-```bash
+```pkcli
 polykey vaults rename myvault-1 myvault-101
 ```
 
 Confirm the rename by running:
 
-```bash
+```pkcli
 polykey vaults list
 ```
 
@@ -117,6 +117,6 @@ Managing vaults is a foundational skill in using Polykey effectively. This secti
 
 For a full list of vault commands and options, run:
 
-```bash
+```pkcli
 polykey vaults -h
 ```
