@@ -3,7 +3,6 @@ import type { PrismTheme } from 'prism-react-renderer';
 // To see changes in development restart docusaurus
 
 const theme: PrismTheme = {
-  // Polykey cli commands are attributed the token.plain class
   plain: {
     color: '#F8F8F2',
     backgroundColor: '#282A36',
