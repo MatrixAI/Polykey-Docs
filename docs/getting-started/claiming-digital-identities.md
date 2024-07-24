@@ -24,7 +24,7 @@ Linking your Polykey node to GitHub improves discoverability and simplifies trus
 
 Initiate authentication with GitHub to allow your node to access necessary identity information.
 
-```bash
+```pkcli
 polykey identities authenticate github.com
 ```
 
@@ -40,7 +40,7 @@ Follow the terminal prompts to log into GitHub and authorize Polykey to access y
 
 Link your GitHub identity with your Polykey node to establish a verifiable identity connection.
 
-```bash
+```pkcli
 polykey identities claim github.com:<my-gh-username>
 ```
 

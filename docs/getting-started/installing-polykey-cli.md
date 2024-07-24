@@ -428,7 +428,7 @@ Bootstrapping is the process for setting up a new Polykey node. This involves ge
 
 To start the Polykey agent in the background, run the following command:
 
-```bash
+```pkcli
 polykey agent start --background
 ```
 
@@ -457,7 +457,7 @@ Detailed explanations about the bootstrapping process can be expanded here for u
 
 To check the status of your Polykey agent, run:
 
-```bash
+```pkcli
 polykey agent status
 ```
 
@@ -477,7 +477,7 @@ If you have reached this step, you have successfully bootstrapped your first nod
 
 To explore the available primary commands and get more detailed help, use:
 
-```bash
+```pkcli
 polykey --help
 ```
 
@@ -495,7 +495,7 @@ polykey --help
 
 To stop the Polykey agent, use:
 
-```bash
+```pkcli
 polykey agent stop
 ```
 
