@@ -4,10 +4,6 @@ import type { Options as PluginGTagOptions } from '@docusaurus/plugin-google-gta
 import type { Options as ThemeOptions } from '@docusaurus/theme-classic';
 import type { UserThemeConfig } from '@docusaurus/theme-common';
 import { visit } from 'unist-util-visit';
-import { themes as prismThemes } from 'prism-react-renderer';
-
-const lightCodeTheme = prismThemes.github;
-const darkCodeTheme = prismThemes.dracula;
 
 /**
  * Docusaurus does not process JSX `<img src ="...">` URLs
@@ -65,7 +61,8 @@ const pluginTheme: [string, ThemeOptions] = [
 
 const themeConfig: UserThemeConfig = {
   colorMode: {
-    disableSwitch: true,
+    defaultMode: 'dark',
+    // DisableSwitch: false,
   },
   navbar: {
     logo: {
@@ -213,9 +210,9 @@ const themeConfig: UserThemeConfig = {
     copyright: `Copyright © ${new Date().getFullYear()} Matrix AI`,
   },
   prism: {
-    theme: lightCodeTheme,
-    darkTheme: darkCodeTheme,
-    additionalLanguages: ['shell-session'],
+    additionalLanguages: ['shell-session', 'bash'],
+    theme: require('./src/css/custom-prism-theme.ts'),
+    darkTheme: require('./src/css/dark-custom-prism-theme.ts'),
   },
 };
 
