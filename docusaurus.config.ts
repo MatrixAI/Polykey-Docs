@@ -61,7 +61,7 @@ const pluginTheme: [string, ThemeOptions] = [
 
 const themeConfig: UserThemeConfig = {
   colorMode: {
-    defaultMode: 'dark',
+    defaultMode: 'light',
     // DisableSwitch: false,
   },
   navbar: {
