@@ -551,8 +551,26 @@ polykey agent stop
 
 :::info
 
-If you encounter issues with starting or stopping the Polykey agent, try the following:
+#### Issues with Starting the Polykey Agent:
 
-- **Ensure the agent is not already running:** Use polykey agent status to check the current status.
+- **Check for Existing Agent Instances:** Before starting a new agent, ensure there isn't already one running by executing:
 
-- **Force quit the agent:** If the agent does not terminate properly, use the Activity Monitor or equivalent process management tool on your operating system.
+```pkcli
+polykey agent status
+```
+
+#### Issues with Stopping the Polykey Agent:
+
+- **Force Termination:** If the Polykey agent does not terminate properly, use Activity Monitor (macOS), Task Manager (Windows), or system monitor tools (Linux) to forcefully end the process.
+
+#### Errors on Agent Start:
+
+- **Seek Help:** If your Polykey agent fails to start due to an error, please reach out on our [Discord Server](https://discord.gg/vfXQZwwugc) and [submit a bug report](https://github.com/MatrixAI/Polykey-CLI/issues/new?assignees=&labels=bug&projects=&template=bug_report.md&title=) detailing the issue.
+
+To assist in diagnosing the issue, please include the verbose output from your terminal. Run the Polykey agent with the verbose flag:
+
+```pkcli
+polykey agent start --verbose
+```
+
+:::
