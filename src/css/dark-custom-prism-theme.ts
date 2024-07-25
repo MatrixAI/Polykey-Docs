@@ -2,7 +2,7 @@ import type { PrismTheme } from 'prism-react-renderer';
 
 // To see changes in development restart docusaurus
 
-const theme: PrismTheme = {
+const darkTheme: PrismTheme = {
   plain: {
     color: '#F8F8F2',
     backgroundColor: '#282A36',
@@ -70,4 +70,4 @@ const theme: PrismTheme = {
     },
   ],
 };
-export default theme;
+export default darkTheme;

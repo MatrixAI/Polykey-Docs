@@ -6,7 +6,7 @@ Prism.languages.pkcli = {
     greedy: true,
   },
   keyword:
-    /\b(?:vaults|create|list|delete|log|rename|list|-h|secrets|get|update|stat)\b/,
+    /\b(?:vaults|create|list|delete|log|rename|list|-h|secrets|get|update|agent|start|status|stop|identities|authenticate|stat)\b/,
   command: {
     pattern: /(^\s*|\s+)(polykey)(?=\s|$)/,
     lookbehind: true,
