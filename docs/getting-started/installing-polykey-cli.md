@@ -521,11 +521,21 @@ polykey --help
 
 ![pk-help.png](/images/pk-help.png)
 
-:::tip
+:::tip Use the CLI Helper Effectively
 
-- Use polykey `[insert a primary command] --help` to list all sub-commands for a primary command.
+- To list all sub-commands available for a primary command, type:
 
-- Use polykey `[insert a primary command] [insert a sub-command] --help` for detailed information on specific sub-commands.
+```pkcli
+polykey [primary command] --help
+```
+
+- For detailed information on a specific sub-command, type:
+
+```pkcli
+polykey [primary command] [sub-command] --help
+```
+
+These commands provide you with helpful guidance on using different functionalities within Polykey.
 
 :::
 
