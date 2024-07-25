@@ -432,9 +432,52 @@ To start the Polykey agent in the background, run the following command:
 polykey agent start --background
 ```
 
+<details>
+<summary> Options for Starting the Polykey Agent</summary>
+
 :::info
-Running `polykey agent start --background` for the first time initiates the bootstrapping process using a **default node path**. The Polykey agent creates a default node when no custom node path is specified. Meaning that simply running `polykey agent start` will always launch the pk agent for accessing the default node unless a node path argument is provided for accessing a different node.
+
+#### Starting the polykey agent in the Foreground vs. the Background
+
+In this guide, we recommend starting the Polykey agent with the `--background` option because it allows the agent to run without occupying a terminal window, enabling you to use the shell for other commands.
+
+However, for monitoring network activity and debugging, running the Polykey agent in the foreground can be beneficial. To do this, execute the command without the `--background` option:
+
+```pkcli
+polykey agent start
+```
+
+This will display real-time network connections and is particularly useful for observing the interactions between your node and seed nodes within the network. It also facilitates capturing error logs or unusual activity, which can be crucial for reporting issues. For verbose output, include the `--verbose` option:
+
+```pkcli
+polykey agent start --verbose
+```
+
+#### Default Node Bootstrapping and the `--node-path` Option
+
+When you start the Polykey agent for the first time without specifying a node path, it automatically initializes using the default node path. This is convenient for quickly setting up a node:
+
+```pkcli
+polykey agent start
+```
+
+If you wish to manage multiple nodes or specify a custom path for your node's data, you can use the `--node-path` option. This is necessary for targeting operations at a node located outside the default path. For example, to start an agent for a node in a custom directory, you would use:
+
+```pkcli
+polykey bootstrap --node-path /custom/node/path
+```
+
+Then to start the Polykey agent for operating on the custom node, you would run:
+
+```pkcli
+polykey agent start --node-path /custom/node/path
+```
+
+The same applies to any other Polykey commands that you wish to target the custom node.
+
 :::
+
+</details>
 
 ### 2. Create & Confirm Your Password
 
@@ -447,11 +490,6 @@ You will need to enter this password every time you start the Polykey agent for 
 :::
 
 ![pk-agent-start-bkg-bootstrap.png](/images/pk-agent-start-bkg-bootstrap.png)
-
-<details>
-<summary>Click here for a detailed explanation</summary>
-Detailed explanations about the bootstrapping process can be expanded here for users who want to understand more about the underlying mechanisms and security implications.
-</details>
 
 ### 3. Verify the status of your PK agent
 
