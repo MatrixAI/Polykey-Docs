@@ -1,4 +1,4 @@
-#/bin/sh
+#!/usr/bin/env sh
 
 response=$(curl -X GET "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/ssl/certificate_packs" \
                 -H "Content-Type: application/json" \

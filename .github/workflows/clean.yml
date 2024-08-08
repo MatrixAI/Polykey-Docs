@@ -29,5 +29,5 @@ jobs:
           echo 'Perform service deployment for feature'
           nix develop .#ci --command bash -c $'
           wrangler delete --name "polykey-docs-dev-$GITHUB_HEAD_REF" --force
-          DOMAIN="$GITHUB_HEAD_REF.dev.polykey.com/docs" ./scripts/ssl.sh
+          DOMAIN="$GITHUB_HEAD_REF.dev.polykey.com/docs" ./scripts/certs_cleanup.sh
           '
