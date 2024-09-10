@@ -121,3 +121,12 @@
   /*height: 6em;*/
   padding: 1.5em 0;
 }
+
+.markdown a {
+  color: #29A7AC
+}
+
+.markdown a:hover {
+  color: #289295;
+  text-decoration-line: underline !important;
+}
