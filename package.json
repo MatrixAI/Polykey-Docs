@@ -4,6 +4,8 @@
   "scripts": {
     "lint": "eslint '{src,server,scripts}/**/*.{js,ts,jsx,tsx,json}' 'docusaurus.config.ts'",
     "lintfix": "eslint '{src,server,scripts}/**/*.{js,ts,jsx,tsx,json}' 'docusaurus.config.ts' --fix",
+    "lintcontent": "prettier --check '{blog,docs}/**/*.{md,mdx}'",
+    "lintcontentfix": "prettier --write '{blog,docs}/**/*.{md,mdx}'",
     "start": "docusaurus start",
     "swizzle": "docusaurus swizzle",
     "build": "docusaurus build --out-dir=./public",

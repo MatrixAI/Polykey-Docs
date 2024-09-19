@@ -7,6 +7,7 @@ import assetManifestJSON from '__STATIC_CONTENT_MANIFEST';
 export interface Env {
   // CF Worker Sites automatically injects this to point to the KV namespace
   __STATIC_CONTENT: string;
+  POLYKEY_DOCS_ENV: string;
 }
 
 const router = ittyRouter.Router();
@@ -30,9 +31,8 @@ function mapRequestToDocs(req: Request): Request {
 
 router.all('*', async (req: Request, env: Env, ctx: ExecutionContext) => {
   const cacheControl = {
-    browserTTL: 30 * 24 * 60 * 60,
     edgeTTL: 2 * 24 * 60 * 60,
-    bypassCache: false,
+    bypassCache: env.POLYKEY_DOCS_ENV === 'development' ? true : false,
   };
   const url = new URL(req.url);
   // Check if the URL pathname is exactly '/docs'
@@ -44,7 +44,7 @@ router.all('*', async (req: Request, env: Env, ctx: ExecutionContext) => {
   // wrangler as a cache busting measure.
   const assetManifest = JSON.parse(assetManifestJSON);
   try {
-    return await cloudflareKVAssetHandler.getAssetFromKV(
+    const response = await cloudflareKVAssetHandler.getAssetFromKV(
       {
         request: req,
         waitUntil: ctx.waitUntil.bind(ctx),
@@ -56,6 +56,14 @@ router.all('*', async (req: Request, env: Env, ctx: ExecutionContext) => {
         ASSET_MANIFEST: assetManifest,
       },
     );
+
+    if (req.url.includes('assets')) {
+      response.headers.set('Cache-Control', 'max-age=31536000, immutable');
+    } else {
+      response.headers.set('Cache-Control', 'max-age=86400');
+    }
+
+    return response;
   } catch (e) {
     if (e instanceof cloudflareKVAssetHandler.NotFoundError) {
       console.log('Requested resource not found', e.message);
@@ -74,8 +82,14 @@ router.all('*', async (req: Request, env: Env, ctx: ExecutionContext) => {
           ASSET_MANIFEST: assetManifest,
         },
       );
+
+      const headers = new Headers(response404.headers);
+
+      headers.set('Cache-Control', 'max-age=86400');
+
       return new Response(response404.body, {
         ...response404,
+        headers,
         status: 404,
       });
     } else if (e instanceof cloudflareKVAssetHandler.MethodNotAllowedError) {

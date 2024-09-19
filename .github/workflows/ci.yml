@@ -65,6 +65,7 @@ jobs:
           deployment_tier: 'development'
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          POLYKEY_DOCS_ENV: ${{ secrets.POLYKEY_DOCS_ENV }}
         run: |
           echo 'Perform service deployment for feature'
           nix develop .#ci --command bash -c $'
@@ -124,6 +125,7 @@ jobs:
           deployment_tier: 'staging'
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          POLYKEY_DOCS_ENV: ${{ secrets.POLYKEY_DOCS_ENV }}
         run: |
           nix develop .#ci --command bash -c $'
           npm run deploy -- --env staging
@@ -186,6 +188,7 @@ jobs:
           deployment_tier: 'production'
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          POLYKEY_DOCS_ENV: ${{ secrets.POLYKEY_DOCS_ENV }}
         run: |
           nix develop .#ci --command bash -c $'
           npm run deploy -- --env production

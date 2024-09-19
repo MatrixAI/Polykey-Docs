@@ -64,7 +64,9 @@ async function main(argv = process.argv) {
   ];
   console.error(['wrangler', ...secretBulkArgs].join(' '));
   childProcess.execFileSync('wrangler', secretBulkArgs, {
-    input: JSON.stringify({}),
+    input: JSON.stringify({
+      POLYKEY_DOCS_ENV: process.env.POLYKEY_DOCS_ENV,
+    }),
   });
   const deployArgs = ['deploy', '--config', './wrangler.toml', ...restArgs];
   console.error(['wrangler', ...deployArgs].join(' '));
