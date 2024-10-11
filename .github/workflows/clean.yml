@@ -23,8 +23,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           ZONE_ID: ${{ secrets.ZONE_ID }}
-          AUTH_KEY: ${{ secrets.AUTH_KEY }}
-          AUTH_EMAIL: ${{ secrets.AUTH_EMAIL }}
+          POLYKEY_DOCS_CLOUDFLARE_CLEANUP_TOKEN: ${{ secrets.POLYKEY_DOCS_CLOUDFLARE_CLEANUP_TOKEN }}
         run: |
           echo 'Perform service deployment for feature'
           nix develop .#ci --command bash -c $'
