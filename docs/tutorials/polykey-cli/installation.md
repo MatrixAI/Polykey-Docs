@@ -34,7 +34,7 @@ Download the executable named `...-polykey-cli-V.V.V-linux-x64`, and rename it t
 Make it executable:
 
 ```sh
-chmod u+x ./polykey
+$ chmod u+x ./polykey
 ```
 
 ### Add it to your `$PATH`.
@@ -42,8 +42,8 @@ chmod u+x ./polykey
 #### For ZSH:
 
 1. `cd` into directory where polykey exec is stored.
-2. Edit the zsh config to add polykey to your path, to streamline the process, run the following command making sure to change the path to polykey if the polykey executable is not in the downloads folder.
-3. For most users, this would be `~/downloads` on Debian based systems.
+2. Edit the zsh config to add polykey to your path. To streamline the process, run the following command, making sure to change the path to polykey if the polykey executable is not in the downloads folder.
+3. For most users, this would be `~/Downloads`
 
 :::warning
 
@@ -51,17 +51,19 @@ Make sure your path to the polykey executable is correct.
 
 :::
 
-```SH
-echo 'export PATH=~/downloads/polykey:$PATH' >> ~/.zshrc && source ~/.zshrc
+```sh
+$ echo 'export PATH=~/Downloads/polykey:$PATH' >> ~/.zshrc && source ~/.zshrc
 ```
 
-You can now run it with `polykey`.
+You only need to run this command once. After running this command, you can now invoke polykey by typing `polykey` into the terminal.
 
 ---
 
 #### For Bash:
 
-1. If you're using Bash, run the following command to add polykey to your path. Ensure to change the path if the executable is not in the downloads folder. For most users, this would be `~/downloads` on Debian-based systems.
+1. `cd` into directory where polykey exec is stored.
+2. Edit the zsh config to add polykey to your path. To streamline the process, run the following command, making sure to change the path to polykey if the polykey executable is not in the downloads folder.
+3. For most users, this would be `~/Downloads`
 
 :::warning
 
@@ -70,35 +72,35 @@ Make sure your path to the polykey executable is correct.
 :::
 
 ```sh
-echo 'export PATH=~/downloads/polykey:$PATH' >> ~/.bashrc && source ~/.bashrc
+$ echo 'export PATH=~/Downloads/polykey:$PATH' >> ~/.bashrc && source ~/.bashrc
 ```
 
-You can now run it with `polykey`.
+You only need to run this command once. After running this command, you can now invoke polykey by typing `polykey` into the terminal.
 
 ---
 
 ### NixOS
 
-We have not yet published a Nixpkgs expression for Polykey. When we do, you will be able to just install `polykey-cli` from Nixpkgs.
+We have not yet published a Nix package for Polykey. When we do, you will be able to just install `polykey-cli` from Nixpkgs.
 
-However it is easy enough to install it from source.
+However, it is easy enough to install it from source.
 
 Clone the repository:
 
 ```sh
-git clone https://github.com/MatrixAI/Polykey-CLI.git
+$ git clone https://github.com/MatrixAI/Polykey-CLI.git
 ```
 
 Enter the `nix-shell`:
 
 ```sh
-nix-shell
+$ nix-shell
 ```
 
 Build the application and install it into the user profile:
 
 ```sh
-nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(prefetch-npm-deps ./package-lock.json)"
+$ nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(prefetch-npm-deps ./package-lock.json)"
 ```
 
 ### Other
@@ -152,7 +154,7 @@ and MacOS permits running of unsigned binaries, however, to progress past this, 
       <TabItem value="method1" label="Method #1 - Admin CLI ">
 
       #### Method #1 - quickest method
-The xattr command will remove the quarantine attribute from the polykey executable, allowing you to run it without triggering macOS security warnings. Remember to ensure that the file path matches the location of your polykey file.
+The `xattr` command will remove the quarantine attribute from the Polykey executable, allowing you to run it without triggering macOS security warnings. Remember to ensure that the file path matches the location of your polykey file.
 
 ```sh
 sudo xattr -r -d com.apple.quarantine ~/Downloads/polykey
@@ -380,7 +382,7 @@ Install it with:
 npm install -g polykey-cli
 ```
 
-This will install the Polykey-CLI into `$(npm config get prefix)`.
+This will install the Polykey-CLI into the path pointed to by the command `$(npm config get prefix)`.
 
 If the `npm` bin path is added to the `$PATH` environment variable, then you will be able to execute `pk` or `polykey`.
 
