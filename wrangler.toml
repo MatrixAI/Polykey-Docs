@@ -16,7 +16,7 @@ routes = [
     "staging.polykey.com/docs/*"
   ]
 
-[env.production]
+[env.master]
   name = "polykey-docs"
   routes = [
     "polykey.com/docs",
