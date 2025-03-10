@@ -1,0 +1,32 @@
+---
+title: 'Polykey Node IDs'
+date: 2025-03-10
+author: 'Christina'
+tags: ['polykey', 'node-id', 'encoding', 'base32', 'security']
+---
+# How Polykey Handles Node IDs
+
+## The Basics
+
+Polykey uses **Base32 Hex encoding** for Node IDs, and here is why:
+
+- **Fixed Length:** A raw 32-byte Node ID always encodes to a 52-character string.
+- **Multibase Prefix ('v')**: The 'v' prefix tells us this is base32hex.
+- **Simple Alphabet:** No special characters - easy to copy, paste, and use anywhere.
+- **Sort Order Matters:** Unlike some encodings, base32hex keeps the same lexicographic sort order as the raw 32-byte data. This ensures Node IDs stay consistent whether they are stored in memory or displayed in a human-readable format.
+
+## Why This Works Well for Polykey
+
+- **Database-Friendly:** The 32-byte raw format is small enough to work as a database key without adding unnecessary bulk.
+- **Consistent Encoding:** Since Base32 Hex preserves sorting, we do not run into mismatches between encoded and raw representations.
+
+## Recovery Code & Root Keypair
+
+- **Not Stored by Polykey:** Users **must** back up their 24-word recovery code, or they will not be able to recover their root keypair.
+- **Same Recovery Code = Same Keypair:** If a user sets up a new node with the same recovery code, it regenerates the same root keypair. This ensures continuity in node identity.
+
+## The Takeaway
+
+We use Base32 Hex because it is clean, consistent, and efficient. Users need to take responsibility for their recovery codes, and if they ever want to recreate a node, using the same recovery phrase will generate the same root keypair.
+
+Simple, secure, and reliable.
