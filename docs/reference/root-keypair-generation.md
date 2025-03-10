@@ -39,43 +39,41 @@ A hybrid cryptosystem consists of:
 
 Before we can encrypt anything, we must generate the Ed25519 Root Keypair.
 
-[Insert Image Here: Hybrid Cryptosystem Diagram] 
-
+![Step 1](kgd-s1.svg)
 ---
 
 ## Generating the Root Keypair 
 The process is deterministic, secure, and clean.
 
-### Step 1: Root Keypair Generation Begins 
+### Root Keypair Generation Begins 
  * The user or console triggers keypair generation.
  * The system gathers high-entropy randomness to ensure security.
 
-[Insert Image Here: Root Keypair Generation Trigger] 
-
+![Step 2](kgd-s2.svg)
 ---
 
-### Step 2: BIP39 Wordlist & Recovery Code 
+### BIP39 Wordlist & Recovery Code 
  * Entropy is converted into a mnemonic phrase using the BIP39 English Wordlist .
  * The 24-word recovery code represents 264 bits of entropy.
 
-[Insert Image Here: BIP39 Recovery Code Generation] 
+![Step 3](kgd-s3.svg)
 
 ---
 
-### Step 3: Mnemonic to Binary Seed 
+### Mnemonic to Binary Seed 
  * The 24-word recovery code is converted into a binary seed using PBKDF2.
  * Uses HMAC-SHA512 with 2048 iterations.
  * The binary seed is 512 bits, then truncated to 256 bits.
 
-[Insert Image Here: PBKDF2 & Binary Seed Truncation] 
+![Step 4](kgd-s4.svg)
 
 ---
 
-### Step 4: Generating the Keypair 
+### Generating the Keypair 
  * The 256-bit seed is fed into the Ed25519 algorithm to generate a private key.
  * Scalar multiplication is performed to derive the public key.
 
-[Insert Image Here: Private Key & Public Key Generation] 
+![Step 5](kgd-s5.svg)
 
 ---
 
@@ -91,8 +89,7 @@ The Data Encryption Key (DEK) is derived from the Root Keypair using a Key Deriv
 3. Store or Re-Derive the DEK 
   * The DEK is either stored securely or regenerated when needed.
 
-[Insert Image Here: DEK Generation Process] 
-
+![Step 6](kgd-s6.svg)
 ---
 
 ## Final Output: The Root Keypair 
@@ -101,8 +98,6 @@ The Data Encryption Key (DEK) is derived from the Root Keypair using a Key Deriv
   * More efficient than RSA prime factorization.
   * 256-bit Ed25519 key provides same security as a 3072-bit RSA key.
   * Public key can be encoded using multibase base32z.
-
-[Insert Image Here: Final Root Keypair Output] 
 
 ---
 
