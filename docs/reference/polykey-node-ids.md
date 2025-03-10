@@ -1,10 +1,9 @@
 ---
-title: "How Polykey Handles Node IDs"
-date: "2025-03-09"
-author: "Christina"
-tags: ["Node ID", "Base32", "Key Management", "Polykey"]
+title: 'Polykey Node IDs'
+date: 2025-03-10
+author: 'Christina'
+tags: ['polykey', 'node-id', 'encoding', 'base32', 'security']
 ---
-
 # How Polykey Handles Node IDs
 
 ## The Basics
