@@ -1,3 +1,10 @@
+---
+title: Root Keypair Generation in Polykey
+date: 2025-03-09
+authors: Christina
+tags: 'cryptography', 'security', 'elliptic-curve', 'ed25519', 'polykey'
+---
+
 # Root Keypair Generation in Polykey
 
 Polykey’s entire encryption model revolves around Hybrid Elliptic Curve Integrated Encryption Scheme (ECIES), and the Root Keypair is the foundation of everything. It’s the cryptographic identity of a node, making secure communication, encryption, and key derivation possible.
