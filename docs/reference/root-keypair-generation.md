@@ -1,8 +1,8 @@
 ---
-title: Root Keypair Generation in Polykey
-date: 2025-03-09
-authors: Christina
-tags: 'cryptography', 'security', 'elliptic-curve', 'ed25519', 'polykey'
+title: "Root Keypair Generation in Polykey"
+date: "2025-03-09"
+authors: "Christina"
+tags: ["cryptography", "security", "elliptic-curve", "ed25519", "polykey"]
 ---
 
 # Root Keypair Generation in Polykey
