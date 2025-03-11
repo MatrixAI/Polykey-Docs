@@ -16,6 +16,17 @@ The `Audit` class is the main component of the audit system. It provides methods
 - Retrieving audit events
 - Managing the audit event lifecycle
 
+The Audit class is initialized with a database instance and other required components:
+
+```typescript
+const audit = await Audit.createAudit({
+  db,
+  nodeConnectionManager,
+  discovery,
+  logger,
+});
+```
+
 ### Audit Events
 
 Audit events have the following structure:
@@ -24,7 +35,38 @@ Audit events have the following structure:
 - `path`: An array of strings representing the event category/path
 - `data`: The event data, which can contain any relevant information about the event
 
+Example of an audit event object:
+
+```typescript
+{
+  id: "auditEventId123",
+  path: ["node", "connection", "forward"],
+  data: {
+    remoteNodeId: "nodeId456",
+    remoteHost: "192.168.1.100",
+    remotePort: 8080,
+    type: "forward"
+  }
+}
+```
+
 ## Usage
+
+### Recording Audit Events
+
+Audit events are typically recorded internally by the Polykey agent when significant actions occur. The system uses the `setAuditEvent` method to record events:
+
+```typescript
+await audit.setAuditEvent(
+  ["node", "connection", "forward"],
+  {
+    remoteNodeId: "nodeId456",
+    remoteHost: "192.168.1.100",
+    remotePort: 8080,
+    type: "forward"
+  }
+);
+```
 
 ### Retrieving Audit Events
 
@@ -69,7 +111,12 @@ Each event type has a specific path structure and data format. The path is an ar
 
 Audit events are stored locally on the node and are only accessible to authorized users with appropriate permissions. When retrieving audit events from another node, proper authentication and authorization are required.
 
-The audit system is designed to be secure and tamper-resistant, ensuring that audit events cannot be modified or deleted without proper authorization.
+The audit system is designed to be secure and tamper-resistant, ensuring that audit events cannot be modified or deleted without proper authorization. Key security features include:
+
+- Events are stored in the node's encrypted database
+- Access to audit events requires proper authentication
+- Events are immutable once recorded
+- The audit system maintains a chronological record of events
 
 ## Integration with Other Components
 
@@ -92,6 +139,22 @@ const agentService = agentServerManifest({
 });
 ```
 
+The audit system is also integrated with the RPC system through handlers and callers:
+
+```typescript
+// In nodes/agent/handlers/index.ts
+const manifestServer = (container: {
+  audit: Audit;
+  db: DB;
+  // ... other components
+}) => {
+  return {
+    nodesAuditEventsGet: new NodesAuditEventsGet(container),
+    // ... other handlers
+  };
+};
+```
+
 ## Implementation Details
 
 The audit system is implemented using the following key files:
@@ -102,6 +165,28 @@ The audit system is implemented using the following key files:
 - `src/nodes/agent/handlers/NodesAuditEventsGet.ts`: Handler for retrieving audit events
 - `src/nodes/agent/callers/nodesAuditEventsGet.ts`: Caller for the audit events RPC method
 
+The `NodesAuditEventsGet` handler processes requests for audit events and returns them in a paginated format:
+
+```typescript
+class NodesAuditEventsGet extends ServerHandler<
+  {
+    audit: Audit;
+    db: DB;
+  },
+  AgentRPCRequestParams<AuditIdMessage>,
+  AgentRPCResponseResult<AgentAuditMessage<AuditEvent>>
+> {
+  public handle = async function* (
+    input: AgentRPCRequestParams<AuditIdMessage>,
+    _cancel: (reason?: any) => void,
+    _meta: Record<string, JSONValue> | undefined,
+    ctx: ContextTimed,
+  ): AsyncGenerator<AgentRPCResponseResult<AgentAuditMessage<AuditEvent>>> {
+    // Implementation details...
+  };
+}
+```
+
 ## Future Enhancements
 
 Future versions of the audit system may include:
@@ -111,3 +196,6 @@ Future versions of the audit system may include:
 - Export functionality for audit logs to common formats (CSV, JSON)
 - Integration with external logging systems (Syslog, ELK stack)
 - Real-time audit event notifications
+- Advanced search and analytics features
+- Role-based access control for audit event access
+- Compliance reporting tools for regulatory requirements
