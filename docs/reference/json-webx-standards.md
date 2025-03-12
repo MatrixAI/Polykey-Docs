@@ -1,10 +1,10 @@
 ---
-title: 'Root Keypair Generation'
+title: 'JSON Webx Standards In Polykey'
 date: 2025-03-12
 author: 'Christina'
 tags: ['json-web-signature', 'cryptography', 'json-web-token', 'json-web-key', 'security' 'polykey', 'json-web-encryption']
 ---
-# JSON Web X Standards in Polykey
+# JSON Web X Standards in Polykey 
 
 ## Overview
 
