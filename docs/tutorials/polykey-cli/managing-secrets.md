@@ -2,12 +2,16 @@
 
 ## Introduction
 
-Secrets in Polykey are essential for securely managing sensitive information, such as API keys, configuration files, or documents. These can be any file type that you need to encrypt and manage securely. This section provides a detailed guide on how to manage these secrets within vaults using Polykey-CLI.
+Secrets in Polykey are essential for securely managing sensitive information,
+such as API keys, configuration files, or documents. These can be any file type
+that you need to encrypt and manage securely. This section provides a detailed
+guide on how to manage these secrets within vaults using Polykey-CLI.
 
 :::tip
 
-In the Polykey CLI, you can get help with managing your Secrets Operations by using the `-h` help command to get a detailed list of availiable options and commands. Try running `polykey secrets -h`
-:::
+In the Polykey CLI, you can get help with managing your Secrets Operations by
+using the `-h` help command to get a detailed list of availiable options and
+commands. Try running `polykey secrets -h` :::
 
 ## Creating Secrets
 
@@ -19,21 +23,24 @@ In the Polykey CLI, you can get help with managing your Secrets Operations by us
 
 **Arguments:**
 
-**directoryPath:** On disk path to the secret file with the contents of
-the new secret.
+**directoryPath:** On disk path to the secret file with the contents of the new
+secret.
 
 **secretPath:** Path to the secret to be created,
 
-specified as `<vaultName>:<directoryPath>`
-:::
+specified as `<vaultName>:<directoryPath>` :::
 
 ### Adding a Secret to a Vault
 
-The `polykey secrets create` command clones an existing file from your local machine and stores it into an encrypted vault, creating a secret in the process. Thus, providing secure data-at-rest encryption of the file.
+The `polykey secrets create` command clones an existing file from your local
+machine and stores it into an encrypted vault, creating a secret in the process.
+Thus, providing secure data-at-rest encryption of the file.
 
-:::tip
-To create a secret, both the vault and file you are creating a secret from, must already exist. Remember that to view the vaults contained within a node, you run `$polykey vaults list`. This is useful for viewing the names of the vaults you are trying to manage secrets with, as vaultName is one of the command arguments that is commonly used.
-:::
+:::tip To create a secret, both the vault and file you are creating a secret
+from, must already exist. Remember that to view the vaults contained within a
+node, you run `$polykey vaults list`. This is useful for viewing the names of
+the vaults you are trying to manage secrets with, as vaultName is one of the
+command arguments that is commonly used. :::
 
 #### Command Arguments
 
@@ -43,9 +50,11 @@ polykey secrets create <filePath> <vaultName>:<secretName>
 
 <!-- How can we improve clarity here without making it too verbose or removing any important details mentioned? -->
 
-:::info
-The `<filePath>` for the file you are trying to create a secret from can either be a working directory filepath or a root path. Also notice that we either have 1 space of seperation or a `:` between command arguments usually. The angle braces are just being used in our explanation for specifying the arguments more clearly.
-:::
+:::info The `<filePath>` for the file you are trying to create a secret from can
+either be a working directory filepath or a root path. Also notice that we
+either have 1 space of seperation or a `:` between command arguments usually.
+The angle braces are just being used in our explanation for specifying the
+arguments more clearly. :::
 
 #### Example Usage of `Polykey Secrets Create`
 
@@ -53,16 +62,20 @@ The `<filePath>` for the file you are trying to create a secret from can either 
 polykey secrets create ./API_ACCESS_KEY.txt my-api-vault:API_ACCESS_KEY
 ```
 
-This command cloned the `API_ACCESS_KEY.txt` file from the terminal's working directory and saved it in a vault named `my-api-vault`, specifying the secretName alias as `API_ACCESS_KEY`. We could have also provided the secretName alias as `API.ACCESS_KEY.txt` but for most text files in Polykey, specifying the file type extension is redundant.
+This command cloned the `API_ACCESS_KEY.txt` file from the terminal's working
+directory and saved it in a vault named `my-api-vault`, specifying the
+secretName alias as `API_ACCESS_KEY`. We could have also provided the secretName
+alias as `API.ACCESS_KEY.txt` but for most text files in Polykey, specifying the
+file type extension is redundant.
 
-:::tip
-Since the secret or `<secretName>` stored in the vault does not specify the file type in its metadata, when you are storing binary files such as images or videos, you may want to specify the file extension in the `secretName` alias for better access & manageability.
-:::
+:::tip Since the secret or `<secretName>` stored in the vault does not specify
+the file type in its metadata, when you are storing binary files such as images
+or videos, you may want to specify the file extension in the `secretName` alias
+for better access & manageability. :::
 
 ## Listing Secrets
 
-:::note
-**List all Available Secrets for a Vault**
+:::note **List all Available Secrets for a Vault**
 
 **Usage:** `polykey secrets list|ls [options] <vaultName>`
 
@@ -72,7 +85,8 @@ Since the secret or `<secretName>` stored in the vault does not specify the file
 
 :::
 
-To list the secret file(s) stored within a specific vault in your default nodePath, use:
+To list the secret file(s) stored within a specific vault in your default
+nodePath, use:
 
 #### Command Arguments:
 
@@ -88,7 +102,8 @@ Polykey secrets list my-api-vault
 
 #### Example Output
 
-In this case, there's just one secret file contained in this vault, the secret we created in the previous example.
+In this case, there's just one secret file contained in this vault, the secret
+we created in the previous example.
 
 ```bash
 API_ACCESS_KEY
@@ -98,12 +113,15 @@ API_ACCESS_KEY
 
 ### Secure Deletion of Local Secrets
 
-After adding a secret to a vault, securely delete the local copy if it's no longer needed. This ensures that no unsecured traces of sensitive information remain on your local filesystem.
-:::
+After adding a secret to a vault, securely delete the local copy if it's no
+longer needed. This ensures that no unsecured traces of sensitive information
+remain on your local filesystem. :::
 
 ## Retreiving Secrets
 
-Retrieve a secret from the given vault using the polykey secrets get command. This command accesses the encrypted content within a vault and outputs it, allowing for further handling depending on the file type.
+Retrieve a secret from the given vault using the polykey secrets get command.
+This command accesses the encrypted content within a vault and outputs it,
+allowing for further handling depending on the file type.
 
 :::note
 
@@ -123,13 +141,18 @@ specified as `<vaultName>:<directoryPath>`
 
 The nature of the file affects how it is handled when retrieved:
 
-- **Text Files:** Files such as .txt, .cfg, or script files like .sh are inherently text-based and can be displayed directly in the terminal. This feature is useful for quick checks and edits directly from the command line.
+- **Text Files:** Files such as .txt, .cfg, or script files like .sh are
+  inherently text-based and can be displayed directly in the terminal. This
+  feature is useful for quick checks and edits directly from the command line.
 
-- **Binary Files:** Files like images, executables, or other non-text formats are binary files. These do not display readable content directly in the terminal and must be handled differently.
+- **Binary Files:** Files like images, executables, or other non-text formats
+  are binary files. These do not display readable content directly in the
+  terminal and must be handled differently.
 
 ### Retrieving a Text File
 
-To view the contents of a text file stored in a vault directly from the terminal, use the following command:
+To view the contents of a text file stored in a vault directly from the
+terminal, use the following command:
 
 ```bash
 polykey secrets get <vaultName>:<secretName>
@@ -149,22 +172,26 @@ polykey secrets get my-vault-tutorial-1:API_ACCESS_KEY
 AKfjd39jdi3903KDje93j04j0
 ```
 
-This method displays text files directly in the terminal, providing immediate access to the contents.
+This method displays text files directly in the terminal, providing immediate
+access to the contents.
 
 ### Retrieving Binary File
 
-Binary files, such as images or executables, need to be handled appropriately to view or use their contents correctly.
+Binary files, such as images or executables, need to be handled appropriately to
+view or use their contents correctly.
 
 #### Steps to Retrieve a Binary File
 
-To retrieve and handle a binary file, specify the output format by redirecting the output to a file with the appropriate file extension:
+To retrieve and handle a binary file, specify the output format by redirecting
+the output to a file with the appropriate file extension:
 
 ```bash
 polykey secrets get <vaultName>:<secretName> > <fileName>.<ext>
 
 ```
 
-This command saves the binary content into a file in the current local directory, preserving the file type as indicated by the extension `<ext>`.
+This command saves the binary content into a file in the current local
+directory, preserving the file type as indicated by the extension `<ext>`.
 
 #### Example: Retrieving and Viewing an Image
 
@@ -175,17 +202,19 @@ polykey secrets get my-NFT:Dali.png > Dali.png
 open Dali.png
 ```
 
-:::note
-The use of `>` in the command line is a standard Unix redirection operator, used here to direct the output from Polykey into a file. This operation is necessary for handling binary files that require specific applications to open.
-:::
+:::note The use of `>` in the command line is a standard Unix redirection
+operator, used here to direct the output from Polykey into a file. This
+operation is necessary for handling binary files that require specific
+applications to open. :::
 
-:::tip
-Ensure the secret name includes the file extension (like Dali.png), which helps clarify the file type when saving and accessing the retrieved file.
-:::
+:::tip Ensure the secret name includes the file extension (like Dali.png), which
+helps clarify the file type when saving and accessing the retrieved file. :::
 
 ## Creating a Directory of Secrets
 
-To create a directory within a vault, use the polykey secrets mkdir command. This command allows you to organize your secrets into directories within a vault.
+To create a directory within a vault, use the polykey secrets mkdir command.
+This command allows you to organize your secrets into directories within a
+vault.
 
 ```bash
 polykey secrets mkdir <vaultName>:<directoryPath>
@@ -201,7 +230,8 @@ polykey secrets mkdir my-image-vault:NFTs
 
 ### Adding a Secret to a Directory in a Vault
 
-After creating a directory, you can add secrets to it. This helps in organizing similar types of secrets under a common directory.
+After creating a directory, you can add secrets to it. This helps in organizing
+similar types of secrets under a common directory.
 
 ```bash
 polykey secrets create <filePath> <vaultName>:<directoryPath>/<secretName>
@@ -209,14 +239,16 @@ polykey secrets create <filePath> <vaultName>:<directoryPath>/<secretName>
 
 #### Example: Adding a Secret to a Directory
 
-To add the file "Dali.png" as a secret named "Dali.png" to the "NFTs" directory within "my-image-vault":
+To add the file "Dali.png" as a secret named "Dali.png" to the "NFTs" directory
+within "my-image-vault":
 
 ```bash
 polykey secrets create ./Dali.png my-image-vault:NFTs/Dali.png
 ```
 
-:::note
-To view secrets saved within a directory in a vault, using the `polykey secrets list <vaultName>` command for that vault will output all secrets in the vault, including those within directories.
+:::note To view secrets saved within a directory in a vault, using the
+`polykey secrets list <vaultName>` command for that vault will output all
+secrets in the vault, including those within directories.
 
 **Example Usage**
 
@@ -240,9 +272,7 @@ To rename an existing secret:
 polykey secrets rename <vaultName>:<oldSecretName> <newSecretName>
 ```
 
-:::tip
-Use the `secrets list` command to check on your renamed secretFile.
-:::
+:::tip Use the `secrets list` command to check on your renamed secretFile. :::
 
 ## Updating a Secret
 
@@ -258,9 +288,10 @@ polykey secrets update <filePath> <vaultName>:<secretName>
 polykey secrets update ./rare-dali.png my-image-vault:NFTs/Dali.png
 ```
 
-:::info
-This is essentially replacing the file content of an existing secret while preserving the identity of the secret. One way to verify that the update was performed sucesfully is by viewing the mtime (modified time) timestamp from the `secrets stat` command.
-:::
+:::info This is essentially replacing the file content of an existing secret
+while preserving the identity of the secret. One way to verify that the update
+was performed sucesfully is by viewing the mtime (modified time) timestamp from
+the `secrets stat` command. :::
 
 ## Retrieving Secret Metadata
 
@@ -279,20 +310,10 @@ polykey secrets stat my-image-vault:NFTs/Dali.png
 #### Example Output
 
 ```yaml
-dev       0
-ino       158
-mode      33188
-nlink     1
-uid       0
-gid       0
-rdev      0
-size      23450
-atime     Sat May 25 2024 17:22:34 GMT-0600
-mtime     Sat May 25 2024 17:22:33 GMT-0600
-ctime     Sat May 25 2024 17:22:33 GMT-0600
-birthtime Fri May 24 2024 22:42:43 GMT-0600
-blksize   4096
-blocks    6
+dev       0 ino       158 mode      33188 nlink     1 uid       0 gid       0
+rdev      0 size      23450 atime     Sat May 25 2024 17:22:34 GMT-0600
+mtime     Sat May 25 2024 17:22:33 GMT-0600 ctime     Sat May 25 2024 17:22:33
+GMT-0600 birthtime Fri May 24 2024 22:42:43 GMT-0600 blksize   4096 blocks    6
 ```
 
 :::note
@@ -341,7 +362,8 @@ THE_THIEF.png
 polykey secrets delete my-image-vault:THE_THIEF.png
 ```
 
-Successful deletion does not produce output. Verify the secret was removed by listing secrets in the vault.
+Successful deletion does not produce output. Verify the secret was removed by
+listing secrets in the vault.
 
 ```bash
 polykey secrets list my-image vault
@@ -363,6 +385,5 @@ To edit a secret directly within a Vault using Polykey:
 polykey secrets edit <vaultName>:<secretName>
 ```
 
-:::warning
-Polykey Secrets Edit on Mac OS has a bug that we are investigating. Use Polykey Secrets Update in the meantime.
-:::
+:::warning Polykey Secrets Edit on Mac OS has a bug that we are investigating.
+Use Polykey Secrets Update in the meantime. :::

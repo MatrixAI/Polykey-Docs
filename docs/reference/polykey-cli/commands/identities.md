@@ -14,7 +14,8 @@ Usage:
 
 ## `authenticate`
 
-Gestalt based command which authenticates a digital identity provider, i.e. GitHub, Meta (Tentatively), X (Tentatively)
+Gestalt based command which authenticates a digital identity provider, i.e.
+GitHub, Meta (Tentatively), X (Tentatively)
 
 Usage:
 
@@ -41,7 +42,8 @@ identityId      maverick
 
 ## `claim`
 
-Allows you to claim a digital identity for the currently active node. This creates a gist on your github profile denoting the claim.
+Allows you to claim a digital identity for the currently active node. This
+creates a gist on your github profile denoting the claim.
 
 Usage:
 
@@ -54,7 +56,8 @@ Url: https://gist.github.com/maverick/ebd6af3369f25d9c9c9bfa581f1da016
 
 ## `disallow`
 
-Unsets provided permissions from a particular node ID or a gestalt ID (providerID:Identity ID).
+Unsets provided permissions from a particular node ID or a gestalt ID
+(providerID:Identity ID).
 
 Usage:
 

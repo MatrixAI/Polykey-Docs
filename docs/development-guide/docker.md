@@ -2,9 +2,11 @@
 
 ## Image Publishing
 
-Image publishing is done automatically through the CI/CD. However manual scripts are available below for deployment.
+Image publishing is done automatically through the CI/CD. However manual scripts
+are available below for deployment.
 
-The below is an example of manual scripts that would be used if you were prototyping the publishing procedure.
+The below is an example of manual scripts that would be used if you were
+prototyping the publishing procedure.
 
 ### Deploying to AWS ECR:
 

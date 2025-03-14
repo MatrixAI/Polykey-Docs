@@ -1,6 +1,7 @@
 # `polykey vaults`
 
 ## `clone`
+
 1. Clone a vault from another node ID
 2. Requires vault name to be cloned as a parameter
 3. Requires node ID of the node with access to the vault as a parameter
@@ -15,8 +16,8 @@ vault         zS4cBAnYTa3221RYLPWT4q6
 newvault      zMC3GPfmdx2XhXHN5Ra3tKT
 ```
 
-
 ## `create`
+
 1. Create a new vault
 2. Requires the vault name as a parameter
 
@@ -32,6 +33,7 @@ myvault       zMC3GPfmdx2XhXHN5Ra3tKT
 ```
 
 ## `rm`
+
 1. Delete an existing vault
 2. Requires the vault name as a parameter
 
@@ -49,6 +51,7 @@ vault  zS4cBAnYTa3221RYLPWT4q6
 ```
 
 ## `ls`
+
 1. Lists all locally cloned vaults
 
 Usage:
@@ -59,6 +62,7 @@ vault  zS4cBAnYTa3221RYLPWT4q6
 ```
 
 ## `log`
+
 1. Get logs (including the version history) from a vault
 2. A version commit can be used to reset the vault state to that version
 
@@ -93,6 +97,7 @@ Initial Commit
 ```
 
 ## `permissions`
+
 1. Lists permissions of a specified vault
 
 Usage:
@@ -103,6 +108,7 @@ vctg4j8988mkobuvruaj2ijmij6jinvk8nf714f0s11kq3blc8g00: pull, clone
 ```
 
 ## `pull`
+
 1. Pull updated changes from a vault which is shared from another node
 
 Usage:
@@ -121,6 +127,7 @@ other-secret
 ```
 
 ## `rename`
+
 1. Rename an existing vault
 
 Usage:
@@ -134,6 +141,7 @@ renamedvault      zUUqm8tN22MkaR3zvMKnKQw
 ```
 
 ## `scan`
+
 1. Scans for new shared vaults from a specified node ID
 
 Usage:
@@ -144,6 +152,7 @@ other-vault      z2CtVYNDudjXQPPzdcSfSDa pull,clone
 ```
 
 ## `share`
+
 1. Share a vault with another node using their node ID
 
 Usage:
@@ -156,6 +165,7 @@ v2ki21482dokemqrrrc9e3oqr3s43nh3t92cbjua2vks3aopt1vr0: pull, clone
 ```
 
 ## `unshare`
+
 1. Stop sharing a previously shared vault
 
 Usage:
@@ -165,7 +175,9 @@ $ polykey vaults unshare myvault v2ki21482dokemqrrrc9e3oqr3s43nh3t92cbjua2vks3ao
 ```
 
 ## `version`
-1. Set a vault to a previous or specific version obtained from the vault commit logs
+
+1. Set a vault to a previous or specific version obtained from the vault commit
+   logs
 
 Usage:
 

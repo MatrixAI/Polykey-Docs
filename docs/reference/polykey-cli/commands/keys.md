@@ -36,18 +36,16 @@ bQGkBvy3xvbW+b7mY/aYgnBdPwk4q2eXq4OO3L6ZpJKLjIdHw6zcUFT8YCcYTC3x
 
 Usage
 
-````shell
+```shell
 > polykey keys certchain
-````
+```
 
 ## `encrypt`
-
 
 1. Encrypts a file with the Root keypair.
 2. Requires the filePath and NodeID as parameters.
 
 Usage:
-
 
 ```shell
 > polykey keys encrypt /home/addievo/Desktop/Work/Polykey-CLI/random2.txt vctg4j8988mkobuvruaj2ijmij6jinvk8nf714f0s11kq3blc8g00
@@ -87,6 +85,7 @@ privateKey      {"ciphertext":"l-6itRP2FtVWBvGVjS56P497WJsS8fpmiyKlaT8ohOg_-BT2J
 2. Requires authentication
 
 Usage:
+
 ```shell
 > polykey keys password
 
@@ -173,4 +172,3 @@ Usage:
 ```shell
 polykey keys verify /filePath
 ```
-

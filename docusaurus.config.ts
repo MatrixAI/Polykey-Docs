@@ -1,40 +1,55 @@
 import type { Config } from '@docusaurus/types';
+import type { Options as PluginSVGROptions } from '@docusaurus/plugin-svgr';
 import type { Options as PluginDocsOptions } from '@docusaurus/plugin-content-docs';
 import type { Options as PluginGTagOptions } from '@docusaurus/plugin-google-gtag';
 import type { Options as ThemeOptions } from '@docusaurus/theme-classic';
 import type { UserThemeConfig } from '@docusaurus/theme-common';
-import { visit } from 'unist-util-visit';
 import { themes as prismThemes } from 'prism-react-renderer';
+import autoprefixer from 'autoprefixer';
+import tailwindcss from 'tailwindcss';
 
 const lightCodeTheme = prismThemes.github;
 const darkCodeTheme = prismThemes.dracula;
 
-/**
- * Docusaurus does not process JSX `<img src ="...">` URLs
- * This plugin rewrites the src attribute to `src="/docs/..."`
- * Markdown links `[]()`, images `![](/image)` and anchor `<a href="...">`
- * are already automatically processed.
- * Note that this is a hack, and it's ideal to instead prefer using `require`.
- * However those images would not be viewable in the GitHub markdown.
- */
-const remarkImageSrcWithDocsPrefix = () => {
-  return (tree) => {
-    visit(tree, 'mdxJsxFlowElement', (node) => {
-      if (node.name === 'img') {
-        const srcAttribute = node.attributes.find(
-          (attr) => attr.name === 'src',
-        );
-        if (
-          srcAttribute != null &&
-          typeof srcAttribute.value === 'string' &&
-          srcAttribute.value.startsWith('/images/')
-        ) {
-          srcAttribute.value = `/docs${srcAttribute.value}`;
-        }
-      }
-    });
+const pluginSVGR: [string, PluginSVGROptions] = [
+  '@docusaurus/plugin-svgr',
+  {
+    svgrConfig: {},
+  },
+];
+
+const pluginTailwind = () => {
+  return {
+    name: 'docusaurus-plugin-tailwindcss',
+    injectHtmlTags() {
+      return {
+        headTags: [
+          {
+            tagName: 'link',
+            attributes: {
+              rel: 'stylesheet',
+              href: 'https://cdn.jsdelivr.net/npm/tailwindcss/dist/preflight.min.css',
+            },
+          },
+        ],
+      };
+    },
+    configurePostCss(postcssOptions) {
+      // Appends TailwindCSS and AutoPrefixer.
+      postcssOptions.plugins.push(tailwindcss);
+      postcssOptions.plugins.push(autoprefixer);
+      return postcssOptions;
+    },
   };
 };
+
+const pluginGTag: [string, PluginGTagOptions] = [
+  '@docusaurus/plugin-google-gtag',
+  {
+    trackingID: 'G-GSMHXNB32E',
+    anonymizeIP: false,
+  },
+];
 
 const pluginDocs: [string, PluginDocsOptions] = [
   '@docusaurus/plugin-content-docs',
@@ -42,17 +57,8 @@ const pluginDocs: [string, PluginDocsOptions] = [
     path: 'docs',
     routeBasePath: '/',
     sidebarPath: './sidebars.ts',
-    remarkPlugins: [remarkImageSrcWithDocsPrefix],
     include: ['**/*.md', '**/*.mdx'],
     exclude: ['**/_*.{js,jsx,ts,tsx,md,mdx}', '**/_*/**', '**/.**'],
-  },
-];
-
-const pluginGTag: [string, PluginGTagOptions] = [
-  '@docusaurus/plugin-google-gtag',
-  {
-    trackingID: 'G-GSMHXNB32E',
-    anonymizeIP: false,
   },
 ];
 
@@ -222,23 +228,23 @@ const themeConfig: UserThemeConfig = {
 const config: Config = {
   title: 'Polykey Documentation',
   tagline: 'Tutorials, How-To Guides, Theory and Reference',
+  favicon: 'images/polykey-favicon.png',
   url: 'https://polykey.com',
   // The `baseUrl` always must end with a trailing slash.
   baseUrl: '/docs/',
-  onBrokenLinks: 'warn',
-  onBrokenMarkdownLinks: 'warn',
-  // This ensures that `/x.md` is generated as `/x/index.html` and not `/x.html`.
-  // Which is the expected directory layout for most web servers.
-  trailingSlash: undefined,
-  favicon: 'images/polykey-favicon.png',
   organizationName: 'MatrixAI',
   projectName: 'PolyKey-Docs',
+  onBrokenLinks: 'warn',
+  onBrokenMarkdownLinks: 'warn',
   i18n: {
     defaultLocale: 'en',
     locales: ['en'],
   },
+  // This ensures that `/x.md` is generated as `/x/index.html` and not `/x.html`.
+  // Which is the expected directory layout for most web servers.
+  trailingSlash: undefined,
   staticDirectories: ['static'],
-  plugins: [pluginDocs, pluginTheme, pluginGTag],
+  plugins: [pluginSVGR, pluginDocs, pluginTheme, pluginGTag, pluginTailwind],
   themeConfig,
 };
 
