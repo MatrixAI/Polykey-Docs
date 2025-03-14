@@ -26,7 +26,7 @@ Slack).
 
 <p align="center">
   <figure>
-    <img src="/images/gestalts-and-DIs/di-ceos.png" width="60%" />
+    <img src={require('@site/images/gestalts-and-DIs/di-ceos.png').default} width="60%" />
     <br />
     <figcaption>From top left to bottom: Digital identities for the CEOs of Twitter, GitHub, LinkedIn, and FaceBook</figcaption>
   </figure>
@@ -141,7 +141,7 @@ a [X.509 certificate](https://en.wikipedia.org/wiki/X.509).
 
 <p align="center">
   <figure>
-    <img src="/images/divio_quadrant.png" width="100%" />
+    <img src={require('@site/images/divio_quadrant.png').default} width="100%" />
     <br />
     <figcaption>X.509 certificates act as the root of trust for Polykey Sigchains</figcaption>
   </figure>
@@ -175,7 +175,7 @@ Keynodes and digital identities as its vertices.
 
 <p align="center">
   <figure>
-    <img src="/images/gestalts-and-DIs/GestaltDiagram.png" width="70%" />
+    <img src={require('@site/images/gestalts-and-DIs/GestaltDiagram.png').default} width="70%" />
     <br />
     <figcaption>Visual depiction of a Polykey Gestalt</figcaption>
   </figure>
@@ -210,7 +210,7 @@ distributed clients.
 
 <p align="center">
   <figure>
-    <img src="/images/gestalts-and-DIs/keybase.png" width="70%" />
+    <img src={require('@site/images/gestalts-and-DIs/keybase.png').default} width="70%" />
     <br />
     <figcaption>Digital identity augmentation as implemented within Keybase</figcaption>
   </figure>
@@ -247,7 +247,7 @@ stages, however, only the final three belong to the augmentation itself:
 
 <p align="center">
   <figure>
-    <img src="/images/gestalts-and-DIs/augmentation.png" width="90%" />
+    <img src={require('@site/images/gestalts-and-DIs/augmentation.png').default} width="90%" />
     <br />
     <figcaption>Polykey's Digital Identity (DI) augmentation process</figcaption>
   </figure>
@@ -255,7 +255,7 @@ stages, however, only the final three belong to the augmentation itself:
 
 <p align="center">
   <figure>
-    <img src="/images/gestalts-and-DIs/augmentationv3.png" width="90%" />
+    <img src={require('@site/images/gestalts-and-DIs/augmentationv3.png').default} width="90%" />
     <br />
     <figcaption>Structure of a cryptolink generated via augmentation</figcaption>
   </figure>
@@ -342,7 +342,7 @@ communicate with.
 
 <p align="center">
   <figure>
-    <img src="/images/gestalts-and-DIs/gestalt-discovery.png" width="90%" />
+    <img src={require('@site/images/gestalts-and-DIs/gestalt-discovery.png').default} width="90%" />
     <br />
     <figcaption>The Gestalt Discovery process</figcaption>
   </figure>
@@ -355,7 +355,7 @@ functionality and application.
 
 <p align="center">
   <figure>
-    <img src="/images/gestalts-and-DIs/gestalt-trust-chain.png" width="90%" />
+    <img src={require('@site/images/gestalts-and-DIs/gestalt-trust-chain.png').default} width="90%" />
     <br />
     <figcaption>The beginnings of a trust network formed by Gestalts</figcaption>
   </figure>

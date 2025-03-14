@@ -19,7 +19,7 @@ The documentation is structured using
 - [Reference](./reference/) - these are useful when you need remember how to use
   a particular command or function
 
-<img src="/images/divio_quadrant.png" width="100%" />
+<img src={require('@site/images/divio_quadrant.png').default} width="100%" />
 
 ## Introduction
 

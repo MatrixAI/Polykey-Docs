@@ -100,7 +100,7 @@ After successfully authenticating with GitHub, you can claim your identity. This
 involves posting a cryptographic link to a publicly verifiable location, such as
 a GitHub gist. This link serves as proof of ownership of the identity.
 
-<img src="/images/cryptolink.png" alt="Cryptolink"
+<img src={require('@site/images/cryptolink.png').default} alt="Cryptolink"
 style={{ width: '70%', height: 'auto' }} />
 
 ### Command Usage
