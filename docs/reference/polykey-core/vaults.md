@@ -67,9 +67,9 @@ decrypted in memory using the Virtual File System.
 ## `VaultManager`
 
 The `VaultManager` class is responsible for handling the many vaults a polykey
-instance would have. It contains a mapping of the vault name to the
-[`Vault`](#Vault) object along with functions manage the vaults. This is what is
-exported from the `Vaults` module.
+instance would have. It contains a mapping of the vault name to the `Vault`
+object along with functions manage the vaults. This is what is exported from the
+`Vaults` module.
 
 ---
 
