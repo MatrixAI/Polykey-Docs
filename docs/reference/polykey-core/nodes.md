@@ -6,25 +6,42 @@
 
 :::
 
-In the Polykey network, nodes represent the foundational elements of connectivity and interaction.
+In the Polykey network, nodes represent the foundational elements of
+connectivity and interaction.
 
 ## Node Structure
 
-The structure of nodes in Polykey encompasses several key elements, each contributing to the node's identity, connectivity, and functionality within the network:
+The structure of nodes in Polykey encompasses several key elements, each
+contributing to the node's identity, connectivity, and functionality within the
+network:
 
-1. NodeId: The primary identifier for a node within the Polykey network. It uniquely identifies each node, playing a critical role in node-to-node interactions and communications.
+1. NodeId: The primary identifier for a node within the Polykey network. It
+   uniquely identifies each node, playing a critical role in node-to-node
+   interactions and communications.
 
-2. NodeAddress: Comprises a host or hostname and a port. This combination allows for the location and accessibility of nodes within the network, facilitating direct connections and communications.
+2. NodeAddress: Comprises a host or hostname and a port. This combination allows
+   for the location and accessibility of nodes within the network, facilitating
+   direct connections and communications.
 
-3. NodeContact: A record mapping NodeContactAddress to NodeContactAddressData. It contains detailed information about how and when a node was last connected, including the connection mode and last active timestamp.
+3. NodeContact: A record mapping NodeContactAddress to NodeContactAddressData.
+   It contains detailed information about how and when a node was last
+   connected, including the connection mode and last active timestamp.
 
-4. NodeBucket: An array of node IDs and their corresponding contacts. Node buckets are used in distributed hash tables (DHTs) to organize nodes based on their distance in the network.
+4. NodeBucket: An array of node IDs and their corresponding contacts. Node
+   buckets are used in distributed hash tables (DHTs) to organize nodes based on
+   their distance in the network.
 
-5. NodeGraphSpace: Indicates the space within the NodeGraph where a node resides. It is used to classify and manage nodes in different contexts or domains within the network.
+5. NodeGraphSpace: Indicates the space within the NodeGraph where a node
+   resides. It is used to classify and manage nodes in different contexts or
+   domains within the network.
 
-6. ConnectionErrorCode and ConnectionErrorReason: Enums that define various error codes and reasons related to node connections, aiding in error handling and network stability.
+6. ConnectionErrorCode and ConnectionErrorReason: Enums that define various
+   error codes and reasons related to node connections, aiding in error handling
+   and network stability.
 
-7. SeedNodes: A record of initial nodes used for bootstrapping the network. Seed nodes provide the entry points for new nodes to join and integrate into the network.
+7. SeedNodes: A record of initial nodes used for bootstrapping the network. Seed
+   nodes provide the entry points for new nodes to join and integrate into the
+   network.
 
 ```ts
 type NodeAddressScope = 'local' | 'global';
@@ -42,27 +59,34 @@ type NodeBucket = Array<[NodeId, NodeContact]>;
 
 #### `type NodeId`
 
-- A unique identifier for a node within the Polykey network, essential for node identification and interaction.
+- A unique identifier for a node within the Polykey network, essential for node
+  identification and interaction.
 
 #### `type NodeAddress`
 
-- A tuple comprising a host (or hostname) and a port, representing the network address of a node for connectivity.
+- A tuple comprising a host (or hostname) and a port, representing the network
+  address of a node for connectivity.
 
 #### `type NodeBucket`
 
-- An array structure used in a distributed hash table (DHT) to organize nodes based on their network distance, containing pairs of `NodeId` and `NodeContact`.
+- An array structure used in a distributed hash table (DHT) to organize nodes
+  based on their network distance, containing pairs of `NodeId` and
+  `NodeContact`.
 
 #### `type NodeBucketIndex`
 
-- A numerical index used to categorize nodes into different buckets within the DHT based on their proximity or distance.
+- A numerical index used to categorize nodes into different buckets within the
+  DHT based on their proximity or distance.
 
 #### `type NodeContactAddressData`
 
-- Detailed information about a node's last connection, including the connection mode (direct, signal, relay), last connected time, and address scopes.
+- Detailed information about a node's last connection, including the connection
+  mode (direct, signal, relay), last connected time, and address scopes.
 
 #### `type NodeIdEncoded`
 
-- An encoded form of `NodeId`, facilitating the storage and transmission of node identifiers in a compact, serialized format.
+- An encoded form of `NodeId`, facilitating the storage and transmission of node
+  identifiers in a compact, serialized format.
 
 ---
 
@@ -70,7 +94,8 @@ type NodeBucket = Array<[NodeId, NodeContact]>;
 
 #### `constructor(...)`
 
-Initializes an instance of `NodeManager` with necessary dependencies and configuration.
+Initializes an instance of `NodeManager` with necessary dependencies and
+configuration.
 
 ##### Parameters:
 
@@ -86,8 +111,10 @@ Initializes an instance of `NodeManager` with necessary dependencies and configu
   - `connectionConnectTimeoutTime`: Timeout for establishing `NodeConnection`.
   - `refreshBucketDelayTime`: Interval for refreshing buckets in the DHT.
   - `refreshBucketDelayJitter`: Jitter applied to the bucket refresh interval.
-  - `retryConnectionsDelayTime`: Interval for retrying connections to maintain network health.
-  - `nodesConnectionFindLocalTimeoutTime`: Timeout for finding local connections via MDNS.
+  - `retryConnectionsDelayTime`: Interval for retrying connections to maintain
+    network health.
+  - `nodesConnectionFindLocalTimeoutTime`: Timeout for finding local connections
+    via MDNS.
   - `logger`: Logger instance.
 
 ##### Usage Example:
@@ -115,13 +142,17 @@ const nodeManager = new NodeManager({
 
 #### `public async start(): Promise<void>`
 
-Starts the NodeManager, initializing network services, task handlers, and MDNS for node discovery.
+Starts the NodeManager, initializing network services, task handlers, and MDNS
+for node discovery.
 
 ##### Functionality:
 
-- Registers task handlers for various operations like refreshing buckets, garbage collection, connection checks, and node graph synchronization.
-- Sets up initial refresh bucket tasks and schedules tasks for checking connections.
-- Initializes multicast DNS (MDNS) for local network discovery and service registration.
+- Registers task handlers for various operations like refreshing buckets,
+  garbage collection, connection checks, and node graph synchronization.
+- Sets up initial refresh bucket tasks and schedules tasks for checking
+  connections.
+- Initializes multicast DNS (MDNS) for local network discovery and service
+  registration.
 - Adds event listeners for handling node connections.
 
 ##### Usage Example:
@@ -134,7 +165,8 @@ await nodeManager.start();
 
 #### `public async stop(): Promise<void>`
 
-Stops the NodeManager, halting network services, task handlers, and MDNS operations.
+Stops the NodeManager, halting network services, task handlers, and MDNS
+operations.
 
 ##### Functionality:
 
@@ -152,7 +184,8 @@ await nodeManager.stop();
 
 #### `public acquireConnection(...): ResourceAcquire<NodeConnection>`
 
-Acquires a connection to a specified node, establishing a new connection if necessary.
+Acquires a connection to a specified node, establishing a new connection if
+necessary.
 
 ##### Parameters:
 
@@ -162,12 +195,14 @@ Acquires a connection to a specified node, establishing a new connection if nece
 ##### Functionality:
 
 - Validates the target node ID and checks for an existing connection.
-- If no connection exists, initiates a `findNode` operation to establish a connection.
+- If no connection exists, initiates a `findNode` operation to establish a
+  connection.
 - Returns a resource acquisition function for the established node connection.
 
 ##### Returns:
 
-- `ResourceAcquire<NodeConnection>`: A function to acquire the connection resource.
+- `ResourceAcquire<NodeConnection>`: A function to acquire the connection
+  resource.
 
 ##### Usage Example:
 
@@ -180,7 +215,8 @@ const connection = await connectionAcquire();
 
 #### `public withConnF(...): PromiseCancellable<T>`
 
-Facilitates communication with another node over the network using an existing or new connection.
+Facilitates communication with another node over the network using an existing
+or new connection.
 
 ##### Parameters:
 
@@ -196,7 +232,8 @@ Facilitates communication with another node over the network using an existing o
 
 ##### Returns:
 
-- `PromiseCancellable<T>`: A cancellable promise that resolves to the result of the function `f`.
+- `PromiseCancellable<T>`: A cancellable promise that resolves to the result of
+  the function `f`.
 
 ##### Usage Example:
 
@@ -222,11 +259,13 @@ Executes a generator function for network communication with another node.
 
 - Retrieves or establishes a connection to the specified node.
 - Executes the generator function `g` using the connection.
-- Manages the connection resource, ensuring proper handling of errors and release.
+- Manages the connection resource, ensuring proper handling of errors and
+  release.
 
 ##### Returns:
 
-- `AsyncGenerator<T, TReturn, TNext>`: An asynchronous generator yielding results from the generator function `g`.
+- `AsyncGenerator<T, TReturn, TNext>`: An asynchronous generator yielding
+  results from the generator function `g`.
 
 ##### Usage Example:
 
@@ -259,13 +298,16 @@ Attempts to find a node within the network using various connection strategies.
 
 ##### Functionality:
 
-- Utilizes signal-based, direct, and MDNS discovery strategies to locate the node.
+- Utilizes signal-based, direct, and MDNS discovery strategies to locate the
+  node.
 - Manages concurrent and total connection attempts with specified limits.
 - Resolves to the node's address and contact data upon successful discovery.
 
 ##### Returns:
 
-- `PromiseCancellable<[NodeAddress, NodeContactAddressData] | undefined>`: A cancellable promise resolving to the node's address and contact data, if found.
+- `PromiseCancellable<[NodeAddress, NodeContactAddressData] | undefined>`: A
+  cancellable promise resolving to the node's address and contact data, if
+  found.
 
 ##### Usage Example:
 
@@ -290,11 +332,13 @@ Attempts to connect to a node using signal-based (hole punched) connections.
 
 - Seeds the initial queue with the closest connections.
 - Attempts to establish a connection using signal-based methods.
-- Continues trying connections until the target node is successfully connected or all options are exhausted.
+- Continues trying connections until the target node is successfully connected
+  or all options are exhausted.
 
 ##### Returns:
 
-- `PromiseCancellable<[[Host, Port], NodeContactAddressData]>`: A promise that resolves to the node's address and connection data if successful.
+- `PromiseCancellable<[[Host, Port], NodeContactAddressData]>`: A promise that
+  resolves to the node's address and connection data if successful.
 
 ##### Usage Example:
 
@@ -319,11 +363,14 @@ Tries to establish a direct connection to a node without using signaling.
 
 - Initiates the process by seeding the queue with the closest nodes.
 - Attempts to connect directly to each node in the queue.
-- Proceeds with attempts until a successful connection is made or all options are explored.
+- Proceeds with attempts until a successful connection is made or all options
+  are explored.
 
 ##### Returns:
 
-- `PromiseCancellable<[[Host, Port], NodeContactAddressData]>`: A promise that resolves to the node's address and connection data upon successful direct connection.
+- `PromiseCancellable<[[Host, Port], NodeContactAddressData]>`: A promise that
+  resolves to the node's address and connection data upon successful direct
+  connection.
 
 ##### Usage Example:
 
@@ -336,7 +383,12 @@ const directConnection = await nodeManager.findNodeByDirect(
 
 ---
 
-These methods provide specialized strategies for finding and connecting to nodes within the Polykey network. `findNodeBySignal` leverages signal-based connections for nodes that might be behind NATs or firewalls, while `findNodeByDirect` attempts direct connections when signaling is not necessary. Both methods are essential for maintaining a robust and flexible network, allowing nodes to establish connections in various network environments.
+These methods provide specialized strategies for finding and connecting to nodes
+within the Polykey network. `findNodeBySignal` leverages signal-based
+connections for nodes that might be behind NATs or firewalls, while
+`findNodeByDirect` attempts direct connections when signaling is not necessary.
+Both methods are essential for maintaining a robust and flexible network,
+allowing nodes to establish connections in various network environments.
 
 ---
 
@@ -351,12 +403,14 @@ Queries the network via MDNS for Polykey nodes matching a specific NodeId.
 
 ##### Functionality:
 
-- Performs an MDNS query to discover services associated with the specified NodeId.
+- Performs an MDNS query to discover services associated with the specified
+  NodeId.
 - Returns the list of discovered addresses and ports for the target node.
 
 ##### Returns:
 
-- `PromiseCancellable<Array<[Host, Port]>>`: A promise that resolves to an array of host-port tuples found via MDNS.
+- `PromiseCancellable<Array<[Host, Port]>>`: A promise that resolves to an array
+  of host-port tuples found via MDNS.
 
 ##### Usage Example:
 
@@ -368,7 +422,8 @@ const mdnsAddresses = await nodeManager.queryMDNS(targetNodeId);
 
 #### `public findNodeByMDNS(...): PromiseCancellable<[[Host, Port], NodeContactAddressData]>`
 
-Attempts to find a node in the local network using MDNS and establish a connection.
+Attempts to find a node in the local network using MDNS and establish a
+connection.
 
 ##### Parameters:
 
@@ -383,7 +438,9 @@ Attempts to find a node in the local network using MDNS and establish a connecti
 
 ##### Returns:
 
-- `PromiseCancellable<[[Host, Port], NodeContactAddressData]>`: A promise that resolves to the node's address and connection data upon successful MDNS discovery and connection.
+- `PromiseCancellable<[[Host, Port], NodeContactAddressData]>`: A promise that
+  resolves to the node's address and connection data upon successful MDNS
+  discovery and connection.
 
 ##### Usage Example:
 
@@ -395,7 +452,8 @@ const mdnsConnection = await nodeManager.findNodeByMDNS(targetNodeId);
 
 #### `protected async queueDataFromRequest(...)`
 
-Queries a target node for the closest nodes to a specified node and adds them to the connection queue.
+Queries a target node for the closest nodes to a specified node and adds them to
+the connection queue.
 
 ##### Parameters:
 
@@ -406,8 +464,10 @@ Queries a target node for the closest nodes to a specified node and adds them to
 
 ##### Functionality:
 
-- Makes a remote procedure call (RPC) to the target node to retrieve the closest active and local nodes to the specified node.
-- Adds the retrieved nodes to the node connections queue for further connection attempts.
+- Makes a remote procedure call (RPC) to the target node to retrieve the closest
+  active and local nodes to the specified node.
+- Adds the retrieved nodes to the node connections queue for further connection
+  attempts.
 
 ##### Usage Example:
 
@@ -424,7 +484,8 @@ await nodeManager.queueDataFromRequest(
 
 #### `public pingNode(...): PromiseCancellable<[NodeAddress, NodeContactAddressData] | undefined>`
 
-Attempts to establish a connection with a specified node or uses an existing connection to confirm its reachability.
+Attempts to establish a connection with a specified node or uses an existing
+connection to confirm its reachability.
 
 ##### Parameters:
 
@@ -434,11 +495,14 @@ Attempts to establish a connection with a specified node or uses an existing con
 ##### Functionality:
 
 - Utilizes `findNode` to attempt to establish a connection to the target node.
-- Returns the node's address and contact data if the connection is successfully established or already exists.
+- Returns the node's address and contact data if the connection is successfully
+  established or already exists.
 
 ##### Returns:
 
-- `PromiseCancellable<[NodeAddress, NodeContactAddressData] | undefined>`: A promise that resolves to the node's address and contact data, or undefined if the connection cannot be established.
+- `PromiseCancellable<[NodeAddress, NodeContactAddressData] | undefined>`: A
+  promise that resolves to the node's address and contact data, or undefined if
+  the connection cannot be established.
 
 ##### Usage Example:
 
@@ -450,7 +514,8 @@ const result = await nodeManager.pingNode(targetNodeId);
 
 #### `public pingNodeAddress(...): PromiseCancellable<boolean>`
 
-Attempts to make a direct connection to a specified node address without ICE (Interactive Connectivity Establishment).
+Attempts to make a direct connection to a specified node address without ICE
+(Interactive Connectivity Establishment).
 
 ##### Parameters:
 
@@ -462,12 +527,15 @@ Attempts to make a direct connection to a specified node address without ICE (In
 ##### Functionality:
 
 - Checks for an existing connection to the target node.
-- Tries to establish a direct connection under certain conditions, such as an existing connection, NAT configuration, or public accessibility.
-- Returns `true` if the connection is established or already exists, `false` otherwise.
+- Tries to establish a direct connection under certain conditions, such as an
+  existing connection, NAT configuration, or public accessibility.
+- Returns `true` if the connection is established or already exists, `false`
+  otherwise.
 
 ##### Returns:
 
-- `PromiseCancellable<boolean>`: A promise that resolves to `true` if the connection is successful, `false` otherwise.
+- `PromiseCancellable<boolean>`: A promise that resolves to `true` if the
+  connection is successful, `false` otherwise.
 
 ##### Usage Example:
 
@@ -479,7 +547,8 @@ const isPingSuccessful = await nodeManager.pingNodeAddress(nodeId, host, port);
 
 #### `public requestChainData(...): PromiseCancellable<Record<ClaimId, SignedClaim>>`
 
-Requests chain data (claims) from a target node, optionally filtering by a specific claim ID.
+Requests chain data (claims) from a target node, optionally filtering by a
+specific claim ID.
 
 ##### Parameters:
 
@@ -495,7 +564,8 @@ Requests chain data (claims) from a target node, optionally filtering by a speci
 
 ##### Returns:
 
-- `PromiseCancellable<Record<ClaimId, SignedClaim>>`: A promise that resolves to a record of claim IDs and their corresponding verified claims.
+- `PromiseCancellable<Record<ClaimId, SignedClaim>>`: A promise that resolves to
+  a record of claim IDs and their corresponding verified claims.
 
 ##### Usage Example:
 
@@ -510,7 +580,8 @@ const chainData = await nodeManager.requestChainData(
 
 #### `public claimNode(...): PromiseCancellable<void>`
 
-Initiates the process of claiming a node, generating and exchanging signed claims between nodes.
+Initiates the process of claiming a node, generating and exchanging signed
+claims between nodes.
 
 ##### Parameters:
 
@@ -520,7 +591,8 @@ Initiates the process of claiming a node, generating and exchanging signed claim
 
 ##### Functionality:
 
-- Generates a claim for linking the node and exchanges it with the target node for cross-signing.
+- Generates a claim for linking the node and exchanges it with the target node
+  for cross-signing.
 - Both nodes verify and sign each other's claims.
 - Updates the Gestalt Graph with the newly established link.
 
@@ -534,7 +606,8 @@ await nodeManager.claimNode(targetNodeId);
 
 #### `public async *handleClaimNode(...): AsyncGenerator<AgentRPCResponseResult<AgentClaimMessage>>`
 
-Handles a claim node request from another node, processing the exchange of claims.
+Handles a claim node request from another node, processing the exchange of
+claims.
 
 ##### Parameters:
 
@@ -544,7 +617,8 @@ Handles a claim node request from another node, processing the exchange of claim
 
 ##### Functionality:
 
-- Processes the incoming claim request, verifying and signing the received claim.
+- Processes the incoming claim request, verifying and signing the received
+  claim.
 - Generates a new claim for the requesting node and sends it for cross-signing.
 - Updates the Gestalt Graph with the link between the two nodes.
 
@@ -563,16 +637,20 @@ for await (const response of nodeManager.handleClaimNode(
 
 #### `public setNode(...): PromiseCancellable<void>`
 
-Adds or updates a node in the NodeGraph, ensuring node authentication and managing node bucket constraints.
+Adds or updates a node in the NodeGraph, ensuring node authentication and
+managing node bucket constraints.
 
 ##### Parameters:
 
 - `nodeId`: NodeId of the node to add or update.
 - `nodeAddress`: Address of the node.
 - `nodeContactAddressData`: Additional contact data for the node.
-- `block`: Flag to block the operation until any ongoing garbage collection finishes.
-- `force`: Flag to add the node without authentication or in a full bucket, replacing the oldest node.
-- `connectionConnectTimeoutTime`: Timeout for ping operations during garbage collection.
+- `block`: Flag to block the operation until any ongoing garbage collection
+  finishes.
+- `force`: Flag to add the node without authentication or in a full bucket,
+  replacing the oldest node.
+- `connectionConnectTimeoutTime`: Timeout for ping operations during garbage
+  collection.
 - `ctx`: Optional context for timed operations.
 - `tran`: Optional database transaction.
 
@@ -582,7 +660,8 @@ Adds or updates a node in the NodeGraph, ensuring node authentication and managi
 - Handles three scenarios:
   1. Node exists: updates the node.
   2. Node doesn't exist and bucket has room: adds the node.
-  3. Node doesn't exist and bucket is full: pings the oldest node and decides to update or replace it based on ping success.
+  3. Node doesn't exist and bucket is full: pings the oldest node and decides to
+     update or replace it based on ping success.
 - If `force` is true, replaces the oldest node regardless of ping result.
 - Adds nodes to a pending list if the bucket is full and `force` is false.
 
@@ -637,7 +716,8 @@ Retrieves a specific bucket from the NodeGraph based on its index.
 
 ##### Returns:
 
-- `Promise<NodeBucket | undefined>`: A promise that resolves to the requested bucket or undefined if not found.
+- `Promise<NodeBucket | undefined>`: A promise that resolves to the requested
+  bucket or undefined if not found.
 
 ##### Usage Example:
 
@@ -654,7 +734,8 @@ Performs garbage collection on a specific bucket in the NodeGraph.
 ##### Parameters:
 
 - `bucketIndex`: Index of the bucket to perform garbage collection on.
-- `connectionConnectTimeoutTime`: Timeout for each ping operation during garbage collection.
+- `connectionConnectTimeoutTime`: Timeout for each ping operation during garbage
+  collection.
 - `ctx`: Optional context for timed operations.
 - `tran`: Optional database transaction.
 
@@ -663,7 +744,8 @@ Performs garbage collection on a specific bucket in the NodeGraph.
 - Iterates over each node in the specified bucket.
 - Pings each node to check its responsiveness.
 - Removes unresponsive nodes to make room for pending nodes.
-- Fills the bucket with pending nodes until full, discarding any remaining pending nodes.
+- Fills the bucket with pending nodes until full, discarding any remaining
+  pending nodes.
 - Ensures concurrency control and respects the cancellation signal.
 
 ##### Usage Example:
@@ -681,7 +763,8 @@ await nodeManager.garbageCollectBucket(
 
 #### `protected async addPendingNode(...): Promise<void>`
 
-Adds a node to the pending list for a specified bucket, possibly triggering garbage collection.
+Adds a node to the pending list for a specified bucket, possibly triggering
+garbage collection.
 
 ##### Parameters:
 
@@ -690,7 +773,8 @@ Adds a node to the pending list for a specified bucket, possibly triggering garb
 - `nodeAddress`: Address of the node.
 - `nodeContactAddressData`: Additional contact data for the node.
 - `block`: Flag to run garbage collection synchronously.
-- `connectionConnectTimeoutTime`: Timeout for ping operations during garbage collection.
+- `connectionConnectTimeoutTime`: Timeout for ping operations during garbage
+  collection.
 - `ctx`: Context for timed operations.
 - `tran`: Optional database transaction.
 
@@ -723,7 +807,8 @@ Sets up a garbage collection task for a specific bucket in the NodeGraph.
 
 ##### Parameters:
 
-- `bucketIndex`: Index of the bucket for which the garbage collection task is set up.
+- `bucketIndex`: Index of the bucket for which the garbage collection task is
+  set up.
 
 ##### Functionality:
 
@@ -745,7 +830,8 @@ Resets all buckets in the NodeGraph in response to a key renewal.
 
 ##### Functionality:
 
-- Reorders all nodes across all buckets according to the new node ID after key renewal.
+- Reorders all nodes across all buckets according to the new node ID after key
+  renewal.
 
 ##### Usage Example:
 
@@ -762,13 +848,15 @@ Performs a Kademlia refresh bucket operation for a specific bucket.
 ##### Parameters:
 
 - `bucketIndex`: Index of the bucket to refresh.
-- `connectionConnectTimeoutTime`: Timeout for each connection attempt during the refresh operation.
+- `connectionConnectTimeoutTime`: Timeout for each connection attempt during the
+  refresh operation.
 - `ctx`: Optional context for timed operations.
 
 ##### Functionality:
 
 - Generates a random node ID within the range of the specified bucket.
-- Conducts a network lookup for the generated node ID, prompting an update of node graph information.
+- Conducts a network lookup for the generated node ID, prompting an update of
+  node graph information.
 
 ##### Usage Example:
 
@@ -806,14 +894,17 @@ Updates the delay for a scheduled refresh bucket task.
 
 ##### Parameters:
 
-- `bucketIndex`: Index of the bucket for which the refresh task is being updated.
-- `delay`: Delay time for the refresh bucket task (defaults to the class's `refreshBucketDelayTime`).
+- `bucketIndex`: Index of the bucket for which the refresh task is being
+  updated.
+- `delay`: Delay time for the refresh bucket task (defaults to the class's
+  `refreshBucketDelayTime`).
 - `lazy`: Boolean indicating if the task should be lazily scheduled.
 - `tran`: Optional database transaction.
 
 ##### Functionality:
 
-- Iterates over existing tasks for the specified bucket and updates the delay for the first task found.
+- Iterates over existing tasks for the specified bucket and updates the delay
+  for the first task found.
 - Cancels duplicate tasks found for the same bucket.
 - Creates a new task if none are scheduled or existing.
 
@@ -845,7 +936,8 @@ Performs an initial synchronization of the NodeGraph with the network.
 
 - Connects to initial nodes provided.
 - Performs a `find-node` operation for the node's own ID.
-- Reschedules refresh bucket operations for buckets above the closest node found.
+- Reschedules refresh bucket operations for buckets above the closest node
+  found.
 - The process ensures the node joins the network and populates its k-buckets.
 
 ##### Usage Example:

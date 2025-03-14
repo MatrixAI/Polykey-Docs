@@ -1,22 +1,36 @@
 # Sharing Vaults With Secrets
 
-In Polykey, sharing vaults containing secrets is essential for collaborative environments. This guide will walk you through the process of securely sharing your vaults and enabling other users to access and synchronize secrets between trusted nodes.
+In Polykey, sharing vaults containing secrets is essential for collaborative
+environments. This guide will walk you through the process of securely sharing
+your vaults and enabling other users to access and synchronize secrets between
+trusted nodes.
 
 ## Prerequisites for Sharing Vaults
 
-Before sharing a vault, ensure that both nodes have established trust and appropriate permissions are set. For details on setting trust and access permissions, refer to the "Discovering Users' Nodes and Managing Access Permissions" section.
+Before sharing a vault, ensure that both nodes have established trust and
+appropriate permissions are set. For details on setting trust and access
+permissions, refer to the "Discovering Users' Nodes and Managing Access
+Permissions" section.
 
 ### Common Debugging Techniques for Sharing Secrets
 
-To share secrets between two nodes on different machines, both must be actively connected to the Polykey network. Here are some techniques to ensure connectivity and troubleshoot common issues:
+To share secrets between two nodes on different machines, both must be actively
+connected to the Polykey network. Here are some techniques to ensure
+connectivity and troubleshoot common issues:
 
-- **Node Ping:** Use `polykey nodes ping <nodeID>` to check if the intended recipient's node is active and reachable.
+- **Node Ping:** Use `polykey nodes ping <nodeID>` to check if the intended
+  recipient's node is active and reachable.
 
-- **Restarting Polykey Agent:** If connectivity issues persist, try restarting the Polykey agent. Persistent errors might indicate restrictive network settings blocking communication.
+- **Restarting Polykey Agent:** If connectivity issues persist, try restarting
+  the Polykey agent. Persistent errors might indicate restrictive network
+  settings blocking communication.
 
-- **Network Alternatives:** Connectivity issues may also be due to restrictive networks, try connecting from a different network environment.
+- **Network Alternatives:** Connectivity issues may also be due to restrictive
+  networks, try connecting from a different network environment.
 
-- **Multiple Nodes:** To test sharing functionality without another user, set up multiple nodes on your system. Refer to the managing multiple nodes section for guidance.
+- **Multiple Nodes:** To test sharing functionality without another user, set up
+  multiple nodes on your system. Refer to the managing multiple nodes section
+  for guidance.
 
 ## Sharing the Vault
 
@@ -31,7 +45,8 @@ polykey vaults share <vaultName> <nodeId>
 
 :::tip
 
-Remember, you can run the following commands to reference the argument names to pass into your command:
+Remember, you can run the following commands to reference the argument names to
+pass into your command:
 
 - `polykey vaults list`
 - `polykey identities list`
@@ -68,7 +83,8 @@ This command lists the vaults shared by the specified node.
 
 ## Cloning the Shared Vault
 
-After identifying the shared vaults, the recipient can clone the desired vault to their own local node:
+After identifying the shared vaults, the recipient can clone the desired vault
+to their own local node:
 
 ```bash
 polykey vaults clone <vaultName> <nodeId>
@@ -87,7 +103,9 @@ This command clones "myvault" from the specified node to the local system.
 
 ## Synchronizing Changes
 
-If updates are made to the original vault, such as key rotations or new secrets added, the receiving node can synchronize these changes by pulling the latest version of the vault:
+If updates are made to the original vault, such as key rotations or new secrets
+added, the receiving node can synchronize these changes by pulling the latest
+version of the vault:
 
 ```bash
 polykey vaults pull <vaultName> <targetNodeId>
@@ -106,4 +124,7 @@ This command updates "myvault" with the latest changes from the specified node.
 
 ## Conclussion
 
-Sharing and synchronizing vaults in Polykey enhances collaboration and security across the network. By following these guidelines, users can effectively manage sensitive data, ensuring all parties involved have secure and up-to-date access to shared resources.
+Sharing and synchronizing vaults in Polykey enhances collaboration and security
+across the network. By following these guidelines, users can effectively manage
+sensitive data, ensuring all parties involved have secure and up-to-date access
+to shared resources.

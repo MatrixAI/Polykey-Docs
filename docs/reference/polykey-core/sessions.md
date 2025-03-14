@@ -6,13 +6,16 @@
 
 :::
 
-The SessionManager class is responsible for creating, verifying, and managing session tokens. It integrates with a database and a key management system to ensure secure token handling.
+The SessionManager class is responsible for creating, verifying, and managing
+session tokens. It integrates with a database and a key management system to
+ensure secure token handling.
 
 ## Specification
 
 ### `Session`
 
-The `Session` class manages session tokens, specifically handling their storage, retrieval, and lifecycle.
+The `Session` class manages session tokens, specifically handling their storage,
+retrieval, and lifecycle.
 
 #### `static async createSession(...):Promise<Session>`
 
@@ -48,7 +51,8 @@ const session = await Session.createSession({
 
 #### `public async start(...):Promise<void>`
 
-Starts the session, optionally clearing existing token and writing a new token if required.
+Starts the session, optionally clearing existing token and writing a new token
+if required.
 
 ##### Parameters:
 
@@ -133,7 +137,9 @@ await session.writeToken('yourNewSessionToken');
 
 #### `static async createSessionManager(...): Promise<SessionManager>`
 
-Creates and initialises an instance of `SessionManager`. This static method sets up the necessary database and key ring dependencies and starts the session manager.
+Creates and initialises an instance of `SessionManager`. This static method sets
+up the necessary database and key ring dependencies and starts the session
+manager.
 
 ##### Parameters:
 
@@ -165,7 +171,8 @@ const sessionManager = await SessionManager.createSessionManager({
 
 #### `public async start(...): Promise<void>`
 
-Starts the session manager. This method sets up the session key and prepares the manager for operation.
+Starts the session manager. This method sets up the session key and prepares the
+manager for operation.
 
 ##### Parameters:
 
@@ -195,7 +202,8 @@ await sessionManager.stop();
 
 #### `public async destroy(...)`
 
-Destroys the session manager instance, clearing all session-related data from the database.
+Destroys the session manager instance, clearing all session-related data from
+the database.
 
 ##### Usage Example:
 
@@ -274,7 +282,8 @@ if (isValid) {
 
 #### `public async setupKey():Promise<Buffer>`
 
-Sets up the session key. This method ensures that a valid session key is available, generating a new one if necessary.
+Sets up the session key. This method ensures that a valid session key is
+available, generating a new one if necessary.
 
 ##### Returns:
 

@@ -15,6 +15,7 @@
 .cache-loader
 # wrangler
 .wrangler
+.dev.vars
 
 # Logs
 logs

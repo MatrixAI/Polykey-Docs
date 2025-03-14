@@ -124,6 +124,7 @@ const sidebars: SidebarsConfig = {
       },
       items: [
         'reference/architecture',
+        'reference/root-keypair',
         {
           type: 'category',
           label: 'Polykey-CLI',

@@ -1,29 +1,43 @@
 # Gestalt Graph
 
-:::info
-For auto-generated programmatic reference, please see the docs here:
-https://matrixai.github.io/Polykey/modules/gestalts.html
-:::
+:::info For auto-generated programmatic reference, please see the docs here:
+https://matrixai.github.io/Polykey/modules/gestalts.html :::
 
-Gestalt Graphs in Polykey represent a unified social plane that links identities to NodeIDs. This facilitates the sharing
-of vaults and secrets by allowing users to rely on either NodeIDs or social IDs (based on their preference) when sharing information.
+Gestalt Graphs in Polykey represent a unified social plane that links identities
+to NodeIDs. This facilitates the sharing of vaults and secrets by allowing users
+to rely on either NodeIDs or social IDs (based on their preference) when sharing
+information.
 
 ## Gestalt
 
-Gestalts in Polykey represent a unique identification system that blends the concept of node-based and identity-based identifiers.
-This allows users to establish a more comprehensive and user-friendly way of interacting within the Polykey network.
-Each Gestalt ID can consist of one or both of the following elements:
+Gestalts in Polykey represent a unique identification system that blends the
+concept of node-based and identity-based identifiers. This allows users to
+establish a more comprehensive and user-friendly way of interacting within the
+Polykey network. Each Gestalt ID can consist of one or both of the following
+elements:
 
-1. NodeID: This is the primary identifier for a user within the Polykey network. It specifically denotes the ID of the node running the Polykey Agent.
-   The NodeID is fundamental for interactions that are primarily node-centric, facilitating operations and communications that are tied to the technical infrastructure of the network.
-2. Identity ID: This element extends the notion of identity beyond just the technical node. It consists of:
+1. NodeID: This is the primary identifier for a user within the Polykey network.
+   It specifically denotes the ID of the node running the Polykey Agent. The
+   NodeID is fundamental for interactions that are primarily node-centric,
+   facilitating operations and communications that are tied to the technical
+   infrastructure of the network.
+2. Identity ID: This element extends the notion of identity beyond just the
+   technical node. It consists of:
 
-- ProviderID: This identifies the social identity provider. It's a key element that signifies the external platform or service (like GitHub, Google, etc.) that the user's social identity is associated with.
-- IdentityID: This is the specific user ID within the domain of the chosen identity provider. It's the unique identifier given to a user by the external identity provider, differentiating them from other users on that platform.
+- ProviderID: This identifies the social identity provider. It's a key element
+  that signifies the external platform or service (like GitHub, Google, etc.)
+  that the user's social identity is associated with.
+- IdentityID: This is the specific user ID within the domain of the chosen
+  identity provider. It's the unique identifier given to a user by the external
+  identity provider, differentiating them from other users on that platform.
 - Optional Personal Information:
   - Name: The user's name, providing a more human-readable identifier.
-  - Email: The user's email address, offering another layer of identity that can be used for communication or verification purposes.URL: A URL that might be associated with the user's identity, such as a personal website or a profile page on the identity provider's platform.
-  - URL: A URL that might be associated with the user's identity, such as a personal website or a profile page on the identity provider's platform.
+  - Email: The user's email address, offering another layer of identity that can
+    be used for communication or verification purposes.URL: A URL that might be
+    associated with the user's identity, such as a personal website or a profile
+    page on the identity provider's platform.
+  - URL: A URL that might be associated with the user's identity, such as a
+    personal website or a profile page on the identity provider's platform.
 
 ```ts
 type GestaltInfo =
@@ -60,55 +74,69 @@ type GestaltIdentityInfo = {
 
 #### `type Gestalt`
 
-- Represents the overall structure of the Gestalt Graph, encompassing matrices, nodes, and identities.
+- Represents the overall structure of the Gestalt Graph, encompassing matrices,
+  nodes, and identities.
 
 #### `type GestaltAction`
 
-- Denotes specific actions applicable within the Gestalt Graph, such as 'notify', 'scan', or 'claim'.
+- Denotes specific actions applicable within the Gestalt Graph, such as
+  'notify', 'scan', or 'claim'.
 
 #### `type GestaltActions`
 
-- A record type mapping GestaltAction to a null value, used for action-related operations in the Gestalt Graph.
+- A record type mapping GestaltAction to a null value, used for action-related
+  operations in the Gestalt Graph.
 
 #### `type GestaltKey`
 
-- An opaque type representing a unique key within the Gestalt Graph, used for secure operations and identifications.
+- An opaque type representing a unique key within the Gestalt Graph, used for
+  secure operations and identifications.
 
 #### `type GestaltLinkId`
 
-- A unique identifier for a link within the Gestalt Graph, representing connections between nodes and identities.
+- A unique identifier for a link within the Gestalt Graph, representing
+  connections between nodes and identities.
 
 #### `type GestaltNodeInfo`
 
-- Contains information about a node in the Gestalt Graph, primarily the NodeID and optional JSON value properties
+- Contains information about a node in the Gestalt Graph, primarily the NodeID
+  and optional JSON value properties
 
 #### `type GestaltNodeInfoJSON`
 
-- The JSON representation of GestaltNodeInfo, with nodeId in a specific internal ID format for serialization.
+- The JSON representation of GestaltNodeInfo, with nodeId in a specific internal
+  ID format for serialization.
 
 #### `type GestaltIdentityInfo`
 
-- Describes an identity within the Gestalt Graph, including providerId, identityId, and optional personal information (name, email, URL).
+- Describes an identity within the Gestalt Graph, including providerId,
+  identityId, and optional personal information (name, email, URL).
 
 #### `type GestaltLink`
 
-- Represents a link (edge) in the Gestalt Graph, which can be either a node-to-node link (GestaltLinkNode) or a node-to-identity link (GestaltLinkIdentity).
+- Represents a link (edge) in the Gestalt Graph, which can be either a
+  node-to-node link (GestaltLinkNode) or a node-to-identity link
+  (GestaltLinkIdentity).
 
 #### `type GestaltLinkNode`
 
-- A type for links between nodes in the Gestalt Graph, containing a link ID, a signed claim, and metadata.
+- A type for links between nodes in the Gestalt Graph, containing a link ID, a
+  signed claim, and metadata.
 
 #### `type GestaltInfo`
 
-- A union type that can represent either GestaltNodeInfo or GestaltIdentityInfo, used for describing elements in the Gestalt Graph.
+- A union type that can represent either GestaltNodeInfo or GestaltIdentityInfo,
+  used for describing elements in the Gestalt Graph.
 
 #### `type GestaltLinkIdentity`
 
-- Similar to GestaltLinkNode, but specifically for linking a node to an identity, including a signed claim and additional metadata.
+- Similar to GestaltLinkNode, but specifically for linking a node to an
+  identity, including a signed claim and additional metadata.
 
 #### `type GestaltId`
 
-- A general type for identifiers within the Gestalt Graph, used for referencing nodes, identities, or links.
+- A general type for identifiers within the Gestalt Graph, used for referencing
+  nodes, identities, or links.
 
 ---
 
@@ -174,7 +202,8 @@ await gestaltGraph.stop();
 
 #### `async destroy(...): Promise<void>`
 
-Destroys the gestalt graph instance, clearing all related data from the database.
+Destroys the gestalt graph instance, clearing all related data from the
+database.
 
 ##### Usage Example:
 
@@ -316,9 +345,12 @@ Links two nodes within the gestalt graph.
 
 ##### Functionality:
 
-- Validates if the link node's issuer and subject match the provided node information.
-- Ensures the nodes are not already linked; if they are, it only updates the link node.
-- Handles ACL changes based on whether the nodes are new or existing in the gestalt graph.
+- Validates if the link node's issuer and subject match the provided node
+  information.
+- Ensures the nodes are not already linked; if they are, it only updates the
+  link node.
+- Handles ACL changes based on whether the nodes are new or existing in the
+  gestalt graph.
 - Creates and links a new GestaltLinkId if the nodes are not already connected.
 
 ##### Returns:
@@ -339,7 +371,8 @@ const gestaltLinkId = await gestaltGraph.linkNodeAndNode(
 
 #### `public async unlinkNodeAndNode(...): Promise<void>`
 
-Unlinks two nodes in the gestalt graph, ensuring that their connection is removed.
+Unlinks two nodes in the gestalt graph, ensuring that their connection is
+removed.
 
 ##### Parameters:
 
@@ -375,10 +408,14 @@ Links a node and an identity within the gestalt graph.
 
 ##### Functionality:
 
-- Validates if the link identity's issuer and subject match the provided node and identity information.
-- Handles the scenario where either the node or the identity or both are new in the graph.
-- Manages ACL changes depending on the existence of the node and identity in the gestalt graph.
-- Creates a new GestaltLinkId for the connection and manages updates if the node and identity are already connected.
+- Validates if the link identity's issuer and subject match the provided node
+  and identity information.
+- Handles the scenario where either the node or the identity or both are new in
+  the graph.
+- Manages ACL changes depending on the existence of the node and identity in the
+  gestalt graph.
+- Creates a new GestaltLinkId for the connection and manages updates if the node
+  and identity are already connected.
 
 ##### Returns:
 
@@ -398,7 +435,8 @@ const gestaltLinkId = await gestaltGraph.linkNodeAndIdentity(
 
 #### `public async unlinkNodeAndIdentity(...): Promise<void>`
 
-Unlinks a node and an identity in the gestalt graph, effectively removing their connection.
+Unlinks a node and an identity in the gestalt graph, effectively removing their
+connection.
 
 ##### Parameters:
 
@@ -410,8 +448,10 @@ Unlinks a node and an identity in the gestalt graph, effectively removing their 
 
 - Checks the existence of both the node and the identity in the graph.
 - Validates and removes the link between the node and the identity.
-- Adjusts the graph to reflect the unlinking, potentially setting vertices as singletons.
-- Manages ACL permissions appropriately, copying permissions if the gestalt splits.
+- Adjusts the graph to reflect the unlinking, potentially setting vertices as
+  singletons.
+- Manages ACL permissions appropriately, copying permissions if the gestalt
+  splits.
 
 ##### Usage Example:
 
@@ -425,7 +465,9 @@ await gestaltGraph.unlinkNodeAndIdentity(nodeId, providerIdentityId);
 
 #### `public linkVertexAndVertex(...): Promise<GestaltLinkId>`
 
-Links two vertices (nodes or identities) within the gestalt graph. This method is an abstraction that can handle linking between two nodes, a node and an identity, or an identity and a node.
+Links two vertices (nodes or identities) within the gestalt graph. This method
+is an abstraction that can handle linking between two nodes, a node and an
+identity, or an identity and a node.
 
 ##### Overloads:
 
@@ -451,7 +493,8 @@ Links two vertices (nodes or identities) within the gestalt graph. This method i
 
 #### `public linkVertexAndVertex(...): Promise<GestaltLinkId>`
 
-Links two vertices (either nodes or identities) within the gestalt graph, dynamically handling the link type based on the vertex types.
+Links two vertices (either nodes or identities) within the gestalt graph,
+dynamically handling the link type based on the vertex types.
 
 ##### Parameters:
 
@@ -462,8 +505,10 @@ Links two vertices (either nodes or identities) within the gestalt graph, dynami
 
 ##### Functionality:
 
-- Determines the types of the vertices and delegates the linking operation to either linkNodeAndNode or linkNodeAndIdentity, based on the vertex types.
-- Handles linking between two nodes, a node and an identity, or an identity and a node.
+- Determines the types of the vertices and delegates the linking operation to
+  either linkNodeAndNode or linkNodeAndIdentity, based on the vertex types.
+- Handles linking between two nodes, a node and an identity, or an identity and
+  a node.
 
 ##### Returns:
 
@@ -483,7 +528,8 @@ const gestaltLinkId = await gestaltGraph.linkVertexAndVertex(
 
 #### `public unlinkVertexAndVertex(...): Promise<void>`
 
-Unlinks two vertices (either nodes or identities) within the gestalt graph, dynamically handling the unlinking type based on the vertex types.
+Unlinks two vertices (either nodes or identities) within the gestalt graph,
+dynamically handling the unlinking type based on the vertex types.
 
 ##### Parameters:
 
@@ -493,8 +539,10 @@ Unlinks two vertices (either nodes or identities) within the gestalt graph, dyna
 
 ##### Functionality:
 
-- Determines the types of the vertices and delegates the unlinking operation to either unlinkNodeAndNode or unlinkNodeAndIdentity, based on the vertex types.
-- Handles unlinking between two nodes, a node and an identity, or an identity and a node.
+- Determines the types of the vertices and delegates the unlinking operation to
+  either unlinkNodeAndNode or unlinkNodeAndIdentity, based on the vertex types.
+- Handles unlinking between two nodes, a node and an identity, or an identity
+  and a node.
 
 ##### Usage Example:
 
@@ -508,7 +556,8 @@ await gestaltGraph.unlinkVertexAndVertex(gestaltId1, gestaltId2);
 
 #### `public getGestaltActions(...): Promise<GestaltActions>`
 
-Retrieves the actions associated with a specific gestalt (node or identity) in the gestalt graph.
+Retrieves the actions associated with a specific gestalt (node or identity) in
+the gestalt graph.
 
 ##### Parameters:
 
@@ -547,7 +596,8 @@ Sets a specific action for a gestalt (node or identity) in the gestalt graph.
 ##### Functionality:
 
 - Validates the existence of the gestalt in the graph.
-- Sets the specified action in the ACL for the node or the node linked to the identity.
+- Sets the specified action in the ACL for the node or the node linked to the
+  identity.
 
 ##### Usage Example:
 

@@ -1,9 +1,9 @@
 # `polykey secrets`
 
 ## `create`
+
 1. Create a secret within a given vault
 2. Requires a file path as input which contains the secret
-
 
 Usage:
 
@@ -12,6 +12,7 @@ $ polykey secrets create ~/random.txt vault1:secret1
 ```
 
 ## `rm`
+
 1. Removes one or more secrets from a specified vault
 2. Ignores paths which do not exist and continues execution
 3. Pass in the `-r` option to remove directories
@@ -44,7 +45,9 @@ ErrorPolykeyCLIRemoveSecret: Failed to remove one or more secrets
 $ polykey secrets rm -r vault1:dir1
 # Command finishes successfully this time
 ```
+
 ## `dir`
+
 1. Adds a directory within a given vault
 2. Requires dir to be added as a parameter
 3. Requires the vault where to the dir is to be added
@@ -56,13 +59,13 @@ $ polykey secrets dir ~/test-dir vault1
 ```
 
 ## `ed`
+
 1. Edit a secret within a vault by launching the preferred editor
 2. If the secret doesn't exist, a new and empty secret is created for editing
-3. If the edited file isn't saved or the editor crashes, the secret will not be written
+3. If the edited file isn't saved or the editor crashes, the secret will not be
+   written
 
-:::warning
-This command does not work on Windows yet
-:::
+:::warning This command does not work on Windows yet :::
 
 Usage:
 
@@ -75,14 +78,14 @@ I edited this secret inside an editor
 ```
 
 ## `cat`
+
 1. Fetches one or more secrets from a specified vault and concatenates them
 2. Skips to the next argument if a secret encounters an error while reading
 3. File contents are printed out to `stdout` and errors to `stderr`
-4. If no paths are specified, this command takes input from `stdin` and prints it to `stdout`
+4. If no paths are specified, this command takes input from `stdin` and prints
+   it to `stdout`
 
-:::tip
-`^D` in the terminal stands for the key combination 'Ctrl-D'
-:::
+:::tip `^D` in the terminal stands for the key combination 'Ctrl-D' :::
 
 Usage:
 
@@ -112,6 +115,7 @@ abc^D^Dabc
 ```
 
 ## `ls`
+
 1. Lists all secrets within a specific directory inside a specified vault
 
 Usage:
@@ -133,6 +137,7 @@ dir1/nothing-to-see-here
 ```
 
 ## `mkdir`
+
 1. Creates an empty directory within a vault
 2. Skips invalid operations
 3. To make a nested directory, pass in the `-p` option
@@ -157,6 +162,7 @@ abc/def/ghi
 ```
 
 ## `rename`
+
 1. Rename a secret
 2. Requires secret location (vaultName:secretName) as a parameter
 3. Requires new name of the secret as a parameter
@@ -174,12 +180,11 @@ new-name
 ```
 
 ## `stat`
+
 1. Get the stats of a specified secret from a vault
 2. Requires secret location (vaultName:secretName) as a parameter
 
-:::note
-The mode (or file permissions) doesn't exist within a vault
-:::
+:::note The mode (or file permissions) doesn't exist within a vault :::
 
 Usage:
 
@@ -203,14 +208,16 @@ blocks: 1
 ```
 
 ## `env`
-1. Export one or multiple secrets within a vault as environment variables
-2. Run a command with the specified variables, or export them in the current working environment
 
-:::note
-Separate the environment variables from the command by passing in a `--`
+1. Export one or multiple secrets within a vault as environment variables
+2. Run a command with the specified variables, or export them in the current
+   working environment
+
+:::note Separate the environment variables from the command by passing in a `--`
 :::
 
 Usage:
+
 ```shell
 $ polykey secrets ls my-project
 OPENAI_API_KEY
@@ -242,14 +249,15 @@ do not commit your keys to github
 ```
 
 ## `write`
+
 1. Reads input from `stdin` and writes it to the specified file
 2. If the file doesn't exist, it gets created
 
-:::tip
-`stdin`, or standard input, can be either manually entered by typing, or piped in through another command.
+:::tip `stdin`, or standard input, can be either manually entered by typing, or
+piped in through another command.
 
-To close the input steam and save the file, press `^D`, or 'Ctrl-D' in a new line, or press `^D` twice on the same line.
-:::
+To close the input steam and save the file, press `^D`, or 'Ctrl-D' in a new
+line, or press `^D` twice on the same line. :::
 
 Usage:
 

@@ -2,7 +2,7 @@
 // It is only used for IDE checking and auto-completion
 {
   "compilerOptions": {
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowJs": true,
     "strictNullChecks": true,
     "noImplicitAny": false,
@@ -20,7 +20,7 @@
       "node",
       "@cloudflare/workers-types",
       "@docusaurus/module-type-aliases",
-      "@docusaurus/theme-classic",
+      "@docusaurus/theme-classic"
     ],
     "baseUrl": "./.",
     "paths": {
@@ -29,11 +29,15 @@
     "noEmit": true
   },
   "include": [
+    "global.d.ts",
     "./src/**/*",
+    "./src/**/*.json",
     "./docs/**/*",
+    "./pages/**/*",
+    "./blog/**/*",
     "./server/**/*",
     "./scripts/**/*",
     "./docusaurus.config.ts",
-    "./sidebars.ts"
+    "./tailwind.config.ts"
   ]
 }

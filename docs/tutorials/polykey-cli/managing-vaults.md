@@ -2,7 +2,11 @@
 
 ## Introduction
 
-Vaults in Polykey are secure containers where you can store and manage secrets like passwords, tokens, certificates, and keys. Vaults are encrypted and only accessible within your Polykey node. This section covers the basics of managing vaults, including creating, listing, deleting, viewing vault history, and renaming them.
+Vaults in Polykey are secure containers where you can store and manage secrets
+like passwords, tokens, certificates, and keys. Vaults are encrypted and only
+accessible within your Polykey node. This section covers the basics of managing
+vaults, including creating, listing, deleting, viewing vault history, and
+renaming them.
 
 ## Creating a Vault
 
@@ -28,7 +32,8 @@ Vault zUvPxC9aKNw94E1yR9dffzY created successfully
 
 ## Listing Vaults
 
-To see all the vaults you have, use the list command. This provides a simple way to view all vault names and their identifiers.
+To see all the vaults you have, use the list command. This provides a simple way
+to view all vault names and their identifiers.
 
 ```bash
 polykey vaults list
@@ -58,11 +63,13 @@ Delete the vault named myvault:
 polykey vaults delete myvault
 ```
 
-This operation does not produce output on successful execution, indicating the vault has been removed.
+This operation does not produce output on successful execution, indicating the
+vault has been removed.
 
 ## Viewing Vault History
 
-Each vault maintains a version history which tracks changes over time. Use the log command to view the history of commits to a vault.
+Each vault maintains a version history which tracks changes over time. Use the
+log command to view the history of commits to a vault.
 
 ```bash
 polykey vaults log <vaultName>
@@ -91,7 +98,8 @@ message    "AWS_ACCESS_KEY_ID added\n"
 
 ## Renaming a Vault
 
-To change the name of an existing vault, use the rename command. This allows you to update the vault's name to something more descriptive or appropriate.
+To change the name of an existing vault, use the rename command. This allows you
+to update the vault's name to something more descriptive or appropriate.
 
 ```bash
 polykey vaults rename <oldVaultName> <newVaultName>
@@ -113,7 +121,13 @@ polykey vaults list
 
 ## Conclusion
 
-Managing vaults is a foundational skill in using Polykey effectively. This section has guided you through the essential commands needed to create, manage, and organize your vaults within Polykey. Further capabilities such as setting permissions, sharing vaults, and pulling vaults from other nodes will be covered in the Secrets Management section of our documentation. These basic functionalities ensure that your secrets are well-organized and secure within the network.
+Managing vaults is a foundational skill in using Polykey effectively. This
+section has guided you through the essential commands needed to create, manage,
+and organize your vaults within Polykey. Further capabilities such as setting
+permissions, sharing vaults, and pulling vaults from other nodes will be covered
+in the Secrets Management section of our documentation. These basic
+functionalities ensure that your secrets are well-organized and secure within
+the network.
 
 For a full list of vault commands and options, run:
 
