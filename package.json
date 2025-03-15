@@ -11,13 +11,14 @@
     "deploy": "node ./scripts/deploy.mjs"
   },
   "devDependencies": {
+    "@apidevtools/json-schema-ref-parser": "^11.9.3",
     "@cloudflare/kv-asset-handler": "^0.3.2",
     "@cloudflare/workers-types": "^4.20230228.0",
     "@docusaurus/core": "^3.7.0",
     "@docusaurus/module-type-aliases": "^3.7.0",
     "@docusaurus/plugin-content-docs": "^3.7.0",
-    "@docusaurus/plugin-svgr": "^3.7.0",
     "@docusaurus/plugin-google-gtag": "^3.7.0",
+    "@docusaurus/plugin-svgr": "^3.7.0",
     "@docusaurus/theme-classic": "^3.7.0",
     "@docusaurus/theme-common": "^3.7.0",
     "@docusaurus/types": "^3.7.0",

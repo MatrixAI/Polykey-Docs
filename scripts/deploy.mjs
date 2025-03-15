@@ -5,9 +5,31 @@ import fs from 'node:fs';
 import url from 'node:url';
 import process from 'node:process';
 import childProcess from 'node:child_process';
+import $RefParser from '@apidevtools/json-schema-ref-parser';
 import TOML from '@iarna/toml';
 
 const platform = os.platform();
+
+async function loadEnvSchema() {
+  const schema = await $RefParser.bundle('env.schema.json');
+  const props = new Set();
+  const required = new Set();
+  (function extract(s) {
+    if (!s || typeof s !== 'object') return;
+    // Collect properties
+    if (s.properties) Object.keys(s.properties).forEach((k) => props.add(k));
+    // Collect required properties
+    if (s.required) s.required.forEach((r) => required.add(r));
+    // Process composition keywords
+    ['allOf', 'anyOf', 'oneOf'].forEach(
+      (k) => Array.isArray(s[k]) && s[k].forEach(extract),
+    );
+  })(schema);
+  return {
+    allKeys: [...props],
+    requiredKeys: [...required],
+  };
+}
 
 /* eslint-disable no-console */
 async function main(argv = process.argv) {
@@ -95,10 +117,11 @@ async function main(argv = process.argv) {
       encoding: 'utf-8',
     });
   }
-  const envSchema = JSON.parse(await fs.promises.readFile('env.schema.json'));
-  for (const key of envSchema.required) {
+  const { allKeys, requiredKeys } = await loadEnvSchema();
+  // Check if required variables are set
+  for (const key of requiredKeys) {
     if (process.env[key] == null || process.env[key] === '') {
-      throw new Error(`${key} is not set`);
+      throw new Error(`Required environment variable ${key} is not set`);
     }
   }
   const secretBulkArgs = [
@@ -110,7 +133,7 @@ async function main(argv = process.argv) {
   ];
   console.error(['wrangler', ...secretBulkArgs].join(' '));
   const secrets = {};
-  for (const key of Object.keys(envSchema.properties)) {
+  for (const key of allKeys) {
     secrets[key] = process.env[key];
   }
   childProcess.execFileSync('wrangler', secretBulkArgs, {
