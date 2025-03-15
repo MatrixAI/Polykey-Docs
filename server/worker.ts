@@ -54,7 +54,7 @@ router.all('*', async (req: Request, env: Env, ctx: ExecutionContext) => {
       {
         // This will map `/x` to `/x/index.html`, if `/x` does not exist.
         // This is conventional for HTTP servers.
-        mapRequestToAsset: cloudflareKVAssetHandler.mapRequestToAsset,
+        mapRequestToAsset: mapRequestToDocs,
         cacheControl,
         ASSET_NAMESPACE: env.__STATIC_CONTENT,
         ASSET_MANIFEST: assetManifest,
