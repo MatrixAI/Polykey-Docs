@@ -127,6 +127,24 @@ const sidebars: SidebarsConfig = {
         'reference/root-keypair',
         {
           type: 'category',
+          label: 'Architecture',
+          link: {
+            type: 'doc',
+            id: 'reference/architecture',
+          },
+          items: [
+            'reference/DES',
+            'reference/ecis',
+            'reference/encryption-algorithms',
+            'reference/hybrid-cryptosystem',
+            'reference/json-webx-standards',
+            'reference/kem',
+            'reference/key-encryption-management-storage',
+            'reference/node-id',
+          ],
+        },
+        {
+          type: 'category',
           label: 'Polykey-CLI',
           link: {
             type: 'doc',
