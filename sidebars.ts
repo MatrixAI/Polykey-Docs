@@ -116,7 +116,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: '›Reference',
+      label: 'Reference',
       collapsed: false,
       link: {
         type: 'doc',
