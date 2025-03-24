@@ -123,8 +123,25 @@ const sidebars: SidebarsConfig = {
         id: 'reference/README',
       },
       items: [
-        'reference/architecture',
-        'reference/root-keypair',
+        {
+          type: 'category',
+          label: 'Architecture',
+          link: {
+            type: 'doc',
+            id: 'reference/architecture',
+          },
+          items: [
+            'reference/architecture/root-keypair',
+            'reference/architecture/DES',
+            'reference/architecture/ecis',
+            'reference/architecture/encryption-algorithms',
+            'reference/architecture/hybrid-cryptosystem',
+            'reference/architecture/json-webx-standards',
+            'reference/architecture/kem',
+            'reference/architecture/key-encryption-management-storage',
+            'reference/architecture/node-id',
+          ],
+        },
         {
           type: 'category',
           label: 'Polykey-CLI',
