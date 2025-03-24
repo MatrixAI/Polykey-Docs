@@ -2,9 +2,9 @@
 
 ### Node ID
 
-In order to interact with other nodes, PolyKey uses a unique node ID identifier.
+In order to interact with other nodes, Polykey uses a unique node ID identifier.
 Currently, the fingerprint of the root public key of a keynode is calculated
-using a sha256 has function and is then transformed into base64 encoding to
+using a SHA256 hash function and is then transformed into base64 encoding to
 obtain a keynode’s Node ID. This will consistently produce a string of 44
 characters. In the future, PolyKey will used an ed25519 public key directly
 encoded using base64 to create the Node ID. As the signature of ed25519 keys can
