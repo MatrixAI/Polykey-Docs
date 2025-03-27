@@ -4,7 +4,7 @@ const sidebars: SidebarsConfig = {
   docs: [
     {
       type: 'category',
-      label: 'Tutorials',
+      label: 'Getting Started',
       collapsed: false,
       link: {
         type: 'doc',
