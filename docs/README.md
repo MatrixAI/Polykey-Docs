@@ -7,9 +7,6 @@ displayed_sidebar: docs
 
 Welcome to the Polykey documentation.
 
-The documentation is structured using
-[Divio system](https://documentation.divio.com/).
-
 - [Tutorials](./tutorials) - these are a series of steps to introduce Polykey to
   new beginners to achieve a practical outcome
 - [How-To Guides](/docs/how-to-guides) - these are short guides on how to
@@ -19,14 +16,12 @@ The documentation is structured using
 - [Reference](./reference/) - these are useful when you need remember how to use
   a particular command or function
 
-<img src={require('@site/images/divio_quadrant.png').default} width="100%" />
-
 ## Introduction
 
 Polykey helps yourself, teams and software agents to manage and share secrets in
 a secure and easy-to-use manner.
 
-- Usable for average humans, you don't need to be a cryptography or
+- Usable for the average person, you don't need to be a cryptography or
   cybersecurity expert to securely manage and share secrets.
 - Can be integrated into software for automation of secret workflows.
 - Unifies the workflow between interactive password management and
@@ -76,24 +71,24 @@ passwords or keys.
 
 For this reason, we think of secrets as "capabilities".
 
-All secrets put into vaults. Each vault is a persistent fully-encrypted virtual
+All secrets are put into vaults. Each vault is a persistent, fully encrypted virtual
 filesystem with automatic version history. Vaults can be shared with other
 Polykey agents.
 
-Polykey's secrets management concept provides users with secure communication
+Polykey's secrets management system provides users with secure communication
 and secure computation.
 
 ### Decentralized Trust
 
-Sharing secrets depends secure communications. Secure communications depends on
+Sharing secrets depends on secure communications. Secure communications depends on
 trusted identities.
 
-Polykey introduced a concept called "Gestalt Identity".
+Polykey introduces a concept called "Gestalt Identity".
 
-A Gestalt Identity is a collection of digital identities (social media profiles
+A Gestalt Identity is a collection of digital identities (i.e. social media profiles
 and Polykey nodes) that all represent the same entity.
 
-When you start a Polykey agent, it immediate forms its own gestalt with the
+When you start a Polykey agent, it immediately forms its own gestalt with the
 Polykey node as its only identity. Link up your digital identities to the node
 in order to expand your gestalt.
 
