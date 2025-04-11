@@ -30,16 +30,20 @@ The CLI is open-source and available on GitHub:
 
 Polykey is continuously built and tested on:
 
-- Linux x64 / arm64
+- Linux x64
 - MacOS x64 / arm64
 - Windows x64
 - Docker
 
-:::note Polykey is currently in beta. Its interface is at various levels of
+:::note Note
+
+ Polykey is currently in beta. Its interface is at various levels of
 stability. So bear with us as we perfect its design. You can contribute by
 discussing with us on [Discord](https://discord.gg/h3UShM8WUN) or creating issue
 tickets in the
-[Polykey-CLI repo on GitHub](https://github.com/MatrixAI/Polykey-CLI). :::
+[Polykey-CLI repo on GitHub](https://github.com/MatrixAI/Polykey-CLI). 
+
+:::
 
 ## Getting Started
 

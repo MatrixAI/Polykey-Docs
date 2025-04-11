@@ -10,12 +10,12 @@ guide on how to manage these secrets within vaults using Polykey-CLI.
 :::tip
 
 In the Polykey CLI, you can get help with managing your Secrets Operations by
-using the `-h` help command to get a detailed list of availiable options and
-commands. Try running `polykey secrets -h` :::
+using the `-help` help command to get a detailed list of availiable options and
+commands. Try running `polykey secrets -help` :::
 
 ## Creating Secrets
 
-:::note
+:::note Note
 
 **Create a Secret within a given Vault**
 
@@ -28,7 +28,9 @@ secret.
 
 **secretPath:** Path to the secret to be created,
 
-specified as `<vaultName>:<directoryPath>` :::
+specified as `<vaultName>:<directoryPath>`
+
+ :::
 
 ### Adding a Secret to a Vault
 
@@ -38,7 +40,7 @@ Thus, providing secure data-at-rest encryption of the file.
 
 :::tip To create a secret, both the vault and file you are creating a secret
 from, must already exist. Remember that to view the vaults contained within a
-node, you run `$polykey vaults list`. This is useful for viewing the names of
+node, you run `polykey vaults list`. This is useful for viewing the names of
 the vaults you are trying to manage secrets with, as vaultName is one of the
 command arguments that is commonly used. :::
 
@@ -48,15 +50,15 @@ command arguments that is commonly used. :::
 polykey secrets create <filePath> <vaultName>:<secretName>
 ```
 
-<!-- How can we improve clarity here without making it too verbose or removing any important details mentioned? -->
+:::info 
 
-:::info The `<filePath>` for the file you are trying to create a secret from can
+The `<filePath>` for the file you are trying to create a secret from can
 either be a working directory filepath or a root path. Also notice that we
 either have 1 space of seperation or a `:` between command arguments usually.
-The angle braces are just being used in our explanation for specifying the
-arguments more clearly. :::
 
-#### Example Usage of `Polykey Secrets Create`
+:::
+
+#### Example Usage of `polykey secrets create`
 
 ```bash
 polykey secrets create ./API_ACCESS_KEY.txt my-api-vault:API_ACCESS_KEY
@@ -155,20 +157,15 @@ To view the contents of a text file stored in a vault directly from the
 terminal, use the following command:
 
 ```bash
-polykey secrets get <vaultName>:<secretName>
+polykey secrets cat <vaultName>:<secretName>
 ```
 
 #### Example: Retrieving a Text File
 
-Retrieve the contents of the `API_ACCESS_KEY` stored in `my-vault-tutorial-1`
+Retrieve the contents of the `API_ACCESS_KEY` stored in `my-vault`
 
-```bash
-polykey secrets get my-vault-tutorial-1:API_ACCESS_KEY
-```
-
-#### Example Output
-
-```bash
+```shell
+$ polykey secrets cat my-vault:API_ACCESS_KEY
 AKfjd39jdi3903KDje93j04j0
 ```
 
@@ -198,17 +195,25 @@ directory, preserving the file type as indicated by the extension `<ext>`.
 Retrieve an image stored in a vault and view it using system-specific commands:
 
 ```bash
-polykey secrets get my-NFT:Dali.png > Dali.png
-open Dali.png
+$polykey secrets get my-NFT:Dali.png > Dali.png
+$open Dali.png
 ```
 
-:::note The use of `>` in the command line is a standard Unix redirection
+:::note Note
+
+The use of `>` in the command line is a standard Unix redirection
 operator, used here to direct the output from Polykey into a file. This
 operation is necessary for handling binary files that require specific
-applications to open. :::
+applications to open. 
 
-:::tip Ensure the secret name includes the file extension (like Dali.png), which
-helps clarify the file type when saving and accessing the retrieved file. :::
+:::
+
+:::tip Tip
+
+Ensure the secret name includes the file extension (like Dali.png), which
+helps clarify the file type when saving and accessing the retrieved file. 
+
+:::
 
 ## Creating a Directory of Secrets
 
@@ -274,18 +279,18 @@ polykey secrets rename <vaultName>:<oldSecretName> <newSecretName>
 
 :::tip Use the `secrets list` command to check on your renamed secretFile. :::
 
-## Updating a Secret
+### Updating a Secret
 
 To update the contents of an existing secret:
 
 ```bash
-polykey secrets update <filePath> <vaultName>:<secretName>
+polykey secrets write <filePath> <vaultName>:<secretName>
 ```
 
 #### Example: Secrets Update
 
 ```bash
-polykey secrets update ./rare-dali.png my-image-vault:NFTs/Dali.png
+$ cat ./rare-dali.png | polykey secrets write my-image-vault:nfts/dali.png
 ```
 
 :::info This is essentially replacing the file content of an existing secret
@@ -309,11 +314,11 @@ polykey secrets stat my-image-vault:NFTs/Dali.png
 
 #### Example Output
 
-```yaml
-dev       0 ino       158 mode      33188 nlink     1 uid       0 gid       0
-rdev      0 size      23450 atime     Sat May 25 2024 17:22:34 GMT-0600
-mtime     Sat May 25 2024 17:22:33 GMT-0600 ctime     Sat May 25 2024 17:22:33
-GMT-0600 birthtime Fri May 24 2024 22:42:43 GMT-0600 blksize   4096 blocks    6
+```bash
+-> polykey nodes connections                                               
+host                                   	hostname	nodeIdEncoded                                        	port	timeout	usageCount	authenticated
+13.210.66.119                          	N/A     	v8k5smi8a5o7j4mhdka50q679op9lctdcepgkuslrhumc0ur793og	1314	34004  	0         	false
+2600:1f16:1f71:7c00:3593:3a22:674f:f33b	N/A     	vair3u8kqfqoheulk277bp71j5vi80vd2bnavki02ekeounp72e80	1314	55884  	0         	false
 ```
 
 :::note
@@ -342,40 +347,20 @@ GMT-0600 birthtime Fri May 24 2024 22:42:43 GMT-0600 blksize   4096 blocks    6
 To remove a secret from a vault:
 
 ```bash
-polykey secrets delete <vaultName>:<secretName>
+polykey secrets rm <vaultName>:<secretName>
 ```
 
 #### Example: Deleting a Secret
 
-```bash
-polykey secrets list my-image-vault
-```
+$ polykey secrets ls my-image-vault:nfts
+nfts/dali.png
+nfts/some-image.png
 
-**Output:**
+$ polykey secrets rm my-image-vault:nfts/some-image.png
+# note the lack of output
 
-```bash
-NFTs/Dali.png
-THE_THIEF.png
-```
-
-```bash
-polykey secrets delete my-image-vault:THE_THIEF.png
-```
-
-Successful deletion does not produce output. Verify the secret was removed by
-listing secrets in the vault.
-
-```bash
-polykey secrets list my-image vault
-```
-
-**Output:**
-
-Notice that we have sucesfully removed one of the secrets from the vault now.
-
-```bash
-NFTs/Dali.png
-```
+$ polykey secrets ls my-image-vault:nfts
+nfts/dali.png
 
 ## Editing Secrets in a Vault
 

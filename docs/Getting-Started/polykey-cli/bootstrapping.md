@@ -24,8 +24,17 @@ encryption and decryption of all node state and secret data managed by Polykey.
 You will be prompted to provide a root password. This password encrypts the root
 key.
 
-:::note Remember to keep your password in a secure location as you will need it
-each time you start the Polykey agent. :::
+:::note Note
+
+Remember to keep your password in a secure location as you will need it each time you start the Polykey agent.
+
+:::
+
+:::important
+
+Bootstrapping also returns a **recovery code**. This code is required to recover a node with the same ID, so it is critical that you store it safely and securely. If lost, node identity recovery will not be possible.
+
+:::
 
 ### Starting the Polykey Agent
 
@@ -64,7 +73,8 @@ If the Polykey agent does not terminate properly, you can force quit the process
 through the Activity Monitor on your machine. If you encounter this or any other
 issue, please consider making a
 [bug report](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) to help
-improve Polykey.
+improve Polykey. Please make sure to check for existing issues before creating a
+new one.
 
 ## Check Agent Status
 
@@ -80,19 +90,19 @@ including its connectivity and activity within the network.
 ### Example Output
 
 ```bash
-status           	LIVE
-pid              	96992
+sstatus           	LIVE
+pid              	20004
 nodeId           	vgijtpv0h8m1eajeir77g73muq88n5kj0413t6fjdqsv9kt8dq4pg
-clientHost       	::1
-clientPort       	54975
+clientHost       	127.0.0.1
+clientPort       	51980
 agentHost        	::
-agentPort        	60358
-upTime           	8
-startTime        	1716509093
-connectionsActive	3
-nodesTotal       	11
-version          	1.2.3-alpha.4-1-1
-sourceVersion    	1.2.3-alpha.4
+agentPort        	58078
+upTime           	120
+startTime        	1742186927
+connectionsActive	0
+nodesTotal       	2
+version          	1.21.4-1-1
+sourceVersion    	1.21.4
 stateVersion     	1
 networkVersion   	1
 ```

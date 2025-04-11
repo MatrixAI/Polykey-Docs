@@ -126,13 +126,13 @@ $ nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(
 We will be working on other distribution methods.
 
   </TabItem>
-  <TabItem value="macos" label="MacOs">
+  <TabItem value="macOS" label="MacOS">
 
 ## MacOS
 
 :::info
 
-ARM-64 builds are not currently supported on MacOS as of **26-03-24.** However,
+ARM-64 builds are not currently supported on MacOS as of **6 April 2025.** However,
 building Polykey yourself on MacOS resolves in a working binary. Follow this
 guide below to manually build and install Polykey on macOS.
 
@@ -284,13 +284,21 @@ echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
 </TabItem>
  <TabItem value="bash" label="Bash">
 
+:::tip
+
+The path export should not pint to the Polykey executable itself, but rather to
+the directory containing the executable. Otherwise, the executable will not be
+found and will not work. 
+
+:::
+
 #### For Bash:
 
 1. `cd` into the directory where the "polykey" executable is stored.
 2. Edit the Bash config to add "polykey" to your path. To streamline the
    process, run the following command, making sure to change the path to
    "polykey" if the executable is not in the downloads folder. For most users,
-   this would be `~/downloads` on Debian-based systems.
+   this would be `~/Downloads` 
 
 :::tip
 
@@ -408,7 +416,7 @@ docker run -it 0e1addd9855a agent start --background -np /tmp/polykey
 Making sure to replace `0e1addd9855a` with your corresponding image ID.
 
 ```shell
- docker run -it  0e1addd9855a agent start --background -np /tmp/polykey
+$ docker run -it  0e1addd9855a agent start --background -np /tmp/polykey
 WARNING: The requested image's platform (linux/amd64) does not match the detected host platform (linux/arm64/v8) and no specific platform was requested
 ✔ Enter new password … *
 ✔ Confirm new password … *
@@ -418,7 +426,7 @@ clientHost  	127.0.0.1
 clientPort  	45509
 agentHost   	::
 agentPort   	37468
-recoveryCode	net elephant gentle eight pulp oyster panther sing own autumn silly whip simple warfare daughter pepper detail bachelor awkward forget ignore cream silly raw
+recoveryCode	(random text recovery code goes here)
 
 ```
 

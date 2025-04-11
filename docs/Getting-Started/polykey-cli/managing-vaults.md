@@ -60,7 +60,7 @@ polykey vaults delete <vaultName>
 Delete the vault named myvault:
 
 ```bash
-polykey vaults delete myvault
+polykey vaults rm myvault
 ```
 
 This operation does not produce output on successful execution, indicating the

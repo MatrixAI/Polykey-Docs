@@ -122,7 +122,7 @@ polykey vaults pull myvault v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv50
 
 This command updates "myvault" with the latest changes from the specified node.
 
-## Conclussion
+## Conclusion
 
 Sharing and synchronizing vaults in Polykey enhances collaboration and security
 across the network. By following these guidelines, users can effectively manage

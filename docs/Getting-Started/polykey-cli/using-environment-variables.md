@@ -45,7 +45,7 @@ critical use case for the polykey secrets env command.
 #### Example: Start an application with a secure API key
 
 ```bash
-polykey secrets env --env Weather-Ops:API_KEY -- node app.js
+polykey secrets env weather-ops:API_KEY -- node app.js
 ```
 
 This will execute `app.js` with the `API_KEY` set, sourced from the

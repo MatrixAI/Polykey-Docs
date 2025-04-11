@@ -2,10 +2,7 @@
 
 Managing multiple local
 
-nodes in Polykey can serve various purposes. For example, you might maintain one
-node for personal projects and another for professional work. This segregation
-ensures that the vaults and their respective contents remain distinct based on
-their usage context.
+nodes in Polykey can serve various purposes. For example, you might maintain one node for personal projects and another for professional work. This segregation ensures that the vaults and their respective contents remain distinct based on their usage context.
 
 This approach is particularly advantageous for demonstrations or training
 purposes, as it allows you to simulate sharing vaults between two nodes on the
@@ -41,8 +38,12 @@ node we are starting an agent for. If unsure of the syntax to use for command
 operations, adding the --help at the end of each subcommand provides useful
 context.
 
-:::note If a node has not been created before, initializing the Polykey agent
-for it will also initiate the bootstrap process. :::
+:::note Note
+
+ If a node has not been created before, initializing the Polykey agent
+for it will also initiate the bootstrap process. 
+
+:::
 
 When working with multiple nodes, specifying the node path in each command can
 become cumbersome. To streamline this process in your terminal shell session,
