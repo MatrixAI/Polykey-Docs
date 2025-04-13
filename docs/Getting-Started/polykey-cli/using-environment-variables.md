@@ -59,13 +59,19 @@ application, you can output them in different formats.
 #### Unix-like Systems Example
 
 ```bash
-polykey secrets env --env-format unix --env Weather-Ops:API_KEY
+olykey secrets env --env-format unix --env MyVault:API_KEY
+
+API_KEY=someRandomValue123
 ```
 
 #### JSON Format Example
 
 ```bash
-polykey secrets env --env-format json --env Weather-Ops:API_KEY
+polykey secrets env --env-format json --env MyVault:API_KEY
+
+{
+  "API_KEY": "someRandomValue123"
+}
 ```
 
 These commands display the environment variables in the console, useful for
@@ -99,7 +105,8 @@ secrets.
 #### AWS CLI Integration Example
 
 ```bash
-polykey secrets env --env AWS-Creds:AWS_ACCESS_KEY_ID,AWS-Creds:AWS_SECRET_ACCESS_KEY -- aws s3 ls
+polykey secrets env \
+  $ polykey secrets env aws-creds:AWS_ACCESS_KEY_ID aws-creds:AWS_SECRET_ACCESS_KEY -- aws s3 ls
 ```
 
 This securely passes AWS credentials to the AWS CLI.

@@ -6,7 +6,9 @@ Installing the CLI can be done in different ways depending on your operating
 environment.
 
 :::info
+## Polykey Core Overview
 
+The Polykey CLI and core primarily use TypeScript for service logic, domain business operations, and persistence layers. While the main codebase is in TypeScript, some supporting libraries incorporate native C++ or Rust for platform‐specific functionality. This approach combines cross‐platform convenience with native performance optimizations.
 Polykey-CLI has only been tested on Linux and macOS. We are working on
 supporting other platforms. There's minor teething problems when it comes
 supporting other platforms. Help us by reporting any issues with the CLI tool in
@@ -441,7 +443,7 @@ The CLI is published as
 Install it with:
 
 ```sh
-npm install -g polykey-cli
+npm install polykey
 ```
 
 This will install the Polykey-CLI into the path pointed to by the command
