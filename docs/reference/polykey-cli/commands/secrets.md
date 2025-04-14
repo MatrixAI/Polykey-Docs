@@ -67,7 +67,7 @@ $ polykey secrets dir ~/test-dir vault1
 
 :::warning Warning
 
-This command does not work on Windows yet 
+This command does not work on Windows yet
 
 :::
 
@@ -89,9 +89,9 @@ I edited this secret inside an editor
 4. If no paths are specified, this command takes input from `stdin` and prints
    it to `stdout`
 
-:::tip Tip 
+:::tip Tip
 
-`^D` in the terminal stands for the key combination 'Ctrl-D' 
+`^D` in the terminal stands for the key combination 'Ctrl-D'
 
 :::
 
@@ -194,7 +194,7 @@ new-name
 
 :::note Note
 
- The mode (or file permissions) doesn't exist within a vault 
+The mode (or file permissions) doesn't exist within a vault
 
 :::
 
@@ -270,11 +270,11 @@ do not commit your keys to github
 
 :::tip Tip
 
-`stdin`, or standard input, can be either manually entered by typing, or
-piped in through another command.
+`stdin`, or standard input, can be either manually entered by typing, or piped
+in through another command.
 
 To close the input steam and save the file, press `^D`, or 'Ctrl-D' in a new
-line, or press `^D` twice on the same line. 
+line, or press `^D` twice on the same line.
 
 :::
 

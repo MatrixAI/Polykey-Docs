@@ -1,4 +1,4 @@
-# Establishing Identity Linkages in Polykey
+# Establishing Identity Linkages
 
 In Polykey, claiming a digital identity is a crucial step that allows users to
 establish their identity across various platforms and link these identities to
@@ -8,7 +8,9 @@ cryptographic link to a publicly verifiable location.
 
 This tutorial will guide you through the steps to authenticate with GitHub and
 claim an identity using Polykey, enhancing security and streamlining identity
-verification, making it easier for other users to discover and trust your nodes. Currently, we only support github as an identity provider, but we plan to add more in the future.
+verification, making it easier for other users to discover and trust your nodes.
+Currently, we only support github as an identity provider, but we plan to add
+more in the future.
 
 ## Step 1: Authenticate with GitHub
 
@@ -33,8 +35,8 @@ polykey identities authenticate <providerId>
 
 :::note Note
 
-Since Polykey currently only supports GitHub as an IdP, this is the
-command that you will use to start the authentication process.
+Since Polykey currently only supports GitHub as an IdP, this is the command that
+you will use to start the authentication process.
 
 ```bash
 polykey identities authenticate github
@@ -74,19 +76,19 @@ identityId	maverick
 During the authentication process, here's what Polykey requests access to and
 why:
 
-- **Currently: Create Gists:** Polykey creates a gist under your GitHub account containing
-  a cryptographic link. This link is a verifiable method that proves the
-  ownership of your GitHub identity to anyone checking your Polykey gestalt
+- **Currently: Create Gists:** Polykey creates a gist under your GitHub account
+  containing a cryptographic link. This link is a verifiable method that proves
+  the ownership of your GitHub identity to anyone checking your Polykey gestalt
   graph.
 
 -:::note Note
 
- **Future Plan: Read All User Profile Data:** This enables Polykey to access your profile
-  details, including your username, followers, and public repository data. This
-  information is used to ensure that the identity you claim corresponds
-  accurately to your public digital footprint, enhancing trust and verification.
+**Future Plan: Read All User Profile Data:** This enables Polykey to access your
+profile details, including your username, followers, and public repository data.
+This information is used to ensure that the identity you claim corresponds
+accurately to your public digital footprint, enhancing trust and verification.
 
-  :::
+:::
 
 #### Security and Privacy Considerations
 
@@ -150,7 +152,7 @@ https://gist.github.com/my-github-username
 
 This gist contains the cryptographic link confirming that your Polykey identity
 is correctly linked to your GitHub profile. Viewing this gist ensures your claim
-was successful and publicly verifiable. 
+was successful and publicly verifiable.
 
 :::note Note
 

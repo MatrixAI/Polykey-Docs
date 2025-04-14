@@ -26,13 +26,16 @@ key.
 
 :::note Note
 
-Remember to keep your password in a secure location as you will need it each time you start the Polykey agent.
+Remember to keep your password in a secure location as you will need it each
+time you start the Polykey agent.
 
 :::
 
 :::important
 
-Bootstrapping also returns a **recovery code**. This code is required to recover a node with the same ID, so it is critical that you store it safely and securely. If lost, node identity recovery will not be possible.
+Bootstrapping also returns a **recovery code**. This code is required to recover
+a node with the same ID, so it is critical that you store it safely and
+securely. If lost, node identity recovery will not be possible.
 
 :::
 

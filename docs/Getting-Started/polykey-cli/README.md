@@ -37,11 +37,10 @@ Polykey is continuously built and tested on:
 
 :::note Note
 
- Polykey is currently in beta. Its interface is at various levels of
-stability. So bear with us as we perfect its design. You can contribute by
-discussing with us on [Discord](https://discord.gg/h3UShM8WUN) or creating issue
-tickets in the
-[Polykey-CLI repo on GitHub](https://github.com/MatrixAI/Polykey-CLI). 
+Polykey is currently in beta. Its interface is at various levels of stability.
+So bear with us as we perfect its design. You can contribute by discussing with
+us on [Discord](https://discord.gg/h3UShM8WUN) or creating issue tickets in the
+[Polykey-CLI repo on GitHub](https://github.com/MatrixAI/Polykey-CLI).
 
 :::
 
@@ -53,7 +52,7 @@ Start your journey with Polykey by following the tutorials below in sequence:
 
 For a visual walkthrough, check out our
 [getting started demo video](https://vimeo.com/884649667) after installing
-Polykey. 
+Polykey.
 
 :::
 

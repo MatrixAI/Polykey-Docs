@@ -67,6 +67,7 @@ This operation does not produce output on successful execution, indicating the
 vault has been removed.
 
 :::note
+
 ## Viewing Vault History
 
 Each vault maintains a version history which tracks changes over time. Use the

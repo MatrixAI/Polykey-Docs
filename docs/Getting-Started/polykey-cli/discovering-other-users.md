@@ -38,9 +38,10 @@ polykey identities discover <gestaltId>
 ```bash
 polykey identities discover github.com:maverick
 ```
-:::note Note
-This command adds the node associated with the GitHub username "maverick" to
-your discovery queue, allowing you to initiate interactions with this user.
+
+:::note Note This command adds the node associated with the GitHub username
+"maverick" to your discovery queue, allowing you to initiate interactions with
+this user.
 
 :::
 
@@ -117,7 +118,8 @@ managed:
 
 - **Scan:** Allows the node to scan for vaults
 - **Notify:** Allows sending notifications about changes or updates.
-- **Claim** Allows a different gstalt to claim the node 
+- **Claim** Allows a different gstalt to claim the node
+
 #### Example Command to Set Permissions
 
 ```bash
@@ -192,8 +194,8 @@ polykey identities list
 
 ### Trusting and Untrusting Nodes
 
-You can explicitly trust or untrust individual nodes or entire gestalts to refine how notifications and
-access controls are handled:
+You can explicitly trust or untrust individual nodes or entire gestalts to
+refine how notifications and access controls are handled:
 
 ```bash
 polykey identities trust <gestaltId>

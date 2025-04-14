@@ -1,4 +1,4 @@
-# Using Environment Variables with Polykey
+# Using Environment Variables
 
 Polykey revolutionizes the management of environment variables by injecting them
 securely into applications, surpassing traditional `.env` file methods. This
@@ -59,7 +59,7 @@ application, you can output them in different formats.
 #### Unix-like Systems Example
 
 ```bash
-olykey secrets env --env-format unix --env MyVault:API_KEY
+polykey secrets env --env-format unix --env MyVault:API_KEY
 
 API_KEY=someRandomValue123
 ```

@@ -71,22 +71,22 @@ passwords or keys.
 
 For this reason, we think of secrets as "capabilities".
 
-All secrets are put into vaults. Each vault is a persistent, fully encrypted virtual
-filesystem with automatic version history. Vaults can be shared with other
-Polykey agents.
+All secrets are put into vaults. Each vault is a persistent, fully encrypted
+virtual filesystem with automatic version history. Vaults can be shared with
+other Polykey agents.
 
-Polykey's secrets management system provides users with secure communication
-and secure computation.
+Polykey's secrets management system provides users with secure communication and
+secure computation.
 
 ### Decentralized Trust
 
-Sharing secrets depends on secure communications. Secure communications depends on
-trusted identities.
+Sharing secrets depends on secure communications. Secure communications depends
+on trusted identities.
 
 Polykey introduces a concept called "Gestalt Identity".
 
-A Gestalt Identity is a collection of digital identities (i.e. social media profiles
-and Polykey nodes) that all represent the same entity.
+A Gestalt Identity is a collection of digital identities (i.e. social media
+profiles and Polykey nodes) that all represent the same entity.
 
 When you start a Polykey agent, it immediately forms its own gestalt with the
 Polykey node as its only identity. Link up your digital identities to the node

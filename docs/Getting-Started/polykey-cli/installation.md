@@ -6,13 +6,17 @@ Installing the CLI can be done in different ways depending on your operating
 environment.
 
 :::info
+
 ## Polykey Core Overview
 
-The Polykey CLI and core primarily use TypeScript for service logic, domain business operations, and persistence layers. While the main codebase is in TypeScript, some supporting libraries incorporate native C++ or Rust for platform‐specific functionality. This approach combines cross‐platform convenience with native performance optimizations.
-Polykey-CLI has only been tested on Linux and macOS. We are working on
-supporting other platforms. There's minor teething problems when it comes
-supporting other platforms. Help us by reporting any issues with the CLI tool in
-our Github Repo
+The Polykey CLI and core primarily use TypeScript for service logic, domain
+business operations, and persistence layers. While the main codebase is in
+TypeScript, some supporting libraries incorporate native C++ or Rust for
+platform‐specific functionality. This approach combines cross‐platform
+convenience with native performance optimizations. Polykey-CLI has only been
+tested on Linux and macOS. We are working on supporting other platforms. There's
+minor teething problems when it comes supporting other platforms. Help us by
+reporting any issues with the CLI tool in our Github Repo
 [here](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) or by dropping
 a message to the developers in our discord server
 [here](https://discord.gg/dC32r35TeE).
@@ -134,9 +138,9 @@ We will be working on other distribution methods.
 
 :::info
 
-ARM-64 builds are not currently supported on MacOS as of **6 April 2025.** However,
-building Polykey yourself on MacOS resolves in a working binary. Follow this
-guide below to manually build and install Polykey on macOS.
+ARM-64 builds are not currently supported on MacOS as of **6 April 2025.**
+However, building Polykey yourself on MacOS resolves in a working binary. Follow
+this guide below to manually build and install Polykey on macOS.
 
 :::
 
@@ -290,7 +294,7 @@ echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
 
 The path export should not pint to the Polykey executable itself, but rather to
 the directory containing the executable. Otherwise, the executable will not be
-found and will not work. 
+found and will not work.
 
 :::
 
@@ -300,7 +304,7 @@ found and will not work.
 2. Edit the Bash config to add "polykey" to your path. To streamline the
    process, run the following command, making sure to change the path to
    "polykey" if the executable is not in the downloads folder. For most users,
-   this would be `~/Downloads` 
+   this would be `~/Downloads`
 
 :::tip
 
