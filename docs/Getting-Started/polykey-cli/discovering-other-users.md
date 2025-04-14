@@ -39,9 +39,11 @@ polykey identities discover <gestaltId>
 polykey identities discover github.com:maverick
 ```
 
-This command adds the node associated with the GitHub username "maverick" to
-your discovery queue, allowing you to initiate interactions with this user.
-:::note
+:::note Note This command adds the node associated with the GitHub username
+"maverick" to your discovery queue, allowing you to initiate interactions with
+this user.
+
+:::
 
 ## Troubleshooting Discovery and Connection Issues
 
@@ -76,8 +78,6 @@ network.
      to see if the issue persists.
 
 :::
-
-:::info
 
 ### Future Enhancements
 
@@ -116,12 +116,9 @@ Permissions in Polykey determine what actions a node or an identity can perform
 within the network. Here’s a general list of potential permissions that can be
 managed:
 
-- **Read:** Allows viewing but not modifying.
-- **Write:** Allows both viewing and modifying.
-- **Execute:** Allows performing specific actions.
+- **Scan:** Allows the node to scan for vaults
 - **Notify:** Allows sending notifications about changes or updates.
-- **Trust:** Allows a node to be trusted, generally affecting how interactions
-  are secured.
+- **Claim** Allows a different gstalt to claim the node
 
 #### Example Command to Set Permissions
 
@@ -197,8 +194,8 @@ polykey identities list
 
 ### Trusting and Untrusting Nodes
 
-You can explicitly trust or untrust a node to refine how notifications and
-access controls are handled:
+You can explicitly trust or untrust individual nodes or entire gestalts to
+refine how notifications and access controls are handled:
 
 ```bash
 polykey identities trust <gestaltId>

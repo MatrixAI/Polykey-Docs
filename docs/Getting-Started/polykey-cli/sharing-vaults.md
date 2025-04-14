@@ -73,13 +73,15 @@ polykey vaults scan <nodeId>
 
 - `<nodeId>`: The Node ID of the node that shared the vault with you.
 
-#### Example
+:::note Example
 
 ```bash
 polykey vaults scan v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv500
 ```
 
 This command lists the vaults shared by the specified node.
+
+:::note
 
 ## Cloning the Shared Vault
 
@@ -93,11 +95,13 @@ polykey vaults clone <vaultName> <nodeId>
 - `<vaultName>`: The name of the vault to be cloned.
 - `<nodeId>`: The Node ID from which to clone the vault.
 
-### Example
+:::note Example
 
 ```bash
 polykey vaults clone myvault v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv500
 ```
+
+:::note
 
 This command clones "myvault" from the specified node to the local system.
 
@@ -114,7 +118,7 @@ polykey vaults pull <vaultName> <targetNodeId>
 - `<vaultNameOrId>`: The name or ID of the vault to update.
 - `<targetNodeId>`: (Optional) The node ID from which to pull updates.
 
-### Example
+:::note Example
 
 ```bash
 polykey vaults pull myvault v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv500
@@ -122,7 +126,9 @@ polykey vaults pull myvault v4c11qv5fpq2fm3ropmma2sglfc9349jspqb1iutl3f7en1ckv50
 
 This command updates "myvault" with the latest changes from the specified node.
 
-## Conclussion
+:::note
+
+## Conclusion
 
 Sharing and synchronizing vaults in Polykey enhances collaboration and security
 across the network. By following these guidelines, users can effectively manage

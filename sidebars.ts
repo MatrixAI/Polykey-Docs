@@ -4,59 +4,28 @@ const sidebars: SidebarsConfig = {
   docs: [
     {
       type: 'category',
-      label: 'Tutorials',
+      label: 'Getting Started',
       collapsed: false,
-      link: {
-        type: 'doc',
-        id: 'tutorials/README',
-      },
       items: [
         {
           type: 'category',
           label: 'Polykey CLI',
           link: {
             type: 'doc',
-            id: 'tutorials/polykey-cli/README',
+            id: 'Getting-Started/polykey-cli/README',
           },
           items: [
-            'tutorials/polykey-cli/installation',
-            'tutorials/polykey-cli/bootstrapping',
-            'tutorials/polykey-cli/managing-vaults',
-            'tutorials/polykey-cli/managing-secrets',
-            'tutorials/polykey-cli/claiming-digital-identities',
-            'tutorials/polykey-cli/discovering-other-users',
-            'tutorials/polykey-cli/sharing-vaults',
-            'tutorials/polykey-cli/managing-multiple-nodes',
-            'tutorials/polykey-cli/using-environment-variables',
+            'Getting-Started/polykey-cli/installation',
+            'Getting-Started/polykey-cli/bootstrapping',
+            'Getting-Started/polykey-cli/managing-vaults',
+            'Getting-Started/polykey-cli/managing-secrets',
+            'Getting-Started/polykey-cli/claiming-digital-identities',
+            'Getting-Started/polykey-cli/discovering-other-users',
+            'Getting-Started/polykey-cli/sharing-vaults',
+            'Getting-Started/polykey-cli/managing-multiple-nodes',
+            'Getting-Started/polykey-cli/using-environment-variables',
           ],
-        },
-        {
-          type: 'category',
-          label: 'Polykey Desktop',
-          link: {
-            type: 'doc',
-            id: 'tutorials/polykey-desktop/README',
-          },
-          items: [],
-        },
-        {
-          type: 'category',
-          label: 'Polykey Mobile',
-          link: {
-            type: 'doc',
-            id: 'tutorials/polykey-mobile/README',
-          },
-          items: [],
-        },
-        {
-          type: 'category',
-          label: 'Polykey Core',
-          link: {
-            type: 'doc',
-            id: 'tutorials/polykey-core/README',
-          },
-          items: ['tutorials/polykey-core/installation'],
-        },
+        },      
       ],
     },
     {

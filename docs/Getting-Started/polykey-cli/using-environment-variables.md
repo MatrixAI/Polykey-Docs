@@ -1,4 +1,4 @@
-# Using Environment Variables with Polykey
+# Using Environment Variables
 
 Polykey revolutionizes the management of environment variables by injecting them
 securely into applications, surpassing traditional `.env` file methods. This
@@ -45,7 +45,7 @@ critical use case for the polykey secrets env command.
 #### Example: Start an application with a secure API key
 
 ```bash
-polykey secrets env --env Weather-Ops:API_KEY -- node app.js
+polykey secrets env weather-ops:API_KEY -- node app.js
 ```
 
 This will execute `app.js` with the `API_KEY` set, sourced from the
@@ -59,13 +59,19 @@ application, you can output them in different formats.
 #### Unix-like Systems Example
 
 ```bash
-polykey secrets env --env-format unix --env Weather-Ops:API_KEY
+polykey secrets env --env-format unix --env MyVault:API_KEY
+
+API_KEY=someRandomValue123
 ```
 
 #### JSON Format Example
 
 ```bash
-polykey secrets env --env-format json --env Weather-Ops:API_KEY
+polykey secrets env --env-format json --env MyVault:API_KEY
+
+{
+  "API_KEY": "someRandomValue123"
+}
 ```
 
 These commands display the environment variables in the console, useful for
@@ -99,7 +105,8 @@ secrets.
 #### AWS CLI Integration Example
 
 ```bash
-polykey secrets env --env AWS-Creds:AWS_ACCESS_KEY_ID,AWS-Creds:AWS_SECRET_ACCESS_KEY -- aws s3 ls
+polykey secrets env \
+  $ polykey secrets env aws-creds:AWS_ACCESS_KEY_ID aws-creds:AWS_SECRET_ACCESS_KEY -- aws s3 ls
 ```
 
 This securely passes AWS credentials to the AWS CLI.
@@ -125,7 +132,7 @@ management of environment variables. It allows for the dynamic and secure
 handling of sensitive data across different stages of development and
 deployment.
 
-## Additional References
+:::note Additional References
 
 We encourage you to delve deeper into Polykey and consider integrating it into
 your workflows. For further insights and to participate in community
@@ -136,6 +143,8 @@ discussions, please explore the following resources:
   project's security.
 - [Using Polykey for secure access to cloud providers:](https://polykey.com/blog/introducing-a-new-standard-in-environment-secrets-management-with-polykey)
   Learn how Polykey facilitates secure interactions with cloud services.
+
+:::note
 
 ## Tying It All Together
 

@@ -41,8 +41,12 @@ node we are starting an agent for. If unsure of the syntax to use for command
 operations, adding the --help at the end of each subcommand provides useful
 context.
 
-:::note If a node has not been created before, initializing the Polykey agent
-for it will also initiate the bootstrap process. :::
+:::note Note
+
+If a node has not been created before, initializing the Polykey agent for it
+will also initiate the bootstrap process.
+
+:::
 
 When working with multiple nodes, specifying the node path in each command can
 become cumbersome. To streamline this process in your terminal shell session,
@@ -69,7 +73,7 @@ specify a node path, so it automatically targets the default node path.
 **Shell B (for your new node, nodeB):**
 
 ```bash
-polykey agent super_start --node-path ./nodeB --background
+polykey agent start --node-path ./nodeB --background
 ```
 
 This command starts a new Polykey agent for nodeB in the background. The first
