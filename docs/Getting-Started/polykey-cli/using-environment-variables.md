@@ -132,7 +132,7 @@ management of environment variables. It allows for the dynamic and secure
 handling of sensitive data across different stages of development and
 deployment.
 
-## Additional References
+:::note Additional References
 
 We encourage you to delve deeper into Polykey and consider integrating it into
 your workflows. For further insights and to participate in community
@@ -143,6 +143,8 @@ discussions, please explore the following resources:
   project's security.
 - [Using Polykey for secure access to cloud providers:](https://polykey.com/blog/introducing-a-new-standard-in-environment-secrets-management-with-polykey)
   Learn how Polykey facilitates secure interactions with cloud services.
+
+:::note
 
 ## Tying It All Together
 

@@ -55,7 +55,7 @@ If you need to remove a vault, you can delete it using the delete command:
 polykey vaults delete <vaultName>
 ```
 
-#### Example
+:::note Example
 
 Delete the vault named myvault:
 
@@ -66,6 +66,7 @@ polykey vaults rm myvault
 This operation does not produce output on successful execution, indicating the
 vault has been removed.
 
+:::note
 ## Viewing Vault History
 
 Each vault maintains a version history which tracks changes over time. Use the

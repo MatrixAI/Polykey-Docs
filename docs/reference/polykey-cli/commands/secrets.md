@@ -65,7 +65,11 @@ $ polykey secrets dir ~/test-dir vault1
 3. If the edited file isn't saved or the editor crashes, the secret will not be
    written
 
-:::warning This command does not work on Windows yet :::
+:::warning Warning
+
+This command does not work on Windows yet 
+
+:::
 
 Usage:
 
@@ -85,7 +89,11 @@ I edited this secret inside an editor
 4. If no paths are specified, this command takes input from `stdin` and prints
    it to `stdout`
 
-:::tip `^D` in the terminal stands for the key combination 'Ctrl-D' :::
+:::tip Tip 
+
+`^D` in the terminal stands for the key combination 'Ctrl-D' 
+
+:::
 
 Usage:
 
@@ -184,7 +192,11 @@ new-name
 1. Get the stats of a specified secret from a vault
 2. Requires secret location (vaultName:secretName) as a parameter
 
-:::note The mode (or file permissions) doesn't exist within a vault :::
+:::note Note
+
+ The mode (or file permissions) doesn't exist within a vault 
+
+:::
 
 Usage:
 
@@ -213,7 +225,10 @@ blocks: 1
 2. Run a command with the specified variables, or export them in the current
    working environment
 
-:::note Separate the environment variables from the command by passing in a `--`
+:::note Note
+
+Separate the environment variables from the command by passing in a `--`
+
 :::
 
 Usage:
@@ -253,11 +268,15 @@ do not commit your keys to github
 1. Reads input from `stdin` and writes it to the specified file
 2. If the file doesn't exist, it gets created
 
-:::tip `stdin`, or standard input, can be either manually entered by typing, or
+:::tip Tip
+
+`stdin`, or standard input, can be either manually entered by typing, or
 piped in through another command.
 
 To close the input steam and save the file, press `^D`, or 'Ctrl-D' in a new
-line, or press `^D` twice on the same line. :::
+line, or press `^D` twice on the same line. 
+
+:::
 
 Usage:
 

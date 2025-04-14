@@ -70,7 +70,7 @@ specify a node path, so it automatically targets the default node path.
 **Shell B (for your new node, nodeB):**
 
 ```bash
-polykey agent super_start --node-path ./nodeB --background
+polykey agent start --node-path ./nodeB --background
 ```
 
 This command starts a new Polykey agent for nodeB in the background. The first

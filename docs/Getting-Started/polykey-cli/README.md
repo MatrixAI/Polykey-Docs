@@ -49,9 +49,13 @@ tickets in the
 
 Start your journey with Polykey by following the tutorials below in sequence:
 
-:::tip For a visual walkthrough, check out our
+:::tip Tip
+
+For a visual walkthrough, check out our
 [getting started demo video](https://vimeo.com/884649667) after installing
-Polykey. :::
+Polykey. 
+
+:::
 
 1. **[Installation](/docs/tutorials/polykey-cli/installation)** - Install
    Polykey CLI on your platform.

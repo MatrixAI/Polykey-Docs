@@ -111,15 +111,13 @@ we created in the previous example.
 API_ACCESS_KEY
 ```
 
-:::note
-
-### Secure Deletion of Local Secrets
+:::note Secure Deletion of Local Secrets
 
 After adding a secret to a vault, securely delete the local copy if it's no
 longer needed. This ensures that no unsecured traces of sensitive information
 remain on your local filesystem. :::
 
-## Retreiving Secrets
+ Retreiving Secrets
 
 Retrieve a secret from the given vault using the polykey secrets get command.
 This command accesses the encrypted content within a vault and outputs it,
@@ -225,13 +223,14 @@ vault.
 polykey secrets mkdir <vaultName>:<directoryPath>
 ```
 
-#### Example: Creating a Directory in a Vault
+:::note Example: Creating a Directory in a Vault
 
 To create a directory named "NFTs" within the "my-image-vault":
 
 ```bash
 polykey secrets mkdir my-image-vault:NFTs
 ```
+:::note
 
 ### Adding a Secret to a Directory in a Vault
 
@@ -306,13 +305,13 @@ To view metadata about a secret:
 polykey secrets stat <vaultName>:<secretName>
 ```
 
-#### Example: Viewing Metadata for a Secret
+:::note Note
+
+Example: Viewing Metadata for a Secret
 
 ```bash
 polykey secrets stat my-image-vault:NFTs/Dali.png
 ```
-
-#### Example Output
 
 ```bash
 -> polykey nodes connections                                               
@@ -350,14 +349,18 @@ To remove a secret from a vault:
 polykey secrets rm <vaultName>:<secretName>
 ```
 
-#### Example: Deleting a Secret
+:::note Note
+ Example: Deleting a Secret
 
 $ polykey secrets ls my-image-vault:nfts
 nfts/dali.png
 nfts/some-image.png
 
 $ polykey secrets rm my-image-vault:nfts/some-image.png
-# note the lack of output
+
+Note the lack of output
+
+:::note
 
 $ polykey secrets ls my-image-vault:nfts
 nfts/dali.png
