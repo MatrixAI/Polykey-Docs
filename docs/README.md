@@ -43,7 +43,30 @@ USB storage.
 
 ## Features
 
-TBD
+## Features
+
+Polykey is designed to offer a robust, decentralized secrets management experience. Key features include:
+
+- **Decentralized & Local-First:**  
+  Polykey operates locally on your device in a peer-to-peer network, ensuring your secrets remain under your control without reliance on centralized cloud services.
+
+- **State-of-the-Art Cryptography:**  
+  Utilizes modern encryption protocols such as XChaCha20-Poly1305 for secure symmetric encryption, complemented by secure key exchange (X25519) and digital signatures (Ed25519), providing both confidentiality and data integrity.
+
+- **Secure Vault Architecture:**  
+  Secrets are organized into fully encrypted, version-controlled vaults that function like a secure, virtual filesystem - enabling safe storage, backup, and sharing with trusted peers.
+
+- **Gestalt Identity Model:**  
+  Employs a unique decentralized identity system where multiple digital identities combine to form a Gestalt Identity, ensuring secure and trusted secret sharing across the network.
+
+- **Seamless Integration & Automation:**  
+  Designed for both interactive use and automated workflows, Polykey easily integrates into existing systems for streamlined secret management and operational efficiency.
+
+- **Cross-Platform & Open-Source:**  
+  As an open-source solution, Polykey is available on multiple platforms and benefits from community contributions, ensuring transparency and continuous improvement.
+
+- **Future-Proof Security:**  
+  With ongoing developments, Polykey is actively exploring post-quantum cryptography and other advanced security measures to keep pace with emerging threats.
 
 ## Principles
 
