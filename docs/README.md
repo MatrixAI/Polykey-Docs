@@ -97,7 +97,3 @@ As you deploy more Polykey agents, you can join existing gestalts.
 Your gestalt is how other users are able to share secrets with a trusted
 identity. Your identity is the sum of the reputation of all your digital
 identities that are part of the gestalt.
-
-## Comparison to other Tools
-
-TBD
