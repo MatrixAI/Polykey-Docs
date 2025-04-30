@@ -1,122 +1,75 @@
----
-slug: /
-displayed_sidebar: docs
----
+# **Welcome to the Polykey documentation**
 
-# Polykey Documentation
+* [Tutorials:](https://polykey.com/docs/tutorials) Step-by-step guides that introduce Polykey through practical outcomes.
 
-Welcome to the Polykey documentation.
+* [How-To Guides:](https://polykey.com/docs/how-to-guides) Short, targeted instructions for achieving specific use-cases, assuming prior familiarity.
 
-- [Tutorials](./tutorials) - these are a series of steps to introduce Polykey to
-  new beginners to achieve a practical outcome
-- [How-To Guides](/docs/how-to-guides) - these are short guides on how to
-  achieve a specific use-case which makes assumptions on the reader
-- [Theory](./theory/) - these are important for understanding the "why" of
-  Polykey
-- [Reference](./reference/) - these are useful when you need remember how to use
-  a particular command or function
+* [Theory:](https://polykey.com/docs/theory/) Conceptual foundations explaining the rationale behind Polykey.
+
+* [Reference:](https://polykey.com/docs/reference/) Lookup documentation for commands, functions, and technical specifications.
 
 ## Introduction
 
-Polykey helps yourself, teams and software agents to manage and share secrets in
-a secure and easy-to-use manner.
+Polykey helps individuals, teams, and software agents manage and share secrets securely and intuitively.
 
-- Usable for the average person, you don't need to be a cryptography or
-  cybersecurity expert to securely manage and share secrets.
-- Can be integrated into software for automation of secret workflows.
-- Unifies the workflow between interactive password management and
-  infrastructure key management.
-- Decentralized and local-first software that does not hand over your secrets to
-  the cloud. You maintain sovereignty over your secrets on your devices.
-- Easily backup and synchronise your secrets across all your devices: desktop,
-  mobile or server.
-- End to end encryption for all network communication.
-- All data is encrypted at rest, thus preventing compromise even if devices are
-  lost or stolen.
+* **User-Friendly:** Designed for everyday users, with no need to be a cryptography or cybersecurity expert.
 
-PolyKey is an open-source decentralised peer to peer secrets management system.
-It provides a software agent that runs on your device locally. Each agent
-process is a node in the Polykey peer to peer network. This agent manages your
-secret data and is capable of sharing secrets with other trusted Polykey agents.
-The secret data can be placed inside any directory on your computer including on
-USB storage.
+* **Automation-Ready:** Integrates into software workflows for automated secret handling.
+
+* **Unified Secrets Management:** Bridges the gap between personal password management and infrastructure-level key handling.
+
+* **Decentralized and Local-First:** Your secrets never leave your device unless you choose to share them.
+
+* **Seamless Synchronization:** Backup and sync secrets across desktops, mobile devices, and servers.
+
+* **Comprehensive Encryption:** All data is end-to-end encrypted in transit and encrypted at rest.
+
+Polykey is an open-source, peer-to-peer secrets management system. Each Polykey agent runs locally as a node in the network, managing secrets and enabling sharing with trusted peers. Secrets are stored within encrypted vaults and can be placed anywhere on your system, including external storage like USB drives.
 
 ## Features
 
-## Features
+Polykey delivers robust, decentralized secrets management through the following capabilities:
 
-Polykey is designed to offer a robust, decentralized secrets management experience. Key features include:
+* **Decentralized & Local-First:** Operates entirely on your device in a peer-to-peer network, giving you full control over your secrets.
 
-- **Decentralized & Local-First:**  
-  Polykey operates locally on your device in a peer-to-peer network, ensuring your secrets remain under your control without reliance on centralized cloud services.
+* **State-of-the-Art Cryptography:** Employs XChaCha20-Poly1305 for encryption, X25519 for key exchange, and Ed25519 for signatures, ensuring confidentiality and integrity.
 
-- **State-of-the-Art Cryptography:**  
-  Utilizes modern encryption protocols such as XChaCha20-Poly1305 for secure symmetric encryption, complemented by secure key exchange (X25519) and digital signatures (Ed25519), providing both confidentiality and data integrity.
+* **Secure Vault Architecture:** Secrets are organized into fully encrypted, version-controlled vaults that function like a secure, virtual filesystem, enabling safe storage, backup, and sharing with trusted peers. Data remains encrypted at rest, even when the Polykey agent is not running. It is only decrypted when the agent is launched and the user authenticates.
 
-- **Secure Vault Architecture:**  
-  Secrets are organized into fully encrypted, version-controlled vaults that function like a secure, virtual filesystem - enabling safe storage, backup, and sharing with trusted peers.
+* **Gestalt Identity Model:** Aggregates multiple digital identities into a unified, trusted representation to facilitate secure sharing.
 
-- **Gestalt Identity Model:**  
-  Employs a unique decentralized identity system where multiple digital identities combine to form a Gestalt Identity, ensuring secure and trusted secret sharing across the network.
+* **Integration & Automation:** Works interactively or via CLI integration for seamless inclusion in CI/CD pipelines and system workflows.
 
-- **Seamless Integration & Automation:**  
-  Designed for both interactive use and automated workflows, Polykey easily integrates into existing systems for streamlined secret management and operational efficiency.
+* **Cross-Platform & Open Source:** Actively maintained, open-source, and operable across multiple environments.
 
-- **Cross-Platform & Open-Source:**  
-  As an open-source solution, Polykey is available on multiple platforms and benefits from community contributions, ensuring transparency and continuous improvement.
+* **Forward-Looking Security:** Investigating post-quantum cryptography and advanced protective mechanisms to stay ahead of evolving threats.
 
-- **Future-Proof Security:**  
-  With ongoing developments, Polykey is actively exploring post-quantum cryptography and other advanced security measures to keep pace with emerging threats.
-
-## Principles
-
-There are 2 main concepts to understand in Polykey:
-
-- Secrets Management
-- Decentralized Trust
+## Core Concepts
 
 ### Secrets Management
 
-Polykey was built from the ground up to focus on secrets management.
+Polykey was purpose-built for secrets management: any data that enables capability.
 
-Secrets can be any kind of data that enables some sort of capability in the
-physical or virtual world.
+* **Passwords** for authentication
 
-The world is full of secrets. For example, a password is a secret that enables
-you to login to a website. A private key is a secret that enables you to sign
-and verify some data. A symmetric key is a secret that enables you to encrypt
-and decrypt some data. A token is a secret that enables software agents and
-machines to authenticate to remote services. A credit card is a secret that
-enables payments.
+* **Private Keys** for signing or decryption
 
-Polykey is designed to manage all kinds of secrets. It is not limited to
-passwords or keys.
+* **Tokens** for machine-to-service authentication
 
-For this reason, we think of secrets as "capabilities".
+* **Credit Card Info** for payments
 
-All secrets are put into vaults. Each vault is a persistent, fully encrypted
-virtual filesystem with automatic version history. Vaults can be shared with
-other Polykey agents.
-
-Polykey's secrets management system provides users with secure communication and
-secure computation.
+All secrets are stored in encrypted vaults with automatic versioning. Vaults can be shared securely with other Polykey agents. Secrets are treated as capabilities, or elements that grant power in both digital and physical systems.
 
 ### Decentralized Trust
 
-Sharing secrets depends on secure communications. Secure communications depends
-on trusted identities.
+Secret sharing relies on secure communications, which require trusted identities. Polykey introduces Gestalt Identity:
 
-Polykey introduces a concept called "Gestalt Identity".
+A **Gestalt Identity** is a collection of digital identities (e.g., social profiles, Polykey nodes) representing the same person or agent.
 
-A Gestalt Identity is a collection of digital identities (i.e. social media
-profiles and Polykey nodes) that all represent the same entity.
+* When a Polykey agent starts, it begins with a single-node gestalt.
 
-When you start a Polykey agent, it immediately forms its own gestalt with the
-Polykey node as its only identity. Link up your digital identities to the node
-in order to expand your gestalt.
+* Users can link other identities to expand trust.
 
-As you deploy more Polykey agents, you can join existing gestalts.
+* Gestalts allow others to verify and trust your identity when sharing secrets.
 
-Your gestalt is how other users are able to share secrets with a trusted
-identity. Your identity is the sum of the reputation of all your digital
-identities that are part of the gestalt.
+Trust in Polykey is compositional, built from the integrity of all linked identities in your gestalt.
