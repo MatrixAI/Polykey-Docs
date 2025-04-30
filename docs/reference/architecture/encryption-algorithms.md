@@ -16,14 +16,19 @@ cryptographic algorithms for optimal security and performance.
 
 -### Symmetric Encryption
 
-- **XChaCha20-Poly1305 (IETF)**  
-  - **Key Size:** 256 bits  
-  - **Nonce Size:** 192 bits  
-  - **MAC Size:** 128 bits  
-  - This extended 192-bit nonce allows random nonces to be safely used, reducing the risk of nonce reuse and making the encryption scheme misuse-resistant.  
-  - A stream cipher approach is employed, encrypting data per block with a fresh, random nonce each time.
-  - Polykey stores its persistent state in an encrypted database, protected by a “Data Encryption Key” (DEK). This DEK is not derived from the root key, so rotating the root key does not require re-encrypting the entire database.
-  - By combining encryption and authentication, XChaCha20-Poly1305 ensures both confidentiality and integrity of the stored data.
+- **XChaCha20-Poly1305 (IETF)**
+  - **Key Size:** 256 bits
+  - **Nonce Size:** 192 bits
+  - **MAC Size:** 128 bits
+  - This extended 192-bit nonce allows random nonces to be safely used, reducing
+    the risk of nonce reuse and making the encryption scheme misuse-resistant.
+  - A stream cipher approach is employed, encrypting data per block with a
+    fresh, random nonce each time.
+  - Polykey stores its persistent state in an encrypted database, protected by a
+    “Data Encryption Key” (DEK). This DEK is not derived from the root key, so
+    rotating the root key does not require re-encrypting the entire database.
+  - By combining encryption and authentication, XChaCha20-Poly1305 ensures both
+    confidentiality and integrity of the stored data.
 
 ### Asymmetric Encryption
 
