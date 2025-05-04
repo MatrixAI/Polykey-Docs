@@ -42,64 +42,29 @@ libraries that Node.js requires.
 
 ### Manually
 
-Builds for Linux is released on GitHub:
-https://github.com/MatrixAI/Polykey-CLI/releases.
+#### Using the Polykey CLI via the terminal
 
-Download the executable named `...-polykey-cli-V.V.V-linux-x64`, and rename it
-to `polykey`.
+If you prefer not to use a package manager or Docker, you can install Polykey directly via the terminal using a prebuilt binary.
 
-Make it executable:
+1. Download the executable from the [GitHub releases page](https://github.com/MatrixAI/Polykey-CLI/releases) and rename it to `polykey`.
 
-```sh
-$ chmod u+x ./polykey
-```
+2. Make it executable:
 
-### Add it to your `$PATH`.
+   ```sh
+   chmod u+x ./polykey
 
-#### For ZSH:
+3.	Move it into a directory in your $PATH, or add the current directory to your $PATH temporarily:
+*	For ZSH:
 
-1. `cd` into directory where polykey exec is stored.
-2. Edit the zsh config to add polykey to your path. To streamline the process,
-   run the following command, making sure to change the path to polykey if the
-   polykey executable is not in the downloads folder.
-3. For most users, this would be `~/Downloads`
+   echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
 
-:::warning
+*	For Bash:
+   echo 'export PATH=~/Downloads:$PATH' >> ~/.bashrc && source ~/.bashrc
 
-Make sure your path to the polykey executable is correct.
+4.	Confirm the installation:
+ polykey --version
 
-:::
-
-```sh
-$ echo 'export PATH=~/Downloads/polykey:$PATH' >> ~/.zshrc && source ~/.zshrc
-```
-
-You only need to run this command once. After running this command, you can now
-invoke polykey by typing `polykey` into the terminal.
-
----
-
-#### For Bash:
-
-1. `cd` into directory where polykey exec is stored.
-2. Edit the zsh config to add polykey to your path. To streamline the process,
-   run the following command, making sure to change the path to polykey if the
-   polykey executable is not in the downloads folder.
-3. For most users, this would be `~/Downloads`
-
-:::warning
-
-Make sure your path to the polykey executable is correct.
-
-:::
-
-```sh
-$ echo 'export PATH=~/Downloads/polykey:$PATH' >> ~/.bashrc && source ~/.bashrc
-```
-
-You only need to run this command once. After running this command, you can now
-invoke polykey by typing `polykey` into the terminal.
-
+If it returns the version, you’re ready to use the CLI.
 ---
 
 ### NixOS
