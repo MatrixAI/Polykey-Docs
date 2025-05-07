@@ -1,6 +1,5 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
-import Admonition from '@theme/Admonition';
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem'; import
+Admonition from '@theme/Admonition';
 
 # Installation
 
@@ -46,34 +45,43 @@ libraries that Node.js requires.
 
 #### Using the Polykey CLI via the terminal
 
-If you prefer not to use a package manager or Docker, you can install Polykey directly via the terminal using a prebuilt binary.
+If you prefer not to use a package manager or Docker, you can install Polykey
+directly via the terminal using a prebuilt binary.
 
-1. Download the executable from the [GitHub releases page](https://github.com/MatrixAI/Polykey-CLI/releases) and rename it to `polykey`.
+1. Download the executable from the
+   [GitHub releases page](https://github.com/MatrixAI/Polykey-CLI/releases) and
+   rename it to `polykey`.
 
 2. Make it executable:
 
    ```sh
    chmod u+x ./polykey
 
-3.	Move it into a directory in your $PATH, or add the current directory to your $PATH temporarily:
-*	For ZSH:
+   ```
 
-   echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
+3. Move it into a directory in your $PATH, or add the current directory to your
+   $PATH temporarily:
 
-*	For Bash:
-   echo 'export PATH=~/Downloads:$PATH' >> ~/.bashrc && source ~/.bashrc
+- For ZSH:
 
-4.	Confirm the installation:
- polykey --version
+echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
+
+- For Bash: echo 'export PATH=~/Downloads:$PATH' >> ~/.bashrc && source
+  ~/.bashrc
+
+4. Confirm the installation: polykey --version
 
 If it returns the version, you’re ready to use the CLI.
 
- :::tip Important: Agent behavior
+:::tip Important: Agent behavior
 
-Once you start the Polykey agent, the terminal window will be fully occupied by the running agent process.
+Once you start the Polykey agent, the terminal window will be fully occupied by
+the running agent process.
 
-To continue issuing Polykey commands (e.g., to create a vault), you must open a **new terminal window**.  
-If the system shuts down or the agent process stops, you’ll need to **restart the agent** before running any other commands.
+To continue issuing Polykey commands (e.g., to create a vault), you must open a
+**new terminal window**.  
+If the system shuts down or the agent process stops, you’ll need to **restart
+the agent** before running any other commands.
 
 :::
 
