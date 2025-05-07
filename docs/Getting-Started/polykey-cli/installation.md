@@ -68,37 +68,30 @@ directly via the terminal using a prebuilt binary.
 
 5. If it returns the version, you’re ready to use the CLI.
 
-<Admonition type="tip" title="Important — Agent behavior">
+<Admonition type="tip" title="Important: Agent behavior">
 Once you start a long‑lived command like <code>polykey agent start</code>, that process monopolizes the current terminal window.
-
 To issue any further Polykey commands (for example, <code>polykey vaults
 create</code>), you must open a **new terminal window**.
 
 If the machine reboots or the agent exits, simply rerun <code>polykey agent
-start</code> in a terminal to restart it. </Admonition> 66. --- 67. ### NixOS
+start</code> in a terminal to restart it. 
+</Admonition>
 
 - For ZSH:
 
-echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
+```shell
+export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
+```
 
-- For Bash: echo 'export PATH=~/Downloads:$PATH' >> ~/.bashrc && source
-  ~/.bashrc
+- For Bash:
+
+```shell
+export PATH=~/Downloads:$PATH >> ~/.bashrc && source ~/.bashrc && source
+```
 
 4. Confirm the installation: polykey --version
 
 If it returns the version, you’re ready to use the CLI.
-
-:::tip Important: Agent behavior
-
-Once you start the Polykey agent, the terminal window will be fully occupied by
-the running agent process.
-
-To continue issuing Polykey commands (e.g., to create a vault), you must open a
-**new terminal window**.  
-If the system shuts down or the agent process stops, you’ll need to **restart
-the agent** before running any other commands.
-
-:::
 
 ### NixOS
 
@@ -127,7 +120,7 @@ $ nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(
 
 ### Other
 
-We will be working on other distribution methods.
+We are working on other distribution methods. Check back soon.
 
   </TabItem>
   <TabItem value="macOS" label="MacOS">
@@ -165,7 +158,7 @@ this guide below to manually build and install Polykey on macOS.
 
 :::
 
-3. Make the Executable Runnable: Before you can run the Polykey CLI, you need to
+3. Make the file Executable: Before you can run the Polykey CLI, you need to
    make it executable. Use the `chmod +x` command to add executable permissions
    to the file. Replace `polykey` with the actual name of your file if it's
    different:
@@ -196,7 +189,7 @@ Remember to ensure that the file path matches the location of your polykey file.
 sudo xattr -r -d com.apple.quarantine ~/Downloads/polykey
 ```
 
-If you have completed this sucesfully, you may ignore Method #2 and move to the
+If you have completed this sucessfully, you may ignore Method #2 and move to the
 next section on how to add polykey to your `$PATH`.
 
 ## <!-- I need to add a link to skip ahead  -->
@@ -217,8 +210,10 @@ trigger a pop-up.
 
 1. MacOS will then prompt you with the following:
 
-:::important Do not close this prompt. If you do, the 'Allow Anyway' option will
-not appear in the next step. :::
+:::important 
+Do not close this prompt. If you do, the 'Allow Anyway' option will
+not appear in the next step. 
+:::
 
 ![install1](/images/mac-install1.png)
 
@@ -236,8 +231,10 @@ not appear in the next step. :::
 sudo ./polykey
 ```
 
-:::tip When prompted in the terminal, type your administrator password and hit
-enter. :::
+:::tip 
+When prompted in the terminal, type your administrator password and hit
+enter. 
+:::
 
 5. Following this, you will get another similar prompt
 
@@ -263,6 +260,16 @@ enter. :::
 To enable running the Polykey CLI from any directory in the terminal on macOS,
 you'll need to update your shell configuration file.
 
+<Admonition type="tip" title="Important: Agent behavior">
+Once you start a long‑lived command like <code>polykey agent start</code>, that process monopolizes the current terminal window.
+
+To issue any further Polykey commands (for example, <code>polykey vaults
+create</code>), you must open a **new terminal window**.
+
+If the machine reboots or the agent exits, simply rerun <code>polykey agent
+start</code> in a terminal to restart it.
+</Admonition>
+
 <Tabs>
       <TabItem value="zsh" label="ZSH (default shell on recent macOS versions)">
 
@@ -281,8 +288,8 @@ Make sure your path to the "polykey" executable is correct.
 
 :::
 
-```sh
-echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
+```shell
+ 'export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
 ```
 
 </TabItem>
@@ -309,11 +316,11 @@ found and will not work.
 Make sure your path to the "polykey" executable is correct. Replace `downloads`
 with the path to the working directory
 
-:::
-
-```sh
-echo 'export PATH=~/downloads:$PATH' >> ~/.bashrc && source ~/.bashrc
+```shell
+export PATH=~/downloads:$PATH >> ~/.bashrc && source ~/.bashrc
 ```
+
+:::
 
 </TabItem>
 </Tabs>
@@ -416,6 +423,16 @@ polykey-cli-0.1.2-alpha.2   gygbx1qgpnhbvbcbaby3sfm19bamg7sx   0e1addd9855a   12
 ```shell
 docker run -it 0e1addd9855a agent start --background -np /tmp/polykey
 ```
+
+<Admonition type="tip" title="Important: Agent behavior">
+Once you start a long‑lived command like <code>polykey agent start</code>, that process monopolizes the current terminal window.
+
+To issue any further Polykey commands (for example, <code>polykey vaults
+create</code>), you must open a **new terminal window**.
+
+If the machine reboots or the agent exits, simply rerun <code>polykey agent
+start</code> in a terminal to restart it. 
+</Admonition>
 
 Making sure to replace `0e1addd9855a` with your corresponding image ID.
 
