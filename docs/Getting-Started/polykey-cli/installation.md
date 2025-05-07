@@ -59,8 +59,24 @@ directly via the terminal using a prebuilt binary.
 
    ```
 
-3. Move it into a directory in your $PATH, or add the current directory to your
+3. Move it into a directory in your
+   $PATH, or add the current directory to your
    $PATH temporarily:
+
+64. Confirm the installation:  
+    polykey --version
+
+65. If it returns the version, you’re ready to use the CLI.
+
+<Admonition type="tip" title="Important — Agent behavior">
+Once you start a long‑lived command like <code>polykey agent start</code>, that process monopolizes the current terminal window.
+
+To issue any further Polykey commands (for example, <code>polykey vaults create</code>), you must open a **new terminal window**.
+
+If the machine reboots or the agent exits, simply rerun <code>polykey agent start</code> in a terminal to restart it.
+</Admonition>
+66. ---
+67. ### NixOS
 
 - For ZSH:
 
