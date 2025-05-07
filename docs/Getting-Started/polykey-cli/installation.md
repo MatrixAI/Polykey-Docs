@@ -1,4 +1,6 @@
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Admonition from '@theme/Admonition';
 
 # Installation
 
@@ -65,7 +67,15 @@ If you prefer not to use a package manager or Docker, you can install Polykey di
  polykey --version
 
 If it returns the version, you’re ready to use the CLI.
----
+
+ :::tip Important: Agent behavior
+
+Once you start the Polykey agent, the terminal window will be fully occupied by the running agent process.
+
+To continue issuing Polykey commands (e.g., to create a vault), you must open a **new terminal window**.  
+If the system shuts down or the agent process stops, you’ll need to **restart the agent** before running any other commands.
+
+:::
 
 ### NixOS
 
