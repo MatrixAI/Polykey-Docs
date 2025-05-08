@@ -1,5 +1,4 @@
-import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem'; import
-Admonition from '@theme/Admonition';
+import Tabs from '@theme/Tabs'; import TabItem from '@theme/TabItem';
 
 # Installation
 
@@ -56,26 +55,30 @@ directly via the terminal using a prebuilt binary.
 
    ```sh
    chmod u+x ./polykey
-
    ```
 
 3. Move it into a directory in your
    $PATH, or add the current directory to your
    $PATH temporarily:
 
-4. Confirm the installation:  
+4. Confirm the installation:
+
+   ```sh
    polykey --version
+   ```
 
 5. If it returns the version, you’re ready to use the CLI.
 
-<Admonition type="tip" title="Important: Agent behavior">
-Once you start a long‑lived command like <code>polykey agent start</code>, that process monopolizes the current terminal window.
-To issue any further Polykey commands (for example, <code>polykey vaults
-create</code>), you must open a **new terminal window**.
+:::important Important
 
-If the machine reboots or the agent exits, simply rerun <code>polykey agent
-start</code> in a terminal to restart it. 
-</Admonition>
+Once you start a long‑lived command like `polykey agent start`, that process
+monopolizes the current terminal window. To issue any further Polykey commands
+(for example, `polykey vaults create`), you must open a **new terminal window**.
+
+If the machine reboots or the agent exits, simply rerun `polykey agent start` in
+a terminal to restart it.
+
+:::
 
 - For ZSH:
 
@@ -89,7 +92,10 @@ export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
 export PATH=~/Downloads:$PATH >> ~/.bashrc && source ~/.bashrc && source
 ```
 
-4. Confirm the installation: polykey --version
+4. Confirm the installation:
+   ```sh
+   polykey --version
+   ```
 
 If it returns the version, you’re ready to use the CLI.
 
@@ -210,10 +216,8 @@ trigger a pop-up.
 
 1. MacOS will then prompt you with the following:
 
-:::important 
-Do not close this prompt. If you do, the 'Allow Anyway' option will
-not appear in the next step. 
-:::
+:::important Do not close this prompt. If you do, the 'Allow Anyway' option will
+not appear in the next step. :::
 
 ![install1](/images/mac-install1.png)
 
@@ -231,10 +235,8 @@ not appear in the next step.
 sudo ./polykey
 ```
 
-:::tip 
-When prompted in the terminal, type your administrator password and hit
-enter. 
-:::
+:::tip When prompted in the terminal, type your administrator password and hit
+enter. :::
 
 5. Following this, you will get another similar prompt
 
@@ -260,31 +262,34 @@ enter.
 To enable running the Polykey CLI from any directory in the terminal on macOS,
 you'll need to update your shell configuration file.
 
-<Admonition type="tip" title="Important: Agent behavior">
-Once you start a long‑lived command like <code>polykey agent start</code>, that process monopolizes the current terminal window.
+:::important Important
 
-To issue any further Polykey commands (for example, <code>polykey vaults
-create</code>), you must open a **new terminal window**.
+Once you start a long‑lived command like `polykey agent start`, that process
+monopolizes the current terminal window. To issue any further Polykey commands
+(for example, `polykey vaults create`), you must open a **new terminal window**.
 
-If the machine reboots or the agent exits, simply rerun <code>polykey agent
-start</code> in a terminal to restart it.
-</Admonition>
+If the machine reboots or the agent exits, simply rerun `polykey agent start` in
+a terminal to restart it.
+
+:::
 
 <Tabs>
       <TabItem value="zsh" label="ZSH (default shell on recent macOS versions)">
 
 #### For ZSH (default shell on recent macOS versions):
 
-1. Navigate (cd) into the directory where the "polykey" executable is stored.
+1. Navigate (cd) into the directory where the `polykey` executable is stored.
 
-2. Edit the Zsh configuration file to add "polykey" to your $PATH. Use the
-   following command, ensuring to replace ~/Downloads with the correct path to
-   the "polykey" executable if it's not in the downloads folder. For most users,
-   this path would be ~/Downloads on Debian-based systems.
+2. Edit the Zsh configuration file to add `polykey` to your `$PATH`. Use the
+   following command, ensuring to replace `~/Downloads` with the correct path to
+   the `polykey` executable if it's not in the downloads folder. For most users,
+   this path would be `~/Downloads`.
 
 :::tip
 
-Make sure your path to the "polykey" executable is correct.
+Make sure you provide the _path_ to `polykey` instead of the actual executable.
+This is not the path: `~/Downloads/polykey`. This is the correct path:
+`~/Downloads`.
 
 :::
 
@@ -424,15 +429,16 @@ polykey-cli-0.1.2-alpha.2   gygbx1qgpnhbvbcbaby3sfm19bamg7sx   0e1addd9855a   12
 docker run -it 0e1addd9855a agent start --background -np /tmp/polykey
 ```
 
-<Admonition type="tip" title="Important: Agent behavior">
-Once you start a long‑lived command like <code>polykey agent start</code>, that process monopolizes the current terminal window.
+:::important Important
 
-To issue any further Polykey commands (for example, <code>polykey vaults
-create</code>), you must open a **new terminal window**.
+Once you start a long‑lived command like `polykey agent start`, that process
+monopolizes the current terminal window. To issue any further Polykey commands
+(for example, `polykey vaults create`), you must open a **new terminal window**.
 
-If the machine reboots or the agent exits, simply rerun <code>polykey agent
-start</code> in a terminal to restart it. 
-</Admonition>
+If the machine reboots or the agent exits, simply rerun `polykey agent start` in
+a terminal to restart it.
+
+:::
 
 Making sure to replace `0e1addd9855a` with your corresponding image ID.
 
@@ -447,7 +453,7 @@ clientHost  	127.0.0.1
 clientPort  	45509
 agentHost   	::
 agentPort   	37468
-recoveryCode	(random text recovery code goes here)
+recoveryCode	(random recovery code goes here)
 
 ```
 
@@ -487,8 +493,8 @@ Use `npm install` to setup the project.
 
 :::tip
 
-If you have `nix-shell` available, enter into `nix-shell` and it will
-automatically setup the development environment.
+If you have `nix` installed and `nix-shell` available, enter into `nix-shell`
+and it will automatically setup the development environment.
 
 :::
 
