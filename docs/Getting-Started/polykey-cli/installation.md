@@ -99,6 +99,32 @@ export PATH=~/Downloads:$PATH >> ~/.bashrc && source ~/.bashrc && source
 
 If it returns the version, you’re ready to use the CLI.
 
+:::tip
+
+If you see an error like:
+
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+
+This means the Polykey agent is already running. To manage this, you can:
+
+- **Check the agent status**:
+
+```shell
+polykey agent status
+
+```
+
+Stop the running agent:
+
+```shell
+polykey agent stop
+```
+
+You must stop the current agent or use a different terminal before starting a new one.
+
+:::
+
+
 ### NixOS
 
 We have not yet published a Nix package for Polykey. When we do, you will be
@@ -135,9 +161,9 @@ We are working on other distribution methods. Check back soon.
 
 :::info
 
-ARM-64 builds are not currently supported on MacOS as of **6 April 2025.**
-However, building Polykey yourself on MacOS resolves in a working binary. Follow
-this guide below to manually build and install Polykey on macOS.
+The file `polykey-cli-V.V.V-darwin-universal` is **not truly universal** — it only supports **ARM64-based Macs** (Apple Silicon: M1, M2, M3, etc).  
+It **will not** run on Intel-based Macs.  
+If you're using an Intel Mac, you must **build Polykey from source**. Instructions are provided in the [Source](#source) section.
 
 :::
 
@@ -272,6 +298,32 @@ If the machine reboots or the agent exits, simply rerun `polykey agent start` in
 a terminal to restart it.
 
 :::
+
+:::tip
+
+If you see an error like:
+
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+
+This means the Polykey agent is already running. To manage this, you can:
+
+- **Check the agent status**:
+
+```shell
+polykey agent status
+
+```
+
+Stop the running agent:
+
+```shell
+polykey agent stop
+```
+
+You must stop the current agent or use a different terminal before starting a new one.
+
+:::
+
 
 <Tabs>
       <TabItem value="zsh" label="ZSH (default shell on recent macOS versions)">
@@ -439,6 +491,32 @@ If the machine reboots or the agent exits, simply rerun `polykey agent start` in
 a terminal to restart it.
 
 :::
+
+:::tip
+
+If you see an error like:
+
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+
+This means the Polykey agent is already running. To manage this, you can:
+
+- **Check the agent status**:
+
+```shell
+polykey agent status
+
+```
+
+Stop the running agent:
+
+```shell
+polykey agent stop
+```
+
+You must stop the current agent or use a different terminal before starting a new one.
+
+:::
+
 
 Making sure to replace `0e1addd9855a` with your corresponding image ID.
 
