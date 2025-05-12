@@ -73,7 +73,7 @@ directly via the terminal using a prebuilt binary.
 
 Once you start a long‑lived command like `polykey agent start`, that process
 monopolizes the current terminal window. To issue any further Polykey commands
-(for example, `polykey vaults create`), you must open a **new terminal window**.
+(for example, `polykey vaults create`) you must open a **new terminal window**.
 
 If the machine reboots or the agent exits, simply rerun `polykey agent start` in
 a terminal to restart it.
@@ -126,7 +126,7 @@ other than this, then it is still active!
 Stop the running agent:
 
 ```shell
-polykey agent 
+polykey agent
 ```
 
 You must stop the current agent or use a different terminal before starting a
@@ -272,8 +272,7 @@ not appear in the next step. :::
 sudo ./polykey
 ```
 
-:::tip Tip 
-When prompted in the terminal, type your administrator password and
+:::tip Tip When prompted in the terminal, type your administrator password and
 hit enter. :::
 
 5. Following this, you will get another similar prompt
@@ -282,8 +281,7 @@ hit enter. :::
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
-:::tip Tip 
-You can also verify the version of polykey that was installed with:
+:::tip Tip You can also verify the version of polykey that was installed with:
 
 ```sh
 ./polykey --version
