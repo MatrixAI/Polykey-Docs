@@ -405,7 +405,7 @@ terminal.
 :::warning
 
 Polykey for windows should be working but we have yet to create documentation on
-the installation process for this. Check back soon.
+the installation process for this. Check back soon!
 
 :::
 
