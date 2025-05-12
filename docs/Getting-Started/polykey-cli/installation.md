@@ -19,7 +19,7 @@ minor teething problems when it comes supporting other platforms. Help us by
 reporting any issues with the CLI tool in our Github Repo
 [here](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) or by dropping
 a message to the developers in our discord server
-[here](https://discord.gg/dC32r35TeE).
+[here](https://discord.gg/dC32r35TeE)
 
 :::
 
@@ -42,65 +42,97 @@ libraries that Node.js requires.
 
 ### Manually
 
-Builds for Linux is released on GitHub:
-https://github.com/MatrixAI/Polykey-CLI/releases.
+#### Using the Polykey CLI via the terminal
 
-Download the executable named `...-polykey-cli-V.V.V-linux-x64`, and rename it
-to `polykey`.
+If you prefer not to use a package manager or Docker, you can install Polykey
+directly via the terminal using a prebuilt binary.
 
-Make it executable:
+1. Download the executable from the
+   [GitHub releases page](https://github.com/MatrixAI/Polykey-CLI/releases) and
+   rename it to `polykey`.
 
-```sh
-$ chmod u+x ./polykey
-```
+2. Make it executable:
 
-### Add it to your `$PATH`.
+   ```sh
+   chmod u+x ./polykey
+   ```
 
-#### For ZSH:
+3. Move it into a directory in your
+   $PATH, or add the current directory to your
+   $PATH temporarily:
 
-1. `cd` into directory where polykey exec is stored.
-2. Edit the zsh config to add polykey to your path. To streamline the process,
-   run the following command, making sure to change the path to polykey if the
-   polykey executable is not in the downloads folder.
-3. For most users, this would be `~/Downloads`
+4. Confirm the installation:
 
-:::warning
+   ```sh
+   polykey --version
+   ```
 
-Make sure your path to the polykey executable is correct.
+5. If it returns the version, you’re ready to use the CLI.
 
-:::
+:::important Important
 
-```sh
-$ echo 'export PATH=~/Downloads/polykey:$PATH' >> ~/.zshrc && source ~/.zshrc
-```
+Once you start a long‑lived command like `polykey agent start`, that process
+monopolizes the current terminal window. To issue any further Polykey commands
+(for example, `polykey vaults create`) you must open a **new terminal window**.
 
-You only need to run this command once. After running this command, you can now
-invoke polykey by typing `polykey` into the terminal.
-
----
-
-#### For Bash:
-
-1. `cd` into directory where polykey exec is stored.
-2. Edit the zsh config to add polykey to your path. To streamline the process,
-   run the following command, making sure to change the path to polykey if the
-   polykey executable is not in the downloads folder.
-3. For most users, this would be `~/Downloads`
-
-:::warning
-
-Make sure your path to the polykey executable is correct.
+If the machine reboots or the agent exits, simply rerun `polykey agent start` in
+a terminal to restart it.
 
 :::
 
-```sh
-$ echo 'export PATH=~/Downloads/polykey:$PATH' >> ~/.bashrc && source ~/.bashrc
+- For ZSH:
+
+```shell
+export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
 ```
 
-You only need to run this command once. After running this command, you can now
-invoke polykey by typing `polykey` into the terminal.
+- For Bash:
 
----
+```shell
+export PATH=~/Downloads:$PATH >> ~/.bashrc && source ~/.bashrc && source
+```
+
+4. Confirm the installation:
+   ```sh
+   polykey --version
+   ```
+
+If it returns the version, you’re ready to use the CLI.
+
+:::tip Tip
+
+If you see an error like:
+
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
+already be running
+
+This means the Polykey agent is already running. To manage this, you can:
+
+- **Check the agent status**:
+
+```shell
+polykey agent status
+```
+
+If the agent returns something like this:
+
+```shell
+status DEAD
+```
+
+Then the agent is inactive and needs to be restarted. If it returns something
+other than this, then it is still active!
+
+Stop the running agent:
+
+```shell
+polykey agent
+```
+
+You must stop the current agent or use a different terminal before starting a
+new one. The currently running agent must be stopped before it can be re-run.
+
+:::
 
 ### NixOS
 
@@ -129,7 +161,7 @@ $ nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(
 
 ### Other
 
-We will be working on other distribution methods.
+We are working on other distribution methods. Check back soon.
 
   </TabItem>
   <TabItem value="macOS" label="MacOS">
@@ -138,9 +170,11 @@ We will be working on other distribution methods.
 
 :::info
 
-ARM-64 builds are not currently supported on MacOS as of **6 April 2025.**
-However, building Polykey yourself on MacOS resolves in a working binary. Follow
-this guide below to manually build and install Polykey on macOS.
+The file `polykey-cli-V.V.V-darwin-universal` is **not truly universal** — it
+only supports **ARM64-based Macs** (Apple Silicon: M1, M2, M3, etc).  
+It **will not** run on Intel-based Macs.  
+If you're using an Intel Mac, you must **build Polykey from source**.
+Instructions are provided in the [Source](#source) section.
 
 :::
 
@@ -160,14 +194,14 @@ this guide below to manually build and install Polykey on macOS.
  mv polykey-cli-V.V.V-darwin-universal polykey
 ```
 
-:::tip
+:::tip Tip
 
 - Navigate into the directory where the file is saved to execute commands.
 - Replace `V.V.V.` with the actual version number of the file you downloaded.
 
 :::
 
-3. Make the Executable Runnable: Before you can run the Polykey CLI, you need to
+3. Make the file Executable: Before you can run the Polykey CLI, you need to
    make it executable. Use the `chmod +x` command to add executable permissions
    to the file. Replace `polykey` with the actual name of your file if it's
    different:
@@ -198,7 +232,7 @@ Remember to ensure that the file path matches the location of your polykey file.
 sudo xattr -r -d com.apple.quarantine ~/Downloads/polykey
 ```
 
-If you have completed this sucesfully, you may ignore Method #2 and move to the
+If you have completed this sucessfully, you may ignore Method #2 and move to the
 next section on how to add polykey to your `$PATH`.
 
 ## <!-- I need to add a link to skip ahead  -->
@@ -238,8 +272,8 @@ not appear in the next step. :::
 sudo ./polykey
 ```
 
-:::tip When prompted in the terminal, type your administrator password and hit
-enter. :::
+:::tip Tip When prompted in the terminal, type your administrator password and
+hit enter. :::
 
 5. Following this, you will get another similar prompt
 
@@ -247,7 +281,7 @@ enter. :::
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
-:::tip You can also verify the version of polykey that was installed with:
+:::tip Tip You can also verify the version of polykey that was installed with:
 
 ```sh
 ./polykey --version
@@ -265,32 +299,71 @@ enter. :::
 To enable running the Polykey CLI from any directory in the terminal on macOS,
 you'll need to update your shell configuration file.
 
+:::important Important
+
+Once you start a long‑lived command like `polykey agent start`, that process
+monopolizes the current terminal window. To issue any further Polykey commands
+(for example, `polykey vaults create`), you must open a **new terminal window**.
+
+If the machine reboots or the agent exits, simply rerun `polykey agent start` in
+a terminal to restart it.
+
+:::
+
+:::tip Tip
+
+If you see an error like:
+
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
+already be running
+
+This means the Polykey agent is already running. To manage this, you can:
+
+- **Check the agent status**:
+
+```shell
+polykey agent status
+```
+
+Stop the running agent:
+
+```shell
+polykey agent stop
+```
+
+You must stop the current agent or use a different terminal before starting a
+new one.
+
+:::
+
 <Tabs>
       <TabItem value="zsh" label="ZSH (default shell on recent macOS versions)">
 
 #### For ZSH (default shell on recent macOS versions):
 
-1. Navigate (cd) into the directory where the "polykey" executable is stored.
+1. Navigate (cd) into the directory where the `polykey` executable is stored.
 
-2. Edit the Zsh configuration file to add "polykey" to your $PATH. Use the
-   following command, ensuring to replace ~/Downloads with the correct path to
-   the "polykey" executable if it's not in the downloads folder. For most users,
-   this path would be ~/Downloads on Debian-based systems.
+2. Edit the Zsh configuration file to add `polykey` to your `$PATH`. Use the
+   following command, ensuring to replace `~/Downloads` with the correct path to
+   the `polykey` executable if it's not in the downloads folder. For most users,
+   this path would be `~/Downloads`.
 
-:::tip
+:::tip Tip
 
-Make sure your path to the "polykey" executable is correct.
+Make sure you provide the _path_ to `polykey` instead of the actual executable.
+This is not the path: `~/Downloads/polykey`. This is the correct path:
+`~/Downloads`.
 
 :::
 
-```sh
-echo 'export PATH=~/Downloads:$PATH' >> ~/.zshrc && source ~/.zshrc
+```shell
+ export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
 ```
 
 </TabItem>
  <TabItem value="bash" label="Bash">
 
-:::tip
+:::tip Tip
 
 The path export should not pint to the Polykey executable itself, but rather to
 the directory containing the executable. Otherwise, the executable will not be
@@ -306,21 +379,21 @@ found and will not work.
    "polykey" if the executable is not in the downloads folder. For most users,
    this would be `~/Downloads`
 
-:::tip
+:::tip Tip
 
 Make sure your path to the "polykey" executable is correct. Replace `downloads`
 with the path to the working directory
 
-:::
-
-```sh
-echo 'export PATH=~/downloads:$PATH' >> ~/.bashrc && source ~/.bashrc
+```shell
+export PATH=~/downloads:$PATH >> ~/.bashrc && source ~/.bashrc
 ```
+
+:::
 
 </TabItem>
 </Tabs>
 
-:::tip
+:::tip Tip
 
 You can check if the PATH environment variable for Polykey has been updated
 correctly by running:
@@ -341,7 +414,7 @@ terminal.
 :::warning
 
 Polykey for windows should be working but we have yet to create documentation on
-the installation process for this.
+the installation process for this. Check back soon!
 
 :::
 
@@ -370,7 +443,7 @@ docker run -it "$image"
 
 ### Docker for Mac
 
-:::tip
+:::tip Tip
 
 You can install nix for MacOS and then follow the general docker instructions
 above. Nix for mac can be installed by running
@@ -419,6 +492,43 @@ polykey-cli-0.1.2-alpha.2   gygbx1qgpnhbvbcbaby3sfm19bamg7sx   0e1addd9855a   12
 docker run -it 0e1addd9855a agent start --background -np /tmp/polykey
 ```
 
+:::important Important
+
+Once you start a long‑lived command like `polykey agent start`, that process
+monopolizes the current terminal window. To issue any further Polykey commands
+(for example, `polykey vaults create`), you must open a **new terminal window**.
+
+If the machine reboots or the agent exits, simply rerun `polykey agent start` in
+a terminal to restart it.
+
+:::
+
+:::tip Tip
+
+If you see an error like:
+
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
+already be running
+
+This means the Polykey agent is already running. To manage this, you can:
+
+- **Check the agent status**:
+
+```shell
+polykey agent status
+```
+
+Stop the running agent:
+
+```shell
+polykey agent stop
+```
+
+You must stop the current agent or use a different terminal before starting a
+new one.
+
+:::
+
 Making sure to replace `0e1addd9855a` with your corresponding image ID.
 
 ```shell
@@ -432,7 +542,7 @@ clientHost  	127.0.0.1
 clientPort  	45509
 agentHost   	::
 agentPort   	37468
-recoveryCode	(random text recovery code goes here)
+recoveryCode	(random recovery code goes here)
 
 ```
 
@@ -470,10 +580,10 @@ git clone https://github.com/MatrixAI/Polykey-CLI.git
 
 Use `npm install` to setup the project.
 
-:::tip
+:::tip Tip
 
-If you have `nix-shell` available, enter into `nix-shell` and it will
-automatically setup the development environment.
+If you have `nix` installed and `nix-shell` available, enter into `nix-shell`
+and it will automatically setup the development environment.
 
 :::
 
