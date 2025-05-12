@@ -59,20 +59,23 @@ directly via the terminal using a prebuilt binary.
 
 3. Add the executable to your PATH
 
-To run `polykey` from anywhere, you need to add the directory containing it to your `PATH`. You can either:
+To run `polykey` from anywhere, you need to add the directory containing it to
+your `PATH`. You can either:
 
-- Move `polykey` into an existing directory already in your `PATH` (e.g., `/usr/local/bin`), **or**
+- Move `polykey` into an existing directory already in your `PATH` (e.g.,
+  `/usr/local/bin`), **or**
 - Add the current directory to your `PATH`, either temporarily or permanently:
 
 **Temporary (until terminal closes):**
-```sh
+
+````sh
 export PATH="$PWD:$PATH"
 
 4. Confirm the installation:
 
    ```sh
    polykey --version
-   ```
+````
 
 5. If it returns the version, you’re ready to use the CLI.
 
@@ -130,7 +133,7 @@ status DEAD
 ```
 
 Then the agent is inactive and needs to be restarted. If it returns something
-other than this, then it is still active!
+other than this, then it is still active.
 
 Stop the running agent:
 
