@@ -57,9 +57,16 @@ directly via the terminal using a prebuilt binary.
    chmod u+x ./polykey
    ```
 
-3. Move it into a directory in your
-   $PATH, or add the current directory to your
-   $PATH temporarily:
+3. Add the executable to your PATH
+
+To run `polykey` from anywhere, you need to add the directory containing it to your `PATH`. You can either:
+
+- Move `polykey` into an existing directory already in your `PATH` (e.g., `/usr/local/bin`), **or**
+- Add the current directory to your `PATH`, either temporarily or permanently:
+
+**Temporary (until terminal closes):**
+```sh
+export PATH="$PWD:$PATH"
 
 4. Confirm the installation:
 
@@ -83,16 +90,18 @@ a terminal to restart it.
 - For ZSH:
 
 ```shell
-export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
+export PATH="$HOME/Downloads:$PATH"' >> ~/.zshrc && source ~/.zshrc
 ```
 
 - For Bash:
 
+– For Bash:
+
 ```shell
-export PATH=~/Downloads:$PATH >> ~/.bashrc && source ~/.bashrc && source
+echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.bashrc && source ~/.bashrc
 ```
 
-4. Confirm the installation:
+4. Confirm the installation with:
    ```sh
    polykey --version
    ```
