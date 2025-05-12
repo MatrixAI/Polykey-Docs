@@ -99,7 +99,7 @@ export PATH=~/Downloads:$PATH >> ~/.bashrc && source ~/.bashrc && source
 
 If it returns the version, you’re ready to use the CLI.
 
-:::tip
+:::tip Tip
 
 If you see an error like:
 
@@ -114,6 +114,13 @@ This means the Polykey agent is already running. To manage this, you can:
 polykey agent status
 ```
 
+If the agent returns something like this:
+
+```shell
+status DEAD
+```
+Then the agent is inactive and needs to be restarted. If it returns something other than this, then it is still active.
+
 Stop the running agent:
 
 ```shell
@@ -121,7 +128,7 @@ polykey agent stop
 ```
 
 You must stop the current agent or use a different terminal before starting a
-new one.
+new one. The currently running agent must be stopped before it can be re-run.
 
 :::
 
@@ -185,7 +192,7 @@ Instructions are provided in the [Source](#source) section.
  mv polykey-cli-V.V.V-darwin-universal polykey
 ```
 
-:::tip
+:::tip Tip
 
 - Navigate into the directory where the file is saved to execute commands.
 - Replace `V.V.V.` with the actual version number of the file you downloaded.
@@ -263,7 +270,8 @@ not appear in the next step. :::
 sudo ./polykey
 ```
 
-:::tip When prompted in the terminal, type your administrator password and hit
+:::tip Tip
+When prompted in the terminal, type your administrator password and hit
 enter. :::
 
 5. Following this, you will get another similar prompt
@@ -272,7 +280,8 @@ enter. :::
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
-:::tip You can also verify the version of polykey that was installed with:
+:::tip Tip
+You can also verify the version of polykey that was installed with:
 
 ```sh
 ./polykey --version
@@ -301,7 +310,7 @@ a terminal to restart it.
 
 :::
 
-:::tip
+:::tip Tip
 
 If you see an error like:
 
@@ -339,7 +348,7 @@ new one.
    the `polykey` executable if it's not in the downloads folder. For most users,
    this path would be `~/Downloads`.
 
-:::tip
+:::tip Tip
 
 Make sure you provide the _path_ to `polykey` instead of the actual executable.
 This is not the path: `~/Downloads/polykey`. This is the correct path:
@@ -354,7 +363,7 @@ This is not the path: `~/Downloads/polykey`. This is the correct path:
 </TabItem>
  <TabItem value="bash" label="Bash">
 
-:::tip
+:::tip Tip
 
 The path export should not pint to the Polykey executable itself, but rather to
 the directory containing the executable. Otherwise, the executable will not be
@@ -370,7 +379,7 @@ found and will not work.
    "polykey" if the executable is not in the downloads folder. For most users,
    this would be `~/Downloads`
 
-:::tip
+:::tip Tip
 
 Make sure your path to the "polykey" executable is correct. Replace `downloads`
 with the path to the working directory
@@ -384,7 +393,7 @@ export PATH=~/downloads:$PATH >> ~/.bashrc && source ~/.bashrc
 </TabItem>
 </Tabs>
 
-:::tip
+:::tip Tip
 
 You can check if the PATH environment variable for Polykey has been updated
 correctly by running:
@@ -434,7 +443,7 @@ docker run -it "$image"
 
 ### Docker for Mac
 
-:::tip
+:::tip Tip
 
 You can install nix for MacOS and then follow the general docker instructions
 above. Nix for mac can be installed by running
@@ -494,7 +503,7 @@ a terminal to restart it.
 
 :::
 
-:::tip
+:::tip Tip
 
 If you see an error like:
 
@@ -571,7 +580,7 @@ git clone https://github.com/MatrixAI/Polykey-CLI.git
 
 Use `npm install` to setup the project.
 
-:::tip
+:::tip Tip
 
 If you have `nix` installed and `nix-shell` available, enter into `nix-shell`
 and it will automatically setup the development environment.
