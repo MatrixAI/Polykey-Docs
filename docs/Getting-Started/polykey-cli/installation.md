@@ -103,7 +103,8 @@ If it returns the version, you’re ready to use the CLI.
 
 If you see an error like:
 
-WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
+already be running
 
 This means the Polykey agent is already running. To manage this, you can:
 
@@ -111,7 +112,6 @@ This means the Polykey agent is already running. To manage this, you can:
 
 ```shell
 polykey agent status
-
 ```
 
 Stop the running agent:
@@ -120,10 +120,10 @@ Stop the running agent:
 polykey agent stop
 ```
 
-You must stop the current agent or use a different terminal before starting a new one.
+You must stop the current agent or use a different terminal before starting a
+new one.
 
 :::
-
 
 ### NixOS
 
@@ -161,9 +161,11 @@ We are working on other distribution methods. Check back soon.
 
 :::info
 
-The file `polykey-cli-V.V.V-darwin-universal` is **not truly universal** — it only supports **ARM64-based Macs** (Apple Silicon: M1, M2, M3, etc).  
+The file `polykey-cli-V.V.V-darwin-universal` is **not truly universal** — it
+only supports **ARM64-based Macs** (Apple Silicon: M1, M2, M3, etc).  
 It **will not** run on Intel-based Macs.  
-If you're using an Intel Mac, you must **build Polykey from source**. Instructions are provided in the [Source](#source) section.
+If you're using an Intel Mac, you must **build Polykey from source**.
+Instructions are provided in the [Source](#source) section.
 
 :::
 
@@ -303,7 +305,8 @@ a terminal to restart it.
 
 If you see an error like:
 
-WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
+already be running
 
 This means the Polykey agent is already running. To manage this, you can:
 
@@ -311,7 +314,6 @@ This means the Polykey agent is already running. To manage this, you can:
 
 ```shell
 polykey agent status
-
 ```
 
 Stop the running agent:
@@ -320,10 +322,10 @@ Stop the running agent:
 polykey agent stop
 ```
 
-You must stop the current agent or use a different terminal before starting a new one.
+You must stop the current agent or use a different terminal before starting a
+new one.
 
 :::
-
 
 <Tabs>
       <TabItem value="zsh" label="ZSH (default shell on recent macOS versions)">
@@ -346,7 +348,7 @@ This is not the path: `~/Downloads/polykey`. This is the correct path:
 :::
 
 ```shell
- 'export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
+ export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
 ```
 
 </TabItem>
@@ -403,7 +405,7 @@ terminal.
 :::warning
 
 Polykey for windows should be working but we have yet to create documentation on
-the installation process for this.
+the installation process for this. Check back soon.
 
 :::
 
@@ -496,7 +498,8 @@ a terminal to restart it.
 
 If you see an error like:
 
-WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
+already be running
 
 This means the Polykey agent is already running. To manage this, you can:
 
@@ -504,7 +507,6 @@ This means the Polykey agent is already running. To manage this, you can:
 
 ```shell
 polykey agent status
-
 ```
 
 Stop the running agent:
@@ -513,10 +515,10 @@ Stop the running agent:
 polykey agent stop
 ```
 
-You must stop the current agent or use a different terminal before starting a new one.
+You must stop the current agent or use a different terminal before starting a
+new one.
 
 :::
-
 
 Making sure to replace `0e1addd9855a` with your corresponding image ID.
 
