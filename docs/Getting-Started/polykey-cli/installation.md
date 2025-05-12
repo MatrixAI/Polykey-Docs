@@ -19,7 +19,7 @@ minor teething problems when it comes supporting other platforms. Help us by
 reporting any issues with the CLI tool in our Github Repo
 [here](https://github.com/MatrixAI/Polykey-CLI/issues/new/choose) or by dropping
 a message to the developers in our discord server
-[here](https://discord.gg/dC32r35TeE).
+[here](https://discord.gg/dC32r35TeE)
 
 :::
 
