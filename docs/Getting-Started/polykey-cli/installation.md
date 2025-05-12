@@ -126,7 +126,7 @@ other than this, then it is still active!
 Stop the running agent:
 
 ```shell
-polykey agent stop
+polykey agent 
 ```
 
 You must stop the current agent or use a different terminal before starting a
@@ -272,7 +272,8 @@ not appear in the next step. :::
 sudo ./polykey
 ```
 
-:::tip Tip When prompted in the terminal, type your administrator password and
+:::tip Tip 
+When prompted in the terminal, type your administrator password and
 hit enter. :::
 
 5. Following this, you will get another similar prompt
@@ -281,7 +282,8 @@ hit enter. :::
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
-:::tip Tip You can also verify the version of polykey that was installed with:
+:::tip Tip 
+You can also verify the version of polykey that was installed with:
 
 ```sh
 ./polykey --version
