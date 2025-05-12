@@ -119,7 +119,9 @@ If the agent returns something like this:
 ```shell
 status DEAD
 ```
-Then the agent is inactive and needs to be restarted. If it returns something other than this, then it is still active.
+
+Then the agent is inactive and needs to be restarted. If it returns something
+other than this, then it is still active!
 
 Stop the running agent:
 
@@ -270,9 +272,8 @@ not appear in the next step. :::
 sudo ./polykey
 ```
 
-:::tip Tip
-When prompted in the terminal, type your administrator password and hit
-enter. :::
+:::tip Tip When prompted in the terminal, type your administrator password and
+hit enter. :::
 
 5. Following this, you will get another similar prompt
 
@@ -280,8 +281,7 @@ enter. :::
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
-:::tip Tip
-You can also verify the version of polykey that was installed with:
+:::tip Tip You can also verify the version of polykey that was installed with:
 
 ```sh
 ./polykey --version
