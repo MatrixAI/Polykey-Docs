@@ -93,12 +93,10 @@ a terminal to restart it.
 - For ZSH:
 
 ```shell
-export PATH="$HOME/Downloads:$PATH"' >> ~/.zshrc && source ~/.zshrc
+echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.zshrc && source ~/.zshrc
 ```
 
 - For Bash:
-
-– For Bash:
 
 ```shell
 echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.bashrc && source ~/.bashrc
@@ -120,8 +118,8 @@ already be running
 
 This means the Polykey agent is already running. To manage this, you can:
 
-- **Check the agent status**:
-
+**Check the agent status**:
+pm 
 ```shell
 polykey agent status
 ```
