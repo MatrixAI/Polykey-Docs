@@ -68,14 +68,15 @@ your `PATH`. You can either:
 
 **Temporary (until terminal closes):**
 
-````sh
+```shell
 export PATH="$PWD:$PATH"
+```
 
 4. Confirm the installation:
 
-   ```sh
+```shell
    polykey --version
-````
+```
 
 5. If it returns the version, you’re ready to use the CLI.
 
@@ -102,10 +103,42 @@ echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.zshrc && source ~/.zshrc
 echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.bashrc && source ~/.bashrc
 ```
 
+:::tip Setting PATH across operating systems
+
+Where you place the `polykey` binary — and how you add it to your `PATH` —
+depends on your OS:
+
+- **Linux**: Preferred location is `~/.local/bin` (you may need to create it
+  using `mkdir -p ~/.local/bin`). Make sure this directory is included in your
+  `$PATH` — often via `~/.bashrc`, `~/.bash_profile`, or `~/.profile`.
+
+- **macOS**: Same as Linux — use `~/.local/bin` or `~/bin`. Update your `$PATH`
+  in `~/.zshrc` (ZSH is default on macOS since Catalina) or `~/.bash_profile` if
+  using Bash.
+
+- **Windows**: Place `polykey.exe` into:
+
+```shell
+%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
+```
+
+This location is typically already included in the system PATH.
+
+To verify it’s working, run:
+
+```shell
+which polykey
+polykey --version
+
+```
+
+:::
+
 4. Confirm the installation with:
-   ```sh
+
+```shell
    polykey --version
-   ```
+```
 
 If it returns the version, you’re ready to use the CLI.
 
@@ -282,8 +315,11 @@ not appear in the next step. :::
 sudo ./polykey
 ```
 
-:::tip Tip When prompted in the terminal, type your administrator password and
-hit enter. :::
+:::tip Tip
+
+When prompted in the terminal, type your administrator password and hit enter.
+
+:::
 
 5. Following this, you will get another similar prompt
 
@@ -291,7 +327,9 @@ hit enter. :::
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
-:::tip Tip You can also verify the version of polykey that was installed with:
+:::tip Tip
+
+You can also verify the version of polykey that was installed with:
 
 ```sh
 ./polykey --version
@@ -421,7 +459,7 @@ terminal.
   </TabItem>
   <TabItem value="windows" label="Windows">
 
-:::warning
+:::warning Warning
 
 Polykey for windows should be working but we have yet to create documentation on
 the installation process for this. Check back soon!
