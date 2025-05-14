@@ -68,14 +68,14 @@ your `PATH`. You can either:
 
 **Temporary (until terminal closes):**
 
-````sh
+```sh
 export PATH="$PWD:$PATH"
 
 4. Confirm the installation:
 
    ```sh
    polykey --version
-````
+```
 
 5. If it returns the version, you’re ready to use the CLI.
 
