@@ -53,21 +53,85 @@ directly via the terminal using a prebuilt binary.
 
 2. Make it executable:
 
-   ```sh
-   chmod u+x ./polykey
-   ```
+```sh
+chmod u+x ./polykey
+```
 
-3. Move it into a directory in your
-   $PATH, or add the current directory to your
-   $PATH temporarily:
+3. Add the executable to your PATH
 
-4. Confirm the installation:
+To run `polykey` from anywhere, you need to add the directory containing it to
+your `PATH`. You can either:
 
-   ```sh
-   polykey --version
-   ```
+- Move `polykey` into an existing directory already in your `PATH` (e.g.,
+  `/usr/local/bin`), **or**
+- Add the polykey directory to your `PATH`, either temporarily or permanently:
 
-5. If it returns the version, you’re ready to use the CLI.
+**Temporarily (until terminal closes):**
+
+```shell
+export PATH="$HOME/Downloads:$PATH"
+```
+
+**Permanently:**
+
+<Tabs>
+   <TabItem value="zsh" label="For zsh">
+To permanently add `polykey` to `PATH` on zsh, run the following command.
+
+```shell
+echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.zshrc && source ~/.zshrc
+```
+
+   </TabItem>
+   <TabItem value="bash" label="For bash">
+To permanently add `polykey` to `PATH` on bash, run the following command.
+
+```shell
+echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.bashrc && source ~/.bashrc
+```
+
+   </TabItem>
+</Tabs>
+
+---
+
+:::tip Setting PATH across operating systems
+
+Where you place the `polykey` binary — and how you add it to your `PATH` —
+depends on your OS:
+
+- **Linux**: Preferred location is `~/.local/bin` (you may need to create it
+  using `mkdir -p ~/.local/bin`). Make sure this directory is included in your
+  `$PATH` — often via `~/.bashrc`, `~/.bash_profile`, or `~/.profile`.
+
+- **macOS**: Same as Linux — use `~/.local/bin` or `~/bin`. Update your `$PATH`
+  in `~/.zshrc` (ZSH is default on macOS since Catalina) or `~/.bash_profile` if
+  using Bash.
+
+- **Windows**: Place `polykey.exe` into:
+
+```shell
+%USERPROFILE%\AppData\Local\Microsoft\WindowsApps
+```
+
+This location is typically already included in the system PATH.
+
+To verify it’s working, run:
+
+```shell
+which polykey
+polykey --version
+```
+
+:::
+
+4. Confirm the installation with:
+
+```shell
+polykey --version
+```
+
+If it returns the version, you’re ready to use the CLI.
 
 :::important Important
 
@@ -80,35 +144,17 @@ a terminal to restart it.
 
 :::
 
-- For ZSH:
-
-```shell
-export PATH=~/Downloads:$PATH >> ~/.zshrc && source ~/.zshrc
-```
-
-- For Bash:
-
-```shell
-export PATH=~/Downloads:$PATH >> ~/.bashrc && source ~/.bashrc && source
-```
-
-4. Confirm the installation:
-   ```sh
-   polykey --version
-   ```
-
-If it returns the version, you’re ready to use the CLI.
-
 :::tip Tip
 
 If you see an error like:
 
-WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
-already be running
+```
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+```
 
 This means the Polykey agent is already running. To manage this, you can:
 
-- **Check the agent status**:
+**Check the agent status**:
 
 ```shell
 polykey agent status
@@ -121,12 +167,12 @@ status DEAD
 ```
 
 Then the agent is inactive and needs to be restarted. If it returns something
-other than this, then it is still active!
+other than this, then it is still active.
 
 Stop the running agent:
 
 ```shell
-polykey agent
+polykey agent stop
 ```
 
 You must stop the current agent or use a different terminal before starting a
@@ -144,19 +190,19 @@ However, it is easy enough to install it from source.
 Clone the repository:
 
 ```sh
-$ git clone https://github.com/MatrixAI/Polykey-CLI.git
+git clone https://github.com/MatrixAI/Polykey-CLI.git
 ```
 
 Enter the `nix-shell`:
 
 ```sh
-$ nix-shell
+nix-shell
 ```
 
 Build the application and install it into the user profile:
 
 ```sh
-$ nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(prefetch-npm-deps ./package-lock.json)"
+nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(prefetch-npm-deps ./package-lock.json)"
 ```
 
 ### Other
@@ -272,8 +318,11 @@ not appear in the next step. :::
 sudo ./polykey
 ```
 
-:::tip Tip When prompted in the terminal, type your administrator password and
-hit enter. :::
+:::tip Tip
+
+When prompted in the terminal, type your administrator password and hit enter.
+
+:::
 
 5. Following this, you will get another similar prompt
 
@@ -281,7 +330,9 @@ hit enter. :::
 
 #### Click on Open and now Polykey-CLI should be running in your terminal window.
 
-:::tip Tip You can also verify the version of polykey that was installed with:
+:::tip Tip
+
+You can also verify the version of polykey that was installed with:
 
 ```sh
 ./polykey --version
@@ -314,16 +365,26 @@ a terminal to restart it.
 
 If you see an error like:
 
-WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
-already be running
+```
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+```
 
 This means the Polykey agent is already running. To manage this, you can:
 
-- **Check the agent status**:
+**Check the agent status**:
 
 ```shell
 polykey agent status
 ```
+
+If the agent returns something like this:
+
+```shell
+status DEAD
+```
+
+Then the agent is inactive and needs to be restarted. If it returns something
+other than this, then it is still active.
 
 Stop the running agent:
 
@@ -332,7 +393,7 @@ polykey agent stop
 ```
 
 You must stop the current agent or use a different terminal before starting a
-new one.
+new one. The currently running agent must be stopped before it can be re-run.
 
 :::
 
@@ -411,7 +472,7 @@ terminal.
   </TabItem>
   <TabItem value="windows" label="Windows">
 
-:::warning
+:::warning Warning
 
 Polykey for windows should be working but we have yet to create documentation on
 the installation process for this. Check back soon!
