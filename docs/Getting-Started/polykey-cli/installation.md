@@ -53,9 +53,9 @@ directly via the terminal using a prebuilt binary.
 
 2. Make it executable:
 
-   ```sh
-   chmod u+x ./polykey
-   ```
+```sh
+chmod u+x ./polykey
+```
 
 3. Add the executable to your PATH
 
@@ -64,44 +64,36 @@ your `PATH`. You can either:
 
 - Move `polykey` into an existing directory already in your `PATH` (e.g.,
   `/usr/local/bin`), **or**
-- Add the current directory to your `PATH`, either temporarily or permanently:
+- Add the polykey directory to your `PATH`, either temporarily or permanently:
 
-**Temporary (until terminal closes):**
-
-```shell
-export PATH="$PWD:$PATH"
-```
-
-4. Confirm the installation:
+**Temporarily (until terminal closes):**
 
 ```shell
-   polykey --version
+export PATH="$HOME/Downloads:$PATH"
 ```
 
-5. If it returns the version, you’re ready to use the CLI.
+**Permanently:**
 
-:::important Important
-
-Once you start a long‑lived command like `polykey agent start`, that process
-monopolizes the current terminal window. To issue any further Polykey commands
-(for example, `polykey vaults create`) you must open a **new terminal window**.
-
-If the machine reboots or the agent exits, simply rerun `polykey agent start` in
-a terminal to restart it.
-
-:::
-
-- For ZSH:
+<Tabs>
+   <TabItem value="zsh" label="For zsh">
+To permanently add `polykey` to `PATH` on zsh, run the following command.
 
 ```shell
 echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.zshrc && source ~/.zshrc
 ```
 
-- For Bash:
+   </TabItem>
+   <TabItem value="bash" label="For bash">
+To permanently add `polykey` to `PATH` on bash, run the following command.
 
 ```shell
 echo 'export PATH="$HOME/Downloads:$PATH"' >> ~/.bashrc && source ~/.bashrc
 ```
+
+   </TabItem>
+</Tabs>
+
+---
 
 :::tip Setting PATH across operating systems
 
@@ -129,7 +121,6 @@ To verify it’s working, run:
 ```shell
 which polykey
 polykey --version
-
 ```
 
 :::
@@ -137,17 +128,29 @@ polykey --version
 4. Confirm the installation with:
 
 ```shell
-   polykey --version
+polykey --version
 ```
 
 If it returns the version, you’re ready to use the CLI.
+
+:::important Important
+
+Once you start a long‑lived command like `polykey agent start`, that process
+monopolizes the current terminal window. To issue any further Polykey commands
+(for example, `polykey vaults create`) you must open a **new terminal window**.
+
+If the machine reboots or the agent exits, simply rerun `polykey agent start` in
+a terminal to restart it.
+
+:::
 
 :::tip Tip
 
 If you see an error like:
 
-WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
-already be running
+```
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+```
 
 This means the Polykey agent is already running. To manage this, you can:
 
@@ -169,7 +172,7 @@ other than this, then it is still active.
 Stop the running agent:
 
 ```shell
-polykey agent
+polykey agent stop
 ```
 
 You must stop the current agent or use a different terminal before starting a
@@ -187,19 +190,19 @@ However, it is easy enough to install it from source.
 Clone the repository:
 
 ```sh
-$ git clone https://github.com/MatrixAI/Polykey-CLI.git
+git clone https://github.com/MatrixAI/Polykey-CLI.git
 ```
 
 Enter the `nix-shell`:
 
 ```sh
-$ nix-shell
+nix-shell
 ```
 
 Build the application and install it into the user profile:
 
 ```sh
-$ nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(prefetch-npm-deps ./package-lock.json)"
+nix-env -f ./release.nix --install --attr application --argstr npmDepsHash "$(prefetch-npm-deps ./package-lock.json)"
 ```
 
 ### Other
@@ -362,16 +365,26 @@ a terminal to restart it.
 
 If you see an error like:
 
-WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may
-already be running
+```
+WARN:polykey.PolykeyAgent:Failed Creating PolykeyAgent — another agent may already be running
+```
 
 This means the Polykey agent is already running. To manage this, you can:
 
-- **Check the agent status**:
+**Check the agent status**:
 
 ```shell
 polykey agent status
 ```
+
+If the agent returns something like this:
+
+```shell
+status DEAD
+```
+
+Then the agent is inactive and needs to be restarted. If it returns something
+other than this, then it is still active.
 
 Stop the running agent:
 
@@ -380,7 +393,7 @@ polykey agent stop
 ```
 
 You must stop the current agent or use a different terminal before starting a
-new one.
+new one. The currently running agent must be stopped before it can be re-run.
 
 :::
 
