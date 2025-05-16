@@ -24,7 +24,7 @@ const sidebars: SidebarsConfig = {
             'Getting-Started/polykey-cli/sharing-vaults',
             'Getting-Started/polykey-cli/managing-multiple-nodes',
             'Getting-Started/polykey-cli/using-environment-variables',
-            'Getting-Started/polykey-cli/running-the-agent-with-systemd.md', 
+            'Getting-Started/polykey-cli/running-the-agent-with-systemd', 
           ],
         },      
       ],
