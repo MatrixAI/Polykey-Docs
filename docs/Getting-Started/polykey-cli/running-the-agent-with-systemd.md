@@ -5,8 +5,6 @@ modules for managing the Polykey Agent using `systemd`. These modules were
 introduced as part of a broader effort to improve automation, reliability, and
 user experience across both user-level and system-wide contexts.
 
----
-
 ## Background
 
 The Polykey Agent is a long-lived background process that facilitates secure
@@ -14,20 +12,24 @@ secret management and distributed key infrastructure. Traditionally, users had
 to manually start the agent from the terminal. To streamline this, two modules
 were introduced:
 
-- `programs`: Configures **user-level services** for personal development and
+- **programs:** Configures user-level services for personal development and
   desktop use.
-- `services`: Configures **system-level services** for shared machines and
-  server environments.
+- **services:** Configures system-level services for shared machines and server
+  environments.
 
 These modules utilize `systemd`, a service manager used in most Linux
 distributions.
+git st
+:::note Note 
+On NixOS, Polykey is not configured through .service files, but
+instead through the Home Manager or Nix configuration. See the NixOS integration
+section below. 
+:::
 
----
+## What is systemd?
 
-## What is `systemd`?
-
-`systemd` is the default init and service manager in most Linux distros. It
-allows you to:
+systemd is the default init and service manager in most Linux distros. It allows
+you to:
 
 - Start, stop, and restart background services.
 - Automatically launch services at boot or login.
@@ -35,11 +37,9 @@ allows you to:
 
 `systemd` uses unit files (like `.service`) to define how services behave.
 
----
+### Key Concepts
 
-## Key Concepts
-
-### User vs System Services
+**User vs System Services**
 
 | Mode       | Controlled By | Suitable For                    | Config Path               |
 | ---------- | ------------- | ------------------------------- | ------------------------- |
@@ -48,75 +48,69 @@ allows you to:
 
 The new modules are designed to target both these contexts.
 
----
-
-## Programs Module (User Services)
+#### Programs Module (User Services)
 
 The `programs` module sets up a user-level `systemd` service that:
 
 - Starts the agent on login.
 - Runs the agent under the current user.
-- Stores logs in the user's journal.
+- Stores logs in the user’s journal.
 
 ### Setup Instructions (User Mode)
 
 1. Ensure the Polykey binary is installed and accessible via `$PATH`.
 2. Copy the service file to:
 
-   ```sh
-   mkdir -p ~/.config/systemd/user
-   cp polykey-agent.service ~/.config/systemd/user/
-   ```
+```sh
+mkdir -p ~/.config/systemd/user
+cp polykey-agent.service ~/.config/systemd/user/
+```
 
 3. Enable and start the service:
 
-   ```sh
-   systemctl --user daemon-reload
-   systemctl --user enable polykey-agent
-   systemctl --user start polykey-agent
-   ```
+```shell
+systemctl --user daemon-reload
+systemctl --user enable polykey-agent
+systemctl --user start polykey-agent
+```
 
-4. Verify it's running:
+4. Verify it’s running:
 
-   ```sh
-   systemctl --user status polykey-agent
-   journalctl --user -u polykey-agent
-   ```
+```shell
+systemctl --user status polykey-agent
+journalctl --user -u polykey-agent
+```
 
----
+#### Services Module (System Services)
 
-## Services Module (System Services)
-
-The `services` module sets up a root-owned service that:
+The services module sets up a root-owned service that:
 
 - Runs globally for all users.
 - Is launched at boot.
 - Is managed from `/etc/systemd/system/`.
 
-### Setup Instructions (System Mode)
+##### Setup Instructions (System Mode)
 
 1. Copy the service file to:
 
-   ```sh
-   sudo cp polykey-agent.service /etc/systemd/system/
-   ```
+```shell
+sudo cp polykey-agent.service /etc/systemd/system/
+```
 
 2. Enable and start the service:
 
-   ```sh
-   sudo systemctl daemon-reload
-   sudo systemctl enable polykey-agent
-   sudo systemctl start polykey-agent
-   ```
+```shell
+sudo systemctl daemon-reload
+sudo systemctl enable polykey-agent
+sudo systemctl start polykey-agent
+```
 
 3. Check status:
 
-   ```sh
-   sudo systemctl status polykey-agent
-   sudo journalctl -u polykey-agent
-   ```
-
----
+```shell
+sudo systemctl status polykey-agent
+sudo journalctl -u polykey-agent
+```
 
 ## Configuration Details
 
@@ -128,13 +122,14 @@ The service files can be customized:
 
 To override a system service without editing the base file:
 
-```sh
+```shell
 sudo systemctl edit polykey-agent
 ```
 
----
+**Note for NixOS users:** These overrides are not applicable. See the next
+section.
 
-## Handling Secrets & Recovery Codes
+### Handling Secrets & Recovery Codes
 
 The new modules support secure handling of recovery codes and agent secrets:
 
@@ -142,52 +137,54 @@ The new modules support secure handling of recovery codes and agent secrets:
 - Avoid running agents as root unless necessary.
 - For system mode, ensure secrets are stored in restricted root-only paths.
 
----
+#### Troubleshooting
 
-## Troubleshooting
+- **“Service not found”:**
 
-- **"Service not found"**:
+* Run `daemon-reload` after copying or editing unit files. (Not needed in NixOS)
 
-  - Run `daemon-reload` after copying or editing unit files.
+- **“Permission denied”:**
 
-- **"Permission denied"**:
+* Ensure system-level services are started with `sudo`.
 
-  - Ensure system-level services are started with `sudo`.
+- **Service not starting:**
 
-- **Service not starting**:
+* Run `journalctl -u polykey-agent` for logs.
 
-  - Run `journalctl -u polykey-agent` for logs.
+- **User services not auto-starting:**
 
-- **User services not auto-starting**:
+* Check that `linger` is enabled for the user:
 
-  - Check that `linger` is enabled for the user:
+```shell
+sudo loginctl enable-linger $USER
+```
 
-    ```sh
-    sudo loginctl enable-linger $USER
-    ```
+### NixOS Integration
 
----
+On NixOS, service setup is handled via Home Manager or system configuration, not
+.service files. Here’s a basic example of configuring Polykey in home.nix:
 
-## Use Cases
+```nix
+  polykey = rec {
+    enable = true;
+    passwordFilePath = "/home/user/.polykeypass";
+    recoveryCodeOutPath = "/home/user/.polykeyrecovery";
+  };
+```
 
-- **Developers**: Enable `programs` to automatically start the agent at login.
-- **Sysadmins**: Deploy `services` module for always-on availability of the
-  agent across all users.
-- **Security-sensitive installations**: Customize environment securely and
-  inspect logs via `journalctl`.
+- enable will activate the service.
+- passwordFilePath provides the path to read the vault password.
+- recoveryCodeOutPath sets the location to write recovery codes.
 
----
+**More references:**
 
-## Next Steps
+- Polykey Nixpkg (private)
+- Home Manager Infra Docs
 
-- Finalize documentation with visual diagrams (systemd flow, unit layering).
-- Incorporate examples of overriding default behavior.
-- Validate this guide on different distros (e.g. Ubuntu, Fedora, Arch).
+**Use Cases**
 
----
-
-## Related References
-
-- [systemd documentation](https://www.freedesktop.org/wiki/Software/systemd/)
-- [Polykey PR #138](https://github.com/MatrixAI/Polykey-CLI/pull/138)
-- [CLI Installation Guide](./installation.md)
+- Developers: Enable `programs` to automatically start the agent at login.
+- Sysadmins: Deploy `services` module for always-on availability of the agent
+  across all users.
+- Security-sensitive installations: Customize environment securely and inspect
+  logs via `journalctl`.
