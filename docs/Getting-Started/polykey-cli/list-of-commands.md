@@ -1,6 +1,7 @@
 # Polykey CLI Command Reference
 
-This page provides an overview of available `polykey` CLI commands, organized by category.
+This page provides an overview of available `polykey` CLI commands, organized by
+category.
 
 Each command links to a page with detailed usage, flags, and examples.
 
