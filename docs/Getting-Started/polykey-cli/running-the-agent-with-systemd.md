@@ -18,9 +18,14 @@ were introduced:
   environments.
 
 These modules utilize `systemd`, a service manager used in most Linux
-distributions. git st :::note Note On NixOS, Polykey is not configured through
+distributions.
+
+<!-- prettier-ignore -->
+:::note Note
+On NixOS, Polykey is not configured through
 .service files, but instead through the Home Manager or Nix configuration. See
-the NixOS integration section below. :::
+the NixOS integration section below.
+:::
 
 ## What is systemd?
 
