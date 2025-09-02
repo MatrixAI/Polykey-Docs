@@ -240,11 +240,15 @@ const config: Config = {
     defaultLocale: 'en',
     locales: ['en'],
   },
+  markdown: {
+    mermaid: true
+  },
   // This ensures that `/x.md` is generated as `/x/index.html` and not `/x.html`.
   // Which is the expected directory layout for most web servers.
   trailingSlash: undefined,
   staticDirectories: ['static'],
   plugins: [pluginSVGR, pluginDocs, pluginTheme, pluginGTag, pluginTailwind],
+  themes: ['@docusaurus/theme-mermaid'],
   themeConfig,
 };
 

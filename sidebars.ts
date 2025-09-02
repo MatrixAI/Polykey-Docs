@@ -77,6 +77,8 @@ const sidebars: SidebarsConfig = {
         id: 'theory/README',
       },
       items: [
+        'theory/trust-operating-system',
+        'theory/receipt-rails-operational-flow',
         'theory/secrets-management',
         'theory/decentralized-trust-network',
         'theory/centralized-vs-decentralized-platforms',
