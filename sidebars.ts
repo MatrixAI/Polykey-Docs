@@ -4,7 +4,7 @@ const sidebars: SidebarsConfig = {
   docs: [
     {
       type: 'category',
-      label: 'Getting Started',
+      label: 'Tutorials',
       collapsed: false,
       items: [
         {
@@ -12,20 +12,20 @@ const sidebars: SidebarsConfig = {
           label: 'Polykey CLI',
           link: {
             type: 'doc',
-            id: 'Getting-Started/polykey-cli/README',
+            id: 'tutorials/polykey-cli/README',
           },
           items: [
-            'Getting-Started/polykey-cli/installation',
-            'Getting-Started/polykey-cli/bootstrapping',
-            'Getting-Started/polykey-cli/managing-vaults',
-            'Getting-Started/polykey-cli/managing-secrets',
-            'Getting-Started/polykey-cli/claiming-digital-identities',
-            'Getting-Started/polykey-cli/discovering-other-users',
-            'Getting-Started/polykey-cli/sharing-vaults',
-            'Getting-Started/polykey-cli/managing-multiple-nodes',
-            'Getting-Started/polykey-cli/using-environment-variables',
+            'tutorials/polykey-cli/installation',
+            'tutorials/polykey-cli/bootstrapping',
+            'tutorials/polykey-cli/managing-vaults',
+            'tutorials/polykey-cli/managing-secrets',
+            'tutorials/polykey-cli/claiming-digital-identities',
+            'tutorials/polykey-cli/discovering-other-users',
+            'tutorials/polykey-cli/sharing-vaults',
+            'tutorials/polykey-cli/managing-multiple-nodes',
+            'tutorials/polykey-cli/using-environment-variables',
           ],
-        },      
+        },
       ],
     },
     {

@@ -3,7 +3,7 @@ slug: /
 displayed_sidebar: docs
 ---
 
-# **Welcome to the Polykey documentation**
+# Welcome to the Polykey documentation
 
 - [Tutorials:](https://polykey.com/docs/tutorials) Step-by-step guides that
   introduce Polykey through practical outcomes.
