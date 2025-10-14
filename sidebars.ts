@@ -77,6 +77,7 @@ const sidebars: SidebarsConfig = {
         id: 'theory/README',
       },
       items: [
+        'theory/clarifying-mental-models',
         'theory/trust-operating-system',
         'theory/receipt-rails-operational-flow',
         'theory/secrets-management',
