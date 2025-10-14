@@ -61,6 +61,8 @@ const pluginDocs: [string, PluginDocsOptions] = [
     sidebarPath: './sidebars.ts',
     include: ['**/*.md', '**/*.mdx'],
     exclude: ['**/_*.{js,jsx,ts,tsx,md,mdx}', '**/_*/**', '**/.**'],
+    showLastUpdateAuthor: true,
+    showLastUpdateTime: true,
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],
   },
