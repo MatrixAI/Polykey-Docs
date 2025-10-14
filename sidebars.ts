@@ -77,6 +77,7 @@ const sidebars: SidebarsConfig = {
         id: 'theory/README',
       },
       items: [
+        'theory/clarifying-mental-models',
         'theory/trust-operating-system',
         'theory/receipt-rails-operational-flow',
         'theory/secrets-management',
@@ -94,6 +95,17 @@ const sidebars: SidebarsConfig = {
         id: 'reference/README',
       },
       items: [
+        {
+          type: 'category',
+          label: 'Specifications',
+          link: {
+            type: 'doc',
+            id: 'reference/specifications/README'
+          },
+          items: [
+            'reference/specifications/PSP-1 - Capability Model and Grammar',
+          ],
+        },
         {
           type: 'category',
           label: 'Architecture',

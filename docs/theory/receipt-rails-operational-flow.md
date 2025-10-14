@@ -137,18 +137,17 @@ sequenceDiagram
   alt Principal-side CEP (placement=P, bridging=true) [PS-BA]
     Note over P: If P and R are the same trust boundary<br>this is effectively native (colocated)<br>bridging=false, PoAR still on P's sigchain
     S ->> P: Present capability (Presentation)
+    Note over P: Σ = verify(Presentation, Grant, Bind, channel, ttl,<br>attenuation?, lease?, allowed-surface?)
     break Verification fails at P
       Note over P: Deny path<br>Mint DenyReceipt with reason code<br>(binding_mismatch, lease_stale, surface_violation, rate_limit)
       Note over P: Write DenyReceipt on P's sigchain
       P ->> S: Deliver DenyReceipt
     end
     alt Mediate at P
-      Note over P: Verify Presentation + Bind + fresh LeaseRef<br>Record requestDigest vs Allowed-Surface
       P ->> R: ToA API call
       R -->> P: Result
       P -->> S: Result (if requester expects data)
     else Derive at P
-      Note over P: Verify Presentation + Bind + fresh LeaseRef
       P ->> S: Short-scope token (session-bound)
       S ->> R: ToA API call (using token)
       R -->> S: Result
@@ -163,12 +162,12 @@ sequenceDiagram
 
   else Resource-side CEP (placement=R, bridging=false) [native]
     S ->> R: Present capability (Presentation)
+    Note over R: Σ = verify(Presentation, Grant, Bind, channel, ttl,<br>attenuation?)
     break Verification fails at R
       Note over R: Deny path<br>Mint DenyReceipt with reason code<br>(binding_mismatch, lease_stale, surface_violation, rate_limit)
       Note over R: Write DenyReceipt on R's sigchain
       R ->> S: Deliver DenyReceipt
     end
-    Note over R: Enforce at Resource CEP
     R -->> S: Result (if requester expects data)
     Note over R: Write Access PoAR on R's sigchain
     R ->> S: Deliver PoAR
@@ -176,6 +175,7 @@ sequenceDiagram
   else Subject-side CEP (placement=S, bridging=false) [SSA wallet/session]
     Note over S: S does not hold long-lived upstream lease.
     S ->> S: Present capability (internal Presentation)
+    Note over S: Σ = verify(Presentation, Grant, Bind, channel, ttl,<br>attenuation?)
     break Verification fails at S
       Note over S: Deny path<br>Mint DenyReceipt with reason code<br>(binding_mismatch, lease_stale, surface_violation, rate_limit)
       Note over S: Write DenyReceipt on S's sigchain
@@ -189,6 +189,7 @@ sequenceDiagram
 
   else Subject-side CEP (placement=S, bridging=true) [SS-BA, rare]
     S ->> S: Present capability (internal Presentation)
+    Note over S: Σ = verify(Presentation, Grant, Bind, channel, ttl,<br>attenuation?, lease?, allowed-surface? for mediate)
     break Verification fails at S
       Note over S: Deny path<br>Mint DenyReceipt with reason code<br>(binding_mismatch, lease_stale, surface_violation, rate_limit)
       Note over S: Write DenyReceipt on S's sigchain
