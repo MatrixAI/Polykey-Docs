@@ -103,7 +103,7 @@ const sidebars: SidebarsConfig = {
             id: 'reference/specifications/README'
           },
           items: [
-            'reference/specifications/PSP-1 - Capability Model and Grammar',
+            'reference/specifications/psp-1',
           ],
         },
         {
