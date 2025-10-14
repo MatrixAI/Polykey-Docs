@@ -55,6 +55,7 @@ router.all('*', async (req: Request, env: Env, ctx: ExecutionContext) => {
         // This will map `/x` to `/x/index.html`, if `/x` does not exist.
         // This is conventional for HTTP servers.
         mapRequestToAsset: mapRequestToDocs,
+        pathIsEncoded: true,
         cacheControl,
         ASSET_NAMESPACE: env.__STATIC_CONTENT,
         ASSET_MANIFEST: assetManifest,
@@ -78,6 +79,7 @@ router.all('*', async (req: Request, env: Env, ctx: ExecutionContext) => {
             // Map request to 404.html page.
             return new Request(`${new URL(req.url).origin}/404.html`, req);
           },
+          pathIsEncoded: true,
           cacheControl,
           ASSET_NAMESPACE: env.__STATIC_CONTENT,
           ASSET_MANIFEST: assetManifest,
