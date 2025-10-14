@@ -97,6 +97,17 @@ const sidebars: SidebarsConfig = {
       items: [
         {
           type: 'category',
+          label: 'Specifications',
+          link: {
+            type: 'doc',
+            id: 'reference/specifications/README'
+          },
+          items: [
+            'reference/specifications/PSP-1 - Capability Model and Grammar',
+          ],
+        },
+        {
+          type: 'category',
           label: 'Architecture',
           link: {
             type: 'doc',
