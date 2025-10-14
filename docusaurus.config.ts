@@ -7,6 +7,8 @@ import type { UserThemeConfig } from '@docusaurus/theme-common';
 import { themes as prismThemes } from 'prism-react-renderer';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from 'tailwindcss';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 
 const lightCodeTheme = prismThemes.github;
 const darkCodeTheme = prismThemes.dracula;
@@ -59,6 +61,8 @@ const pluginDocs: [string, PluginDocsOptions] = [
     sidebarPath: './sidebars.ts',
     include: ['**/*.md', '**/*.mdx'],
     exclude: ['**/_*.{js,jsx,ts,tsx,md,mdx}', '**/_*/**', '**/.**'],
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
   },
 ];
 
@@ -250,6 +254,15 @@ const config: Config = {
   plugins: [pluginSVGR, pluginDocs, pluginTheme, pluginGTag, pluginTailwind],
   themes: ['@docusaurus/theme-mermaid'],
   themeConfig,
+  stylesheets: [
+    {
+      href: 'https://cdn.jsdelivr.net/npm/katex@0.13.24/dist/katex.min.css',
+      type: 'text/css',
+      integrity:
+        'sha384-odtC+0UGzzFL/6PNoE8rX/SPcQDXBJ+uRepguP4QkPCm2LBxH3FA3y+fKSiJ+AmM',
+      crossorigin: 'anonymous',
+    },
+  ],
 };
 
 export default config;
