@@ -104,6 +104,11 @@ const sidebars: SidebarsConfig = {
           },
           items: [
             'reference/specifications/PSP-1 - Capability Model and Grammar',
+            'reference/specifications/PSP-2 - Receipt Model',
+            'reference/specifications/PSP-3 - Sigchain and Envelope',
+            'reference/specifications/PSP-4 - Registries',
+            'reference/specifications/PSP-5 - CEP and Bridge Adapter',
+            'reference/specifications/PSP-6 - TAP and RAM',
           ],
         },
         {

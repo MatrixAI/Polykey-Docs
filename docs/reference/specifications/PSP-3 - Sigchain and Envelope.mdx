@@ -1,0 +1,66 @@
+# PSP-3 - Sigchain and Envelope
+
+Provided by the Envelope (per SIGCHAIN-01):
+
+- jti (JWT ID): The primary, unique identifier for this claim on its sigchain
+  (e.g., an IdSortable/UUIDv7).
+- iss (Issuer): The DID of the Principal (P) issuing the Grant.
+- sub (Subject): The DID of the Subject (S) receiving the Grant.
+- exp (Expiration Time): The timestamp after which the Grant is invalid.
+- iat (Issued At) / nbf (Not Before): Timestamps for issuance and validity start
+  time.
+- prevClaimId / prevDigest: Linkage to the previous claim on the sigchain, as
+  defined by SIGCHAIN-01.
+- Signatures: At least one valid signature per SIGCHAIN-01 (e.g., JWS with
+  protected headers). Multiple signatures are allowed.
+- Canonical digest: A content-addressed hash of the canonicalized claim MUST be
+  derivable per SIGCHAIN-01 for stable cross-references (e.g., grant_ref).
+  Implementations MAY materialize/store it; it is not a payload field.
+
+Provided by the Grant Payload (PCAP-01):
+
+- typ (Type): A string identifying the claim type. For a Grant, this MUST be
+  "ClaimGrant".
+- action: A single verb string (e.g., "deploy:to_env").
+- resource: A single resource identifier (e.g., a URI).
+- bind: The Bind object containing capability constraints.
+
+Normative rules:
+
+- Grants MUST be written on the issuer's (P's) sigchain.
+- The envelope MUST include iss, sub, exp, and a valid signature per
+  SIGCHAIN-01; Presentations beyond exp are invalid.
+- payload.typ MUST be "ClaimGrant".
+- A Grant MUST carry exactly one action (verb) and exactly one resource.
+- action MUST reference a registered verb; for attenuation, child.action MUST
+  equal parent.action unless the verb registry defines a subset sub-verb
+  accepted by TAP.
+- resource MUST conform to a registered scheme; for attenuation, resource.child
+  MUST be a subset of resource.parent per the scheme's subset relation.
+- bind MUST be enforceable by CEPs and MUST be included as a bind_snapshot in
+  the Access PoAR (PRSC-01).
+- Required Bind dimensions declared by the verb's registry entry (e.g., nbf/exp,
+  channel, policyRef) MUST be present; otherwise the CEP MUST deny.
+- Unknown verbs, unknown resource schemes, or unresolvable scheme comparators
+  MUST cause deny.
+- CEPs MUST check revocation status (see Revocation) before enforcement.
+- Presentations MUST reference the Grant via its canonical digest (grant_ref)
+  derived per SIGCHAIN-01.
+
+Recommended fields:
+
+- aud: DID or array of DIDs of acceptable enforcers (e.g., `"did:pk:P"` or
+  `["did:pk:P","did:pk:R"]`)
+- purpose: semantic hash or descriptor of intent (e.g., `"sha256:artifact-H"`,
+  `"door-visit-123"`)
+- context: structured k/v describing runtime context (e.g.,
+  `{"pod":"runner-xyz","ns":"ci"}`)
+- nbf, exp: NumericDate (Unix seconds) defining the enforceable window; if the
+  envelope also carries nbf/exp, CEPs MUST enforce the intersection
+- ttl: maximum Presentation lifetime in seconds (e.g., 120)
+- maxUses: optional counter for total uses (enforced only by stateful CEPs)
+- geofence / net: optional constraints (e.g., CIDR, region, location)
+- channel: required channel-binding profile id (e.g., "tls_exporter:v1",
+  "dpop:v1")
+- policyRef: OPTIONAL content-addressed “affordance bundle” for mediated flows
+  (e.g., Allowed-Surface); structure/enforcement in CEP/BA spec
