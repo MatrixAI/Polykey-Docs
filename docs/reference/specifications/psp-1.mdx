@@ -37,12 +37,16 @@ receipt formats and proof traces are defined in PSP-2; enforcement
 placement/modes are defined in the CEP/BA specification; acceptance and
 governance live in TAP/RAM and related profiles.
 
-## Terminology
+## Terminology and Requirements Language
+
+### Requirements Language
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when,
 and only when, they appear in all capitals, as shown here.
+
+### Core Terminology
 
 - **Principal (P):** Originator of authority; issues a Grant to a Subject.
 - **Subject (S):** Holder of a Grant that exercises the capability by creating a
@@ -221,21 +225,38 @@ Deterministic Evaluation and PSP-4).
 - The `now: Int` fact is CEP-provided and subject to TAP time-discipline; PSP-1
   is agnostic to the time source.
 
-#### Relationship with Biscuit Datalog (Informative)
+#### Relationship with Biscuit Datalog
 
-- CPL/0 intentionally defines the checks-only, monotone fragment (no user atoms,
-  variables, rules, recursion, or negation). This fragment maps 1:1 to Biscuit
-  checks:
-  - Program (all of Checks) $\cong$ multiple Biscuit check blocks (all must
-    pass).
-  - Check (any of Queries) $\cong$ a Biscuit check with multiple queries (OR).
-  - Query (and of Literals) $\cong$ a Biscuit query's conjunction.
-- Rationale: simple PCF and stable program_id; syntactic attenuation;
-  deterministic, ms-class verification and compact proof traces.
-- Interop: Biscuit tokens in the checks-only fragment can be normalized into
-  CPL/0. If rules are required in a domain, precompute finite sets and ship a
-  CPL/0 guard, or use a TAP-gated policy that supplies a compiled guard or an
-  approved CEP runtime.
+- Fragment alignment. CPL/0 defines the checks-only, monotone fragment (no user
+  atoms, variables, rules, recursion, or negation). This corresponds to the
+  Biscuit checks fragment without rules, where each check is an OR of queries,
+  and each query is an AND of ground predicates.
+- Structural mapping (CPL/0 -> Biscuit):
+  - Program (ALL of Checks) ? a set of Biscuit check blocks, all of which MUST
+    pass.
+  - Check (ANY of Queries) ? a Biscuit check containing multiple queries (OR).
+  - Query (AND of Literals) ? a Biscuit query whose predicates match CPL/0
+    literals 1:1.
+  - Literal (Builtin(op, args...)) ? a ground predicate recognized by the verifier
+    as the corresponding builtin; arguments are ground terms
+    (Str/Int/Bool/Bytes).
+- Conversion constraints (Biscuit -> CPL/0 normalizer):
+  1. No rules or user facts are consumed during conversion; only checks are
+     considered. Any presence of rules, variables, non-ground terms, or
+     unsupported predicates MUST cause conversion to fail (out of scope for
+     CPL/0 interop).
+  2. All predicate identifiers MUST be recognized builtin op_ids in the pinned
+     builtins_id; argument arity/types MUST match; strings are NFC; Bytes are
+     exact octets.
+  3. The resulting CPL/0 Program is constructed as `all(check_i)`; each Biscuit
+     check yields one CPL/0 Check; each Biscuit query yields one CPL/0 Query;
+     each recognized predicate yields one CPL/0 Literal.
+- Equivalence goal (informative): For tokens inside this fragment and under
+  identical pinned semantics (builtins/channel lattice/scheme comparators),
+  verification outcomes SHOULD coincide between Biscuit's check evaluation and
+  CPL/0 Program evaluation over the same environment facts. Outside this
+  fragment, issuers SHOULD precompute finite sets and ship a CPL/0 guard, or use
+  a TAP-gated policy that provides an approved CEP runtime.
 
 Because CPL/0 is checks-only over ground terms with pure, bounded builtins, CEPs
 evaluate Programs deterministically and emit minimal proof traces (which check,
@@ -250,7 +271,7 @@ TAP-gated and provide either a compiled CPL/0 guard or an approved CEP runtime.
 At verification, the CEP supplies an environment of facts. Builtins may
 reference these facts by name.
 
-- Required environment facts (normative)
+- Required environment facts
   - action: Str - action being attempted (e.g., "secret:read").
   - resource: Str - target resource identifier (scheme-normalized).
   - now: Int - NumericDate (Unix seconds) at enforcement.
@@ -267,7 +288,7 @@ reference these facts by name.
     jurisdiction tags, or digest references) and define how they are obtained
     and verified. PSP-1 does not enumerate these; Programs assert them via
     equality (e.g., ctx_eq).
-- Missing facts and normalization
+- Missing facts
   - If a builtin present in the Program requires an environment fact that is
     missing, evaluation MUST fail closed.
   - The CEP MUST normalize `resource` using the same comparator semantics used
@@ -414,7 +435,7 @@ action in A over any resource in R"). Use PairSet when the matrix is irregular.
 - CEPs MUST verify subset relations hop-by-hop along the delegation chain using
   the same normalization and comparators; failures or unknowns MUST cause deny.
 
-#### Profiles
+#### Specification Profiles
 
 This specification standardizes exactly three Declaration kinds: PairSet,
 ActionSet, ResourceSet. Specification Profiles MAY further constrain their usage
@@ -1171,7 +1192,7 @@ revocation state) MUST be locally available at enforcement or the CEP MUST deny.
 
 Inputs (conceptual)
 
-- Presentation P: presenter, grant_ref, iat, exp, jti, channel_binding, ctx, and
+- Presentation P: presenter, grant_ref, iat, exp, jti, channelBinding, ctx, and
   optionally grant_refs (ordered digest hints).
 - Local stores/cache: Grants by digest (leaf and, if applicable, parents),
   revocation state, TAP configuration (anchors, depth caps, resolver policy,
@@ -1185,18 +1206,41 @@ Preconditions (TAP-governed, outside evaluation)
   enforcement. At enforcement time, all required inputs MUST be local; otherwise
   deny.
 
+### Time Model & Boundaries
+
+- Single time capture: The CEP MUST capture a single logical `now : Int` (Unix
+  seconds) at the **start** of enforcement. All time comparisons in this
+  algorithm and in builtins evaluation use this same `now`.
+- Half-open windows: Unless a builtin's pinned definition states otherwise, all
+  time windows are half-open intervals `[start, end)`, i.e., inclusive of
+  `start`, exclusive of `end`.
+  - Presentation validity window: `[iat, exp)` - accept iff `iat <= now < exp`.
+  - Grant envelope windows (e.g., `not_before`, `not_after` per PSP-3) are also
+    treated as half-open and MUST be intersected with the Presentation window.
+  - `within_time(now, nbf, exp)` succeeds iff `nbf <= now < exp` under the
+    pinned builtins set.
+  - `ttl_ok(iat, now, ttl_max)` succeeds iff `now < iat + ttl_max`.
+- Precedence / intersection: When multiple constraints apply (Presentation
+  window, Grant envelope, and time-based builtins such as `within_time` and
+  `ttl_ok`), the effective acceptance condition is the intersection of all
+  applicable constraints at the captured `now`. If any one fails, enforcement
+  MUST deny.
+- Time discipline: Clock source and skew tolerance are governed by TAP policy;
+  all time comparisons MUST follow TAP's time discipline. If time discipline
+  cannot be satisfied (e.g., clock indeterminate), enforcement MUST deny.
+
 ### Algorithm
 
 1. Parse Presentation
    - Validate required conceptual fields: presenter, grant_ref, iat, exp, jti,
-     channel_binding, ctx.
+     channelBinding, ctx.
    - Capture a single logical now at the start of enforcement. Enforce
      Presentation lifetime window using this now: now >= iat AND now < exp
      (subject to TAP clock discipline); else deny.
 2. Verify PoP and channel binding
    - Verify the presenter's proof-of-possession signature over the Presentation
      payload; else deny.
-   - Verify channel_binding matches the live session per the declared profile
+   - Verify channelBinding matches the live session per the declared profile
      (e.g., TLS exporter, DPoP); else deny.
 3. Resolve and verify the leaf Grant (local)
    - Locate the leaf Grant by grant_ref in local storage; if unavailable, deny.
@@ -1438,7 +1482,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 
 - Timing behavior
   - CEPs SHOULD aim for consistent-time checks and minimize data-dependent
-    timing variations in hot paths (especially channel_binding and signature
+    timing variations in hot paths (especially channelBinding and signature
     checks).
 - Error reporting
   - Use standardized reason codes (e.g., pcf_mismatch, pin_mismatch, revoked,
@@ -1554,7 +1598,7 @@ Presentation (conceptual fields; non-normative)
 
 CEP evaluation outline
 
-1. PoP and channel: presenter's signature valid; channel_binding matches mTLS
+1. PoP and channel: presenter's signature valid; channelBinding matches mTLS
    session.
 2. Leaf Grant located locally by grant_ref; signatures valid; Grant envelope
    window intersects with Presentation window.
@@ -1646,14 +1690,14 @@ Presentation (conceptual fields; non-normative)
   "iat": 1768100050,
   "exp": 1768100170,
   "jti": "uuid-9a7b",
-  "channel_binding": { "profile": "mtls:v1", "value": "base64url(exporter)" },
+  "channelBinding": { "profile": "mtls:v1", "value": "base64url(exporter)" },
   "ctx": { "ns": "prod", "app": "web", "purpose": "sha256:artifact-H", "pod": "runner-xyz" },
 }
 ```
 
 CEP evaluation outline
 
-1. Verify PoP + channel_binding (mTLS exporter).
+1. Verify PoP + channelBinding (mTLS exporter).
 2. Load leaf Grant locally by grant_ref; verify signatures + envelope; enforce
    envelope $\land$ presentation time intersection; check revocation (local).
 3. If delegated: verify custody, prev linkage; pins compatibility; scheme
@@ -1750,7 +1794,7 @@ Presentation (conceptual fields; non-normative)
   "iat": 1768102050,
   "exp": 1768102100,
   "jti": "uuid-5678",
-  "channel_binding": { "profile": "tls_exporter:v1", "value": "base64url(exporter)" },
+  "channelBinding": { "profile": "tls_exporter:v1", "value": "base64url(exporter)" },
   "ctx": { "visitor_id": "door-visit-123", "device": "ios" }
 }
 ```
@@ -2026,3 +2070,86 @@ deny/diagnostic codes to aid auditors:
 
 Receipts SHOULD include enough context (program_id, declaration CIDs, pins,
 minimal evaluation trace, and revocation snapshot) for replay.
+
+### Appendix E - Conformance Test Vectors
+
+The following vectors exercise PCF stability, syntactic attenuation, time
+boundaries, and resource normalization. Each vector specifies inputs and the
+expected decision. Implementations SHOULD include these (or stricter) cases in
+their conformance suites.
+
+#### Example 1 PCF Identity Stability - literal reordering
+
+Setup: Two Programs differ only by literal order within the same Query.
+
+Expect: `program_id` is identical after PCF; evaluation results coincide.
+
+Inputs (sketch):
+
+```
+P1: (all (any (and (ctx_eq "ns" "prod") (ttl_ok iat now 120))))
+P2: (all (any (and (ttl_ok iat now 120) (ctx_eq "ns" "prod"))))
+```
+
+Expected: `multihash(ENCODE(PCF(P1))) == multihash(ENCODE(PCF(P2)))`; both allow
+when ctx.ns="prod" and now < iat+120.
+
+#### Example 2 Syntactic Attenuation - valid child (tightened)
+
+Setup: Parent Check with Query Q; Child retains the Check, drops no Queries, and
+**adds** a Literal; Declarations child $\subseteq$ parent.
+
+Expect: Chain accepted; evaluation allows when both parent and added child
+literals hold.
+
+Inputs (sketch):
+
+```
+Parent: (all (any (and (in_pairset action resource Pairs#P) (ttl_ok iat now 120))))
+Child:  (all (any (and (in_pairset action resource Pairs#C) (ttl_ok iat now 60) (ctx_eq "ns" "prod"))))
+Pairs#C $\subseteq$ Pairs#P
+```
+
+Expected: Chain acceptance; allow only if `now < iat+60` and `ctx.ns="prod"`.
+
+#### Example 3 Syntactic Attenuation - invalid child (removed Check)
+
+Setup: Parent has two Checks (AND); Child omits one parent Check.
+
+Expect: attenuation_failure at chain verification.
+
+Inputs (sketch):
+
+```
+Parent: (all ( (any (and (ctx_eq "ns" "prod")))  (any (and (channel_geq channel "mtls:v1"))) ))
+Child:  (all ( (any (and (ctx_eq "ns" "prod"))) )) ; second Check missing
+```
+
+Expected: Deny with reason `attenuation_failure`.
+
+#### Example 4 Time Boundaries - half-open edges
+
+Setup: `iat=100`, `exp=200`. `ttl_ok(iat, now, 100)`.
+
+Expect: Allow for `now $\in$ {100,...,199}`, deny for `now=200` (Presentation window)
+and `now=200` (TTL boundary).
+
+Inputs: `now=199` => allow; `now=200` => deny.
+
+Expected: At `now=200`, both `now < exp` and `now < iat+ttl_max` **fail**.
+
+#### Example 5 Resource Normalization - percent-encoding equivalence
+
+Setup: Declaration contains `api:https://api.example.com/a%2Fb`; env.resource is
+`api:https://api.example.com/a/b`. Comparator defines canonical normalization
+collapsing these to the same normalized form.
+
+Expect: After normalization, `in_pairset(action, resource, Pairs#X)` is true.
+
+Expected: Allow (assuming other literals hold); deny if normalization fails.
+
+#### Example 6 Comparator Snapshot Pinning - mismatch across chain
+
+Setup: Parent pins `schemes_snapshot_id = S1`; Child pins `S2 != S1`.
+
+Expect: Deny at chain verification with `pin_mismatch`.
