@@ -18,7 +18,7 @@
   </dl>
 </details>
 
-## Abstract
+## 1. Abstract
 
 PSP-1 defines the portable, verifiable capability model used by Polykey to
 express delegated authority. It specifies the structure and semantics of
@@ -37,16 +37,16 @@ receipt formats and proof traces are defined in PSP-2; enforcement
 placement/modes are defined in the CEP/BA specification; acceptance and
 governance live in TAP/RAM and related profiles.
 
-## Terminology and Requirements Language
+## 2. Terminology and Requirements Language
 
-### Requirements Language
+### 2.1 Requirements Language
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when,
 and only when, they appear in all capitals, as shown here.
 
-### Core Terminology
+### 2.2 Core Terminology
 
 - **Principal (P):** Originator of authority; issues a Grant to a Subject.
 - **Subject (S):** Holder of a Grant that exercises the capability by creating a
@@ -57,8 +57,8 @@ and only when, they appear in all capitals, as shown here.
 - **Grant (G):** A durable, signed statement on a sigchain that carries a
   capability program; issued by P to S.
 - **Presentation (Π):** An ephemeral proof-of-possession (PoP) token created by
-  S that references a Grant by its canonical digest (grant_ref, per PSP-3). It
-  is bound to a live channel and runtime context and is NOT stored on sigchains.
+  S that references a Grant by its canonical digest (grantRef, per PSP-3). It is
+  bound to a live channel and runtime context and is NOT stored on sigchains.
 - **Channel binding:** A cryptographic binding of a Presentation to the live
   transport/session per a declared binding profile (e.g., TLS exporter, DPoP).
   It proves the Presentation was minted for, and presented on, the specific
@@ -97,48 +97,40 @@ and only when, they appear in all capitals, as shown here.
   that refers to an immutable artifact (of any kind). Pins may be expressed as
   URIs when a scheme/protocol is defined (e.g., cid://..., ipfs://..., https://
   with immutable digest parameters). In PSP-1, pins are used to fix semantics
-  (e.g., builtins_id, channel_lattice_id); CEPs MUST recognize required pins
-  and, across delegation chains, matching pins are REQUIRED where they affect
-  evaluation.
-
-### 2.3 Ecosystem Terminology
-
-PSP‑1 references several terms defined in related Polykey specifications. These terms
-describe the various placements and roles of enforcement agents and adapters:
-
-- **CEP(R) (Resource‑side CEP):** A CEP embedded in or colocated with the
-  Resource itself; it verifies Presentations natively on behalf of the resource.
-- **CEP(P) (Principal‑side CEP):** A CEP operated within the Principal's trust
-  domain; it is used when the Resource is non‑PK‑native or to bridge to external
-  systems.
-- **CEP(S) (Subject‑side CEP):** A CEP operated within the Subject's domain;
-  often used for wallet‑style session management or when the Subject can derive
-  credentials via federated identity.
-- **Bridge Adapter (BA):** A specialized CEP that bridges to a non‑PK‑native
-  Source of Authority (SoA) using a long‑lived upstream lease. A BA mediates
-  between Polykey Grants/Presentations and legacy authorization systems.
-  Subtypes include:
-  - **PS‑BA (Principal‑side BA):** The typical pattern where the Principal's
-    agent holds the upstream lease and performs legacy enforcement on behalf of
-    the resource.
-  - **SS‑BA (Subject‑side BA):** A less common pattern where the Subject holds
-    a lease and bridges a resource it controls to Polykey.
-- **Exposure Mode:** The method by which a Bridge Adapter handles secrets when
-  interacting with legacy systems. Modes include **mediate** (the adapter
-  performs the action and does not expose raw secrets), **derive** (the
-  adapter mints a short‑lived, scoped token), and **reveal** (the adapter
-  returns the raw secret under strict, TAP‑governed constraints). Exposure mode
-  policies and receipt placement are defined in the CEP/BA specification and
-  TAP/RAM.
+  (e.g., builtinsId, channelLatticeId, schemesSnapshotId). CEPs MUST recognize
+  required pins and, across delegation chains, matching pins are REQUIRED where
+  they affect evaluation.
+- **CEP Placement Variants (CEP(R), CEP(P), CEP(S)):** A CEP may operate in
+  different trust domains depending on where verification occurs.
+  - **CEP(R)** denotes a _Resource-side_ CEP embedded in or colocated with the
+    target Resource.
+  - **CEP(P)** denotes a _Principal-side_ CEP operated within the issuer's
+    (Principal's) domain, often used when bridging to a non-PK-native resource.
+  - **CEP(S)** denotes a _Subject-side_ CEP operated within the Subject's
+    domain; it may manage derived credentials or session keys. These placement
+    variants are defined in the CEP/BA specification and are referenced
+    throughout PSP-1.
+- **Bridge Adapter (BA):** A specialized CEP that bridges to a non-PK-native
+  Source of Authority (SoA) using a long-lived upstream lease. The two
+  recognized subtypes are **PS-BA** (Principal-Side Bridge Adapter), where the
+  Principal holds the upstream lease, and **SS-BA** (Subject-Side Bridge
+  Adapter), where the Subject holds the lease. The BA enforces _exposure modes_
+  when interacting with legacy systems:
+  - **mediate** - the adapter performs the downstream call on behalf of the
+    Subject; the secret never leaves the adapter.
+  - **derive** - the adapter mints a short-lived, scoped token for the Subject
+    to use directly.
+  - **reveal** - the adapter returns the raw secret to the Subject under strict,
+    TAP-governed constraints. Exposure modes and adapter placements are defined
+    in the CEP/BA specification.
 
 ## Overview and Goals
 
 PSP-1 provides the core capability model for Polykey: the program model and
 verification semantics that allow independent parties to mint, hold, present,
 and verify capabilities across boundaries.
-### 3.1 Goals and Design Principles
 
-PSP‑1 defines the following core constructs and invariants for Polykey:
+PSP-1 defines the following core constructs and invariants for Polykey:
 
 - Capability Program (CPL/0): a monotone program with finite Declarations
   (PairSet/ActionSet/ResourceSet), normalized into a Program Canonical Form
@@ -229,9 +221,9 @@ Deterministic Evaluation and PSP-4).
 #### Builtins and registries
 
 - Each builtin op_id, its type signature, and its tightening rule are defined in
-  the Builtins registry (PSP-4). The exact set in use is pinned by builtins_id
-  in the Grant.
-- Channel comparisons (e.g., channel_geq) consult the pinned channel_lattice_id,
+  the Builtins registry (PSP-4). The exact set in use is pinned by builtinsId in
+  the Grant.
+- Channel comparisons (e.g., channel_geq) consult the pinned channelLatticeId,
   which defines the set of recognized channel profile identifiers and their
   partial order. Unknown profiles or an unknown lattice MUST cause deny.
 - Resource subset checks in declaration-aware builtins (e.g., in_pairset)
@@ -268,8 +260,8 @@ Deterministic Evaluation and PSP-4).
   - Check (ANY of Queries) ? a Biscuit check containing multiple queries (OR).
   - Query (AND of Literals) ? a Biscuit query whose predicates match CPL/0
     literals 1:1.
-  - Literal (Builtin(op, args...)) ? a ground predicate recognized by the verifier
-    as the corresponding builtin; arguments are ground terms
+  - Literal (Builtin(op, args...)) ? a ground predicate recognized by the
+    verifier as the corresponding builtin; arguments are ground terms
     (Str/Int/Bool/Bytes).
 - Conversion constraints (Biscuit -> CPL/0 normalizer):
   1. No rules or user facts are consumed during conversion; only checks are
@@ -277,7 +269,7 @@ Deterministic Evaluation and PSP-4).
      unsupported predicates MUST cause conversion to fail (out of scope for
      CPL/0 interop).
   2. All predicate identifiers MUST be recognized builtin op_ids in the pinned
-     builtins_id; argument arity/types MUST match; strings are NFC; Bytes are
+     builtinsId; argument arity/types MUST match; strings are NFC; Bytes are
      exact octets.
   3. The resulting CPL/0 Program is constructed as `all(check_i)`; each Biscuit
      check yields one CPL/0 Check; each Biscuit query yields one CPL/0 Query;
@@ -503,41 +495,41 @@ specific, immutable entry or snapshot in one of these registries.
 
 #### Definitions
 
-Channel `lattice` and `channel_lattice_id`:
+Channel `lattice` and `channelLatticeId`:
 
 - A channel lattice defines a partial order over channel profiles (e.g.,
   mtls:v1 >= tls-exporter:v1 >= dpop:v1 >= bearer:v1). It is the rulebook used
   by the builtin channel_geq(channel, floor).
-- channel_lattice_id is the content-addressed ID of the specific lattice used to
+- channelLatticeId is the content-addressed ID of the specific lattice used to
   interpret ">=". It is required whenever a Program uses channel_geq.
 
-Builtins and `builtins_id`:
+Builtins and `builtinsId`:
 
 - The builtins registry defines each opcode's semantics, types, and attenuation
   tightening rules (e.g., within_time, ttl_ok, in_pairset, channel_geq, ctx_eq,
   presenter_is).
-- builtins_id is the content-addressed ID of the exact builtin set the Program
+- builtinsId is the content-addressed ID of the exact builtin set the Program
   uses.
 
 Resource schemes / comparators:
 
 - Each resource scheme (vault:, net:, k8s:, ...) has a registry entry defining
   normalization and a decidable subset comparator.
-- **schemes_snapshot_id**: Grants pin a content-addressed manifest that maps
+- schemesSnapshotId: Grants pin a content-addressed manifest that maps
   each scheme name referenced by declarations to the exact comparator artifact
-  used for normalization and subset comparison. CEPs select comparator semantics
-  by scheme name within this pinned snapshot. Unknown or unavailable comparators
-  at verification MUST cause deny.
+  used for normalization and subset comparison. CEPs select comparator
+  semantics by scheme name within this pinned snapshot. Unknown or unavailable
+  comparators at verification MUST cause deny.
 
 #### Pinning in Grants
 
 A Grant MUST include references to the exact rulebooks its Program depends on:
 
-- lang_version: version string for CPL/0 (e.g., "cpl/0@1").
-- builtins_id: ID of the Builtins set used by the Program.
-- channel_lattice_id: REQUIRED if the Program contains channel_geq; otherwise
+- langVersion: version string for CPL/0 (e.g., "cpl/0@1").
+- builtinsId: ID of the Builtins set used by the Program.
+- channelLatticeId: REQUIRED if the Program contains channel_geq; otherwise
   OPTIONAL.
-- schemes_snapshot_id: REQUIRED. Content-addressed manifest that pins comparator
+- schemesSnapshotId: REQUIRED. Content-addressed manifest that pins comparator
   semantics for all scheme names referenced by this Grant's declarations.
 - No action registry is required in PSP-1. Actions are plain strings compared
   for equality. Any allowlists or required constraints tied to action names are
@@ -551,10 +543,10 @@ the signed object.
 
 In a delegation chain, a child Grant MUST use the same rulebooks as its parent:
 
-- lang_version must equal the parent's value.
-- builtins_id must equal the parent's value.
-- channel_lattice_id, when present in either parent or child, must be equal.
-- schemes_snapshot_id must equal the parent's value. For each referenced scheme
+- langVersion must equal the parent's value.
+- builtinsId must equal the parent's value.
+- channelLatticeId, when present in either parent or child, must be equal.
+- schemesSnapshotId must equal the parent's value. For each referenced scheme
   name, the same comparator semantics MUST apply consistently across the chain;
   any mismatch or unavailability MUST cause deny.
 - Unknown builtins, lattices, or scheme comparators at any hop MUST cause deny.
@@ -566,20 +558,20 @@ semantics across all hops.
 
 A CEP MUST deny if any of the following holds:
 
-- builtins_id is missing, unknown, or cannot be loaded from the Builtins
+- builtinsId is missing, unknown, or cannot be loaded from the Builtins
   registry.
-- The Program uses channel_geq but channel_lattice_id is missing or unknown.
-- The Program uses channel_geq but the pinned channel_lattice_id does not match
+- The Program uses channel_geq but channelLatticeId is missing or unknown.
+- The Program uses channel_geq but the pinned channelLatticeId does not match
   across delegation hops.
 - Any resource string's scheme has no recognized comparator (by scheme name).
-- The Program references a builtin not present in the pinned builtins_id.
+- The Program references a builtin not present in the pinned builtinsId.
 - In a delegation chain, any of the compatibility requirements above are
   violated.
 - Any required registry entry cannot be loaded or applied at verification time.
-- schemes_snapshot_id is missing, unknown, or cannot be loaded; or
-  schemes_snapshot_id does not match across delegation hops.
+- schemesSnapshotId is missing, unknown, or cannot be loaded; or
+  schemesSnapshotId does not match across delegation hops.
 - A declaration contains a resource whose scheme cannot be normalized under the
-  comparator semantics pinned by schemes_snapshot_id.
+  comparator semantics pinned by schemesSnapshotId.
 
 - A declaration contains a resource whose scheme cannot be normalized under the
   active comparator semantics.
@@ -640,10 +632,10 @@ normalization rules (PCF).
 
 #### Deterministic encoding and identity
 
-- program_bytes = ENCODE(PCF(Program)) as specified by PSP-3.
-- program_id = multihash(program_bytes) as specified by PSP-3.
-- A Grant carrying program_bytes and program_id MUST be rejected if
-  recomputation does not match.
+- programBytes = ENCODE(PCF(Program)) as specified by PSP-3.
+- programId = multihash(programBytes) as specified by PSP-3.
+- A Grant carrying programBytes and programId MUST be rejected if recomputation
+  does not match.
 - ENCODE is defined in PSP-3; PCF is defined here in PSP-1.
 
 #### Failure handling
@@ -659,8 +651,8 @@ normalization rules (PCF).
 
 - Canonicalization is part of the trusted computing base. Implementations SHOULD
   cross-test that semantically identical Programs (after literal reordering,
-  duplicate removal, and string normalization) yield identical program_bytes and
-  program_id across platforms and versions.
+  duplicate removal, and string normalization) yield identical programBytes and
+  programId across platforms and versions.
 
 #### Informative guidance
 
@@ -679,11 +671,11 @@ binary encoding, envelope framing, and multihash identity).
   not_after, statement_id, prev, and signatures to JOSE/COSE/DSSE are defined in
   PSP-3. PSP-1 does not mandate field name representations.
 - Identity of the Program is derived from canonical bytes defined in PSP-3:
-  - program_bytes = ENCODE(PCF(Program))
-  - program_id = multihash(program_bytes)
+  - programBytes = ENCODE(PCF(Program))
+  - programId = multihash(programBytes)
 - Normative integrity requirement: Implementations MUST construct PCF(Program)
-  before deriving identity. At verification, the CEP MUST recompute program_id
-  from program_bytes; any mismatch between the carried program_id and the
+  before deriving identity. At verification, the CEP MUST recompute programId
+  from programBytes; any mismatch between the carried programId and the
   recomputed value MUST cause verification failure.
 - Presentations are signed on-wire messages (not stored on sigchains); PSP-3
   defines their signature container and field placements. PSP-1 specifies only
@@ -717,9 +709,9 @@ claims are specified in PSP-3.
 A conforming Grant MUST satisfy all of the following.
 
 1. Payload contents
-   - program_bytes: The deterministic encoding of PCF(Program) as specified by
+   - programBytes: The deterministic encoding of PCF(Program) as specified by
      PSP-3.
-   - program_id: The multihash of program_bytes (PSP-3). CEPs MUST recompute and
+   - programId: The multihash of programBytes (PSP-3). CEPs MUST recompute and
      match.
    - declarations: A finite map from declaration identifiers to bundled
      canonical bytes:
@@ -730,44 +722,40 @@ A conforming Grant MUST satisfy all of the following.
      - The bytes for every referenced declaration MUST be bundled in the Grant
        payload; no network fetches at evaluation.
    - pins: Registry pins that fix semantics across CEPs and time:
-     - lang_version: The CPL/0 language version string (e.g., "cpl/0@1" - string
+     - langVersion: The CPL/0 language version string (e.g., "cpl/0@1" - string
        form defined in PSP-4).
-     - builtins_id: Content-addressed identifier of the Builtins registry
+     - builtinsId: Content-addressed identifier of the Builtins registry
        snapshot used by the Program.
-    - channel_lattice_id: REQUIRED if and only if the Program contains
-      `channel_geq` literals; OPTIONAL otherwise. When present, it pins the
-      channel lattice used to interpret >=.
-    - schemes_snapshot_id: REQUIRED. A content‑addressed manifest that pins
-      comparator semantics for all scheme names referenced by this Grant’s
-      declarations. CEPs MUST load this manifest to resolve scheme
-      comparators. Unknown or missing snapshots MUST cause deny.
+     - channelLatticeId: REQUIRED if and only if the Program contains
+       channel_geq literals; OPTIONAL otherwise. When present, it pins the
+       channel lattice used to interpret >=.
 2. Envelope and framing
    - The envelope (issuer, subject, issuance/validity timestamps, prev linkage,
      signatures, canonical bytes for the entire claim) is defined in PSP-3.
    - Grants MUST be written on the issuer's sigchain with at least one valid
      signature per PSP-3.
    - A canonical digest for the entire Grant claim MUST be derivable per PSP-3;
-     Presentations reference this digest as grant_ref.
+     Presentations reference this digest as grantRef.
    - CEPs MUST check revocation per PSP-3/TAP before enforcement.
 3. Program identity and integrity
-   - Implementations MUST construct PCF(Program) prior to deriving program_id.
-   - At verification, the CEP MUST recompute program_id from program_bytes. Any
+   - Implementations MUST construct PCF(Program) prior to deriving programId.
+   - At verification, the CEP MUST recompute programId from programBytes. Any
      mismatch MUST cause deny.
    - If the Program references any declaration identifier (e.g., Pairs#CID,
      Actions#CID, Resources#CID), the corresponding canonical bytes MUST be
      included in declarations; missing entries MUST cause deny.
 4. Registry pinning and compatibility
-   - The Program's semantics MUST be interpreted under the pinned lang_version
-     and builtins_id. If unknown or unavailable, verification MUST deny.
-   - If the Program contains channel_geq, channel_lattice_id MUST be present and
+   - The Program's semantics MUST be interpreted under the pinned langVersion
+     and builtinsId. If unknown or unavailable, verification MUST deny.
+   - If the Program contains channel_geq, channelLatticeId MUST be present and
      recognized. Unknown lattices MUST cause deny.
    - Resource scheme semantics are selected by the scheme name present in
      resource strings and MUST match the Scheme registry known to the CEP.
      Unknown schemes or unavailable comparators MUST cause deny.
-   - In a delegation chain, a child Grant's lang_version and builtins_id MUST
+   - In a delegation chain, a child Grant's langVersion and builtinsId MUST
      equal the parent's values. If channel_geq is used in either parent or
-     child, channel_lattice_id (when present) MUST be equal across the chain.
-     Any mismatch MUST cause deny.
+     child, channelLatticeId (when present) MUST be equal across the chain. Any
+     mismatch MUST cause deny.
 5. Declarations and bundling
    - Only the standardized declaration kinds are recognized in PSP-1: PairSet,
      ActionSet, ResourceSet.
@@ -779,19 +767,19 @@ A conforming Grant MUST satisfy all of the following.
    - Unknown declaration kinds or inability to apply required scheme comparators
      MUST cause deny.
 6. Fail-closed behavior
-   - If the Program references a builtin not present in builtins_id,
+   - If the Program references a builtin not present in builtinsId, verification
+     MUST deny.
+   - If the Program uses channel_geq but channelLatticeId is missing or unknown,
      verification MUST deny.
-   - If the Program uses channel_geq but channel_lattice_id is missing or
-     unknown, verification MUST deny.
    - If any declaration reference is missing from declarations, is malformed, or
      fails canonical checks, verification MUST deny.
    - If any resource string in a declaration cannot be normalized under its
      scheme's rules, verification MUST deny.
-   - If program_bytes cannot be parsed into a valid CPL/0 Program per PSP-1
+   - If programBytes cannot be parsed into a valid CPL/0 Program per PSP-1
      (e.g., type errors, prohibited terms), verification MUST deny.
 7. Determinism and normalization invariants
    - The CEP MUST evaluate using only
-     `{program_bytes/program_id, bundled Declarations, builtins_id, channel_lattice_id when used, and the scheme comparator selected by scheme name}`.
+     `{programBytes/programId, bundled Declarations, builtinsId, channelLatticeId when used, and the scheme comparator selected by scheme name}`.
      No other registry artifacts may change the decision at verification.
    - At verification time the CEP MUST normalize the environment resource using
      the same scheme comparator semantics as those used during declaration
@@ -818,11 +806,11 @@ compatibility:
   - ActionSet_child $\subseteq$ ActionSet_parent.
   - ResourceSet_child $\subseteq$ ResourceSet_parent (under the same
     normalization and comparator semantics).
-- Registry pins:
-  - lang_version_child == lang_version_parent.
-  - builtins_id_child == builtins_id_parent.
-  - If channel_geq is present in either parent or child,
-    channel_lattice_id_child == channel_lattice_id_parent.
+  - Registry pins:
+  - langVersion_child == langVersion_parent.
+  - builtinsId_child == builtinsId_parent.
+  - If channel_geq is present in either parent or child, channelLatticeId_child
+    == channelLatticeId_parent.
 - Any violation of the above MUST cause verification to deny the chain at
   enforcement.
 
@@ -835,16 +823,16 @@ verification.
 ### Relationship to Presentations and Enforcement
 
 - Presentations are ephemeral proofs that reference a Grant by its canonical
-  digest (grant_ref). They carry PoP, channel binding, iat/exp, and ctx facts.
+  digest (grantRef). They carry PoP, channel binding, iat/exp, and ctx facts.
   Presentations are NOT recorded on sigchains.
 - CEPs verify the Grant (signatures, revocation per PSP-3), verify custody and
   syntactic attenuation along any delegation chain under the pinned registries,
   then evaluate the leaf Program against CEP-provided environment facts and the
   Grant's bundled Declarations.
 - On success, enforcement MAY proceed, and the CEP SHOULD emit an Access PoAR
-  containing program_id, declaration CIDs, registry pins, and a minimal
+  containing programId, declaration CIDs, registry pins, and a minimal
   evaluation trace per PSP-2.
-- CEPs MUST deny if grant_ref cannot be resolved to a valid Grant under PSP-3
+- CEPs MUST deny if grantRef cannot be resolved to a valid Grant under PSP-3
   framing and signatures.
 
 ### Illustrative Projection (Non-Normative)
@@ -866,7 +854,7 @@ defined in PSP-3.
     "langVersion": "cpl/0@1",
     "builtinsId": "cid:builtins@YYYYMMDD",
     "channelLatticeId": "cid:lattice@1", // REQUIRED iff Program uses channel_geq
-    "schemesSnapshotId": "cid:schemes@YYYYMMDD" // REQUIRED: pins scheme comparator semantics
+    "schemesSnapshotId": "cid:schemes@YYYYMMDD" // REQUIRED
   }
 }
 ```
@@ -879,7 +867,7 @@ transport and encoding are specified in PSP-3.
 A Presentation is an ephemeral, on-path proof by the Subject (S) that it
 possesses a specific Grant and is exercising it now, on this live channel, in
 this runtime context. Presentations are NOT written to sigchains. They reference
-a Grant by its canonical digest (grant_ref, per PSP-3), are proof-of-possession
+a Grant by its canonical digest (grantRef, per PSP-3), are proof-of-possession
 (PoP) bound to the holder's key, and are cryptographically bound to the live
 session via a channel-binding profile. PSP-1 defines the semantic components a
 CEP must verify and evaluate. PSP-3 defines the on-wire signature container and
@@ -890,7 +878,7 @@ small and referential in PSP-1 core.
 
 - Ephemeral proof: Demonstrates holder-of-key (PoP) and binds use to the current
   session.
-- Grant reference: Points to the leaf Grant (grant_ref per PSP-3) that carries
+- Grant reference: Points to the leaf Grant (grantRef per PSP-3) that carries
   the Program and bundled Declarations.
 - Runtime facts: Conveys ctx and timing (iat/exp) the CEP uses to evaluate the
   Program's literals (e.g., ctx_eq, ttl_ok, within_time).
@@ -901,7 +889,7 @@ Note: The names below are non-normative conceptual labels used by PSP-1. The
 normative on-wire field names and encodings are defined in PSP-3.
 
 - presenter: DID of the holder (Subject).
-- grant_ref: canonical digest of the leaf Grant (per PSP-3).
+- grantRef: canonical digest of the leaf Grant (per PSP-3).
 - iat: Int (NumericDate seconds) - mint time.
 - exp: Int (NumericDate seconds) - expiry; exp - iat SHOULD be short; MAY be
   bounded by Program via ttl_ok.
@@ -911,8 +899,8 @@ normative on-wire field names and encodings are defined in PSP-3.
 - ctx: `Map<Str, Term>` - runtime context; MUST include at least the k/v
   required by the Program's ctx_eq literals.
 - Delegation material (TAP-governed):
-  - Presentations in PSP-1 core MUST carry only grant_ref (leaf digest). They
-    MAY include grant_refs: an ordered list of parent digests (leaf->root) as
+  - Presentations in PSP-1 core MUST carry only grantRef (leaf digest). They MAY
+    include grantRefs: an ordered list of parent digests (leaf->root) as
     resolution hints. Resolution, if allowed, is a TAP-governed, pre-enforcement
     step outside CPL/0 evaluation. At enforcement, if required parent Grants are
     not locally available, the CEP MUST deny.
@@ -946,14 +934,14 @@ normative on-wire field names and encodings are defined in PSP-3.
   - ctx MUST be a superset of the required ctx_eq(k, v) literals in the Program.
     Missing keys or unequal values MUST cause deny.
 - Grant reference and custody
-  - grant_ref MUST resolve to a valid leaf Grant under PSP-3 framing and
+  - grantRef MUST resolve to a valid leaf Grant under PSP-3 framing and
     signatures; failure MUST cause deny.
   - If delegation is present, the Presentation MUST carry (or, per TAP, make
     resolvable by a pre-enforcement resolver) sufficient delegation material to
     verify:
     - custody hop-by-hop (issuer(child) == subject(parent)),
     - prev linkage (per PSP-3),
-    - pins compatibility (lang_version, builtins_id, and channel_lattice_id when
+    - pins compatibility (langVersion, builtinsId, and channelLatticeId when
       channel_geq is used),
     - syntactic attenuation (checks/literals tightening and declarations
       subset).
@@ -971,12 +959,12 @@ A CEP MUST deny if any of the following holds:
 
 - PoP signature invalid or channel binding does not match the live session.
 - Presentation lifetime invalid or violates ttl_ok/within_time literals.
-- grant_ref cannot be resolved to a valid Grant (PSP-3).
+  - grantRef cannot be resolved to a valid Grant (PSP-3).
 - Custody/attenuation verification fails (missing parents; signature or prev
   linkage failure; cycle; TAP depth exceeded; pins mismatch; non-attenuating
   child).
-- Unknown or unavailable builtin referenced by the Program; unknown
-  channel_lattice_id when channel_geq is present.
+  - Unknown or unavailable builtin referenced by the Program; unknown
+    channelLatticeId when channel_geq is present.
 - Unknown or unavailable scheme comparator required for declaration evaluation;
   env.resource normalization failure under the active comparator.
 - Missing required ctx keys or mismatched ctx_eq values.
@@ -1061,10 +1049,10 @@ enforced by the CEP with no network I/O during Program evaluation.
 
 For each parent->child hop:
 
-- lang_version_child MUST equal lang_version_parent.
-- builtins_id_child MUST equal builtins_id_parent.
-- If channel_geq appears in either parent or child, channel_lattice_id_child
-  MUST equal channel_lattice_id_parent.
+- langVersion_child MUST equal langVersion_parent.
+- builtinsId_child MUST equal builtinsId_parent.
+- If channel_geq appears in either parent or child, channelLatticeId_child MUST
+  equal channelLatticeId_parent.
 - Scheme comparator consistency: For each resource scheme name referenced by
   Declarations, the same comparator semantics MUST be applicable across the
   chain. If a scheme comparator is unknown or unavailable at enforcement, the
@@ -1088,7 +1076,7 @@ hop-by-hop. Children MAY only narrow or preserve authority.
       Literals.
   - Literal tightening (constants only narrow):
     - Literal constants MAY only be tightened according to the Builtins
-      tightening rules pinned by builtins_id (see PSP-4). Examples:
+      tightening rules pinned by builtinsId (see PSP-4). Examples:
       - within_time: child interval $\subseteq$ parent interval.
       - ttl_ok: `child ttl_max <= parent ttl_max`.
       - channel_geq: `child floor >= parent floor` under the pinned lattice.
@@ -1122,7 +1110,7 @@ hop-by-hop. Children MAY only narrow or preserve authority.
 
 - Evaluation inputs only:
   - The CEP MUST evaluate using only
-    `{ program_bytes/program_id, bundled Declarations, builtins_id, channel_lattice_id when used, and the scheme comparator selected by scheme name }`.
+    `{ programBytes/programId, bundled Declarations, builtinsId, channelLatticeId when used, and the scheme comparator selected by scheme name }`.
     No other registry artifacts may change the decision at enforcement.
 - No network I/O in evaluation:
   - Program evaluation and attenuation checks MUST NOT perform network I/O.
@@ -1138,12 +1126,12 @@ A CEP MUST deny if any of the following holds:
   - issuer(child) != subject(parent), invalid signatures, missing prev linkage,
     cycle detected, or TAP depth exceeded.
 - Pins incompatibility:
-  - lang_version mismatch; builtins_id mismatch; channel_lattice_id mismatch
-    when channel_geq is used by parent or child.
+  - langVersion mismatch; builtinsId mismatch; channelLatticeId mismatch when
+    channel_geq is used by parent or child.
 - Unknown or unavailable semantics:
-  - Program references a builtin not present in builtins_id; Program uses
-    channel_geq but channel_lattice_id is missing or unknown; any resource
-    scheme comparator is unknown or unavailable.
+  - Program references a builtin not present in builtinsId; Program uses
+    channel_geq but channelLatticeId is missing or unknown; any resource scheme
+    comparator is unknown or unavailable.
 - Attenuation violations:
   - Child removes parent Checks; a retained Query in the child omits any parent
     Literal; child widens literal constants contrary to Builtins tightening
@@ -1174,7 +1162,7 @@ A CEP MUST deny if any of the following holds:
 
 - Profiles MAY introduce additional declaration kinds or builtins, but MUST
   preserve monotonicity, purity, bounded evaluation, and pinned semantics
-  (builtins_id) with chain-wide compatibility. When a profile introduces new
+  (builtinsId) with chain-wide compatibility. When a profile introduces new
   declaration kinds (e.g., a PolicyBundle), child bundles MUST be subsets of
   parent bundles under the registry-defined comparator for that kind.
 - Anchoring mechanics and acceptance policies are TAP-governed. PSP-1 is
@@ -1228,8 +1216,8 @@ revocation state) MUST be locally available at enforcement or the CEP MUST deny.
 
 Inputs (conceptual)
 
-- Presentation P: presenter, grant_ref, iat, exp, jti, channelBinding, ctx, and
-  optionally grant_refs (ordered digest hints).
+- Presentation P: presenter, grantRef, iat, exp, jti, channelBinding, ctx, and
+  optionally grantRefs (ordered digest hints).
 - Local stores/cache: Grants by digest (leaf and, if applicable, parents),
   revocation state, TAP configuration (anchors, depth caps, resolver policy,
   time discipline).
@@ -1268,18 +1256,18 @@ Preconditions (TAP-governed, outside evaluation)
 ### Algorithm
 
 1. Parse Presentation
-   - Validate required conceptual fields: presenter, grant_ref, iat, exp, jti,
+   - Validate required conceptual fields: presenter, grantRef, iat, exp, jti,
      channelBinding, ctx.
-   - Capture a single logical now at the start of enforcement. Enforce
-     the Presentation lifetime window using this now: `iat <= now < exp`
-     (subject to TAP clock discipline); else deny.
+   - Capture a single logical now at the start of enforcement. Enforce the
+     Presentation lifetime window using this now: `iat <= now < exp` (subject to
+     TAP clock discipline); else deny.
 2. Verify PoP and channel binding
    - Verify the presenter's proof-of-possession signature over the Presentation
      payload; else deny.
    - Verify channelBinding matches the live session per the declared profile
      (e.g., TLS exporter, DPoP); else deny.
 3. Resolve and verify the leaf Grant (local)
-   - Locate the leaf Grant by grant_ref in local storage; if unavailable, deny.
+   - Locate the leaf Grant by grantRef in local storage; if unavailable, deny.
    - Verify signatures and envelope framing per PSP-3 (issuer, subject, prev,
      created_at/nbf/exp as applicable).
    - Enforce the Grant's envelope validity window (if present). Where both Grant
@@ -1292,9 +1280,9 @@ Preconditions (TAP-governed, outside evaluation)
      - Custody and placement: issuer(child) == subject(parent); signatures
        valid; prev linkage correct; else deny.
      - Depth and cycles: no cycles; deny if TAP depth cap exceeded.
-     - Pinned semantics compatibility: lang_version matches; builtins_id
-       matches; channel_lattice_id matches whenever channel_geq is used by
-       either hop; schemes_snapshot_id matches; else deny.
+     - Pinned semantics compatibility: langVersion matches; builtinsId matches;
+       channelLatticeId matches whenever channel_geq is used by either hop;
+       schemesSnapshotId matches; else deny.
      - Scheme comparator availability: comparators required by referenced
        schemes are known/available; else deny.
      - Syntactic attenuation:
@@ -1322,12 +1310,12 @@ Preconditions (TAP-governed, outside evaluation)
    - Normalize env.resource using the same scheme comparator semantics used for
      declaration canonicalization; normalization failure -> deny.
 6. Load Program and Declarations from the leaf Grant
-   - Parse program_bytes; recompute program_id and require match; else deny.
+   - Parse programBytes; recompute programId and require match; else deny.
    - Ensure all Declarations referenced by the Program are present as bundled
      canonical bytes; else deny.
-   - Confirm pinned semantics are usable: builtins_id known; if Program uses
-     channel_geq, channel_lattice_id present and known; schemes_snapshot_id
-     present and known; else deny.
+   - Confirm pinned semantics are usable: builtinsId known; if the Program uses
+     channel_geq, channelLatticeId present and known; schemesSnapshotId present
+     and known; else deny.
 7. Evaluate Program (closed-world, bounded)
    - Evaluate the CPL/0 Program against the environment facts and bundled
      Declarations with pinned semantics:
@@ -1350,11 +1338,11 @@ Preconditions (TAP-governed, outside evaluation)
        outside PSP-1).
      - The enforcing CEP MUST emit an Access PoAR per PSP-2 on its own sigchain
        (P/R/S depending on placement) and deliver it to the Subject. PoAR SHOULD
-       include program_id, declaration CIDs, pins (including
-       schemes_snapshot_id), a minimal evaluation trace (which check/query
-       passed), and revocation/freshness decision context as applicable. For
-       audit acceleration, the PoAR SHOULD also record comparator fingerprints
-       (per scheme) actually used during evaluation.
+       include programId, declaration CIDs, pins (including schemesSnapshotId),
+       a minimal evaluation trace (which check/query passed), and
+       revocation/freshness decision context as applicable. For audit
+       acceleration, the PoAR SHOULD also record comparator fingerprints (per
+       scheme) actually used during evaluation.
    - On failure:
      - The enforcing CEP MUST emit a DenyReceipt per PSP-2 with an appropriate
        reason code and deliver it to the Subject.
@@ -1381,7 +1369,7 @@ Preconditions (TAP-governed, outside evaluation)
 ### Invariants
 
 - Closed-world: The CEP MUST evaluate using only
-  `{ program_bytes/program_id, bundled Declarations, builtins_id, channel_lattice_id when used, and the scheme comparator selected by scheme name }`.
+  `{ programBytes/programId, bundled Declarations, builtinsId, channelLatticeId when used, and the scheme comparator selected by scheme name }`.
   No other registry artifacts may change the decision at enforcement.
 - No network I/O during evaluation: If required Grants or revocation state are
   not locally available at enforcement, the CEP MUST deny.
@@ -1423,14 +1411,13 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     enforcement; otherwise deny.
 - Fail-closed
   - Unknown, missing, or ambiguous inputs (unknown builtin, unknown
-    channel_lattice_id when channel_geq is used, unknown scheme comparator,
+    channelLatticeId when channel_geq is used, unknown scheme comparator,
     ill-typed literal, normalization failure, indeterminate revocation) MUST
     result in deny.
 - Canonicalization and pinning
-  - CEPs MUST recompute program_id from program_bytes and deny on mismatch.
-  - Pins affecting semantics (builtins_id, and channel_lattice_id when
-    channel_geq is used) MUST match across delegation hops; mismatches MUST
-    deny.
+  - CEPs MUST recompute programId from programBytes and deny on mismatch.
+  - Pins affecting semantics (builtinsId, and channelLatticeId when channel_geq
+    is used) MUST match across delegation hops; mismatches MUST deny.
   - Scheme comparators MUST be selected by scheme name and be available locally;
     otherwise deny.
 - Syntactic attenuation
@@ -1467,7 +1454,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     limits MUST deny (e.g., reason resource_limit or deadline_exceeded per TAP).
 - Input bounds
   - Programs and Declarations MUST remain finite. CEPs SHOULD bound sizes of
-    program_bytes, declaration tables, and ctx to mitigate memory/CPU pressure.
+    programBytes, declaration tables, and ctx to mitigate memory/CPU pressure.
 
 ### Privacy and Minimal Exposure
 
@@ -1477,7 +1464,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     literals.
 - Receipts
   - Access PoARs SHOULD include minimal evaluation traces (e.g., which
-    check/query passed) and program identifiers (program_id, declaration CIDs,
+    check/query passed) and program identifiers (programId, declaration CIDs,
     pins). Detailed evidence, redactions, and selective disclosure are governed
     by PSP-2 and TAP.
 
@@ -1505,11 +1492,11 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 ### Registry and Supply-Chain Trust
 
 - Registry artifacts
-  - builtins_id and (if used) channel_lattice_id MUST reference trusted,
+  - builtinsId and (if used) channelLatticeId MUST reference trusted,
     content-addressed snapshots. Operators SHOULD monitor and pin approved
     versions via TAP; deny unknown pins.
 - Comparator drift
-  - Scheme comparator semantics MUST be stable. The schemes_snapshot_id pins the
+  - Scheme comparator semantics MUST be stable. The schemesSnapshotId pins the
     exact comparator set; CEPs MUST deny on unknown or mismatched snapshots. For
     audit acceleration, PoARs SHOULD record the snapshot id and comparator
     fingerprints actually used by the enforcer.
@@ -1542,9 +1529,9 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 
 - PCF stability
   - Implementers SHOULD cross-test PCF canonicalization and ensure semantically
-    equivalent Programs yield identical program_id across platforms/versions.
+    equivalent Programs yield identical programId across platforms/versions.
 - Deny vectors
-  - Test unknown builtin/lattice/comparator, program_id mismatch, missing
+  - Test unknown builtin/lattice/comparator, programId mismatch, missing
     declaration bytes, ill-typed literals, normalization failures, pins
     mismatches, attenuation violations, and parents_unavailable conditions.
 
@@ -1560,10 +1547,13 @@ This section provides end-to-end, program-first examples. Each example includes:
 
 Notes:
 
-- All CIDs, program_id, and bytes shown are illustrative.
+- All CIDs, programId, and bytes shown are illustrative.
 - On-wire field names and encodings are defined in PSP-3.
 - Actions are plain strings; resource semantics come from scheme comparators.
- - Field names in the JSON projections below use **camelCase** for readability. These labels are **illustrative only**; the normative field names and encodings are defined in PSP‑3. Implementers MUST NOT rely on these example names.
+- Field names in the JSON projections below use **camelCase** for readability.
+  These labels are **illustrative only**; the normative field names and
+  encodings are defined in PSP-3. Implementers MUST NOT rely on these example
+  names.
 
 ### Example 1: DevOps - Read a secret from Vault
 
@@ -1597,10 +1587,11 @@ Declarations (PairSet; canonicalized and content-addressed)
 
 Pins
 
-- lang_version: "cpl/0@1"
-- builtins_id: "cid:builtins@2025-09-01"
-- channel_lattice_id: "cid:channel-lattice@v1" (required because channel_geq is
+- langVersion: "cpl/0@1"
+- builtinsId: "cid:builtins@2025-09-01"
+- channelLatticeId: "cid:channel-lattice@v1" (required because channel_geq is
   used)
+- schemesSnapshotId: "cid:schemes@2025-09-01"
 
 Grant (payload only, non-normative)
 
@@ -1638,7 +1629,7 @@ CEP evaluation outline
 
 1. PoP and channel: presenter's signature valid; channelBinding matches mTLS
    session.
-2. Leaf Grant located locally by grant_ref; signatures valid; Grant envelope
+2. Leaf Grant located locally by grantRef; signatures valid; Grant envelope
    window intersects with Presentation window.
 3. Revocation check (local): not revoked.
 4. Delegation chain (if present): custody, prev linkage; pins match; scheme
@@ -1652,7 +1643,7 @@ CEP evaluation outline
    - within_time(now,1768100000,1768103600): true
    - ttl_ok(iat,now,120): true
    - ctx_eq("ns","prod"), ctx_eq("app","web"): true
-7. Allow; emit PoAR (PSP-2) with program_id, declaration CIDs, pins, minimal
+7. Allow; emit PoAR (PSP-2) with programId, declaration CIDs, pins, minimal
    evaluation trace, and revocation snapshot context.
 
 Delegated child (illustrative)
@@ -1698,9 +1689,10 @@ Declarations (PairSet; canonicalized and content-addressed)
 
 Pins
 
-- lang_version: "cpl/0@1"
-- builtins_id: "cid:builtins@2025-09-01"
-- channel_lattice_id: "cid:channel-lattice@v1"
+- langVersion: "cpl/0@1"
+- builtinsId: "cid:builtins@2025-09-01"
+- channelLatticeId: "cid:channel-lattice@v1"
+- schemesSnapshotId: "cid:schemes@2025-09-01"
 
 Grant (payload only, non-normative)
 
@@ -1737,7 +1729,7 @@ Presentation (conceptual fields; non-normative)
 CEP evaluation outline
 
 1. Verify PoP + channelBinding (mTLS exporter).
-2. Load leaf Grant locally by grant_ref; verify signatures + envelope; enforce
+2. Load leaf Grant locally by grantRef; verify signatures + envelope; enforce
    envelope $\land$ presentation time intersection; check revocation (local).
 3. If delegated: verify custody, prev linkage; pins compatibility; scheme
    comparator available; attenuation (program literals equal/tighter;
@@ -1755,7 +1747,7 @@ CEP evaluation outline
 6. Allow. Enforcement (outside PSP-1): Adapter mints a DB token (e.g., 60-120s
    TTL), channel-bound/session-scoped; returns token to the Subject or mediates
    the downstream call.
-7. Emit PoAR (PSP-2): include program_id, declaration CIDs, pins, minimal
+7. Emit PoAR (PSP-2): include programId, declaration CIDs, pins, minimal
    evaluation trace (which check/query passed), and any derivation metadata
    (e.g., tokenRef). No raw secret is exposed.
 
@@ -1768,9 +1760,9 @@ CEP evaluation outline
 - Presentations remain small; do not embed Grant bodies in PSP-1 core. If
   parents aren't local at enforcement, deny (TAP defines pre-enforcement
   hydration or profile-level stapling).
-- Receipts: PoAR should capture enough to audit the decision (program_id,
-  declaration CIDs, pins, minimal trace), plus derivation metadata (tokenRef),
-  but never the token itself.
+  - Receipts: PoAR should capture enough to audit the decision (programId,
+    declaration CIDs, pins, minimal trace), plus derivation metadata (tokenRef),
+    but never the token itself.
 
 ### Example 3: Physical Access - Open a door lock
 
@@ -1787,7 +1779,7 @@ Program (CPL/0, AST)
   (any
     (and
       (in_pairset action resource Pairs#bafyPairsDoor1)
-(channel_geq channel "tls-exporter:v1")
+      (channel_geq channel "tls-exporter:v1")
       (within_time now 1768102000 1768102600)
       (ttl_ok iat now 60)
       (ctx_eq "visitor_id" "door-visit-123")
@@ -1803,9 +1795,10 @@ Declarations (PairSet; canonicalized and content-addressed)
 
 Pins
 
-- lang_version: "cpl/0@1"
-- builtins_id: "cid:builtins@2025-09-01"
-- channel_lattice_id: "cid:channel-lattice@v1"
+- langVersion: "cpl/0@1"
+- builtinsId: "cid:builtins@2025-09-01"
+- channelLatticeId: "cid:channel-lattice@v1"
+- schemesSnapshotId: "cid:schemes@2025-09-01"
 
 Grant (payload only, non-normative)
 
@@ -1871,12 +1864,12 @@ Delegated child (illustrative; equality permitted)
 - Resource normalization: ensure env.resource is normalized using the scheme
   comparator (vault:, door:) that was used to canonicalize Declarations;
   failures must deny.
-- Pins must match across delegation hops: lang_version, builtins_id, and, when
-  used, channel_lattice_id. Mismatches deny.
+- Pins must match across delegation hops: langVersion, builtinsId, and, when
+  used, channelLatticeId. Mismatches deny.
 - Presentations remain small and referential; do not embed Grant bodies in PSP-1
   core. If parents are required and not locally available at enforcement, deny
   (TAP governs pre-enforcement hydration or profile-level stapling).
-- Receipts (PSP-2): PoARs SHOULD record program_id, declaration CIDs, pins,
+- Receipts (PSP-2): PoARs SHOULD record programId, declaration CIDs, pins,
   minimal evaluation trace, and revocation/freshness context; redactions and
   selective disclosure are TAP/PSP-2 concerns.
 
@@ -1892,7 +1885,7 @@ lattices, comparators) remain in PSP-4.
 
 This Concise Data Definition Language (CDDL) describes the abstract shape of
 Programs and Declarations. It is not the on-wire format. Deterministic encoding
-for program_bytes is defined in PSP-3.
+for `programBytes` is defined in PSP-3.
 
 ```cddl
 ; Core terms
@@ -1957,8 +1950,8 @@ Conformance notes:
 This appendix enumerates the builtin operators assumed by PSP-1 and the
 tightening rules used for syntactic attenuation. The authoritative registry of
 operators (op ids, types, and semantics) is modeled in PSP-4; Grants pin the
-exact set via builtins_id. This appendix is normative for this edition;
-implementers MUST ensure builtins_id references a set that matches these
+exact set via **builtinsId**. This appendix is normative for this edition;
+implementers MUST ensure builtinsId references a set that matches these
 definitions.
 
 - within_time(now:Int, nbf:Int, exp:Int)
@@ -1967,7 +1960,7 @@ definitions.
   - Types: all Int.
   - Tightening: child interval $\subseteq$ parent interval (i.e.,
     `nbf_child >= nbf_parent` and `exp_child <= exp_parent`).
-  - Fail-closed: ill-typed or `now` outside the half‑open interval `[nbf, exp)`
+  - Fail-closed: ill-typed or `now` outside the half-open interval `[nbf, exp)`
     results in `false`; unknown => deny.
 
 - ttl_ok(iat:Int, now:Int, ttl_max:Int)
@@ -2037,8 +2030,8 @@ definitions.
 
 General rules:
 
-- Unknown builtin op_id referenced by a Program under the pinned builtins_id
-  MUST cause deny.
+- Unknown builtin op_id referenced by a Program under the pinned builtinsId MUST
+  cause deny.
 - Types are enforced at evaluation; ill-typed invocations MUST cause deny.
 - Equality of strings uses NFC; comparator logic never performs network I/O.
 
@@ -2093,7 +2086,7 @@ deny/diagnostic codes to aid auditors:
 
 - pcf_mismatch
 - program_parse_error
-- pin_mismatch (lang_version / builtins_id / channel_lattice_id)
+- pin_mismatch (langVersion / builtinsId / channelLatticeId)
 - unknown_builtin
 - unknown_lattice
 - unknown_comparator
@@ -2109,7 +2102,7 @@ deny/diagnostic codes to aid auditors:
 - grant_unavailable
 - anchor_missing (per TAP)
 
-Receipts SHOULD include enough context (program_id, declaration CIDs, pins,
+Receipts SHOULD include enough context (programId, declaration CIDs, pins,
 minimal evaluation trace, and revocation snapshot) for replay.
 
 ### Appendix E - Conformance Test Vectors
@@ -2172,8 +2165,8 @@ Expected: Deny with reason `attenuation_failure`.
 
 Setup: `iat=100`, `exp=200`. `ttl_ok(iat, now, 100)`.
 
-Expect: Allow for `now $\in$ {100,...,199}`, deny for `now=200` (Presentation window)
-and `now=200` (TTL boundary).
+Expect: Allow for `now $\in$ {100,...,199}`, deny for `now=200` (Presentation
+window) and `now=200` (TTL boundary).
 
 Inputs: `now=199` => allow; `now=200` => deny.
 
