@@ -101,13 +101,44 @@ and only when, they appear in all capitals, as shown here.
   and, across delegation chains, matching pins are REQUIRED where they affect
   evaluation.
 
+### 2.3 Ecosystem Terminology
+
+PSP‑1 references several terms defined in related Polykey specifications. These terms
+describe the various placements and roles of enforcement agents and adapters:
+
+- **CEP(R) (Resource‑side CEP):** A CEP embedded in or colocated with the
+  Resource itself; it verifies Presentations natively on behalf of the resource.
+- **CEP(P) (Principal‑side CEP):** A CEP operated within the Principal's trust
+  domain; it is used when the Resource is non‑PK‑native or to bridge to external
+  systems.
+- **CEP(S) (Subject‑side CEP):** A CEP operated within the Subject's domain;
+  often used for wallet‑style session management or when the Subject can derive
+  credentials via federated identity.
+- **Bridge Adapter (BA):** A specialized CEP that bridges to a non‑PK‑native
+  Source of Authority (SoA) using a long‑lived upstream lease. A BA mediates
+  between Polykey Grants/Presentations and legacy authorization systems.
+  Subtypes include:
+  - **PS‑BA (Principal‑side BA):** The typical pattern where the Principal's
+    agent holds the upstream lease and performs legacy enforcement on behalf of
+    the resource.
+  - **SS‑BA (Subject‑side BA):** A less common pattern where the Subject holds
+    a lease and bridges a resource it controls to Polykey.
+- **Exposure Mode:** The method by which a Bridge Adapter handles secrets when
+  interacting with legacy systems. Modes include **mediate** (the adapter
+  performs the action and does not expose raw secrets), **derive** (the
+  adapter mints a short‑lived, scoped token), and **reveal** (the adapter
+  returns the raw secret under strict, TAP‑governed constraints). Exposure mode
+  policies and receipt placement are defined in the CEP/BA specification and
+  TAP/RAM.
+
 ## Overview and Goals
 
 PSP-1 provides the core capability model for Polykey: the program model and
 verification semantics that allow independent parties to mint, hold, present,
 and verify capabilities across boundaries.
+### 3.1 Goals and Design Principles
 
-What PSP-1 defines:
+PSP‑1 defines the following core constructs and invariants for Polykey:
 
 - Capability Program (CPL/0): a monotone program with finite Declarations
   (PairSet/ActionSet/ResourceSet), normalized into a Program Canonical Form
@@ -475,7 +506,7 @@ specific, immutable entry or snapshot in one of these registries.
 Channel `lattice` and `channel_lattice_id`:
 
 - A channel lattice defines a partial order over channel profiles (e.g.,
-  mtls:v1 >= tls_exporter:v1 >= dpop:v1 >= bearer:v1). It is the rulebook used
+  mtls:v1 >= tls-exporter:v1 >= dpop:v1 >= bearer:v1). It is the rulebook used
   by the builtin channel_geq(channel, floor).
 - channel_lattice_id is the content-addressed ID of the specific lattice used to
   interpret ">=". It is required whenever a Program uses channel_geq.
@@ -703,9 +734,13 @@ A conforming Grant MUST satisfy all of the following.
        form defined in PSP-4).
      - builtins_id: Content-addressed identifier of the Builtins registry
        snapshot used by the Program.
-     - channel_lattice_id: REQUIRED if and only if the Program contains
-       channel_geq literals; OPTIONAL otherwise. When present, it pins the
-       channel lattice used to interpret >=.
+    - channel_lattice_id: REQUIRED if and only if the Program contains
+      `channel_geq` literals; OPTIONAL otherwise. When present, it pins the
+      channel lattice used to interpret >=.
+    - schemes_snapshot_id: REQUIRED. A content‑addressed manifest that pins
+      comparator semantics for all scheme names referenced by this Grant’s
+      declarations. CEPs MUST load this manifest to resolve scheme
+      comparators. Unknown or missing snapshots MUST cause deny.
 2. Envelope and framing
    - The envelope (issuer, subject, issuance/validity timestamps, prev linkage,
      signatures, canonical bytes for the entire claim) is defined in PSP-3.
@@ -820,17 +855,18 @@ defined in PSP-3.
 
 ```json
 {
-  "program_id": "mh:...", // multihash(program_bytes) per PSP-3
-  "program_bytes": "...", // ENCODE(PCF(Program)) per PSP-3
+  "programId": "mh:...", // multihash(programBytes) per PSP-3
+  "programBytes": "...", // ENCODE(PCF(Program)) per PSP-3
   "declarations": {
     "pairs:cid:Qm...": "...", // canonical bytes of PairSet
     "actions:cid:Qn...": "...", // canonical bytes of ActionSet (if used)
     "resources:cid:Qr...": "..." // canonical bytes of ResourceSet (if used)
   },
   "pins": {
-    "lang_version": "cpl/0@1",
-    "builtins_id": "cid:builtins@YYYYMMDD",
-    "channel_lattice_id": "cid:lattice@1" // REQUIRED iff Program uses channel_geq
+    "langVersion": "cpl/0@1",
+    "builtinsId": "cid:builtins@YYYYMMDD",
+    "channelLatticeId": "cid:lattice@1", // REQUIRED iff Program uses channel_geq
+    "schemesSnapshotId": "cid:schemes@YYYYMMDD" // REQUIRED: pins scheme comparator semantics
   }
 }
 ```
@@ -962,7 +998,7 @@ payload). PSP-1 does not define a Presentation 'payload' vs 'envelope' split.
   "iat": 1768099200,
   "exp": 1768099320,
   "channelBinding": {
-    "profile": "tls_exporter:v1",
+    "profile": "tls-exporter:v1",
     "value": "base64url(exporter)"
   },
   "ctx": { "ns": "ci", "pod": "runner-xyz" },
@@ -1124,7 +1160,7 @@ A CEP MUST deny if any of the following holds:
 - TTL:
   - Parent ttl_ok(iat, now, 300) -> Child ttl_ok(iat, now, 120) (valid).
 - Channel floor:
-  - Parent channel_geq(channel, "tls_exporter:v1") -> Child channel_geq(channel,
+  - Parent channel_geq(channel, "tls-exporter:v1") -> Child channel_geq(channel,
     "mtls:v1") (valid; equal or stronger only).
 - Context:
   - Parent ctx_eq("ns","prod") -> Child ctx_eq("ns","prod") $\land$
@@ -1235,7 +1271,7 @@ Preconditions (TAP-governed, outside evaluation)
    - Validate required conceptual fields: presenter, grant_ref, iat, exp, jti,
      channelBinding, ctx.
    - Capture a single logical now at the start of enforcement. Enforce
-     Presentation lifetime window using this now: now >= iat AND now < exp
+     the Presentation lifetime window using this now: `iat <= now < exp`
      (subject to TAP clock discipline); else deny.
 2. Verify PoP and channel binding
    - Verify the presenter's proof-of-possession signature over the Presentation
@@ -1527,6 +1563,7 @@ Notes:
 - All CIDs, program_id, and bytes shown are illustrative.
 - On-wire field names and encodings are defined in PSP-3.
 - Actions are plain strings; resource semantics come from scheme comparators.
+ - Field names in the JSON projections below use **camelCase** for readability. These labels are **illustrative only**; the normative field names and encodings are defined in PSP‑3. Implementers MUST NOT rely on these example names.
 
 ### Example 1: DevOps - Read a secret from Vault
 
@@ -1569,15 +1606,16 @@ Grant (payload only, non-normative)
 
 ```
 {
-  "program_id": "mh:QmProgDev1",
-  "program_bytes": "<PCF-bytes>",
+  "programId": "mh:QmProgDev1",
+  "programBytes": "<PCF-bytes>",
   "declarations": {
     "pairs:bafyPairsDev1": "<PairSet-bytes>"
   },
   "pins": {
-    "lang_version": "cpl/0@1",
-    "builtins_id": "cid:builtins@2025-09-01",
-    "channel_lattice_id": "cid:channel-lattice@v1"
+    "langVersion": "cpl/0@1",
+    "builtinsId": "cid:builtins@2025-09-01",
+    "channelLatticeId": "cid:channel-lattice@v1",
+    "schemesSnapshotId": "cid:schemes@2025-09-01"
   }
 }
 ```
@@ -1587,12 +1625,12 @@ Presentation (conceptual fields; non-normative)
 ```
 {
   "presenter": "did:pk:ci-runner-01",
-  "grant_ref": "cid://G_leaf_devops",
+  "grantRef": "cid://G_leaf_devops",
   "iat": 1768100050,
   "exp": 1768100170,
   "jti": "uuid-1234",
   "channelBinding": { "profile": "mtls:v1", "value": "base64url(exporter)" },
-  "ctx": { "ns": "prod", "app": "web", "pod": "runner-xyz" },
+  "ctx": { "ns": "prod", "app": "web", "pod": "runner-xyz" }
 }
 ```
 
@@ -1668,15 +1706,16 @@ Grant (payload only, non-normative)
 
 ```
 {
-  "program_id": "mh:QmProgDbMint1",
-  "program_bytes": "<PCF-bytes>"
+  "programId": "mh:QmProgDbMint1",
+  "programBytes": "<PCF-bytes>",
   "declarations": {
     "pairs:bafyPairsDbMint1": "<PairSet-bytes>"
   },
   "pins": {
-    "lang_version": "cpl/0@1",
-    "builtins_id": "cid:builtins@2025-09-01",
-    "channel_lattice_id": "cid:channel-lattice@v1"
+    "langVersion": "cpl/0@1",
+    "builtinsId": "cid:builtins@2025-09-01",
+    "channelLatticeId": "cid:channel-lattice@v1",
+    "schemesSnapshotId": "cid:schemes@2025-09-01"
   }
 }
 ```
@@ -1686,12 +1725,12 @@ Presentation (conceptual fields; non-normative)
 ```
 {
   "presenter": "did:pk:ci-runner-prod-01",
-  "grant_ref": "cid://G_leaf_dbmint",
+  "grantRef": "cid://G_leaf_dbmint",
   "iat": 1768100050,
   "exp": 1768100170,
   "jti": "uuid-9a7b",
   "channelBinding": { "profile": "mtls:v1", "value": "base64url(exporter)" },
-  "ctx": { "ns": "prod", "app": "web", "purpose": "sha256:artifact-H", "pod": "runner-xyz" },
+  "ctx": { "ns": "prod", "app": "web", "purpose": "sha256:artifact-H", "pod": "runner-xyz" }
 }
 ```
 
@@ -1748,7 +1787,7 @@ Program (CPL/0, AST)
   (any
     (and
       (in_pairset action resource Pairs#bafyPairsDoor1)
-      (channel_geq channel "tls_exporter:v1")
+(channel_geq channel "tls-exporter:v1")
       (within_time now 1768102000 1768102600)
       (ttl_ok iat now 60)
       (ctx_eq "visitor_id" "door-visit-123")
@@ -1772,15 +1811,16 @@ Grant (payload only, non-normative)
 
 ```
 {
-  "program_id": "mh:QmProgDoor1",
-  "program_bytes": "<PCF-bytes>",
+  "programId": "mh:QmProgDoor1",
+  "programBytes": "<PCF-bytes>",
   "declarations": {
     "pairs:bafyPairsDoor1": "<PairSet-bytes>"
   },
   "pins": {
-    "lang_version": "cpl/0@1",
-    "builtins_id": "cid:builtins@2025-09-01",
-    "channel_lattice_id": "cid:channel-lattice@v1"
+    "langVersion": "cpl/0@1",
+    "builtinsId": "cid:builtins@2025-09-01",
+    "channelLatticeId": "cid:channel-lattice@v1",
+    "schemesSnapshotId": "cid:schemes@2025-09-01"
   }
 }
 ```
@@ -1790,18 +1830,18 @@ Presentation (conceptual fields; non-normative)
 ```
 {
   "presenter": "did:pk:mobile-app-42",
-  "grant_ref": "cid://G_leaf_door",
+  "grantRef": "cid://G_leaf_door",
   "iat": 1768102050,
   "exp": 1768102100,
   "jti": "uuid-5678",
-  "channelBinding": { "profile": "tls_exporter:v1", "value": "base64url(exporter)" },
-  "ctx": { "visitor_id": "door-visit-123", "device": "ios" }
+  "channelBinding": { "profile": "tls-exporter:v1", "value": "base64url(exporter)" },
+  "ctx": { "visitorId": "door-visit-123", "device": "ios" }
 }
 ```
 
 CEP evaluation outline (resource-side CEP, OT-aware)
 
-1. PoP and channel: valid; tls_exporter bound to session.
+1. PoP and channel: valid; tls-exporter bound to session.
 2. Leaf Grant found locally; signatures ok; Grant envelope (if present) $\land$
    Presentation window ok.
 3. Revocation: not revoked.
@@ -1810,7 +1850,7 @@ CEP evaluation outline (resource-side CEP, OT-aware)
 6. Program evaluation:
    - in_pairset("access:open","door:building-12:lock-3",Pairs#bafyPairsDoor1):
      true
-   - channel_geq("tls_exporter:v1","tls_exporter:v1"): true (equal under
+   - channel_geq("tls-exporter:v1","tls-exporter:v1"): true (equal under
      lattice)
    - within_time(now,1768102000,1768102600): true (10-minute window)
    - ttl_ok(iat,now,60): true
@@ -1927,7 +1967,8 @@ definitions.
   - Types: all Int.
   - Tightening: child interval $\subseteq$ parent interval (i.e.,
     `nbf_child >= nbf_parent` and `exp_child <= exp_parent`).
-  - Fail-closed: ill-typed or now outside [nbf, exp] => false; unknown => deny.
+  - Fail-closed: ill-typed or `now` outside the half‑open interval `[nbf, exp)`
+    results in `false`; unknown => deny.
 
 - ttl_ok(iat:Int, now:Int, ttl_max:Int)
 
