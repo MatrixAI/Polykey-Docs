@@ -75,8 +75,11 @@ and only when, they appear in all capitals, as shown here.
 - **CPL**: Capability Programming Language.
 - **Program (CPL/0):** A monotone policy evaluated by CEPs, composed of Checks
   (OR of Queries), Queries (AND of Literals), and Literals that are pure,
-  bounded Builtins over ground Terms (Str/Int/Bytes/Bool). CPL/0 has no
-  user-defined atoms, symbols, or variables.
+  bounded Builtins over ground Terms (`Str`/`Int`/`Bytes`/`Bool`). CPL/0 has no
+  user-defined atoms, symbols, or variables. The "/0" suffix denotes that this
+  is the first, deterministic core of the Capability Programming Language
+  family; later editions (e.g., CPL/1) may extend the language while preserving
+  existing semantics.
 - **Declarations:** Finite sets/relations used by programs: PairSet of (action,
   resource), ActionSet, and ResourceSet.
 - **Program Canonical Form (PCF):** The normalized, deterministically encoded
@@ -213,7 +216,9 @@ Deterministic Evaluation and PSP-4).
   - A Check succeeds if and only if at least one of its Queries succeeds.
   - A Query succeeds if and only if all of its Literals succeed.
 - Literals and Terms
-  - Uses builtin literals only: Builtin(op_id, [arg...]).
+  - Uses builtin literals only: Builtin(`op`, [args…]). Here `op` is the textual
+    identifier of the builtin operation (see Appendix B for the registry of
+    builtins).
   - Terms are ground: Str | Int | Bool | Bytes. No variables. No user-defined
     atoms.
   - Int is arbitrary-precision integer. Floats are not permitted.
@@ -225,13 +230,13 @@ Deterministic Evaluation and PSP-4).
 
 #### Builtins and registries
 
-- Each builtin op_id, its type signature, and its tightening rule are defined in
-  the Builtins registry (PSP-4). The exact set in use is pinned by `builtinsId`
-  in the Grant.
-  - Channel comparisons (e.g., `channel_geq`) consult the pinned
-    `channelLatticeId`, which defines the set of recognized channel profile
-    identifiers and their partial order. Unknown profiles or an unknown lattice
-    MUST cause deny.
+- Each builtin operation is identified by a string `op`. Its semantics, type
+  signature, and tightening rule are defined in the Builtins registry (PSP‑4).
+  The exact set in use is pinned by `builtinsId` in the Grant.
+- Channel comparisons (e.g., `channel_geq`) consult the pinned
+  `channelLatticeId`, which defines the set of recognized channel profile
+  identifiers and their partial order. Unknown profiles or an unknown lattice
+  MUST cause deny.
 - Resource subset checks in declaration-aware builtins (e.g., in_pairset)
   consult the scheme comparator selected by the resource's scheme name.
 - If a builtin, lattice, or comparator required by the Program is unknown or
@@ -274,9 +279,9 @@ Deterministic Evaluation and PSP-4).
      considered. Any presence of rules, variables, non-ground terms, or
      unsupported predicates MUST cause conversion to fail (out of scope for
      CPL/0 interop).
-  2. All predicate identifiers MUST be recognized builtin op_ids in the pinned
-     `builtinsId`; argument arity/types MUST match; strings are NFC; Bytes are
-     exact octets.
+  2. All predicate identifiers MUST correspond to recognized builtin operations
+     (`op` strings) in the pinned `builtinsId`; argument arity and types MUST
+     match; strings are NFC; Bytes are exact octets.
   3. The resulting CPL/0 Program is constructed as `all(check_i)`; each Biscuit
      check yields one CPL/0 Check; each Biscuit query yields one CPL/0 Query;
      each recognized predicate yields one CPL/0 Literal.
@@ -849,7 +854,10 @@ verification.
 
 The following illustrates only the Grant payload structure relevant to PSP-1.
 Envelope fields, signatures, canonical claim bytes, and multihash details are
-defined in PSP-3.
+defined in PSP-3. Field names in the JSON projection use camelCase for
+readability. These labels are illustrative only; the normative field names and
+encodings are defined in PSP-3. Implementers MUST NOT rely on these example
+names.
 
 ```json
 {
@@ -1922,7 +1930,7 @@ Query = {
   literals: [1* Literal]
 }
 
-; Literal = Builtin(op_id, args...)
+; Literal = Builtin(op, args...)
 Literal = {
   op: tstr,     ; operator id (e.g., "within_time", "in_pairset")
   args: [* Term]
@@ -2041,9 +2049,8 @@ definitions.
 
 General rules:
 
--- Unknown builtin op_id referenced by a Program under the pinned `builtinsId`
-MUST cause deny.
-
+- Unknown builtin operation (`op`) referenced by a Program under the pinned
+  `builtinsId` MUST cause deny.
 - Types are enforced at evaluation; ill-typed invocations MUST cause deny.
 - Equality of strings uses NFC; comparator logic never performs network I/O.
 
