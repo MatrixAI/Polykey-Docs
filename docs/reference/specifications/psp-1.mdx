@@ -18,7 +18,7 @@
   </dl>
 </details>
 
-## Abstract
+## 1. Abstract
 
 PSP-1 defines the portable, verifiable capability model used by Polykey to
 express delegated authority. It specifies the structure and semantics of
@@ -37,16 +37,16 @@ receipt formats and proof traces are defined in PSP-2; enforcement
 placement/modes are defined in the CEP/BA specification; acceptance and
 governance live in TAP/RAM and related profiles.
 
-## Terminology and Requirements Language
+## 2. Terminology and Requirements Language
 
-### Requirements Language
+### 2.1 Requirements Language
 
 The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD",
 "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" in this
 document are to be interpreted as described in BCP 14 [RFC2119] [RFC8174] when,
 and only when, they appear in all capitals, as shown here.
 
-### Core Terminology
+### 2.2 Core Terminology
 
 - **Principal (P):** Originator of authority; issues a Grant to a Subject.
 - **Subject (S):** Holder of a Grant that exercises the capability by creating a
@@ -57,7 +57,7 @@ and only when, they appear in all capitals, as shown here.
 - **Grant (G):** A durable, signed statement on a sigchain that carries a
   capability program; issued by P to S.
 - **Presentation (Π):** An ephemeral proof-of-possession (PoP) token created by
-  S that references a Grant by its canonical digest (`grantRef`, per PSP‑3). It
+  S that references a Grant by its canonical digest (`grantRef`, per PSP-3). It
   is bound to a live channel and runtime context and is NOT stored on sigchains.
 - **Channel binding:** A cryptographic binding of a Presentation to the live
   transport/session per a declared binding profile (e.g., TLS exporter, DPoP).
@@ -73,13 +73,12 @@ and only when, they appear in all capitals, as shown here.
   Authority (SoA). If a Grant touches a non-native SoA, the enforcing CEP MUST
   verify Lease freshness per TAP policy.
 - **CPL**: Capability Programming Language.
-- **Program (CPL/0):** A monotone policy evaluated by CEPs, composed of Checks
+- **Program (`CPL/0`):** A monotone policy evaluated by CEPs, composed of Checks
   (OR of Queries), Queries (AND of Literals), and Literals that are pure,
-  bounded Builtins over ground Terms (`Str`/`Int`/`Bytes`/`Bool`). CPL/0 has no
-  user-defined atoms, symbols, or variables. The "/0" suffix denotes that this
-  is the first, deterministic core of the Capability Programming Language
-  family; later editions (e.g., CPL/1) may extend the language while preserving
-  existing semantics.
+  bounded Builtins over ground Terms (Str/Int/Bytes/Bool). `CPL/0` has no
+  user-defined atoms, symbols, or variables. The "/0" suffix denotes the first
+  generation of the Capability Programming Language; future families (e.g.,
+  `CPL/1`) may extend the language without altering the semantics of `CPL/0`.
 - **Declarations:** Finite sets/relations used by programs: PairSet of (action,
   resource), ActionSet, and ResourceSet.
 - **Program Canonical Form (PCF):** The normalized, deterministically encoded
@@ -88,6 +87,14 @@ and only when, they appear in all capitals, as shown here.
   shrinks declared sets; never broadens authority.
 - **Builtins Registry:** Versioned, content-addressed set of pure, bounded
   builtins (time/ttl, channel lattice, resource subset, etc.).
+- **Pin:** A self-describing, content-addressed identifier (e.g., multihash/CID)
+  that refers to an immutable artifact (of any kind). Pins may be expressed as
+  URIs when a scheme/protocol is defined (e.g., `cid://...`, `ipfs://...`,
+  `https://` with immutable digest parameters). In PSP-1, pins are used to fix
+  semantics; typical examples include the pinned builtins set (`builtinsId`),
+  the pinned channel lattice (`channelLatticeId`), and the pinned schemes
+  manifest (`schemesSnapshotId`). CEPs MUST recognize required pins and, across
+  delegation chains, matching pins are REQUIRED where they affect evaluation.
 - **Anchoring:** A TAP-approved method that binds the root issuer of a
   delegation chain to a resource domain.
 - **Access PoAR:** The Proof-of-Action receipt written by the enforcing CEP
@@ -96,43 +103,32 @@ and only when, they appear in all capitals, as shown here.
   time discipline, chain depth and anchoring requirements, resolver/mirroring
   allowances, replay defenses, and other deployment-specific constraints used by
   CEPs during verification.
-  - **CEP Placement Variants:** A CEP may operate in different trust domains
-    depending on where verification occurs. These placements are defined in the
-    CEP/BA specification and referenced throughout PSP-1.
-    - **CEP(R) (Resource-side CEP):** A CEP embedded in or colocated with the
-      target Resource. It verifies Presentations natively within the Resource's
-      trust domain. No bridging or long-lived upstream lease is involved.
-    - **CEP(P) (Principal-side CEP):** A CEP operated within the Principal's
-      trust domain. When a CEP(P) bridges to a non-PK-native Source of
-      Authority, it acts as a Principal-Side Bridge Adapter (PS-BA) and holds
-      the upstream lease; it must enforce exposure modes (mediate, derive,
-      reveal) and verify lease freshness per TAP.
-    - **CEP(S) (Subject-side CEP):** A CEP operated within the Subject's trust
-      domain. The common pattern is the Subject Session Authority (SSA), where
-      the Subject derives short-scope tokens from a PK-native resource. When a
-      CEP(S) bridges a non-PK-native Source of Authority, it acts as a
-      Subject-Side Bridge Adapter (SS-BA) and enforces exposure modes under TAP
-      guardrails.
-  - **Bridge Adapter (BA):** A specialized role of a CEP(P) or CEP(S) that
-    bridges to a non-PK-native Source of Authority (SoA) using a long-lived
-    upstream lease. Bridge Adapters are not a separate placement; they are
-    sub-roles of existing CEP placements. When bridging, a Principal-side CEP is
-    called a **PS-BA**, and a Subject-side CEP is called an **SS-BA**. Bridge
-    Adapters enforce exposure modes-mediate, derive, and reveal-as defined in
-    the CEP/BA specification and must verify lease freshness per TAP. Exposure
-    modes dictate how secrets or tokens are handled when interacting with legacy
-    systems.
-  - **Pin:** A self-describing, content-addressed identifier (e.g.,
-    multihash/CID) that refers to an immutable artifact (of any kind). Pins may
-    be expressed as URIs when a scheme/protocol is defined (e.g., `cid://...`,
-    `ipfs://...`, `https://` with immutable digest parameters). In PSP-1, pins
-    are used to fix semantics; typical examples include the pinned builtins set
-    (`builtinsId`), the pinned channel lattice (`channelLatticeId`), and the
-    pinned schemes manifest (`schemesSnapshotId`). CEPs MUST recognize required
-    pins and, across delegation chains, matching pins are REQUIRED where they
-    affect evaluation.
+- **CEP Placement Variants:** A CEP may operate in different trust domains
+  depending on where verification occurs. These placements are defined in the
+  CEP/BA specification and referenced throughout PSP-1.
+  - **CEP(R) (Resource-side CEP):** A CEP embedded in or colocated with the
+    target Resource. It verifies Presentations natively within the Resource's
+    trust domain. No bridging or long-lived upstream lease is involved.
+  - **CEP(P) (Principal-side CEP):** A CEP operated within the Principal's trust
+    domain. When a CEP(P) bridges to a non-PK-native Source of Authority, it
+    acts as a Principal-Side Bridge Adapter (PS-BA) and holds the upstream
+    lease; it must enforce exposure modes (mediate, derive, reveal) and verify
+    lease freshness per TAP.
+  - **CEP(S) (Subject-side CEP):** A CEP operated within the Subject's trust
+    domain. The common pattern is the Subject Session Authority (SSA), where the
+    Subject derives short-scope tokens from a PK-native resource. When a CEP(S)
+    bridges a non-PK-native Source of Authority, it acts as a Subject-Side
+    Bridge Adapter (SS-BA) and enforces exposure modes under TAP guardrails.
+- **Bridge Adapter (BA):** A specialized role of a CEP(P) or CEP(S) that bridges
+  to a non-PK-native Source of Authority (SoA) using a long-lived upstream
+  lease. Bridge Adapters are not a separate placement; they are sub-roles of
+  existing CEP placements. When bridging, a Principal-side CEP is called a
+  PS-BA, and a Subject-side CEP is called an SS-BA. Bridge Adapters enforce
+  exposure modes-mediate, derive, and reveal-as defined in the CEP/BA
+  specification and must verify lease freshness per TAP. Exposure modes dictate
+  how secrets or tokens are handled when interacting with legacy systems.
 
-## Overview and Goals
+## 3. Overview and Goals
 
 PSP-1 provides the core capability model for Polykey: the program model and
 verification semantics that allow independent parties to mint, hold, present,
@@ -152,7 +148,7 @@ What PSP-1 defines:
   custody/attenuation (and anchoring where required), then evaluate the Program
   under bounded resources.
 
-Design goals:
+### 3.1 Goals and Design Principles
 
 - Portable: Grants and Presentations are verifiable across organizational and
   network boundaries.
@@ -165,7 +161,7 @@ Design goals:
 - Receipt-ready: CEPs can emit Access PoARs with program projection/proof traces
   (see PSP-2).
 
-Non-goals (out of scope for PSP-1):
+### 3.2 Out of Scope
 
 - Enforcement placement/modes: CEP/BA placements (P/S/R) and
   mediate/derive/reveal semantics are specified in the CEP/BA spec.
@@ -190,7 +186,51 @@ Non-goals (out of scope for PSP-1):
 - No network I/O in builtins; all builtins MUST be pure, deterministic, and
   bounded.
 
-## The Capability Model
+### 3.3 Threat Model Pointers
+
+PSP-1 addresses a set of well-understood threat vectors. This subsection
+highlights those scenarios and points to TAP for policy controls and
+mitigations.
+
+- **Replay and session hijacking:** Attackers may replay previously issued
+  Presentations or intercept tokens to impersonate a Subject. PSP-1 defends
+  against replay by requiring holder-of-key PoP signatures, strong channel
+  bindings, per-presentation nonces (`jti`), and short presentation TTLs. TAP
+  further governs nonce reuse, replay caches, and session invalidation.
+- **Semantic drift and comparator drift:** Changing definitions of builtins,
+  channel lattices, or scheme comparators can alter the meaning of Grants over
+  time. PSP-1 mitigates this by pinning the exact rulebooks in every Grant
+  (`builtinsId`, `channelLatticeId`, `schemesSnapshotId`); mismatched or unknown
+  pins cause a fail-closed deny.
+- **Resource explosion and unbounded selectors:** Unconstrained wildcards or
+  regex patterns could broaden authority or make subset checks undecidable.
+  PSP-1 requires declarations to be finite and safely bounded. Scheme
+  comparators MUST provide decidable subset relations, and unbounded selectors
+  are forbidden unless the comparator defines a safe, bounded proof strategy.
+- **Lease compromise and bridging attacks:** When a CEP acts as a Bridge Adapter
+  to a non-PK-native Source of Authority (SoA), the upstream lease or secret may
+  be stolen or tampered with. PSP-1 enforces PoP and channel binding but leaves
+  the lease lifecycle and exposure mode policies to TAP and the CEP/BA
+  specification. TAP specifies mediate/derive/reveal modes, lease freshness
+  checks, and dual-control requirements.
+- **Time skew and clock tampering:** Inaccurate clocks can circumvent TTL and
+  time windows. PSP-1 mandates a single captured `now` per enforcement and
+  requires half-open time windows. TAP governs time sources and skew tolerances;
+  enforcement MUST deny if time discipline cannot be satisfied.
+- **Revocation and chain freshness:** Stale or revoked Grants must not be
+  honored. PSP-1 requires revocation state for the leaf and any required parents
+  to be locally available; unknown or stale revocation data causes a fail-closed
+  deny. TAP defines freshness policies and revocation distribution.
+- **Denial of service:** Malicious inputs may include large declarations or
+  complex Programs to exhaust CEP resources. PSP-1 bounds declaration size and
+  enforces pure, deterministic builtins with bounded evaluation. TAP may impose
+  additional CPU/memory budgets and per-request deadlines.
+- **Confidentiality and context exposure:** Excessive context in `ctx` or
+  declarations may leak personal or operational data. PSP-1 encourages minimal,
+  non-PII context, and PSP-2 defines receipt redaction and selective disclosure
+  mechanisms.
+
+## 4. Capability Program
 
 This section specifies the capability language used by Grants and Presentations.
 It defines the CPL/0 abstract syntax and semantics, the CEP-provided evaluation
@@ -199,14 +239,12 @@ fields, sigchain framing, or canonical bytes. Those appear in PSP-3 (bindings
 and digests). Registry artifacts (Builtins, Channel Lattices, Scheme
 Comparators) appear in PSP-4.
 
-### Capability Program
+### 4.1 Language Model
 
 This subsection defines the capability language evaluated by CEPs. It specifies
 abstract structure and semantics only. Builtins, channel lattices, and scheme
 comparators are referenced via registry pins (see Semantic Pinning for
 Deterministic Evaluation and PSP-4).
-
-#### Language Model
 
 - Structure
   - Program = all(Check\*)
@@ -216,22 +254,22 @@ Deterministic Evaluation and PSP-4).
   - A Check succeeds if and only if at least one of its Queries succeeds.
   - A Query succeeds if and only if all of its Literals succeed.
 - Literals and Terms
-  - Uses builtin literals only: Builtin(`op`, [args…]). Here `op` is the textual
-    identifier of the builtin operation (see Appendix B for the registry of
-    builtins).
+  - Uses builtin literals only: Builtin(`op`, [args...]). Here `op` is the
+    textual identifier of the builtin operation (see Appendix B for the registry
+    of builtins).
   - Terms are ground: Str | Int | Bool | Bytes. No variables. No user-defined
     atoms.
   - Int is arbitrary-precision integer. Floats are not permitted.
-- Monotonicity and purity (normative)
+- Monotonicity and purity
   - Programs MUST be monotone. Adding Checks or adding Literals can only narrow
     authority.
   - Builtins MUST be pure, deterministic, and resource-bounded (time/memory). No
     network I/O or ambient mutable state.
 
-#### Builtins and registries
+### 4.2 Builtins and registries
 
 - Each builtin operation is identified by a string `op`. Its semantics, type
-  signature, and tightening rule are defined in the Builtins registry (PSP‑4).
+  signature, and tightening rule are defined in the Builtins registry (PSP-4).
   The exact set in use is pinned by `builtinsId` in the Grant.
 - Channel comparisons (e.g., `channel_geq`) consult the pinned
   `channelLatticeId`, which defines the set of recognized channel profile
@@ -248,7 +286,7 @@ Deterministic Evaluation and PSP-4).
   obtained or validated - including the presentation binding to a live session -
   is outside the CPL/0 language and governed by TAP and PSP-2.
 
-#### Typing, totality and failure modes
+### 4.3 Typing, totality and failure modes
 
 - Builtins MUST validate argument types at evaluation time. Ill-typed
   invocations MUST fail closed.
@@ -259,19 +297,20 @@ Deterministic Evaluation and PSP-4).
 - The `now: Int` fact is CEP-provided and subject to TAP time-discipline; PSP-1
   is agnostic to the time source.
 
-#### Relationship with Biscuit Datalog
+### 4.4 Relationship with Biscuit Datalog
 
 - Fragment alignment. CPL/0 defines the checks-only, monotone fragment (no user
   atoms, variables, rules, recursion, or negation). This corresponds to the
   Biscuit checks fragment without rules, where each check is an OR of queries,
   and each query is an AND of ground predicates.
 - Structural mapping (CPL/0 -> Biscuit):
-  - Program (ALL of Checks) ? a set of Biscuit check blocks, all of which MUST
-    pass.
-  - Check (ANY of Queries) ? a Biscuit check containing multiple queries (OR).
-  - Query (AND of Literals) ? a Biscuit query whose predicates match CPL/0
+  - Program (ALL of Checks) $\cong$ a set of Biscuit check blocks, all of which
+    MUST pass.
+  - Check (ANY of Queries) $\cong$ a Biscuit check containing multiple queries
+    (OR).
+  - Query (AND of Literals) $\cong$ a Biscuit query whose predicates match CPL/0
     literals 1:1.
-  - Literal (Builtin(op, args...)) ? a ground predicate recognized by the
+  - Literal (Builtin(op, args...)) $\cong$ a ground predicate recognized by the
     verifier as the corresponding builtin; arguments are ground terms
     (Str/Int/Bool/Bytes).
 - Conversion constraints (Biscuit -> CPL/0 normalizer):
@@ -300,7 +339,7 @@ attestors SHOULD precompute finite sets (content-addressed) and reference them
 from the Program; alternative profiles that carry ruleful logic MUST remain
 TAP-gated and provide either a compiled CPL/0 guard or an approved CEP runtime.
 
-### Evaluation Environment
+### 4.5 Evaluation Environment
 
 At verification, the CEP supplies an environment of facts. Builtins may
 reference these facts by name.
@@ -329,7 +368,7 @@ reference these facts by name.
     to canonicalize declarations before any literal evaluation. Normalization
     failure MUST cause deny.
 
-### Declarations
+## 5. Declarations
 
 Declarations are finite, canonical datasets that a Grant carries alongside the
 Program. Programs consult Declarations via builtins under pure, bounded
@@ -345,7 +384,7 @@ compactly and to make attenuation (subset) checks mechanical and fast.
 
 There are 2 kinds of literals in declarations: actions and resources.
 
-#### Actions
+### 5.1 Actions
 
 Actions are namespaced strings. They appear as elements inside
 PairSet/ActionSet.
@@ -362,7 +401,7 @@ Actions are plain strings compared for equality. Any domain governance over
 action names (allowlists, required constraints) is outside PSP-1 and MAY be
 enforced by TAP or profiles by requiring corresponding Program literals.
 
-#### Resources
+### 5.2 Resources
 
 Resources identify targets and SHOULD be expressed as URIs (or URI-like
 identifiers) with scheme-specific rules. They appear as elements inside
@@ -394,7 +433,7 @@ Normative requirements
 - TAP scoping: TAP policies MAY restrict acceptable schemes per domain and MAY
   further constrain resource forms (e.g., disallow selectors).
 
-#### PairSet
+### 5.3 PairSet
 
 PairSet is a finite set of (action: Str, resource: Str) pairs. It enumerates
 exactly which action/resource combinations are authorized.
@@ -411,7 +450,7 @@ exactly which action/resource combinations are authorized.
 Use PairSet when the allowlist is irregular (different actions per resource) and
 a simple factorization would be incorrect.
 
-#### ActionSet
+### 5.4 ActionSet
 
 ActionSet is a finite set of actions. It factorizes "what" independently of
 "where."
@@ -428,7 +467,7 @@ ActionSet is a finite set of actions. It factorizes "what" independently of
   - For a derived Grant, the child ActionSet MUST be a subset of the parent
     ActionSet.
 
-#### ResourceSet
+### 5.5 ResourceSet
 
 ResourceSet is a finite set of resources (scheme-qualified strings) with
 scheme-defined subset semantics.
@@ -450,7 +489,7 @@ scheme-defined subset semantics.
 Use ActionSet \* ResourceSet when the policy is truly a cross-product ("any
 action in A over any resource in R"). Use PairSet when the matrix is irregular.
 
-#### Program Use
+### 5.6 Program Use
 
 - Programs consult Declarations via builtins (in_pairset, in_actionset,
   in_resourceset) using the environment's action and resource facts, combined
@@ -460,7 +499,7 @@ action in A over any resource in R"). Use PairSet when the matrix is irregular.
   selectors MUST be finite or safely bounded with a decidable comparator).
 - Unknown declaration kinds, schemes, or comparators MUST cause deny.
 
-#### Attenuation over Declarations
+### 5.7 Attenuation over Declarations
 
 - Delegation MUST NOT broaden Declarations.
   - PairSet_child $\subseteq$ PairSet_parent.
@@ -469,7 +508,7 @@ action in A over any resource in R"). Use PairSet when the matrix is irregular.
 - CEPs MUST verify subset relations hop-by-hop along the delegation chain using
   the same normalization and comparators; failures or unknowns MUST cause deny.
 
-#### Specification Profiles
+### 5.8 Specification Profiles
 
 This specification standardizes exactly three Declaration kinds: PairSet,
 ActionSet, ResourceSet. Specification Profiles MAY further constrain their usage
@@ -478,14 +517,14 @@ comparators per scheme. A CEP MUST deny if a Program references a declaration
 kind not supported by the active profile or if a required comparator is not
 available.
 
-### Semantic Pinning for Deterministic Evaluation
+## 6. Semantic Pinning
 
 This section establishes the minimal, versioned dependencies that capability
 evaluation relies on, and what a Grant MUST pin so CEPs reach the same decision
 everywhere. PSP-4 defines the registry entries. PSP-3 defines the concrete
 fields and canonical bytes.
 
-#### Scope
+### 6.1 Scope
 
 Capability evaluation depends on small, versioned rulebooks ("registries"):
 
@@ -504,7 +543,7 @@ Capability evaluation depends on small, versioned rulebooks ("registries"):
 A registry ID is a content-addressed identifier (e.g., a CID/multihash) for a
 specific, immutable entry or snapshot in one of these registries.
 
-#### Definitions
+### 6.2 Definitions
 
 Channel `lattice` and `channelLatticeId`:
 
@@ -532,7 +571,7 @@ Resource schemes / comparators:
   scheme name within this pinned snapshot. Unknown or unavailable comparators at
   verification MUST cause deny.
 
-#### Pinning in Grants
+### 6.3 Pinning in Grants
 
 A Grant MUST include references to the exact rulebooks its Program depends on:
 
@@ -551,7 +590,7 @@ A Grant MUST include references to the exact rulebooks its Program depends on:
 PSP-3 specifies how these IDs appear on the wire and how they are included in
 the signed object.
 
-#### Delegation Compatibility
+### 6.4 Delegation Compatibility
 
 In a delegation chain, a child Grant MUST use the same rulebooks as its parent:
 
@@ -566,7 +605,7 @@ In a delegation chain, a child Grant MUST use the same rulebooks as its parent:
 These constraints ensure attenuation is checked and evaluated under identical
 semantics across all hops.
 
-#### Fail-Closed Requirements
+### 6.5 Fail-Closed Requirements
 
 A CEP MUST deny if any of the following holds:
 
@@ -587,7 +626,7 @@ A CEP MUST deny if any of the following holds:
 - A declaration contains a resource whose scheme cannot be normalized under the
   active comparator semantics.
 
-#### Rationale
+### 6.6 Rationale
 
 Pinning builtins and, when used, channel lattice IDs makes verification
 deterministic and auditable across time and organizations. It prevents semantic
@@ -597,7 +636,7 @@ comparator selection by scheme name preserves portability while remaining
 fail-closed on unknown or unavailable comparators. Actions remain plain strings;
 any governance over action names lives in TAP/PSP-2, not PSP-1.
 
-### Program Canonical Format (PCF) & Digest
+## 7. Program Canonical Form (PCF) & Digest
 
 Programs MUST be normalized to a canonical tree and deterministically encoded
 before deriving identity. Canonicalization ensures portable, stable program
@@ -605,14 +644,14 @@ identifiers across implementations and platforms. The canonical bytes and
 multihash parameters are specified by PSP-3; this section defines the abstract
 normalization rules (PCF).
 
-#### Purpose
+### 7.1 Purpose
 
 - PCF yields a unique representation for a Program so syntactic permutations or
   duplicate literals do not change identity.
 - Canonicalization applies to the abstract Program (Checks, Queries, Literals
   and their arguments), independent of transport/envelope.
 
-#### Normalization rules
+### 7.2 Normalization rules
 
 - Literals within a Query MUST be sorted by a total order over:
   - operator/predicate identifier (text in NFC, bytewise),
@@ -623,7 +662,7 @@ normalization rules (PCF).
 - Checks within a Program MUST be sorted lexicographically by their canonical
   query lists and duplicates removed.
 
-#### Canonical term order
+### 7.3 Canonical term order
 
 - Strings MUST be NFC-normalized and compared/encoded as exact bytes.
 - Integers MUST be arbitrary-precision, with no float encodings.
@@ -641,7 +680,7 @@ normalization rules (PCF).
 - Any literal or term introducing non-determinism or network I/O MUST NOT be
   part of a Program.
 
-#### Deterministic encoding and identity
+### 7.5 Deterministic encoding and identity
 
 - `programBytes` = ENCODE(PCF(Program)) as specified by PSP-3.
 - `programId` = multihash(`programBytes`) as specified by PSP-3.
@@ -649,7 +688,7 @@ normalization rules (PCF).
   recomputation does not match.
 - ENCODE is defined in PSP-3; PCF is defined here in PSP-1.
 
-#### Failure handling
+### 7.6 Failure handling
 
 - Canonicalization MUST fail, and verification MUST deny, if a Program contains
   an unknown operator, ill-typed arguments under a builtin's signature,
@@ -658,21 +697,21 @@ normalization rules (PCF).
   deny during evaluation. If such references prevent deterministic term
   encodings, identity derivation MUST fail.
 
-#### Stability and tests
+### 7.7 Stability and tests
 
 - Canonicalization is part of the trusted computing base. Implementations SHOULD
   cross-test that semantically identical Programs (after literal reordering,
   duplicate removal, and string normalization) yield identical `programBytes`
   and `programId` across platforms and versions.
 
-#### Informative guidance
+### 7.8 Informative guidance
 
 Keep operator identifiers stable and registry-pinned to avoid PCF instability
 from renaming. When referencing Declarations by content address (e.g.,
 "Pairs#CID"), ensure the reference syntax and encoding are deterministic and
 consistent.
 
-## Frame and Canonical Bytes
+## 8. Frame and Canonical Bytes
 
 PSP-1 defines abstract, semantic objects (Program, Declarations) and their
 canonicalization (PCF). PSP-3 specifies how these appear on the wire (canonical
@@ -692,7 +731,7 @@ binary encoding, envelope framing, and multihash identity).
   defines their signature container and field placements. PSP-1 specifies only
   the semantic components a CEP MUST verify.
 
-## Grants
+## 9. Grants
 
 A Grant is a durable, signed statement on an issuer's (P's) sigchain that
 authorizes a Subject (S) to exercise authority as defined by its embedded
@@ -701,7 +740,7 @@ deterministic and portable via Program Canonical Form (PCF) identity and
 registry pinning. Transport framing, canonical bytes, signatures, and revocation
 claims are specified in PSP-3.
 
-### Purpose and Role
+### 9.1 Purpose and Role
 
 - Grants are the unit of durable, identity-bound authority. They encode:
   - The capability Program (CPL/0) as canonical bytes.
@@ -715,7 +754,7 @@ claims are specified in PSP-3.
   under strict syntactic attenuation and pin compatibility (see Delegation &
   Attenuation).
 
-### Normative Requirements
+### 9.2 Normative Requirements
 
 A conforming Grant MUST satisfy all of the following.
 
@@ -800,41 +839,6 @@ A conforming Grant MUST satisfy all of the following.
      the same scheme comparator semantics as those used during declaration
      canonicalization; normalization failure MUST cause deny.
 
-### Attenuation by Derivation
-
-When a holder delegates by issuing a derived Grant, the child Grant MUST be
-syntactically narrower than the parent Grant and maintain registry
-compatibility:
-
-- Custody (enforced elsewhere): issuer(child) MUST equal subject(parent) with
-  proper sigchain linkage; see Delegation & Attenuation.
-- Program attenuation (syntactic):
-  - A child Program MUST include all parent Checks (by PCF identity) and MAY add
-    additional Checks.
-  - For each retained parent Check, the child MAY remove any subset of the
-    parent's Queries (narrowing the OR). For each retained Query, the child's
-    literal multiset MUST be a superset of the parent's; literal constants MAY
-    only tighten according to the Builtins tightening rules defined in the
-    Builtins registry.
-- Declarations subset:
-  - PairSet_child $\subseteq$ PairSet_parent.
-  - ActionSet_child $\subseteq$ ActionSet_parent.
-  - ResourceSet_child $\subseteq$ ResourceSet_parent (under the same
-    normalization and comparator semantics).
-- Registry pins:
-  - `langVersion_child` == `langVersion_parent`.
-  - `builtinsId_child` == `builtinsId_parent`.
-  - If `channel_geq` is present in either parent or child,
-    `channelLatticeId_child` == `channelLatticeId_parent`.
-- Any violation of the above MUST cause verification to deny the chain at
-  enforcement.
-
-Informative note: The precise tightening rules for builtins (e.g., within_time
-interval narrowing, ttl_ok maximum decrease, channel_geq floor increase or
-equality, ctx_eq equality preservation or further restriction) are defined in
-the Builtins registry (PSP-4). CEPs apply these rules during delegation
-verification.
-
 ### Relationship to Presentations and Enforcement
 
 - Presentations are ephemeral proofs that reference a Grant by its canonical
@@ -880,7 +884,7 @@ names.
 Implementers MUST NOT rely on this projection for wire encoding; the normative
 transport and encoding are specified in PSP-3.
 
-## Presentations
+## 10. Presentations
 
 A Presentation is an ephemeral, on-path proof by the Subject (S) that it
 possesses a specific Grant and is exercising it now, on this live channel, in
@@ -892,7 +896,7 @@ CEP must verify and evaluate. PSP-3 defines the on-wire signature container and
 field mappings; Presentations have no durable sigchain envelope and MUST remain
 small and referential in PSP-1 core.
 
-### Purpose and Role
+### 10.1 Purpose and Role
 
 - Ephemeral proof: Demonstrates holder-of-key (PoP) and binds use to the current
   session.
@@ -901,7 +905,7 @@ small and referential in PSP-1 core.
 - Runtime facts: Conveys ctx and timing (iat/exp) the CEP uses to evaluate the
   Program's literals (e.g., ctx_eq, ttl_ok, within_time).
 
-### Structure (Informative Projection)
+### 10.2 Structure (Informative Projection)
 
 Note: The names below are non-normative conceptual labels used by PSP-1. The
 normative on-wire field names and encodings are defined in PSP-3.
@@ -927,7 +931,7 @@ normative on-wire field names and encodings are defined in PSP-3.
     chain proof). PSP-1 core does not define or require such artifacts and
     forbids embedding raw Grant bodies in Presentations.
 
-### Normative Requirements
+### 10.3 Normative Requirements
 
 - Proof-of-possession and channel binding
   - The Presentation MUST be signed by the presenter (PoP). The CEP MUST verify
@@ -971,7 +975,7 @@ normative on-wire field names and encodings are defined in PSP-3.
 - Storage
   - Presentations MUST NOT be recorded on sigchains.
 
-### Fail-Closed Conditions
+### 10.4 Fail-Closed Conditions
 
 A CEP MUST deny if any of the following holds:
 
@@ -991,7 +995,7 @@ A CEP MUST deny if any of the following holds:
 - Required parent Grants are not locally available at enforcement (e.g., TAP
   forbids resolution or resolution failed).
 
-### Informative Projection
+### 10.5 Informative Projection
 
 The names below are non-normative conceptual labels used by PSP-1. PSP-3 defines
 the signature container and on-wire mappings (e.g., which parts are headers vs
@@ -1004,7 +1008,7 @@ payload). PSP-1 does not define a Presentation 'payload' vs 'envelope' split.
   "iat": 1768099200,
   "exp": 1768099320,
   "channelBinding": {
-    "profile": "tls_exporter:v1",
+    "profile": "tls-exporter:v1",
     "value": "base64url(exporter)"
   },
   "ctx": { "ns": "ci", "pod": "runner-xyz" },
@@ -1013,7 +1017,7 @@ payload). PSP-1 does not define a Presentation 'payload' vs 'envelope' split.
 }
 ```
 
-### Notes (informative)
+### 10.6 Notes (informative)
 
 - PSP-1 does not mandate exact Presentation field names or encodings; those
   appear in PSP-3. The CEP's obligations here are limited to PoP verification,
@@ -1024,7 +1028,7 @@ payload). PSP-1 does not define a Presentation 'payload' vs 'envelope' split.
   profile MAY introduce presentation overlays with strict attenuation and
   receipt requirements.
 
-## Delegation and Attenuation
+## 11. Delegation and Attenuation
 
 Delegation allows a Subject (S) that holds a Grant to issue a derived Grant to a
 new Subject (S2) while never broadening authority (narrower or equal). PSP-1
@@ -1033,7 +1037,7 @@ Declarations, verified hop-by-hop under pinned semantics. Custody
 (issuer/subject lineage), chain structure, and any anchoring requirements are
 enforced by the CEP with no network I/O during Program evaluation.
 
-### Purpose and Scope
+### 11.1 Purpose and Scope
 
 - Custody: Each derived Grant is authored by the delegator and written on the
   delegator's sigchain; custody is the hop-by-hop relationship issuer(child) ==
@@ -1050,7 +1054,7 @@ enforced by the CEP with no network I/O during Program evaluation.
   depth/fan-out caps or strict attenuation requirements). PSP-1 permits equality
   by default.
 
-### Chain Structure and Custody (Normative)
+### 11.2 Chain Structure and Custody
 
 - Hop custody
   - issuer(child) MUST equal subject(parent).
@@ -1063,7 +1067,7 @@ enforced by the CEP with no network I/O during Program evaluation.
     applicable) is governed by TAP; if an applicable anchoring method is
     required but not satisfied, the CEP MUST deny.
 
-### Pinned Semantics Compatibility Across Hops
+### 11.3 Pinned Semantics Compatibility Across Hops
 
 For each parent->child hop:
 
@@ -1078,7 +1082,7 @@ For each parent->child hop:
 
 Any mismatch in the above MUST cause the CEP to deny chain acceptance.
 
-### Syntactic Attenuation
+### 11.4 Syntactic Attenuation
 
 PSP-1 defines attenuation as a purely syntactic subset relation checked
 hop-by-hop. Children MAY only narrow or preserve authority.
@@ -1124,7 +1128,7 @@ hop-by-hop. Children MAY only narrow or preserve authority.
   - Resource subset checks MUST use the scheme's registered comparator;
     unknown/unavailable comparators MUST cause deny.
 
-### Closed-World Enforcement and Availability
+### 11.5 Closed-World Enforcement and Availability
 
 - Evaluation inputs only:
   - The CEP MUST evaluate using only
@@ -1136,7 +1140,7 @@ hop-by-hop. Children MAY only narrow or preserve authority.
     cache, pre-enforcement resolver permitted by TAP, or a profile-defined
     stapled artifact). If not locally available, the CEP MUST deny.
 
-### Fail-Closed Conditions
+### 11.6 Fail-Closed Conditions
 
 A CEP MUST deny if any of the following holds:
 
@@ -1158,7 +1162,7 @@ A CEP MUST deny if any of the following holds:
   - Required parent Grants are not locally available at enforcement (e.g., TAP
     forbids resolution or resolution failed pre-enforcement).
 
-### Informative Examples
+### 11.7 Informative Examples
 
 - Time window:
   - Parent within_time(now, 1000, 2000) -> Child within_time(now, 1200, 1800)
@@ -1176,7 +1180,7 @@ A CEP MUST deny if any of the following holds:
     `{ ("secret:read","vault:.../team/*"), ("secret:derive","vault:.../svcX") }`
   - Child PairSet = `{ ("secret:read","vault:.../team/appA") }` (valid subset).
 
-### Profiles
+### 11.8 Profiles
 
 - Profiles MAY introduce additional declaration kinds or builtins, but MUST
   preserve monotonicity, purity, bounded evaluation, and pinned semantics
@@ -1187,9 +1191,9 @@ A CEP MUST deny if any of the following holds:
   agnostic to how anchors are established; CEPs enforce anchoring only when TAP
   declares an applicable method for the resource domain.
 
-## Revocation and Rotation
+## 12. Revocation and Rotation
 
-### Revocation
+### 12.1 Revocation
 
 - Grants MAY be revoked by their issuer with a signed revocation claim on the
   issuer's sigchain (format and framing per PSP-3).
@@ -1213,7 +1217,7 @@ on-chain registry such as delegate.cash), its outputs MUST be surfaced as
 attested inputs (e.g., via TAP-approved processes or ctx facts). Builtins MUST
 remain pure; no network I/O occurs during Program evaluation.
 
-### Rotation
+### 12.2 Rotation
 
 - For secret-bound flows and other upstream SoA freshness requirements (e.g.,
   lease rotation), upstream rotation (leases, credentials, keys) is governed by
@@ -1225,7 +1229,7 @@ remain pure; no network I/O occurs during Program evaluation.
   defined by PSP-2. PSP-1 does not mandate an on-wire format for rotation
   artifacts.
 
-## CEP Verification Algorithm
+## 13. CEP Verification Algorithm
 
 This section specifies the stepwise, normative checklist a CEP MUST follow at
 enforcement time. The CEP evaluates closed-world: no network I/O occurs during
@@ -1248,7 +1252,7 @@ Preconditions (TAP-governed, outside evaluation)
   enforcement. At enforcement time, all required inputs MUST be local; otherwise
   deny.
 
-### Time Model & Boundaries
+### 13.1 Time Model & Boundaries
 
 - Single time capture: The CEP MUST capture a single logical `now : Int` (Unix
   seconds) at the **start** of enforcement. All time comparisons in this
@@ -1271,7 +1275,7 @@ Preconditions (TAP-governed, outside evaluation)
   all time comparisons MUST follow TAP's time discipline. If time discipline
   cannot be satisfied (e.g., clock indeterminate), enforcement MUST deny.
 
-### Algorithm
+### 13.2 Algorithm
 
 1. Parse Presentation
    - Validate required conceptual fields: `presenter`, `grantRef`, `iat`, `exp`,
@@ -1366,7 +1370,7 @@ Preconditions (TAP-governed, outside evaluation)
      - The enforcing CEP MUST emit a DenyReceipt per PSP-2 with an appropriate
        reason code and deliver it to the Subject.
 
-### Execution Constraints
+### 13.3 Execution Constraints
 
 - Single time capture
   - The CEP MUST capture a single logical now at the start of enforcement and
@@ -1385,7 +1389,7 @@ Preconditions (TAP-governed, outside evaluation)
     locally available at the start of enforcement; otherwise the CEP MUST deny.
     No network I/O
 
-### Invariants
+### 13.4 Invariants
 
 - Closed-world: The CEP MUST evaluate using only
   `{ programBytes/programId, bundled Declarations, builtinsId, channelLatticeId when used, schemesSnapshotId, and the scheme comparator selected by scheme name }`.
@@ -1395,7 +1399,7 @@ Preconditions (TAP-governed, outside evaluation)
 - Fail-closed: Any ambiguity, unknown, or unevaluable condition in the steps
   above MUST result in deny.
 
-### Notes
+### 13.5 Notes
 
 - Placement variants (Principal-side, Resource-side, Subject-side) determine
   where PoAR/DenyReceipt are written, not the verification algorithm. "The
@@ -1411,7 +1415,7 @@ Preconditions (TAP-governed, outside evaluation)
   checks to meet tight cycle budgets; if a deadline cannot be met, fail-closed
   and apply domain-safe fallback per TAP.
 
-## Security Considerations
+## 14. Security Considerations
 
 This section highlights core security principles, common pitfalls, and
 recommended operational practices. PSP-1's kernel is intentionally small; strong
@@ -1419,7 +1423,7 @@ security emerges from a combination of: (a) a deterministic, closed-world
 verifier (the CEP), (b) canonicalization and pinning, (c) syntactic attenuation
 across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 
-### Core Invariants
+### 14.1 Core Invariants
 
 - Holder-of-key + channel binding
   - Presentations MUST be signed by the presenter (PoP) and MUST be bound to the
@@ -1445,7 +1449,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     constants; Declarations MUST be subsets. Equality is permitted unless TAP
     requires strict attenuation.
 
-### Time, Replay, and Freshness
+### 14.2 Time, Replay, and Freshness
 
 - Single logical time
   - CEPs MUST capture a single logical now at enforcement start and use it
@@ -1459,7 +1463,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     locally available state. If unavailable or indeterminate per TAP freshness
     policy, deny.
 
-### Resource & String Handling
+### 14.3 Resource & String Handling
 
 - Resource normalization
   - CEPs MUST normalize env.resource using the same comparator semantics used
@@ -1467,7 +1471,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 - String canonical form
   - Strings MUST be interpreted in NFC; Bytes MUST be exact octets.
 
-### Bounded Evaluation and DoS
+### 14.4 Bounded Evaluation and DoS
 
 - Resource budgets
   - CEPs MUST enforce CPU/steps/memory limits for Program evaluation. Exceeding
@@ -1477,7 +1481,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     `programBytes`, declaration tables, and `ctx` to mitigate memory/CPU
     pressure.
 
-### Privacy and Minimal Exposure
+### 14.5 Privacy and Minimal Exposure
 
 - Minimal ctx and PII
   - Presentations and Grants SHOULD avoid raw PII; prefer DIDs and contextual
@@ -1489,7 +1493,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     pins). Detailed evidence, redactions, and selective disclosure are governed
     by PSP-2 and TAP.
 
-### Delegation & Distribution
+### 14.6 Delegation & Distribution
 
 - Equality and redistribution
   - PSP-1 permits equality (child == parent). TAP MAY forbid co-equal grants
@@ -1499,7 +1503,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
   - Root anchoring for a resource domain is TAP-governed. Where required and
     unsatisfied, CEPs MUST deny.
 
-### Exposure modes
+### 14.7 Exposure modes
 
 - Reveal is high-risk. If TAP permits reveal in a domain, it MUST impose strict
   guardrails: tiny ttl/scope, dual-control, strong audit correlation, and
@@ -1510,9 +1514,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 - Receipts (PSP-2) SHOULD record exposureMode and any immediate
   rotation/revocation references to preserve auditability.
 
-### Registry and Supply-Chain Trust
-
-#### Registry artifacts
+### 14.8 Registry and Supply-Chain Trust
 
 - `builtinsId` and (if used) `channelLatticeId` MUST reference trusted,
   content-addressed snapshots. Operators SHOULD monitor and pin approved
@@ -1523,7 +1525,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     audit acceleration, PoARs SHOULD record the snapshot id and comparator
     fingerprints actually used by the enforcer.
 
-### Side-Channels and Error Signaling
+### 14.9 Side-Channels and Error Signaling
 
 - Timing behavior
   - CEPs SHOULD aim for consistent-time checks and minimize data-dependent
@@ -1536,7 +1538,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     sensitive detail in error text; receipts record sufficient audit context per
     PSP-2.
 
-### Placement-Specific Guidance
+### 14.10 Placement-Specific Guidance
 
 - Resource-side CEPs (physics-bound)
   - Keep Programs/ctx minimal; pre-normalize resources; precompile program
@@ -1547,7 +1549,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
   - Preload and cache Grants and revocation state; amortize verification with
     sessions (outside PSP-1) and avoid unbounded ctx.
 
-### Conformance and Testing
+### 14.11 Conformance and Testing
 
 - PCF stability
   - Implementers SHOULD cross-test PCF canonicalization and ensure semantically
@@ -1557,7 +1559,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     declaration bytes, ill-typed literals, normalization failures, pins
     mismatches, attenuation violations, and parents_unavailable conditions.
 
-## Examples
+## 15. Examples and Test Vectors
 
 This section provides end-to-end, program-first examples. Each example includes:
 
@@ -1892,7 +1894,7 @@ Delegated child (illustrative; equality permitted)
   minimal evaluation trace, and revocation/freshness context; redactions and
   selective disclosure are TAP/PSP-2 concerns.
 
-## Appendices
+## 16. Appendices
 
 This section provides compact, implementation-ready annexes that support PSP-1's
 kernel: a minimal grammar for CPL/0, the builtin operators and their tightening
@@ -1900,7 +1902,7 @@ rules, and the requirements for resource scheme comparators. Wire encodings
 (e.g., CBOR/COSE/JOSE) remain in PSP-3; registry artifacts (builtins snapshots,
 lattices, comparators) remain in PSP-4.
 
-### Appendix A - CPL/0 Grammar (CDDL) [Normative for structure; not wire encoding]
+### Appendix A - CPL/0 Grammar (CDDL)
 
 This Concise Data Definition Language (CDDL) describes the abstract shape of
 Programs and Declarations. It is not the on-wire format. Deterministic encoding
@@ -1964,14 +1966,12 @@ Conformance notes:
 - Canonicalization (PCF) includes sorting/dedup rules (see main text).
 - Unknown operators or ill-typed arguments MUST cause deny.
 
-### Appendix B - Builtins and Tightening Rules [Normative]
+### Appendix B - Builtins and Tightening Rules
 
 This appendix enumerates the builtin operators assumed by PSP-1 and the
 tightening rules used for syntactic attenuation. The authoritative registry of
 operators (op ids, types, and semantics) is modeled in PSP-4; Grants pin the
-exact set via `builtinsId`. This appendix is normative for this edition;
-implementers MUST ensure `builtinsId` references a set that matches these
-definitions.
+exact set via `builtinsId`.
 
 - within_time(now:Int, nbf:Int, exp:Int)
 
@@ -2049,8 +2049,8 @@ definitions.
 
 General rules:
 
-- Unknown builtin operation (`op`) referenced by a Program under the pinned
-  `builtinsId` MUST cause deny.
+- Unknown builtin op referenced by a Program under the pinned `builtinsId` MUST
+  cause deny.
 - Types are enforced at evaluation; ill-typed invocations MUST cause deny.
 - Equality of strings uses NFC; comparator logic never performs network I/O.
 
@@ -2098,33 +2098,7 @@ Illustrative examples of comparator semantics (defined in PSP-4):
 - `eth://<chain>/<contract>[/tokenId]` - equality on chain/contract; optional
   tokenId equality; any richer matching MUST be finite and decidable.
 
-### Appendix D - Suggested Reason Codes
-
-For receipts and diagnostics (PSP-2), implementers MAY use a standard set of
-deny/diagnostic codes to aid auditors:
-
-- pcf_mismatch
-- program_parse_error
-- pin_mismatch (`langVersion` / `builtinsId` / `channelLatticeId`)
-- unknown_builtin
-- unknown_lattice
-- unknown_comparator
-- normalization_failed
-- declaration_missing / declaration_malformed
-- attenuation_failure
-- custody_mismatch / chain_cycle / depth_exceeded
-- revoked / time_expired / time_not_yet_valid
-- ttl_exceeded / deadline_exceeded / resource_limit
-- channel_binding_mismatch
-- ctx_missing / ctx_mismatch
-- parents_unavailable
-- grant_unavailable
-- anchor_missing (per TAP)
-
-Receipts SHOULD include enough context (`programId`, declaration CIDs, pins,
-minimal evaluation trace, and revocation snapshot) for replay.
-
-### Appendix E - Conformance Test Vectors
+### Appendix D - Conformance Test Vectors
 
 The following vectors exercise PCF stability, syntactic attenuation, time
 boundaries, and resource normalization. Each vector specifies inputs and the
@@ -2207,3 +2181,22 @@ Setup: Parent pins `schemesSnapshotId = S1`; Child pins `schemesSnapshotId = S2`
 where `S2 != S1`.
 
 Expect: Deny at chain verification with `pin_mismatch`.
+
+## 17. References
+
+This specification references the following key standards.
+
+- **[RFC2119]** Bradner, S., _"Key words for use in RFCs to Indicate Requirement
+  Levels,"_ BCP 14, March 1997. This Best Current Practice defines how the terms
+  "MUST", "SHALL", "SHOULD", "MAY" and other capitalized keywords are to be
+  interpreted in IETF specifications.
+- **[RFC8174]** Leiba, B., _"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key
+  Words,"_ BCP 14, May 2017. This document clarifies that only uppercase usage
+  of the RFC 2119 keywords carries the special meaning.
+- **[RFC9266]** Whited, S., _"Channel Bindings for TLS 1.3,"_ July 2022. Defines
+  the `tls-exporter` channel binding type for TLS 1.3 and updates other RFCs
+  accordingly.
+- **[RFC9449]** Fett, D., Campbell, B., Bradley, J., Lodderstedt, T., Jones, M.,
+  Waite, D., _"OAuth 2.0 Demonstrating Proof of Possession (DPoP),"_
+  September 2023. Describes a mechanism for sender-constraining OAuth 2.0 tokens
+  via a proof-of-possession mechanism that allows detection of replay attacks.
