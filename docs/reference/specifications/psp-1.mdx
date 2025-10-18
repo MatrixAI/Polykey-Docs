@@ -14,7 +14,9 @@
     <dt>Obsoletes:</dt>
     <dd>-</dd>
     <dt>Depends on:</dt>
-    <dd>PSP-2, PSP-3</dd>
+    <dd>PSP-3, PSP-4</dd>
+    <dt>Informative references:</dt>
+    <dd>PSP-2</dd>
   </dl>
 </details>
 
@@ -127,6 +129,32 @@ and only when, they appear in all capitals, as shown here.
   exposure modes-mediate, derive, and reveal-as defined in the CEP/BA
   specification and must verify lease freshness per TAP. Exposure modes dictate
   how secrets or tokens are handled when interacting with legacy systems.
+
+### 2.3 Identifier & casing convention
+
+To ensure unambiguous interoperation across implementations, PSP-1 adopts a
+uniform lower-camelCase naming convention for all specification identifiers.
+Unless explicitly noted otherwise:
+
+- Builtin operator identifiers (`op` strings) MUST be lower-camelCase ASCII. For
+  example: `withinTime`, `ttlOk`, `channelGeq`, `inPairSet`, `inActionSet`,
+  `inResourceSet`, `ctxEq`, `presenterIs`, and `enforcerEq`.
+- Registry pins and metadata fields MUST use lower-camelCase. Examples include
+  `programId`, `programBytes`, `langVersion`, `builtinsId`, `channelLatticeId`,
+  and `schemesSnapshotId`.
+- Environment fact names and illustrative example fields SHOULD use
+  lower-camelCase (e.g., `grantRef`, `channelBinding`, `presenter`, `enforcer`,
+  `ctx`).
+
+Registered claims imported from other standards (such as JWT claims `iat`,
+`exp`, `jti`) retain their original names and are not subject to this
+convention. Scheme names (e.g., `vault:`, `k8s:`) and content identifiers (e.g.,
+`cid:...`) are treated as data, not identifiers, and therefore remain unchanged.
+
+These canonical names appear in the textual specification and in the
+non-normative JSON projections. PSP-3 defines the on-wire field names and
+encodings; profiles MAY map the canonical names to alternative encodings but
+MUST provide a bijection between the PSP-1 names and the on-wire representation.
 
 ## 3. Overview and Goals
 
@@ -271,18 +299,18 @@ Deterministic Evaluation and PSP-4).
 - Each builtin operation is identified by a string `op`. Its semantics, type
   signature, and tightening rule are defined in the Builtins registry (PSP-4).
   The exact set in use is pinned by `builtinsId` in the Grant.
-- Channel comparisons (e.g., `channel_geq`) consult the pinned
+- Channel comparisons (e.g., `channelGeq`) consult the pinned
   `channelLatticeId`, which defines the set of recognized channel profile
   identifiers and their partial order. Unknown profiles or an unknown lattice
   MUST cause deny.
-- Resource subset checks in declaration-aware builtins (e.g., in_pairset)
-  consult the scheme comparator selected by the resource's scheme name.
+- Resource subset checks in declaration-aware builtins (e.g., inPairSet) consult
+  the scheme comparator selected by the resource's scheme name.
 - If a builtin, lattice, or comparator required by the Program is unknown or
   unavailable, evaluation MUST fail closed.
 - Programs may constrain the live session's profile using
-  `channel_geq(channel, "...")` as defined by the pinned channel lattice.
+  `channelGeq(channel, "...")` as defined by the pinned channel lattice.
   Programs may also assert runtime or provenance context via equality over
-  environment facts (e.g., ctx_eq("k","v")). How those environment facts are
+  environment facts (e.g., `ctxEq("k","v")`). How those environment facts are
   obtained or validated - including the presentation binding to a live session -
   is outside the CPL/0 language and governed by TAP and PSP-2.
 
@@ -360,7 +388,7 @@ reference these facts by name.
   - TAP MAY require additional environment facts (e.g., provenance labels,
     jurisdiction tags, or digest references) and define how they are obtained
     and verified. PSP-1 does not enumerate these; Programs assert them via
-    equality (e.g., ctx_eq).
+    equality (e.g., ctxEq).
 - Missing facts
   - If a builtin present in the Program requires an environment fact that is
     missing, evaluation MUST fail closed.
@@ -461,7 +489,7 @@ ActionSet is a finite set of actions. It factorizes "what" independently of
   - The canonical bytes MUST be content-addressed; the content address
     identifies the ActionSet.
 - Program use
-  - in_actionset(action, Actions#CID) evaluates to true if and only if action
+  - inActionSet(action, Actions#CID) evaluates to true if and only if action
     $\in$ ActionSet(CID).
 - Attenuation
   - For a derived Grant, the child ActionSet MUST be a subset of the parent
@@ -478,7 +506,7 @@ scheme-defined subset semantics.
   - The canonical bytes MUST be content-addressed; the content address
     identifies the ResourceSet.
 - Program use
-  - in_resourceset(resource, Resources#CID) evaluates to true if and only if
+  - inResourceSet(resource, Resources#CID) evaluates to true if and only if
     there exists r_sel $\in$ ResourceSet(CID) with resource $\subseteq$ r_sel
     under the scheme's registered subset comparator.
 - Attenuation
@@ -491,9 +519,9 @@ action in A over any resource in R"). Use PairSet when the matrix is irregular.
 
 ### 5.6 Program Use
 
-- Programs consult Declarations via builtins (in_pairset, in_actionset,
-  in_resourceset) using the environment's action and resource facts, combined
-  with other literals (within_time, ttl_ok, channel_geq, ctx_eq, presenter_is).
+- Programs consult Declarations via builtins (inPairSet, inActionSet,
+  inResourceSet) using the environment's action and resource facts, combined
+  with other literals (withinTime, ttlOk, channelGeq, ctxEq, presenterIs).
 - Actions appear as strings; resources are scheme-qualified strings; subset
   relations are defined by the scheme comparator (no unbounded regex/globs;
   selectors MUST be finite or safely bounded with a decidable comparator).
@@ -530,14 +558,14 @@ Capability evaluation depends on small, versioned rulebooks ("registries"):
 
 - Builtins: the available operations (opcodes), their types, and tightening
   rules.
-- Channel Lattices: partial order used by channel_geq.
+- Channel Lattices: partial order used by channelGeq.
 - Scheme Comparators: per-scheme normalization and decidable subset comparators;
   selected by scheme name.
 - PSP-2/PSP-4 MAY define domain vocabularies and trust registries (e.g., action
   catalogs, asset:/bacnet:/ocpp: scheme definitions, notary key lists, DKIM
   selector archives, origin key policies). CEPs do not consume these artifacts
   directly during evaluation; if used, their effects appear as environment facts
-  and are asserted in Programs (e.g., via ctx_eq) or are enforced by acceptance
+  and are asserted in Programs (e.g., via ctxEq) or are enforced by acceptance
   policy (TAP).
 
 A registry ID is a content-addressed identifier (e.g., a CID/multihash) for a
@@ -549,15 +577,15 @@ Channel `lattice` and `channelLatticeId`:
 
 - A channel lattice defines a partial order over channel profiles (e.g.,
   mtls:v1 >= tls-exporter:v1 >= dpop:v1 >= bearer:v1). It is the rulebook used
-  by the builtin `channel_geq(channel, floor)`. `channelLatticeId` is the
+  by the builtin `channelGeq(channel, floor)`. `channelLatticeId` is the
   content-addressed ID of the specific lattice used to interpret ">=". It is
-  required whenever a Program uses `channel_geq`.
+  required whenever a Program uses `channelGeq`.
 
 Builtins and `builtinsId`:
 
 - The builtins registry defines each opcode's semantics, types, and attenuation
-  tightening rules (e.g., within_time, ttl_ok, in_pairset, channel_geq, ctx_eq,
-  presenter_is).
+  tightening rules (e.g., withinTime, ttlOk, inPairSet, channelGeq, ctxEq,
+  presenterIs).
 - `builtinsId` is the content-addressed ID of the exact builtin set the Program
   uses.
 
@@ -571,6 +599,44 @@ Resource schemes / comparators:
   scheme name within this pinned snapshot. Unknown or unavailable comparators at
   verification MUST cause deny.
 
+#### 6.2.1 Channel Binding Profiles
+
+The channel lattice enumerates recognized channel binding profiles and defines a
+partial order over them. Each profile string corresponds to a concrete
+sender-constraining mechanism from external standards. Common profiles include:
+
+- **mtls:v1** - Mutual TLS client authentication as defined by TLS 1.3 (RFC
+  8446).
+- **tls-exporter:v1** - TLS 1.3 exporter-based channel binding (RFC 9266).
+- **dpop:v1** - Demonstrating Proof of Possession (DPoP) sender-constraining
+  (RFC 9449).
+- **bearer:v1** - No sender-constraining (OAuth 2.0 Bearer tokens).
+
+The partial order often follows the relative strength of sender-constraining,
+for example: `mtls:v1` >= `tls-exporter:v1` >= `dpop:v1` >= `bearer:v1`. The
+exact order and the set of recognized profiles are defined in the pinned channel
+lattice artifact referenced by `channelLatticeId`. A Program using `channelGeq`
+MUST pin a `channelLatticeId` that includes the relevant profiles.
+
+#### 6.2.2 Snapshot Structure
+
+To prevent comparator drift, `schemesSnapshotId` pins a manifest mapping scheme
+names to the exact comparator artifacts used for normalization and subset
+comparison. An example snapshot might look like:
+
+```json
+{
+  "vault": "cid:comparator-vault@2025-09-01",
+  "k8s": "cid:comparator-k8s@2025-08-15",
+  "door": "cid:comparator-door@2025-09-01"
+}
+```
+
+Each value is a content-addressed identifier of a comparator implementation.
+Comparators MUST remain pure, deterministic, and bounded; unknown or mismatched
+comparators across delegation hops MUST cause deny. The snapshot itself is
+pinned by `schemesSnapshotId` in the Grant's `pins` field.
+
 ### 6.3 Pinning in Grants
 
 A Grant MUST include references to the exact rulebooks its Program depends on:
@@ -578,7 +644,7 @@ A Grant MUST include references to the exact rulebooks its Program depends on:
 - `langVersion`: version string for CPL/0 (e.g., "cpl/0@1").
 - `builtinsId`: content-addressed identifier of the Builtins set used by the
   Program.
-- `channelLatticeId`: REQUIRED if the Program contains `channel_geq`; otherwise
+- `channelLatticeId`: REQUIRED if the Program contains `channelGeq`; otherwise
   OPTIONAL.
 - `schemesSnapshotId`: REQUIRED. Content-addressed manifest that pins comparator
   semantics for all scheme names referenced by this Grant's declarations.
@@ -611,9 +677,9 @@ A CEP MUST deny if any of the following holds:
 
 - `builtinsId` is missing, unknown, or cannot be loaded from the Builtins
   registry.
-- The Program uses `channel_geq` but `channelLatticeId` is missing or unknown.
-- The Program uses `channel_geq` but the pinned `channelLatticeId` does not
-  match across delegation hops.
+- The Program uses `channelGeq` but `channelLatticeId` is missing or unknown.
+- The Program uses `channelGeq` but the pinned `channelLatticeId` does not match
+  across delegation hops.
 - Any resource string's scheme has no recognized comparator (by scheme name).
 - The Program references a builtin not present in the pinned `builtinsId`.
 - In a delegation chain, any of the compatibility requirements above are
@@ -630,7 +696,7 @@ A CEP MUST deny if any of the following holds:
 
 Pinning builtins and, when used, channel lattice IDs makes verification
 deterministic and auditable across time and organizations. It prevents semantic
-drift (e.g., tightening changes to within_time or reordering of channel
+drift (e.g., tightening changes to withinTime or reordering of channel
 strengths) from altering the meaning of an already-issued Grant. Scheme
 comparator selection by scheme name preserves portability while remaining
 fail-closed on unknown or unavailable comparators. Actions remain plain strings;
@@ -680,7 +746,7 @@ normalization rules (PCF).
 - Any literal or term introducing non-determinism or network I/O MUST NOT be
   part of a Program.
 
-### 7.5 Deterministic encoding and identity
+### 7.4 Deterministic encoding and identity
 
 - `programBytes` = ENCODE(PCF(Program)) as specified by PSP-3.
 - `programId` = multihash(`programBytes`) as specified by PSP-3.
@@ -688,7 +754,7 @@ normalization rules (PCF).
   recomputation does not match.
 - ENCODE is defined in PSP-3; PCF is defined here in PSP-1.
 
-### 7.6 Failure handling
+### 7.5 Failure handling
 
 - Canonicalization MUST fail, and verification MUST deny, if a Program contains
   an unknown operator, ill-typed arguments under a builtin's signature,
@@ -697,14 +763,14 @@ normalization rules (PCF).
   deny during evaluation. If such references prevent deterministic term
   encodings, identity derivation MUST fail.
 
-### 7.7 Stability and tests
+### 7.6 Stability and tests
 
 - Canonicalization is part of the trusted computing base. Implementations SHOULD
   cross-test that semantically identical Programs (after literal reordering,
   duplicate removal, and string normalization) yield identical `programBytes`
   and `programId` across platforms and versions.
 
-### 7.8 Informative guidance
+### 7.7 Informative guidance
 
 Keep operator identifiers stable and registry-pinned to avoid PCF instability
 from renaming. When referencing Declarations by content address (e.g.,
@@ -777,7 +843,7 @@ A conforming Grant MUST satisfy all of the following.
      - `builtinsId`: Content-addressed identifier of the Builtins registry
        snapshot used by the Program.
      - `channelLatticeId`: REQUIRED if and only if the Program contains
-       `channel_geq` literals; OPTIONAL otherwise. When present, it pins the
+       `channelGeq` literals; OPTIONAL otherwise. When present, it pins the
        channel lattice used to interpret `>=`.
      - `schemesSnapshotId`: REQUIRED. A content-addressed manifest pinning the
        comparator semantics for each resource scheme referenced by this Grant's
@@ -801,13 +867,13 @@ A conforming Grant MUST satisfy all of the following.
 4. Registry pinning and compatibility
    - The Program's semantics MUST be interpreted under the pinned `langVersion`
      and `builtinsId`. If unknown or unavailable, verification MUST deny.
-   - If the Program contains `channel_geq`, `channelLatticeId` MUST be present
+   - If the Program contains `channelGeq`, `channelLatticeId` MUST be present
      and recognized. Unknown lattices MUST cause deny.
    - Resource scheme semantics are selected by the scheme name present in
      resource strings and MUST match the Scheme registry known to the CEP.
      Unknown schemes or unavailable comparators MUST cause deny.
    - In a delegation chain, a child Grant's `langVersion` and `builtinsId` MUST
-     equal the parent's values. If `channel_geq` is used in either parent or
+     equal the parent's values. If `channelGeq` is used in either parent or
      child, `channelLatticeId` (when present) MUST be equal across the chain.
      Any mismatch MUST cause deny.
 5. Declarations and bundling
@@ -823,7 +889,7 @@ A conforming Grant MUST satisfy all of the following.
 6. Fail-closed behavior
    - If the Program references a builtin not present in `builtinsId`,
      verification MUST deny.
-   - If the Program uses `channel_geq` but `channelLatticeId` is missing or
+   - If the Program uses `channelGeq` but `channelLatticeId` is missing or
      unknown, verification MUST deny.
    - If any declaration reference is missing from `declarations`, is malformed,
      or fails canonical checks, verification MUST deny.
@@ -875,8 +941,8 @@ names.
   "pins": {
     "langVersion": "cpl/0@1",
     "builtinsId": "cid:builtins@YYYYMMDD",
-    "channelLatticeId": "cid:lattice@1", // REQUIRED iff Program uses `channel_geq`
-    "schemesSnapshotId": "cid:schemes@YYYYMMDD" // OPTIONAL: pinned manifest of scheme comparators
+    "channelLatticeId": "cid:lattice@1", // REQUIRED iff Program uses `channelGeq`
+    "schemesSnapshotId": "cid:schemes@YYYYMMDD" // REQUIRED: pinned manifest of scheme comparators
   }
 }
 ```
@@ -903,7 +969,7 @@ small and referential in PSP-1 core.
 - Grant reference: Points to the leaf Grant (`grantRef` per PSP-3) that carries
   the Program and bundled Declarations.
 - Runtime facts: Conveys ctx and timing (iat/exp) the CEP uses to evaluate the
-  Program's literals (e.g., ctx_eq, ttl_ok, within_time).
+  Program's literals (e.g., ctxEq, ttlOk, withinTime).
 
 ### 10.2 Structure (Informative Projection)
 
@@ -914,12 +980,12 @@ normative on-wire field names and encodings are defined in PSP-3.
 - grantRef: canonical digest of the leaf Grant (per PSP-3).
 - iat: Int (NumericDate seconds) - mint time.
 - exp: Int (NumericDate seconds) - expiry; exp - iat SHOULD be short; MAY be
-  bounded by Program via ttl_ok.
+  bounded by Program via ttlOk.
 - jti: nonce (unique) for replay resistance.
 - channelBinding: `{ profile: Str, value: BytesOrB64 }` - binding to the live
   session (e.g., TLS exporter, DPoP).
 - ctx: `Map<Str, Term>` - runtime context; MUST include at least the k/v
-  required by the Program's ctx_eq literals.
+  required by the Program's ctxEq literals.
 - Delegation material (TAP-governed):
   - Presentations in PSP-1 core MUST carry only `grantRef` (leaf digest). They
     MAY include `grantRefs`: an ordered list of parent digests (leaf->root) as
@@ -942,18 +1008,18 @@ normative on-wire field names and encodings are defined in PSP-3.
 - Lifetime and timing
   - The CEP MUST reject if the Presentation is expired (now >= exp) or used too
     early (now < iat), subject to TAP clock discipline.
-  - If the Program contains ttl_ok or within_time literals, the CEP MUST enforce
+  - If the Program contains ttlOk or withinTime literals, the CEP MUST enforce
     them using iat/now/exp as appropriate.
-  - Effective lifetime: When both `[iat, exp)` and `ttl_ok` appear, both MUST
+  - Effective lifetime: When both `[iat, exp)` and `ttlOk` appear, both MUST
     pass at the captured `now`. The effective acceptance window is the
     intersection of these constraints.
   - If the Grant envelope carries a validity window (not_before/not_after) per
     PSP-3, the CEP MUST enforce it and, where both apply, MUST enforce the
     intersection with the Presentation's lifetime.
-  - If the Program does not constrain Presentation lifetime via ttl_ok, TAP MAY
+  - If the Program does not constrain Presentation lifetime via ttlOk, TAP MAY
     impose a default maximum Presentation TTL.
 - Context
-  - ctx MUST be a superset of the required ctx_eq(k, v) literals in the Program.
+  - ctx MUST be a superset of the required ctxEq(k, v) literals in the Program.
     Missing keys or unequal values MUST cause deny.
 - Grant reference and custody
   - `grantRef` MUST resolve to a valid leaf Grant under PSP-3 framing and
@@ -964,7 +1030,7 @@ normative on-wire field names and encodings are defined in PSP-3.
     - custody hop-by-hop (issuer(child) == subject(parent)),
     - prev linkage (per PSP-3),
     - pins compatibility (`langVersion`, `builtinsId`, and `channelLatticeId`
-      when `channel_geq` is used),
+      when `channelGeq` is used),
     - syntactic attenuation (checks/literals tightening and declarations
       subset).
   - How parent Grants are made available is TAP-governed (e.g., local cache,
@@ -980,16 +1046,16 @@ normative on-wire field names and encodings are defined in PSP-3.
 A CEP MUST deny if any of the following holds:
 
 - PoP signature invalid or channel binding does not match the live session.
-- Presentation lifetime invalid or violates ttl_ok/within_time literals.
+- Presentation lifetime invalid or violates ttlOk/withinTime literals.
 - `grantRef` cannot be resolved to a valid Grant (PSP-3).
 - Custody/attenuation verification fails (missing parents; signature or prev
   linkage failure; cycle; TAP depth exceeded; pins mismatch; non-attenuating
   child).
 - Unknown or unavailable builtin referenced by the Program; unknown
-  `channelLatticeId` when `channel_geq` is present.
+  `channelLatticeId` when `channelGeq` is present.
 - Unknown or unavailable scheme comparator required for declaration evaluation;
   env.resource normalization failure under the active comparator.
-- Missing required ctx keys or mismatched ctx_eq values.
+- Missing required ctx keys or mismatched ctxEq values.
 - Grant envelope validity window is violated (now outside not_before/not_after
   per PSP-3).
 - Required parent Grants are not locally available at enforcement (e.g., TAP
@@ -1023,7 +1089,7 @@ payload). PSP-1 does not define a Presentation 'payload' vs 'envelope' split.
   appear in PSP-3. The CEP's obligations here are limited to PoP verification,
   channel binding verification, custody/attenuation verification, and Program
   evaluation under the pinned semantics and bundled declarations.
-- Per-use narrowing is achieved by the Program's literals (e.g., ctx_eq, ttl_ok)
+- Per-use narrowing is achieved by the Program's literals (e.g., ctxEq, ttlOk)
   evaluated against Presentation-supplied ctx and iat/exp. A future TAP-gated
   profile MAY introduce presentation overlays with strict attenuation and
   receipt requirements.
@@ -1073,7 +1139,7 @@ For each parent->child hop:
 
 - `langVersion_child` MUST equal `langVersion_parent`.
 - `builtinsId_child` MUST equal `builtinsId_parent`.
-- If `channel_geq` appears in either parent or child, `channelLatticeId_child`
+- If `channelGeq` appears in either parent or child, `channelLatticeId_child`
   MUST equal `channelLatticeId_parent`.
 - Scheme comparator consistency: For each resource scheme name referenced by
   Declarations, the same comparator semantics MUST be applicable across the
@@ -1099,20 +1165,20 @@ hop-by-hop. Children MAY only narrow or preserve authority.
   - Literal tightening (constants only narrow):
     - Literal constants MAY only be tightened according to the Builtins
       tightening rules pinned by `builtinsId` (see PSP-4). Examples:
-      - within_time: child interval $\subseteq$ parent interval.
-      - ttl_ok: `child ttl_max <= parent ttl_max`.
-      - channel_geq: `child floor >= parent floor` under the pinned lattice.
-      - ctx_eq: parent ctx_eq(k,v) MUST be preserved; the child MAY add more
-        ctx_eq constraints.
+      - withinTime: child interval $\subseteq$ parent interval.
+      - ttlOk: `child ttlMax <= parent ttlMax`.
+      - channelGeq: `child floor >= parent floor` under the pinned lattice.
+      - ctxEq: parent ctxEq(k,v) MUST be preserved; the child MAY add more ctxEq
+        constraints.
     - Equality is permitted: a child may preserve the parent's constants and
       literals. TAP MAY require strict attenuation (child < parent) in some
       domains.
   - Context preservation:
-    - Any ctx_eq(k,v) required by the parent MUST be preserved or further
+    - Any ctxEq(k,v) required by the parent MUST be preserved or further
       constrained by the child. At enforcement, Presentation.ctx MUST be a
       superset of the required keys with equal values (see Presentations).
     - Issuers that wish to prevent redistribution SHOULD include
-      presenter_is(...) in the Program; because ctx/literal constraints must be
+      presenterIs(...) in the Program; because ctx/literal constraints must be
       preserved or tightened, re-delegation to a different Subject becomes
       impossible.
 - Declarations (finite sets; multi-scope)
@@ -1149,11 +1215,11 @@ A CEP MUST deny if any of the following holds:
     cycle detected, or TAP depth exceeded.
 - Pins incompatibility:
 - `langVersion` mismatch; `builtinsId` mismatch; `channelLatticeId` mismatch
-  when `channel_geq` is used by parent or child.
+  when `channelGeq` is used by parent or child.
 - Unknown or unavailable semantics:
 - Program references a builtin not present in `builtinsId`; Program uses
-  `channel_geq` but `channelLatticeId` is missing or unknown; any resource
-  scheme comparator is unknown or unavailable.
+  `channelGeq` but `channelLatticeId` is missing or unknown; any resource scheme
+  comparator is unknown or unavailable.
 - Attenuation violations:
   - Child removes parent Checks; a retained Query in the child omits any parent
     Literal; child widens literal constants contrary to Builtins tightening
@@ -1165,16 +1231,16 @@ A CEP MUST deny if any of the following holds:
 ### 11.7 Informative Examples
 
 - Time window:
-  - Parent within_time(now, 1000, 2000) -> Child within_time(now, 1200, 1800)
+  - Parent withinTime(now, 1000, 2000) -> Child withinTime(now, 1200, 1800)
     (valid).
 - TTL:
-  - Parent ttl_ok(iat, now, 300) -> Child ttl_ok(iat, now, 120) (valid).
+  - Parent ttlOk(iat, now, 300) -> Child ttlOk(iat, now, 120) (valid).
 - Channel floor:
-  - Parent `channel_geq`(`channel`, "tls-exporter:v1") -> Child
-    `channel_geq`(`channel`, "mtls:v1") (valid; equal or stronger only).
+  - Parent `channelGeq`(`channel`, "tls-exporter:v1") -> Child
+    `channelGeq`(`channel`, "mtls:v1") (valid; equal or stronger only).
 - Context:
-  - Parent ctx_eq("ns","prod") -> Child ctx_eq("ns","prod") $\land$
-    ctx_eq("pod","runner-42") (valid).
+  - Parent ctxEq("ns","prod") -> Child ctxEq("ns","prod") $\land$
+    ctxEq("pod","runner-42") (valid).
 - Declarations:
   - Parent PairSet =
     `{ ("secret:read","vault:.../team/*"), ("secret:derive","vault:.../svcX") }`
@@ -1223,7 +1289,7 @@ remain pure; no network I/O occurs during Program evaluation.
   lease rotation), upstream rotation (leases, credentials, keys) is governed by
   TAP.
 - The CEP MUST enforce any time/freshness constraints asserted by the Program
-  (e.g., within_time, ttl_ok) and any TAP-approved environment facts (e.g.,
+  (e.g., withinTime, ttlOk) and any TAP-approved environment facts (e.g.,
   lease_status) presented at enforcement.
 - An Access PoAR MAY include a leaseRef/freshness pointer or similar evidence as
   defined by PSP-2. PSP-1 does not mandate an on-wire format for rotation
@@ -1263,12 +1329,12 @@ Preconditions (TAP-governed, outside evaluation)
   - Presentation validity window: `[iat, exp)` - accept iff `iat <= now < exp`.
   - Grant envelope windows (e.g., `not_before`, `not_after` per PSP-3) are also
     treated as half-open and MUST be intersected with the Presentation window.
-  - `within_time(now, nbf, exp)` succeeds iff `nbf <= now < exp` under the
-    pinned builtins set.
-  - `ttl_ok(iat, now, ttl_max)` succeeds iff `now < iat + ttl_max`.
+  - `withinTime(now, nbf, exp)` succeeds iff `nbf <= now < exp` under the pinned
+    builtins set.
+  - `ttlOk(iat, now, ttlMax)` succeeds iff `now < iat + ttlMax`.
 - Precedence / intersection: When multiple constraints apply (Presentation
-  window, Grant envelope, and time-based builtins such as `within_time` and
-  `ttl_ok`), the effective acceptance condition is the intersection of all
+  window, Grant envelope, and time-based builtins such as `withinTime` and
+  `ttlOk`), the effective acceptance condition is the intersection of all
   applicable constraints at the captured `now`. If any one fails, enforcement
   MUST deny.
 - Time discipline: Clock source and skew tolerance are governed by TAP policy;
@@ -1304,7 +1370,7 @@ Preconditions (TAP-governed, outside evaluation)
        valid; prev linkage correct; else deny.
      - Depth and cycles: no cycles; deny if TAP depth cap exceeded.
      - Pinned semantics compatibility: `langVersion` matches; `builtinsId`
-       matches; `channelLatticeId` matches whenever `channel_geq` is used by
+       matches; `channelLatticeId` matches whenever `channelGeq` is used by
        either hop; `schemesSnapshotId` matches; else deny.
      - Scheme comparator availability: comparators required by referenced
        schemes are known/available; else deny.
@@ -1337,53 +1403,55 @@ Preconditions (TAP-governed, outside evaluation)
    - Ensure all Declarations referenced by the Program are present as bundled
      canonical bytes; else deny.
    - Confirm pinned semantics are usable: `builtinsId` known; if the Program
-     uses `channel_geq`, `channelLatticeId` present and known;
+     uses `channelGeq`, `channelLatticeId` present and known;
      `schemesSnapshotId` present and known; else deny.
 7. Evaluate Program (closed-world, bounded)
    - Evaluate the CPL/0 Program against the environment facts and bundled
      Declarations with pinned semantics:
-     - in_pairset / in_actionset / in_resourceset
-     - within_time / ttl_ok
-     - channel_geq
-     - ctx_eq
-     - presenter_is (if used)
+     - inPairSet / inActionSet / inResourceSet
+     - withinTime / ttlOk
+     - channelGeq
+     - ctxEq
+     - presenterIs (if used)
    - Enforce type checks; ill-typed literals -> deny.
    - Enforce resource bounds (CPU/steps/memory). Exceeding limits MUST result in
-     deny with reason resource_limit (or deadline_exceeded if a TAP deadline
-     applies).
+     deny. (Deployments SHOULD use an appropriate reason code from the PSP-2
+     registry to indicate a resource limit or deadline breach.)
    - Unknown builtin, unknown lattice, or unknown scheme comparator required by
      the Program -> deny.
-   - Context superset: ctx MUST include all required ctx_eq(k, v) literals with
+   - Context superset: ctx MUST include all required ctxEq(k, v) literals with
      equal values; else deny.
 8. Decision and receipts (placement-agnostic)
    - On success:
      - Allow enforcement per placement/mode (mediate/derive/reveal are defined
        outside PSP-1).
-     - The enforcing CEP MUST emit an Access PoAR per PSP-2 on its own sigchain
-       (P/R/S depending on placement) and deliver it to the Subject. PoAR SHOULD
-       include `programId`, declaration CIDs, pins (including
-       `schemesSnapshotId`), a minimal evaluation trace (which check/query
-       passed), and revocation/freshness decision context as applicable. For
-       audit acceleration, the PoAR SHOULD also record comparator fingerprints
-       (per scheme) actually used during evaluation.
+     - Deployments MAY emit an Access PoAR to record the decision. When a PoAR
+       is produced, it MUST conform to PSP-2. PoARs MUST include `programId`,
+       declaration CIDs, pins (including `schemesSnapshotId`), a minimal
+       evaluation trace (which check/query passed), revocation/freshness
+       decision context, comparator fingerprints, and the enforcer measurement
+       (`adapterRef`).
    - On failure:
-     - The enforcing CEP MUST emit a DenyReceipt per PSP-2 with an appropriate
-       reason code and deliver it to the Subject.
+     - Deployments MAY emit a DenyReceipt. When a DenyReceipt is emitted, it
+       MUST conform to PSP-2 and include a reason code from the PSP-2 registry.
+       As with PoARs, DenyReceipts SHOULD avoid disclosing sensitive detail and
+       SHOULD record enough context for auditors to reconstruct the decision.
 
 ### 13.3 Execution Constraints
 
 - Single time capture
   - The CEP MUST capture a single logical now at the start of enforcement and
-    use it consistently for within_time, ttl_ok, envelope window checks, and
+    use it consistently for withinTime, ttlOk, envelope window checks, and
     receipt timestamps.
 - Time discipline
   - TAP governs clock source and skew tolerance; the CEP MUST apply TAP's
     discipline to all time comparisons. If time discipline cannot be satisfied
     (e.g., clock indeterminate), the CEP MUST deny.
-- Deadlines and budgets
+  - Deadlines and budgets
   - The CEP MUST enforce bounded evaluation (CPU/steps/memory). If TAP sets a
-    per-request deadline, the CEP MUST abort and deny with reason
-    deadline_exceeded when the deadline is reached.
+    per-request deadline, the CEP MUST abort and deny when the deadline is
+    reached. Deployments SHOULD log an appropriate reason code as defined by the
+    PSP-2 registry.
 - Closed-world inputs
   - All required inputs (leaf Grant, parent Grants, revocation state) MUST be
     locally available at the start of enforcement; otherwise the CEP MUST deny.
@@ -1434,13 +1502,13 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     enforcement; otherwise deny.
 - Fail-closed
   - Unknown, missing, or ambiguous inputs (unknown builtin, unknown
-    `channelLatticeId` when `channel_geq` is used, unknown scheme comparator,
+    `channelLatticeId` when `channelGeq` is used, unknown scheme comparator,
     ill-typed literal, normalization failure, indeterminate revocation) MUST
     result in deny.
 - Canonicalization and pinning
   - CEPs MUST recompute `programId` from `programBytes` and deny on mismatch.
   - Pins affecting semantics (`builtinsId`, and `channelLatticeId` when
-    `channel_geq` is used) MUST match across delegation hops; mismatches MUST
+    `channelGeq` is used) MUST match across delegation hops; mismatches MUST
     deny.
   - Scheme comparators MUST be selected by scheme name and be available locally;
     otherwise deny.
@@ -1453,7 +1521,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 
 - Single logical time
   - CEPs MUST capture a single logical now at enforcement start and use it
-    consistently across within_time, ttl_ok, envelope windows, and receipts.
+    consistently across withinTime, ttlOk, envelope windows, and receipts.
 - Presentation lifetimes
   - Presentations MUST be short-lived (iat/exp). CEPs MUST enforce the
     Presentation window and any Program time constraints. TAP MAY require nonce
@@ -1474,8 +1542,9 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 ### 14.4 Bounded Evaluation and DoS
 
 - Resource budgets
-  - CEPs MUST enforce CPU/steps/memory limits for Program evaluation. Exceeding
-    limits MUST deny (e.g., reason resource_limit or deadline_exceeded per TAP).
+- CEPs MUST enforce CPU/steps/memory limits for Program evaluation. Exceeding
+  limits MUST result in deny. Deployments SHOULD log an appropriate reason code
+  from the PSP-2 registry to indicate a resource or deadline violation.
 - Input bounds
   - Programs and Declarations MUST remain finite. CEPs SHOULD bound sizes of
     `programBytes`, declaration tables, and `ctx` to mitigate memory/CPU
@@ -1485,7 +1554,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 
 - Minimal ctx and PII
   - Presentations and Grants SHOULD avoid raw PII; prefer DIDs and contextual
-    claims. CEPs MUST only require ctx keys needed by the Program's ctx_eq
+    claims. CEPs MUST only require ctx keys needed by the Program's ctxEq
     literals.
 - Receipts
   - Access PoARs SHOULD include minimal evaluation traces (e.g., which
@@ -1498,7 +1567,7 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 - Equality and redistribution
   - PSP-1 permits equality (child == parent). TAP MAY forbid co-equal grants
     (fan-out) or require strict attenuation. Issuers who wish to prevent
-    redistribution SHOULD include presenter_is(...) in the Program.
+    redistribution SHOULD include presenterIs(...) in the Program.
 - Anchoring
   - Root anchoring for a resource domain is TAP-governed. Where required and
     unsatisfied, CEPs MUST deny.
@@ -1532,11 +1601,9 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
     timing variations in hot paths (especially channelBinding and signature
     checks).
 - Error reporting
-  - Use standardized reason codes (e.g., pcf_mismatch, pin_mismatch, revoked,
-    expired, ctx_missing, channel_too_weak, normalization_failed,
-    attenuation_failure, parents_unavailable, resource_limit). Avoid leaking
-    sensitive detail in error text; receipts record sufficient audit context per
-    PSP-2.
+  - When a receipt is emitted, implementations SHOULD include a reason code from
+    the registry defined in PSP-2. Avoid leaking sensitive detail in free-form
+    error messages; audit context belongs in receipts as specified by PSP-2.
 
 ### 14.10 Placement-Specific Guidance
 
@@ -1589,12 +1656,12 @@ Program (CPL/0, AST)
 (all
   (any
     (and
-      (in_pairset action resource Pairs#bafyPairsDev1)
-      (channel_geq channel "mtls:v1")
-      (within_time now 1768100000 1768103600)
-      (ttl_ok iat now 120)
-      (ctx_eq "ns" "prod")
-      (ctx_eq "app" "web")
+      (inPairSet action resource Pairs#bafyPairsDev1)
+      (channelGeq channel "mtls:v1")
+      (withinTime now 1768100000 1768103600)
+      (ttlOk iat now 120)
+      (ctxEq "ns" "prod")
+      (ctxEq "app" "web")
     )
   )
 )
@@ -1609,8 +1676,8 @@ Pins
 
 - `langVersion`: "cpl/0@1"
 - `builtinsId`: "cid:builtins@2025-09-01"
-- `channelLatticeId`: "cid:channel-lattice@v1" (required because `channel_geq`
-  is used)
+- `channelLatticeId`: "cid:channel-lattice@v1" (required because `channelGeq` is
+  used)
 - `schemesSnapshotId`: "cid:schemes@2025-09-01"
 
 Grant (payload only, non-normative)
@@ -1657,12 +1724,12 @@ CEP evaluation outline
    $\subseteq$ parent; literals tightened/equal.
 5. Build env facts; normalize resource (env.resource) per vault comparator; ok.
 6. Program evaluation (closed-world):
-   - in_pairset(action,resource,Pairs#bafyPairsDev1): true for "secret:read" and
+   - inPairSet(action,resource,Pairs#bafyPairsDev1): true for "secret:read" and
      "vault:secret://org/app/prod/kms-key"
-   - channel_geq(channel,"mtls:v1"): true under pinned lattice
-   - within_time(now,1768100000,1768103600): true
-   - ttl_ok(iat,now,120): true
-   - ctx_eq("ns","prod"), ctx_eq("app","web"): true
+   - channelGeq(channel,"mtls:v1"): true under pinned lattice
+   - withinTime(now,1768100000,1768103600): true
+   - ttlOk(iat,now,120): true
+   - ctxEq("ns","prod"), ctxEq("app","web"): true
 7. Allow; emit PoAR (PSP-2) with `programId`, declaration CIDs, pins, minimal
    evaluation trace, and revocation snapshot context.
 
@@ -1670,9 +1737,9 @@ Delegated child (illustrative)
 
 - Parent PairSet: ("secret:read","vault:secret://org/app/prod/\*")
 - Child PairSet: ("secret:read","vault:secret://org/app/prod/appA")
-- Parent within_time(..., 1768100000, 1768103600); Child within_time(...,
+- Parent withinTime(..., 1768100000, 1768103600); Child withinTime(...,
   1768100500, 1768103300)
-- Parent ttl_ok(..., 120); Child ttl_ok(..., 60)
+- Parent ttlOk(..., 120); Child ttlOk(..., 60)
 - Pins equal; attenuation passes (subset + tightened literals).
 
 ### Example 2: DevOps - Derive a Short Lived DB Token
@@ -1690,13 +1757,13 @@ Program (CPL/0, AST)
 (all
   (any
     (and
-      (in_pairset action resource Pairs#bafyPairsDbMint1)
-      (channel_geq channel "mtls:v1")
-      (within_time now 1768100000 1768103600)
-      (ttl_ok iat now 120)
-      (ctx_eq "ns" "prod")
-      (ctx_eq "app" "web")
-      (ctx_eq "purpose" "sha256:artifact-H")
+      (inPairSet action resource Pairs#bafyPairsDbMint1)
+      (channelGeq channel "mtls:v1")
+      (withinTime now 1768100000 1768103600)
+      (ttlOk iat now 120)
+      (ctxEq "ns" "prod")
+      (ctxEq "app" "web")
+      (ctxEq "purpose" "sha256:artifact-H")
     )
   )
 )
@@ -1757,13 +1824,13 @@ CEP evaluation outline
 4. Build env; normalize env.resource per "db://" comparator (equality/prefix per
    PSP-4 rules).
 5. Evaluate Program:
-   - in_pairset("token:mint","db://cluster/app-prod",Pairs#bafyPairsDbMint1) ->
+   - inPairSet("token:mint","db://cluster/app-prod",Pairs#bafyPairsDbMint1) ->
      true
-   - channel_geq(channel,"mtls:v1") -> true (equal/stronger under lattice)
-   - within_time(now,1768100000,1768103600) -> true
-   - ttl_ok(iat,now,120) -> true
-   - ctx_eq("ns","prod"), ctx_eq("app","web"),
-     ctx_eq("purpose","sha256:artifact-H") -> true
+   - channelGeq(channel,"mtls:v1") -> true (equal/stronger under lattice)
+   - withinTime(now,1768100000,1768103600) -> true
+   - ttlOk(iat,now,120) -> true
+   - ctxEq("ns","prod"), ctxEq("app","web"),
+     ctxEq("purpose","sha256:artifact-H") -> true
 6. Allow. Enforcement (outside PSP-1): Adapter mints a DB token (e.g., 60-120s
    TTL), channel-bound/session-scoped; returns token to the Subject or mediates
    the downstream call.
@@ -1799,11 +1866,11 @@ Program (CPL/0, AST)
 (all
   (any
     (and
-      (in_pairset action resource Pairs#bafyPairsDoor1)
-      (channel_geq channel "tls-exporter:v1")
-      (within_time now 1768102000 1768102600)
-      (ttl_ok iat now 60)
-      (ctx_eq "visitorId" "door-visit-123")
+      (inPairSet action resource Pairs#bafyPairsDoor1)
+      (channelGeq channel "tls-exporter:v1")
+      (withinTime now 1768102000 1768102600)
+      (ttlOk iat now 60)
+      (ctxEq "visitorId" "door-visit-123")
     )
   )
 )
@@ -1862,21 +1929,21 @@ CEP evaluation outline (resource-side CEP, OT-aware)
 4. No delegation chain (single-hop) -> no parent checks.
 5. Build env facts; normalize resource with door: comparator; ok.
 6. Program evaluation:
-   - in_pairset("access:open","door:building-12:lock-3",Pairs#bafyPairsDoor1):
+   - inPairSet("access:open","door:building-12:lock-3",Pairs#bafyPairsDoor1):
      true
-   - channel_geq("tls-exporter:v1","tls-exporter:v1"): true (equal under
-     lattice)
-   - within_time(now,1768102000,1768102600): true (10-minute window)
-   - ttl_ok(iat,now,60): true
-   - ctx_eq("visitorId","door-visit-123"): true
-7. Allow within tight deadline; emit PoAR (PSP-2). If deadline exceeded, deny
-   with resource_limit/deadline_exceeded (per TAP).
+   - channelGeq("tls-exporter:v1","tls-exporter:v1"): true (equal under lattice)
+   - withinTime(now,1768102000,1768102600): true (10-minute window)
+   - ttlOk(iat,now,60): true
+   - ctxEq("visitorId","door-visit-123"): true
+7. Allow within tight deadline; emit a PoAR if receipts are used (see PSP-2). If
+   a TAP-imposed deadline is exceeded, deny (an appropriate reason code from the
+   PSP-2 registry SHOULD be used).
 
 Delegated child (illustrative; equality permitted)
 
 - Parent PairSet: ("access:open","door:building-12:lock-3")
 - Child PairSet: ("access:open","door:building-12:lock-3") (equal set)
-- Parent ttl_ok(..., 60); Child ttl_ok(..., 30) (tightened)
+- Parent ttlOk(..., 60); Child ttlOk(..., 30) (tightened)
 - Equality on scope is permitted by PSP-1 (never broaden). TAP MAY require
   strictly narrower scopes in some domains.
 
@@ -1934,12 +2001,12 @@ Query = {
 
 ; Literal = Builtin(op, args...)
 Literal = {
-  op: tstr,     ; operator id (e.g., "within_time", "in_pairset")
+  op: tstr,     ; operator id (e.g., "withinTime", "inPairSet")
   args: [* Term]
 }
 
 ; Declaration references inside Programs are by content id (string)
-; Example literal: { op: "in_pairset", args: [action, resource, "bafy..."] }
+; Example literal: { op: "inPairSet", args: [action, resource, "bafy..."] }
 
 ; Declarations are finite, canonical datasets carried alongside the Program
 DeclarationMap = {
@@ -1948,15 +2015,15 @@ DeclarationMap = {
 }
 
 ; Builtins used (see Appendix B for semantics and tightening rules):
-; - within_time(now:Int, nbf:Int, exp:Int)
-; - ttl_ok(iat:Int, now:Int, ttl_max:Int)
-; - channel_geq(channel:Str, floor:Str)
-; - in_pairset(action:Str, resource:Str, pairs_cid:Str)
-; - in_actionset(action:Str, actions_cid:Str)
-; - in_resourceset(resource:Str, resources_cid:Str)
-; - ctx_eq(key:Str, value:Term)
-; - presenter_is(did:Str) [optional; if present, in pinned builtins set]
-; - enforcer_eq(id:Str)   [optional; if present, in pinned builtins set]
+; - withinTime(now:Int, nbf:Int, exp:Int)
+; - ttlOk(iat:Int, now:Int, ttlMax:Int)
+; - channelGeq(channel:Str, floor:Str)
+; - inPairSet(action:Str, resource:Str, pairsCid:Str)
+; - inActionSet(action:Str, actionsCid:Str)
+; - inResourceSet(resource:Str, resourcesCid:Str)
+; - ctxEq(key:Str, value:Term)
+; - presenterIs(did:Str) [optional; if present, in pinned builtins set]
+; - enforcerEq(id:Str)   [optional; if present, in pinned builtins set]
 ```
 
 Conformance notes:
@@ -1970,79 +2037,85 @@ Conformance notes:
 
 This appendix enumerates the builtin operators assumed by PSP-1 and the
 tightening rules used for syntactic attenuation. The authoritative registry of
-operators (op ids, types, and semantics) is modeled in PSP-4; Grants pin the
+operators (opIds, types, and semantics) is modeled in PSP-4; Grants pin the
 exact set via `builtinsId`.
 
-- within_time(now:Int, nbf:Int, exp:Int)
+**Builtin operations (what & how).** CPL/0 Programs are conjunctions of builtin
+**literals**. Each literal is an `opId` plus arguments (e.g.,
+`withinTime(now, nbf, exp)` or `inPairSet(action, resource, "cid")`). Builtins
+are **pure, deterministic, and resource-bounded**; they perform no network I/O
+and return Booleans. A Grant's `builtinsId` pins a content-addressed snapshot of
+the builtin catalog. CEPs **MUST** deny on unknown operators or ill-typed
+invocations.
 
+**Builtin operations summary**
+
+| opId            | type signature                             | returns | semantics (informative shorthand)                                                                           | tightening (child vs parent)                                | fail-closed                                                 |
+| --------------- | ------------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
+| `withinTime`    | `(now:Int, nbf:Int, exp:Int)`              | Bool    | `nbf <= now < exp`                                                                                          | `[nbf_child >= nbf_parent $\land$ exp_child <= exp_parent]` | ill-typed => deny; else boolean result                      |
+| `ttlOk`         | `(iat:Int, now:Int, ttlMax:Int)`           | Bool    | `now < iat + ttlMax`                                                                                        | `ttlMax_child <= ttlMax_parent`                             | ill-typed => deny; else boolean result                      |
+| `channelGeq`    | `(channel:Str, floor:Str)`                 | Bool    | channel >= floor in the pinned lattice                                                                      | floor_child >= floor_parent                                 | unknown lattice or profile => deny                          |
+| `inPairSet`     | `(action:Str, resource:Str, pairsCid:Str)` | Bool    | `(action, resource) $\in$ PairSet(pairsCid)` (resource normalized via comparator)                           | PairSet_child $\subseteq$ PairSet_parent                    | missing/malformed declaration or comparator failure => deny |
+| `inActionSet`   | `(action:Str, actionsCid:Str)`             | Bool    | `action $\in$ ActionSet(actionsCid)`                                                                        | ActionSet_child $\subseteq$ ActionSet_parent                | missing/malformed declaration => deny                       |
+| `inResourceSet` | `(resource:Str, resourcesCid:Str)`         | Bool    | $\exists$ selector $\in$ ResourceSet(resourcesCid) such that resource $\subseteq$ selector under comparator | ResourceSet_child $\subseteq$ ResourceSet_parent            | comparator or normalization failure => deny                 |
+| `ctxEq`         | `(key:Str, value:Term)`                    | Bool    | environment `ctx[key] == value`                                                                             | parent constraints preserved; child may add more            | missing key or unequal value => false; ill-typed => deny    |
+| `presenterIs`\* | `(did:Str)`                                | Bool    | `presenter == did`                                                                                          | equality preserved                                          | ill-typed => deny                                           |
+| `enforcerEq`\*  | `(id:Str)`                                 | Bool    | `enforcer == id`                                                                                            | equality preserved                                          | ill-typed => deny                                           |
+
+\*Optional operators: present only if included by the pinned `builtinsId`.
+
+- withinTime(now:Int, nbf:Int, exp:Int)
   - Semantics: true iff `nbf <= now < exp`.
   - Types: all Int.
   - Tightening: child interval $\subseteq$ parent interval (i.e.,
     `nbf_child >= nbf_parent` and `exp_child <= exp_parent`).
   - Fail-closed: ill-typed or `now` outside the half-open interval `[nbf, exp)`
     results in `false`; unknown => deny.
-
-- ttl_ok(iat:Int, now:Int, ttl_max:Int)
-
-  - Semantics: true iff `now < iat + ttl_max`.
-  - Types: all Int.
-  - Tightening: `ttl_max_child <= ttl_max_parent`.
-  - Fail-closed: ill-typed => deny; else boolean result.
-
-- channel_geq(channel:Str, floor:Str)
-
+- ttlOk(iat:Int, now:Int, ttlMax:Int)
+- Semantics: true iff `now < iat + ttlMax`.
+- Types: all Int.
+- Tightening: `ttlMax_child <= ttlMax_parent`.
+- Fail-closed: ill-typed => deny; else boolean result.
+- channelGeq(channel:Str, floor:Str)
   - Semantics: true iff channel >= floor in the pinned channel lattice.
   - Types: Str, Str.
   - Tightening: floor_child >= floor_parent (equal or stronger).
   - Fail-closed: unknown lattice or channel/floor not in lattice => deny.
-
-- in_pairset(action:Str, resource:Str, pairs_cid:Str)
-
-  - Semantics: true iff (action, resource) $\in$ PairSet(pairs_cid), after
-    normalizing resource per its scheme comparator. When selectors are used in
-    the PairSet, the scheme comparator defines matching/subset semantics for
-    resource.
-  - Types: Str, Str, Str.
-  - Tightening (delegation): PairSet_child $\subseteq$ PairSet_parent under the
-    same normalization/comparator; equality permitted.
-  - Fail-closed: missing declaration, malformed bytes, unknown comparator, or
-    normalization failure => deny.
-
-- in_actionset(action:Str, actions_cid:Str)
-
-  - Semantics: true iff action $\in$ ActionSet(actions_cid).
-  - Types: Str, Str.
-  - Tightening: ActionSet_child $\subseteq$ ActionSet_parent; equality
-    permitted.
-  - Fail-closed: missing/malformed declaration => deny.
-
-- in_resourceset(resource:Str, resources_cid:Str)
-
-  - Semantics: true iff $\exists$ selector $\in$ ResourceSet(resources_cid) such
-    that resource $\subseteq$ selector under the scheme comparator.
-  - Types: Str, Str.
-  - Tightening: ResourceSet_child $\subseteq$ ResourceSet_parent under the same
-    normalization/comparator; equality permitted.
-  - Fail-closed: unknown comparator, normalization failure, missing/malformed
-    declaration => deny.
-
-- ctx_eq(key:Str, value:Term)
-
+- inPairSet(action:Str, resource:Str, pairsCid:Str)
+- Semantics: true iff (action, resource) $\in$ PairSet(pairsCid), after
+  normalizing resource per its scheme comparator. When selectors are used in the
+  PairSet, the scheme comparator defines matching/subset semantics for resource.
+- Types: Str, Str, Str.
+- Tightening (delegation): PairSet_child $\subseteq$ PairSet_parent under the
+  same normalization/comparator; equality permitted.
+- Fail-closed: missing declaration, malformed bytes, unknown comparator, or
+  normalization failure => deny.
+- inActionSet(action:Str, actionsCid:Str)
+- Semantics: true iff action $\in$ ActionSet(actionsCid).
+- Types: Str, Str.
+- Tightening: ActionSet_child $\subseteq$ ActionSet_parent; equality permitted.
+- Fail-closed: missing/malformed declaration => deny.
+- inResourceSet(resource:Str, resourcesCid:Str)
+- Semantics: true iff $\exists$ selector $\in$ ResourceSet(resourcesCid) such
+  that resource $\subseteq$ selector under the scheme comparator.
+- Types: Str, Str.
+- Tightening: ResourceSet_child $\subseteq$ ResourceSet_parent under the same
+  normalization/comparator; equality permitted.
+- Fail-closed: unknown comparator, normalization failure, missing/malformed
+  declaration => deny.
+- ctxEq(key:Str, value:Term)
   - Semantics: true iff the evaluation environment ctx contains key with equal
     value (string comparison in NFC; bytewise equality for Bytes; exact equality
     for Int/Bool).
   - Types: Str, Term.
-  - Tightening: parent ctx_eq(k,v) MUST be preserved; child MAY add additional
-    ctx_eq constraints.
+  - Tightening: parent ctxEq(k,v) MUST be preserved; child MAY add additional
+    ctxEq constraints.
   - Fail-closed: missing key or unequal value => false; ill-typed => deny.
-
-- presenter_is(did:Str) [optional in builtins set]
-
+- presenterIs(did:Str) [optional in builtins set]
   - Semantics: true iff presenter DID equals did.
   - Tightening: equality preserved.
   - Fail-closed: ill-typed => deny.
-
-- enforcer_eq(id:Str) [optional in builtins set]
+- enforcerEq(id:Str) [optional in builtins set]
   - Semantics: true iff enforcer identifier equals id.
   - Tightening: equality preserved.
   - Fail-closed: ill-typed => deny.
@@ -2114,8 +2187,8 @@ Expect: `programId` is identical after PCF; evaluation results coincide.
 Inputs (sketch):
 
 ```
-P1: (all (any (and (ctx_eq "ns" "prod") (ttl_ok iat now 120))))
-P2: (all (any (and (ttl_ok iat now 120) (ctx_eq "ns" "prod"))))
+P1: (all (any (and (ctxEq "ns" "prod") (ttlOk iat now 120))))
+P2: (all (any (and (ttlOk iat now 120) (ctxEq "ns" "prod"))))
 ```
 
 Expected: `multihash(ENCODE(PCF(P1))) == multihash(ENCODE(PCF(P2)))`; both allow
@@ -2132,8 +2205,8 @@ literals hold.
 Inputs (sketch):
 
 ```
-Parent: (all (any (and (in_pairset action resource Pairs#P) (ttl_ok iat now 120))))
-Child:  (all (any (and (in_pairset action resource Pairs#C) (ttl_ok iat now 60) (ctx_eq "ns" "prod"))))
+Parent: (all (any (and (inPairSet action resource Pairs#P) (ttlOk iat now 120))))
+Child:  (all (any (and (inPairSet action resource Pairs#C) (ttlOk iat now 60) (ctxEq "ns" "prod"))))
 Pairs#C $\subseteq$ Pairs#P
 ```
 
@@ -2143,27 +2216,28 @@ Expected: Chain acceptance; allow only if `now < iat+60` and `ctx.ns="prod"`.
 
 Setup: Parent has two Checks (AND); Child omits one parent Check.
 
-Expect: attenuation_failure at chain verification.
+Expect: Chain verification MUST fail due to a syntactic attenuation violation.
+(Reason code per the PSP-2 registry.)
 
 Inputs (sketch):
 
 ```
-Parent: (all ( (any (and (ctx_eq "ns" "prod")))  (any (and (channel_geq channel "mtls:v1"))) ))
-Child:  (all ( (any (and (ctx_eq "ns" "prod"))) )) ; second Check missing
+Parent: (all ( (any (and (ctxEq "ns" "prod")))  (any (and (channelGeq channel "mtls:v1"))) ))
+Child:  (all ( (any (and (ctxEq "ns" "prod"))) )) ; second Check missing
 ```
 
-Expected: Deny with reason `attenuation_failure`.
+Expected: Deny with an appropriate reason code from the PSP-2 registry.
 
 #### Example 4 Time Boundaries - half-open edges
 
-Setup: `iat=100`, `exp=200`. `ttl_ok(iat, now, 100)`.
+Setup: `iat=100`, `exp=200`. `ttlOk(iat, now, 100)`.
 
 Expect: Allow for `now $\in$ {100,...,199}`, deny for `now=200` (Presentation
 window) and `now=200` (TTL boundary).
 
 Inputs: `now=199` => allow; `now=200` => deny.
 
-Expected: At `now=200`, both `now < exp` and `now < iat+ttl_max` **fail**.
+Expected: At `now=200`, both `now < exp` and `now < iat+ttlMax` **fail**.
 
 #### Example 5 Resource Normalization - percent-encoding equivalence
 
@@ -2171,7 +2245,7 @@ Setup: Declaration contains `api:https://api.example.com/a%2Fb`; env.resource is
 `api:https://api.example.com/a/b`. Comparator defines canonical normalization
 collapsing these to the same normalized form.
 
-Expect: After normalization, `in_pairset(action, resource, Pairs#X)` is true.
+Expect: After normalization, `inPairSet(action, resource, Pairs#X)` is true.
 
 Expected: Allow (assuming other literals hold); deny if normalization fails.
 
@@ -2180,7 +2254,8 @@ Expected: Allow (assuming other literals hold); deny if normalization fails.
 Setup: Parent pins `schemesSnapshotId = S1`; Child pins `schemesSnapshotId = S2`
 where `S2 != S1`.
 
-Expect: Deny at chain verification with `pin_mismatch`.
+Expect: Deny at chain verification due to a pin mismatch (reason code per the
+PSP-2 registry).
 
 ## 17. References
 
