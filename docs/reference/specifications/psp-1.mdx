@@ -548,159 +548,118 @@ available.
 ## 6. Semantic Pinning
 
 This section establishes the minimal, versioned dependencies that capability
-evaluation relies on, and what a Grant MUST pin so CEPs reach the same decision
-everywhere. PSP-4 defines the registry entries. PSP-3 defines the concrete
-fields and canonical bytes.
+evaluation relies on, and what a Grant MUST pin so Capability Enforcement Points
+(CEPs) reach the same decision everywhere. The purpose of semantic pinning is to
+prevent "semantic drift" - where the meaning of a capability could change over
+time or across implementations - by fixing the exact rulebooks used for
+evaluation. PSP-4 defines the actual registry artifacts; PSP-3 defines the
+on-wire fields and canonical bytes.
 
-### 6.1 Scope
+### 6.1 Purpose
 
-Capability evaluation depends on small, versioned rulebooks ("registries"):
+Capability evaluation depends on a few small, versioned "rulebooks". A Grant
+MUST pin identifiers for these rulebooks so that independent CEPs evaluating the
+same Program can arrive at identical decisions at different times and in
+different deployments. Without pinning, the meaning of a capability could
+silently change if, for example, a builtin operator's semantics were tightened
+or a scheme comparator evolved.
 
-- Builtins: the available operations (opcodes), their types, and tightening
-  rules.
-- Channel Lattices: partial order used by channelGeq.
-- Scheme Comparators: per-scheme normalization and decidable subset comparators;
-  selected by scheme name.
-- PSP-2/PSP-4 MAY define domain vocabularies and trust registries (e.g., action
-  catalogs, asset:/bacnet:/ocpp: scheme definitions, notary key lists, DKIM
-  selector archives, origin key policies). CEPs do not consume these artifacts
-  directly during evaluation; if used, their effects appear as environment facts
-  and are asserted in Programs (e.g., via ctxEq) or are enforced by acceptance
-  policy (TAP).
+### 6.2 What MUST be pinned
 
-A registry ID is a content-addressed identifier (e.g., a CID/multihash) for a
-specific, immutable entry or snapshot in one of these registries.
+A Grant **MUST** include the following identifiers in its `pins` map. Each
+identifier references an immutable snapshot in a registry (see PSP-4):
 
-### 6.2 Definitions
+- **`langVersion`** - the CPL/0 edition string (e.g., `cpl/0@1`).
+- **`builtinsId`** - a content-addressed snapshot of the builtin operators in
+  use (including each opcode's semantics, type signatures, tightening rules, and
+  resource bounds).
+- **`schemesSnapshotId`** - a content-addressed manifest that maps each scheme
+  name referenced by this Grant's declarations to the exact comparator snapshot
+  used for normalization and subset comparison. It MUST be present even if only
+  one scheme is referenced.
+- **`channelLatticeId`** - **REQUIRED only if** the Program uses the
+  `channelGeq` builtin. It is a content-addressed snapshot of the channel
+  lattice used to interpret `>=` between channel profile labels. It MUST be
+  omitted if the Program does not call `channelGeq`.
 
-Channel `lattice` and `channelLatticeId`:
+A Grant does **not** pin any action registry; actions are plain strings compared
+for equality. Governance over action names lives in TAP and MAY be enforced by
+requiring corresponding Program literals.
 
-- A channel lattice defines a partial order over channel profiles (e.g.,
-  mtls:v1 >= tls-exporter:v1 >= dpop:v1 >= bearer:v1). It is the rulebook used
-  by the builtin `channelGeq(channel, floor)`. `channelLatticeId` is the
-  content-addressed ID of the specific lattice used to interpret ">=". It is
-  required whenever a Program uses `channelGeq`.
+### 6.3 Snapshot formats
 
-Builtins and `builtinsId`:
+Each pinned identifier refers to a snapshot whose structure is defined in PSP-4.
+This specification only requires that CEPs treat these snapshots as opaque
+rulebooks when evaluating Programs.
 
-- The builtins registry defines each opcode's semantics, types, and attenuation
-  tightening rules (e.g., withinTime, ttlOk, inPairSet, channelGeq, ctxEq,
-  presenterIs).
-- `builtinsId` is the content-addressed ID of the exact builtin set the Program
-  uses.
+- **Builtins snapshot** - Contains a unique ID, version string, and a list of
+  builtin operators. Each operator entry defines the operator's identifier,
+  argument types, semantics, tightening rules for attenuation, and resource
+  bounds (time/memory). Unknown operators MUST cause denial at verification.
+- **Channel lattice snapshot** - Contains a unique ID, a set of channel profile
+  labels, and a partial order over those labels. The partial order defines the
+  result of `channelGeq(channel, floor)`. The precise meaning of each label
+  (e.g., `mtls:v1`, `tlsExporter:v1`, `dpop:v1`, `bearer:v1`) is defined outside
+  this spec in the registry; only the ordering matters here.
+- **Schemes manifest (`schemesSnapshotId`)** - Contains a unique ID and a map
+  from scheme names to comparator snapshot IDs. Each comparator snapshot defines
+  normalization and subset decision rules for one scheme (e.g., vault, k8s,
+  door). Unknown or unavailable comparators MUST cause denial. The manifest MUST
+  list every scheme referenced by the Grant's declarations.
 
-Resource schemes / comparators:
+### 6.4 Delegation compatibility
 
-- Each resource scheme (vault:, net:, k8s:, ...) has a registry entry defining
-  normalization and a decidable subset comparator.
-- **schemesSnapshotId**: Grants pin a content-addressed manifest that maps each
-  scheme name referenced by declarations to the exact comparator artifact used
-  for normalization and subset comparison. CEPs select comparator semantics by
-  scheme name within this pinned snapshot. Unknown or unavailable comparators at
-  verification MUST cause deny.
+In a delegation chain, a child Grant MUST pin exactly the same rulebooks as its
+parent. For each parent->child hop:
 
-#### 6.2.1 Channel Binding Profiles
+- `langVersion(child) == langVersion(parent)`.
+- `builtinsId(child) == builtinsId(parent)`.
+- If either Program uses `channelGeq`, then
+  `channelLatticeId(child) == channelLatticeId(parent)`. If neither uses
+  `channelGeq`, neither Grant may specify a lattice ID.
+- `schemesSnapshotId(child) == schemesSnapshotId(parent)`. The same comparator
+  semantics MUST apply consistently across the chain.
 
-The channel lattice enumerates recognized channel binding profiles and defines a
-partial order over them. Each profile string corresponds to a concrete
-sender-constraining mechanism from external standards. Common profiles include:
+Any mismatch in these identifiers MUST cause denial at verification. Unknown or
+unavailable builtins, lattices, or comparators at any hop MUST also cause
+denial.
 
-- **mtls:v1** - Mutual TLS client authentication as defined by TLS 1.3 (RFC
-  8446).
-- **tls-exporter:v1** - TLS 1.3 exporter-based channel binding (RFC 9266).
-- **dpop:v1** - Demonstrating Proof of Possession (DPoP) sender-constraining
-  (RFC 9449).
-- **bearer:v1** - No sender-constraining (OAuth 2.0 Bearer tokens).
+### 6.5 Fail-closed conditions
 
-The partial order often follows the relative strength of sender-constraining,
-for example: `mtls:v1` >= `tls-exporter:v1` >= `dpop:v1` >= `bearer:v1`. The
-exact order and the set of recognized profiles are defined in the pinned channel
-lattice artifact referenced by `channelLatticeId`. A Program using `channelGeq`
-MUST pin a `channelLatticeId` that includes the relevant profiles.
+A CEP **MUST** deny if any of the following holds:
 
-#### 6.2.2 Snapshot Structure
-
-To prevent comparator drift, `schemesSnapshotId` pins a manifest mapping scheme
-names to the exact comparator artifacts used for normalization and subset
-comparison. An example snapshot might look like:
-
-```json
-{
-  "vault": "cid:comparator-vault@2025-09-01",
-  "k8s": "cid:comparator-k8s@2025-08-15",
-  "door": "cid:comparator-door@2025-09-01"
-}
-```
-
-Each value is a content-addressed identifier of a comparator implementation.
-Comparators MUST remain pure, deterministic, and bounded; unknown or mismatched
-comparators across delegation hops MUST cause deny. The snapshot itself is
-pinned by `schemesSnapshotId` in the Grant's `pins` field.
-
-### 6.3 Pinning in Grants
-
-A Grant MUST include references to the exact rulebooks its Program depends on:
-
-- `langVersion`: version string for CPL/0 (e.g., "cpl/0@1").
-- `builtinsId`: content-addressed identifier of the Builtins set used by the
-  Program.
-- `channelLatticeId`: REQUIRED if the Program contains `channelGeq`; otherwise
-  OPTIONAL.
-- `schemesSnapshotId`: REQUIRED. Content-addressed manifest that pins comparator
-  semantics for all scheme names referenced by this Grant's declarations.
-- No action registry is required in PSP-1. Actions are plain strings compared
-  for equality. Any allowlists or required constraints tied to action names are
-  governed by TAP and MAY be enforced by requiring corresponding Program
-  literals.
-
-PSP-3 specifies how these IDs appear on the wire and how they are included in
-the signed object.
-
-### 6.4 Delegation Compatibility
-
-In a delegation chain, a child Grant MUST use the same rulebooks as its parent:
-
-- `langVersion` must equal the parent's value.
-- `builtinsId` must equal the parent's value.
-- `channelLatticeId`, when present in either parent or child, must be equal.
-- `schemesSnapshotId` must equal the parent's value. For each referenced scheme
-  name, the same comparator semantics MUST apply consistently across the chain;
-  any mismatch or unavailability MUST cause deny.
-- Unknown builtins, lattices, or scheme comparators at any hop MUST cause deny.
-
-These constraints ensure attenuation is checked and evaluated under identical
-semantics across all hops.
-
-### 6.5 Fail-Closed Requirements
-
-A CEP MUST deny if any of the following holds:
-
-- `builtinsId` is missing, unknown, or cannot be loaded from the Builtins
-  registry.
+- `builtinsId` is missing, unknown, or cannot be loaded.
 - The Program uses `channelGeq` but `channelLatticeId` is missing or unknown.
 - The Program uses `channelGeq` but the pinned `channelLatticeId` does not match
   across delegation hops.
-- Any resource string's scheme has no recognized comparator (by scheme name).
+- `schemesSnapshotId` is missing, unknown, or mismatched across delegation hops.
+- Any resource string's scheme lacks a comparator in the pinned
+  `schemesSnapshotId`.
 - The Program references a builtin not present in the pinned `builtinsId`.
-- In a delegation chain, any of the compatibility requirements above are
-  violated.
 - Any required registry entry cannot be loaded or applied at verification time.
-- `schemesSnapshotId` is missing, unknown, or cannot be loaded; or
-  `schemesSnapshotId` does not match across delegation hops.
-- A declaration contains a resource whose scheme cannot be normalized under the
-  comparator semantics pinned by `schemesSnapshotId`.
-- A declaration contains a resource whose scheme cannot be normalized under the
-  active comparator semantics.
 
-### 6.6 Rationale
+### 6.6 Interpreting `channelGeq`
 
-Pinning builtins and, when used, channel lattice IDs makes verification
-deterministic and auditable across time and organizations. It prevents semantic
-drift (e.g., tightening changes to withinTime or reordering of channel
-strengths) from altering the meaning of an already-issued Grant. Scheme
-comparator selection by scheme name preserves portability while remaining
-fail-closed on unknown or unavailable comparators. Actions remain plain strings;
-any governance over action names lives in TAP/PSP-2, not PSP-1.
+The literal `channelGeq(channel, floor)` compares the verified channel profile
+(from the Presentation's channel binding) against the floor value under the
+pinned channel lattice. Common channel binding profiles include:
+
+- **`mtls:v1`** - Mutually authenticated TLS 1.3 (see RFC 8446).
+- **`tlsExporter:v1`** - TLS exporter-based channel binding (see RFC 9266).
+- **`dpop:v1`** - Demonstrating Proof-of-Possession (DPoP) (see RFC 9449).
+- **`bearer:v1`** - No sender-constraining (Bearer tokens).
+
+The pinned lattice defines the partial order between these labels (for example:
+`mtls:v1 >= tlsExporter:v1 >= dpop:v1 >= bearer:v1`). This subsection is
+informative; the authoritative ordering and the set of recognized profiles are
+defined by the snapshot referenced by `channelLatticeId`.
+
+### 6.7 Registry artifacts are defined in PSP-4
+
+The structure and encoding of the builtins snapshot, channel lattice snapshot,
+and schemes manifest are defined in PSP-4. This specification does not redefine
+those schemas; it only specifies which identifiers MUST be present in a Grant
+and how they are enforced.
 
 ## 7. Program Canonical Form (PCF) & Digest
 
@@ -851,12 +810,12 @@ A conforming Grant MUST satisfy all of the following.
        string form defined in PSP-4).
      - `builtinsId`: Content-addressed identifier of the Builtins registry
        snapshot used by the Program.
-     - `channelLatticeId`: REQUIRED if and only if the Program contains
-       `channelGeq` literals; OPTIONAL otherwise. When present, it pins the
-       channel lattice used to interpret `>=`.
-     - `schemesSnapshotId`: REQUIRED. A content-addressed manifest pinning the
-       comparator semantics for each resource scheme referenced by this Grant's
-       declarations.
+   - `channelLatticeId`: REQUIRED only if the Program uses `channelGeq`. It MUST
+     be omitted if the Program does not call `channelGeq`. When present, it pins
+     the channel lattice used to interpret `>=`.
+   - `schemesSnapshotId`: REQUIRED. A content-addressed manifest pinning the
+     comparator semantics for each resource scheme referenced by this Grant's
+     declarations.
 2. Envelope and framing
    - The envelope (issuer, subject, issuance/validity timestamps, prev linkage,
      signatures, canonical bytes for the entire claim) is defined in PSP-3.
@@ -980,7 +939,7 @@ small and referential in PSP-1 core.
 - Runtime facts: Conveys ctx and timing (iat/exp) the CEP uses to evaluate the
   Program's literals (e.g., ctxEq, ttlOk, withinTime).
 
-#### 10.2 Rationale
+### 10.2 Rationale
 
 Presentations are intentionally ephemeral. Unlike Grants, which are durable and
 recorded on sigchains, a Presentation conveys proof-of-possession only for the
@@ -992,32 +951,6 @@ recording sensitive per-use context on a public ledger. Persisting Presentations
 or allowing them to be reused indefinitely would undermine these protections,
 enable unauthorized redistribution, and blur the distinction between durable
 Grants and transient proof-of-use.
-
-### 10.2 Structure (Informative Projection)
-
-Note: The names below are non-normative conceptual labels used by PSP-1. The
-normative on-wire field names and encodings are defined in PSP-3.
-
-- presenter: DID of the holder (Subject).
-- grantRef: canonical digest of the leaf Grant (per PSP-3).
-- iat: Int (NumericDate seconds) - mint time.
-- exp: Int (NumericDate seconds) - expiry; exp - iat SHOULD be short; MAY be
-  bounded by Program via ttlOk.
-- jti: nonce (unique) for replay resistance.
-- channelBinding: `{ profile: Str, value: BytesOrB64 }` - binding to the live
-  session (e.g., TLS exporter, DPoP).
-- ctx: `Map<Str, Term>` - runtime context; MUST include at least the k/v
-  required by the Program's ctxEq literals.
-- Delegation material (TAP-governed):
-  - Presentations in PSP-1 core MUST carry only `grantRef` (leaf digest). They
-    MAY include `grantRefs`: an ordered list of parent digests (leaf->root) as
-    resolution hints. Resolution, if allowed, is a TAP-governed, pre-enforcement
-    step outside CPL/0 evaluation. At enforcement, if required parent Grants are
-    not locally available, the CEP MUST deny.
-  - A TAP policy (with PSP-3 bindings) MAY define alternate, bounded chain
-    attestation artifacts (e.g., a stapled chain receipt or a zero-knowledge
-    chain proof). PSP-1 core does not define or require such artifacts and
-    forbids embedding raw Grant bodies in Presentations.
 
 ### 10.3 Normative Requirements
 
@@ -1083,13 +1016,39 @@ A CEP MUST deny if any of the following holds:
 - Required parent Grants are not locally available at enforcement (e.g., TAP
   forbids resolution or resolution failed).
 
-### 10.5 Informative Projection
+### 10.5 Structure and Informative Projection
 
-The names below are non-normative conceptual labels used by PSP-1. PSP-3 defines
-the signature container and on-wire mappings (e.g., which parts are headers vs
-payload). PSP-1 does not define a Presentation 'payload' vs 'envelope' split.
+Note: The names below are non-normative conceptual labels used by PSP-1. The
+normative on-wire field names and encodings are defined in PSP-3. This list of
+fields and the subsequent JSON example are informative; deployments MAY map to
+alternative encodings but MUST preserve the semantics.
 
-```
+- **presenter**: DID of the holder (Subject).
+- **grantRef**: canonical digest of the leaf Grant (per PSP-3).
+- **iat**: Int (NumericDate seconds) - mint time.
+- **exp**: Int (NumericDate seconds) - expiry; `exp - iat` SHOULD be short; MAY
+  be bounded by the Program via `ttlOk`.
+- **jti**: nonce (unique) for replay resistance.
+- **channelBinding**: `{ profile: Str, value: BytesOrB64 }` - binding to the
+  live session (e.g., TLS exporter, DPoP).
+- **ctx**: `Map<Str, Term>` - runtime context; MUST include at least the
+  key/value pairs required by the Program's `ctxEq` literals.
+- **Delegation material (TAP-governed)**:
+  - Presentations in PSP-1 core MUST carry only `grantRef` (leaf digest). They
+    MAY include `grantRefs`: an ordered list of parent digests (leaf->root) as
+    resolution hints. Resolution, if allowed, is a TAP-governed, pre-enforcement
+    step outside CPL/0 evaluation. At enforcement, if required parent Grants are
+    not locally available, the CEP MUST deny.
+  - A TAP policy (with PSP-3 bindings) MAY define alternate, bounded chain
+    attestation artifacts (e.g., a stapled chain receipt or a zero-knowledge
+    chain proof). PSP-1 core does not define or require such artifacts and
+    forbids embedding raw Grant bodies in Presentations.
+
+**Example:** The following JSON projection illustrates one possible mapping of
+the conceptual fields. Names and encodings are illustrative only; the normative
+specification of on-wire fields is defined in PSP-3.
+
+```json
 {
   "jti": "uuid-1234",
   "iss": "did:pk:S",
@@ -1105,7 +1064,7 @@ payload). PSP-1 does not define a Presentation 'payload' vs 'envelope' split.
 }
 ```
 
-### 10.6 Notes (informative)
+### 10.6 Notes
 
 - PSP-1 does not mandate exact Presentation field names or encodings; those
   appear in PSP-3. The CEP's obligations here are limited to PoP verification,
@@ -1142,7 +1101,7 @@ enforced by the CEP with no network I/O during Program evaluation.
   depth/fan-out caps or strict attenuation requirements). PSP-1 permits equality
   by default.
 
-#### 11.2 Rationale
+### 11.2 Rationale
 
 Syntactic attenuation is not an arbitrary design choice; it is a deliberate
 restriction that makes delegation mechanically checkable and removes subjective
@@ -1156,10 +1115,11 @@ could embed logic that ambiguously broadens or narrows authority, making it
 difficult or impossible for CEPs to decide whether a child Grant has overstepped
 the parent. The syntactic approach also dovetails with PCF canonicalization:
 reordering of checks or literals does not affect identity, and monotonicity is
-explicit in the Program structure. See the 14. Security Considerations for
+explicit in the Program structure. See
+[Section 14, _Security Considerations_](#14-security-considerations) for
 additional discussion of the risks mitigated by syntactic attenuation.
 
-### 11.2 Chain Structure and Custody
+### 11.3 Chain Structure and Custody
 
 - Hop custody
   - issuer(child) MUST equal subject(parent).
@@ -1172,7 +1132,7 @@ additional discussion of the risks mitigated by syntactic attenuation.
     applicable) is governed by TAP; if an applicable anchoring method is
     required but not satisfied, the CEP MUST deny.
 
-### 11.3 Pinned Semantics Compatibility Across Hops
+### 11.4 Pinned Semantics Compatibility Across Hops
 
 For each parent->child hop:
 
@@ -1187,7 +1147,7 @@ For each parent->child hop:
 
 Any mismatch in the above MUST cause the CEP to deny chain acceptance.
 
-### 11.4 Syntactic Attenuation
+### 11.5 Syntactic Attenuation
 
 PSP-1 defines attenuation as a purely syntactic subset relation checked
 hop-by-hop. Children MAY only narrow or preserve authority.
@@ -1233,7 +1193,7 @@ hop-by-hop. Children MAY only narrow or preserve authority.
   - Resource subset checks MUST use the scheme's registered comparator;
     unknown/unavailable comparators MUST cause deny.
 
-### 11.5 Closed-World Enforcement and Availability
+### 11.6 Closed-World Enforcement and Availability
 
 - Evaluation inputs only:
   - The CEP MUST evaluate using only
@@ -1245,7 +1205,7 @@ hop-by-hop. Children MAY only narrow or preserve authority.
     cache, pre-enforcement resolver permitted by TAP, or a profile-defined
     stapled artifact). If not locally available, the CEP MUST deny.
 
-### 11.6 Fail-Closed Conditions
+### 11.7 Fail-Closed Conditions
 
 A CEP MUST deny if any of the following holds:
 
@@ -1267,7 +1227,7 @@ A CEP MUST deny if any of the following holds:
   - Required parent Grants are not locally available at enforcement (e.g., TAP
     forbids resolution or resolution failed pre-enforcement).
 
-### 11.7 Informative Examples
+### 11.8 Informative Examples
 
 - Time window:
   - Parent withinTime(now, 1000, 2000) -> Child withinTime(now, 1200, 1800)
@@ -1285,7 +1245,7 @@ A CEP MUST deny if any of the following holds:
     `{ ("secret:read","vault:.../team/*"), ("secret:derive","vault:.../svcX") }`
   - Child PairSet = `{ ("secret:read","vault:.../team/appA") }` (valid subset).
 
-### 11.8 Profiles
+### 11.9 Profiles
 
 - Profiles MAY introduce additional declaration kinds or builtins, but MUST
   preserve monotonicity, purity, bounded evaluation, and pinned semantics
@@ -1472,12 +1432,12 @@ Preconditions (TAP-governed, outside evaluation)
        decision context, comparator fingerprints, and the enforcer measurement
        (`adapterRef`).
    - On failure:
-     - The enforcing CEP MUST record a decision event for the authorization
-       outcome. If the CEP implemnts PSP-2 receipts, the enforcing CEP MUST emit
-       a DenyReceipt. DenyReceitps MUST include a reason code from the PSP-2
-       registry. As with PoARs, DenyReceipts SHOULD avoid disclosing sensitive
-       detail and SHOULD record enough context for auditors to reconstruct the
-       decision.
+   - The enforcing CEP MUST record a decision event for the authorization
+     outcome. If the CEP implements PSP-2 receipts, the enforcing CEP MUST emit
+     a DenyReceipt. DenyReceipts MUST include a reason code from the PSP-2
+     registry. As with PoARs, DenyReceipts SHOULD avoid disclosing sensitive
+     detail and SHOULD record enough context for auditors to reconstruct the
+     decision.
 
 ### 13.3 Execution Constraints
 
@@ -2079,7 +2039,7 @@ Conformance notes:
 
 This appendix enumerates the builtin operators assumed by PSP-1 and the
 tightening rules used for syntactic attenuation. The authoritative registry of
-operators (`op` strings, types, and semantics) is modeled in PSP‑4; Grants pin
+operators (`op` strings, types, and semantics) is modeled in PSP-4; Grants pin
 the exact set via `builtinsId`.
 
 **Builtin operations (what & how).** CPL/0 Programs are conjunctions of builtin
