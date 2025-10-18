@@ -738,15 +738,24 @@ normalization rules (PCF).
   "Pairs#CID") MUST be encoded deterministically and consistently wherever they
   appear.
 
-#### Prohibited/non-canonical forms
+### 7.4 Prohibited and Non-Canonical Forms
 
-- Floating-point numbers MUST NOT appear in Programs.
-- Indefinite-length encodings and non-normalized strings MUST NOT appear in
-  canonical bytes (see PSP-3 for encoding constraints).
-- Any literal or term introducing non-determinism or network I/O MUST NOT be
-  part of a Program.
+Certain forms are incompatible with deterministic canonicalization and MUST NOT
+appear in a CPL/0 Program or its canonical representation:
 
-### 7.4 Deterministic encoding and identity
+- Floating-point numbers: Programs MUST NOT contain floating-point values. CPL/0
+  supports only arbitrary-precision integers.
+- Indefinite-length encodings and non-normalized strings: All strings MUST be
+  NFC-normalized and encoded with definite lengths. Indefinite-length encodings
+  and non-normalized strings MUST NOT appear in the canonical bytes (see PSP-3
+  for encoding constraints).
+- Non-determinism or network I/O: Any literal or term that would introduce
+  non-determinism (e.g., entropy, randomness) or perform network/external I/O
+  MUST NOT be part of a Program. Builtins are pure and deterministic by
+  construction; user-defined or environment-sourced non-deterministic operations
+  are out of scope for CPL/0.
+
+### 7.5 Deterministic encoding and identity
 
 - `programBytes` = ENCODE(PCF(Program)) as specified by PSP-3.
 - `programId` = multihash(`programBytes`) as specified by PSP-3.
@@ -754,7 +763,7 @@ normalization rules (PCF).
   recomputation does not match.
 - ENCODE is defined in PSP-3; PCF is defined here in PSP-1.
 
-### 7.5 Failure handling
+### 7.6 Failure handling
 
 - Canonicalization MUST fail, and verification MUST deny, if a Program contains
   an unknown operator, ill-typed arguments under a builtin's signature,
@@ -763,14 +772,14 @@ normalization rules (PCF).
   deny during evaluation. If such references prevent deterministic term
   encodings, identity derivation MUST fail.
 
-### 7.6 Stability and tests
+### 7.7 Stability and tests
 
 - Canonicalization is part of the trusted computing base. Implementations SHOULD
   cross-test that semantically identical Programs (after literal reordering,
   duplicate removal, and string normalization) yield identical `programBytes`
   and `programId` across platforms and versions.
 
-### 7.7 Informative guidance
+### 7.8 Informative guidance
 
 Keep operator identifiers stable and registry-pinned to avoid PCF instability
 from renaming. When referencing Declarations by content address (e.g.,
@@ -971,6 +980,19 @@ small and referential in PSP-1 core.
 - Runtime facts: Conveys ctx and timing (iat/exp) the CEP uses to evaluate the
   Program's literals (e.g., ctxEq, ttlOk, withinTime).
 
+#### 10.2 Rationale
+
+Presentations are intentionally ephemeral. Unlike Grants, which are durable and
+recorded on sigchains, a Presentation conveys proof-of-possession only for the
+duration of a single live session. Short-lived tokens dramatically reduce the
+window in which an attacker could replay or steal a capability. They also allow
+time-bounded constraints (e.g., `ttlOk`, `withinTime`) and context-dependent
+predicates (`channelBinding`, `ctxEq`) to be enforced on each invocation without
+recording sensitive per-use context on a public ledger. Persisting Presentations
+or allowing them to be reused indefinitely would undermine these protections,
+enable unauthorized redistribution, and blur the distinction between durable
+Grants and transient proof-of-use.
+
 ### 10.2 Structure (Informative Projection)
 
 Note: The names below are non-normative conceptual labels used by PSP-1. The
@@ -1119,6 +1141,23 @@ enforced by the CEP with no network I/O during Program evaluation.
 - TAP MAY disallow equal-scope delegation (co-equal grants) by policy (e.g.,
   depth/fan-out caps or strict attenuation requirements). PSP-1 permits equality
   by default.
+
+#### 11.2 Rationale
+
+Syntactic attenuation is not an arbitrary design choice; it is a deliberate
+restriction that makes delegation mechanically checkable and removes subjective
+interpretations of what "controls authority". By requiring that child Grants
+retain all parent Checks, may drop Queries to narrow ORs, and only tighten
+literal constants and Declaration sets, the CEP can verify attenuation purely
+through structural subset relations. This mirrors the checks-only fragment of
+Biscuit tokens and ensures that independent implementations will make identical
+decisions when verifying a delegation chain. Without syntactic rules, issuers
+could embed logic that ambiguously broadens or narrows authority, making it
+difficult or impossible for CEPs to decide whether a child Grant has overstepped
+the parent. The syntactic approach also dovetails with PCF canonicalization:
+reordering of checks or literals does not affect identity, and monotonicity is
+explicit in the Program structure. See the 14. Security Considerations for
+additional discussion of the risks mitigated by syntactic attenuation.
 
 ### 11.2 Chain Structure and Custody
 
@@ -1415,8 +1454,8 @@ Preconditions (TAP-governed, outside evaluation)
      - presenterIs (if used)
    - Enforce type checks; ill-typed literals -> deny.
    - Enforce resource bounds (CPU/steps/memory). Exceeding limits MUST result in
-     deny. (Deployments SHOULD use an appropriate reason code from the PSP-2
-     registry to indicate a resource limit or deadline breach.)
+     deny. (The enforcing CEP SHOULD use an appropriate reason code from the
+     PSP-2 registry to indicate a resource limit or deadline breach.)
    - Unknown builtin, unknown lattice, or unknown scheme comparator required by
      the Program -> deny.
    - Context superset: ctx MUST include all required ctxEq(k, v) literals with
@@ -1425,17 +1464,20 @@ Preconditions (TAP-governed, outside evaluation)
    - On success:
      - Allow enforcement per placement/mode (mediate/derive/reveal are defined
        outside PSP-1).
-     - Deployments MAY emit an Access PoAR to record the decision. When a PoAR
-       is produced, it MUST conform to PSP-2. PoARs MUST include `programId`,
-       declaration CIDs, pins (including `schemesSnapshotId`), a minimal
-       evaluation trace (which check/query passed), revocation/freshness
+     - The enforcing CEP MUST record a decision event for the authorization
+       outcome. If the CEP implements PSP-2 receipts, the enforcing CEP MUST
+       emit an Access PoAR to record the decision. PoARs MUST include
+       `programId`, declaration CIDs, pins (including `schemesSnapshotId`), a
+       minimal evaluation trace (which check/query passed), revocation/freshness
        decision context, comparator fingerprints, and the enforcer measurement
        (`adapterRef`).
    - On failure:
-     - Deployments MAY emit a DenyReceipt. When a DenyReceipt is emitted, it
-       MUST conform to PSP-2 and include a reason code from the PSP-2 registry.
-       As with PoARs, DenyReceipts SHOULD avoid disclosing sensitive detail and
-       SHOULD record enough context for auditors to reconstruct the decision.
+     - The enforcing CEP MUST record a decision event for the authorization
+       outcome. If the CEP implemnts PSP-2 receipts, the enforcing CEP MUST emit
+       a DenyReceipt. DenyReceitps MUST include a reason code from the PSP-2
+       registry. As with PoARs, DenyReceipts SHOULD avoid disclosing sensitive
+       detail and SHOULD record enough context for auditors to reconstruct the
+       decision.
 
 ### 13.3 Execution Constraints
 
@@ -1447,11 +1489,11 @@ Preconditions (TAP-governed, outside evaluation)
   - TAP governs clock source and skew tolerance; the CEP MUST apply TAP's
     discipline to all time comparisons. If time discipline cannot be satisfied
     (e.g., clock indeterminate), the CEP MUST deny.
-  - Deadlines and budgets
+- Deadlines and budgets
   - The CEP MUST enforce bounded evaluation (CPU/steps/memory). If TAP sets a
     per-request deadline, the CEP MUST abort and deny when the deadline is
-    reached. Deployments SHOULD log an appropriate reason code as defined by the
-    PSP-2 registry.
+    reached. The enforcing CEP SHOULD log an appropriate reason code as defined
+    by the PSP-2 registry.
 - Closed-world inputs
   - All required inputs (leaf Grant, parent Grants, revocation state) MUST be
     locally available at the start of enforcement; otherwise the CEP MUST deny.
@@ -1543,8 +1585,8 @@ across delegation, and (d) TAP-governed acceptance and deployment hygiene.
 
 - Resource budgets
 - CEPs MUST enforce CPU/steps/memory limits for Program evaluation. Exceeding
-  limits MUST result in deny. Deployments SHOULD log an appropriate reason code
-  from the PSP-2 registry to indicate a resource or deadline violation.
+  limits MUST result in deny. The enforcing CEP SHOULD log an appropriate reason
+  code from the PSP-2 registry to indicate a resource or deadline violation.
 - Input bounds
   - Programs and Declarations MUST remain finite. CEPs SHOULD bound sizes of
     `programBytes`, declaration tables, and `ctx` to mitigate memory/CPU
@@ -2001,7 +2043,7 @@ Query = {
 
 ; Literal = Builtin(op, args...)
 Literal = {
-  op: tstr,     ; operator id (e.g., "withinTime", "inPairSet")
+  op: tstr,     ; operator string (op) (e.g., "withinTime", "inPairSet")
   args: [* Term]
 }
 
@@ -2037,11 +2079,11 @@ Conformance notes:
 
 This appendix enumerates the builtin operators assumed by PSP-1 and the
 tightening rules used for syntactic attenuation. The authoritative registry of
-operators (opIds, types, and semantics) is modeled in PSP-4; Grants pin the
-exact set via `builtinsId`.
+operators (`op` strings, types, and semantics) is modeled in PSP‑4; Grants pin
+the exact set via `builtinsId`.
 
 **Builtin operations (what & how).** CPL/0 Programs are conjunctions of builtin
-**literals**. Each literal is an `opId` plus arguments (e.g.,
+**literals**. Each literal is an `op` string plus arguments (e.g.,
 `withinTime(now, nbf, exp)` or `inPairSet(action, resource, "cid")`). Builtins
 are **pure, deterministic, and resource-bounded**; they perform no network I/O
 and return Booleans. A Grant's `builtinsId` pins a content-addressed snapshot of
@@ -2050,7 +2092,7 @@ invocations.
 
 **Builtin operations summary**
 
-| opId            | type signature                             | returns | semantics (informative shorthand)                                                                           | tightening (child vs parent)                                | fail-closed                                                 |
+| op              | type signature                             | returns | semantics (informative shorthand)                                                                           | tightening (child vs parent)                                | fail-closed                                                 |
 | --------------- | ------------------------------------------ | ------- | ----------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
 | `withinTime`    | `(now:Int, nbf:Int, exp:Int)`              | Bool    | `nbf <= now < exp`                                                                                          | `[nbf_child >= nbf_parent $\land$ exp_child <= exp_parent]` | ill-typed => deny; else boolean result                      |
 | `ttlOk`         | `(iat:Int, now:Int, ttlMax:Int)`           | Bool    | `now < iat + ttlMax`                                                                                        | `ttlMax_child <= ttlMax_parent`                             | ill-typed => deny; else boolean result                      |
